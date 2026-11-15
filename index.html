@@ -424,6 +424,13 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .ftr .legal{font-size:12.5px;line-height:1.6;padding-top:24px}
 .ftr .legal p{margin:0 0 10px}
 .ftr-tools{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.soc{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--navy);text-decoration:none;transition:background .2s,border-color .2s,color .2s}
+.soc:hover{border-color:var(--gold);background:var(--gold-soft)}
+.soc svg{width:18px;height:18px}
+.ftr .soc,.mnav .soc{border-color:var(--line-dark);color:var(--gold-2)}
+.ftr .soc:hover,.mnav .soc:hover{border-color:var(--gold);background:rgba(255,255,255,.06)}
+.mnav .social{margin-top:24px}
 .ftr-tools button{font:500 13.5px/1 var(--sans);padding:10px 14px;border:1px solid var(--line-dark);background:transparent;color:#fff;border-radius:2px;cursor:pointer}
 .ftr-tools button:hover{border-color:var(--gold)}
 
@@ -667,6 +674,7 @@ section>.wrap{position:relative}
   <a class="l" href="#recensioni">Recensioni</a>
   <a class="l" href="#contatti">Contatti</a>
   <a class="btn btn-gold" data-book href="#contatti">Prenota una consulenza</a>
+  <div class="social" data-social aria-label="Profili social" hidden></div>
 </div>
 
 <main id="top">
@@ -755,6 +763,7 @@ section>.wrap{position:relative}
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Focus su pianificazione finanziaria, fiscale e passaggio generazionale</li>
         </ul>
         <p class="sign">Marco Busetto</p>
+        <div class="social" data-social aria-label="Profili social" hidden></div>
       </div>
     </div>
   </section>
@@ -1435,6 +1444,7 @@ section>.wrap{position:relative}
         <span class="brand"><span class="mono">MB</span><span><b>Marco Busetto</b><small>Consulenza patrimoniale</small></span></span>
         <p style="margin:18px 0 0;max-width:380px">Pianificazione successoria, passaggio generazionale e protezione del patrimonio per famiglie, imprenditori e professionisti.</p>
         <div class="ftr-tools"><button type="button" id="vcard">Salva contatto</button><button type="button" id="share">Condividi la pagina</button></div>
+        <div class="social" data-social aria-label="Profili social" hidden></div>
       </div>
       <div><h4>Navigazione</h4><ul>
         <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#metodo">Il metodo</a></li>
@@ -1498,6 +1508,7 @@ const CONFIG = {
     { icon: "linkedin",  title: "LinkedIn",  sub: "Profilo professionale", url: "" },
     { icon: "instagram", title: "Instagram", sub: "Pillole di educazione finanziaria", url: "" },
     { icon: "facebook",  title: "Facebook",  sub: "", url: "" },
+    { icon: "whatsapp",  title: "Canale WhatsApp", sub: "Approfondimenti di mercato gratuiti", url: "" },   // link del canale (whatsapp.com/channel/...)
     { icon: "youtube",   title: "YouTube",   sub: "Video e approfondimenti", url: "" },
     { icon: "doc",       title: "Guida gratuita alla successione", sub: "Scarica il PDF", url: "" }
   ],
@@ -1618,6 +1629,13 @@ const links = [
   cards[0][0] !== 'google' && C.google.profile && {icon:'google', title:'Profilo Google', sub:'Recensioni e informazioni', url:C.google.profile},
   C.google.review && {icon:'pen', title:'Lascia una recensione', sub:'Mi aiuta a farmi conoscere', url:C.google.review}
 ].filter(Boolean);
+/* icone social (Chi sono, menu e piè di pagina): solo i profili con un link */
+{ const NAMES = {linkedin: 'LinkedIn', instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', whatsapp: 'Canale WhatsApp'};
+  const soc = C.links.filter(l => l.url && NAMES[l.icon]).map(l => [l.icon, NAMES[l.icon], l.url]);
+  if (!soc.some(x => x[0] === 'whatsapp') && wa) soc.push(['whatsapp', 'Scrivimi su WhatsApp', wa]);
+  document.querySelectorAll('[data-social]').forEach(el => { el.hidden = !soc.length;
+    el.innerHTML = soc.map(([i, n, u]) => `<a class="soc" href="${esc(u)}" target="_blank" rel="noopener" aria-label="${n}" title="${n}">${svg(i)}</a>`).join(''); });
+}
 $('links').innerHTML = (links.length ? '<p class="eyebrow" style="margin:0 0 4px">Link utili</p>' : '') + links.map(l => `<a class="lnk" href="${esc(l.url)}" target="_blank" rel="noopener"><span class="ic">${svg(l.icon)}</span><span><b>${esc(l.title)}</b>${l.sub?`<small>${esc(l.sub)}</small>`:''}</span><span class="ar">${svg('arrow')}</span></a>`).join('');
 
 /* ---------- reviews, stats, legal ---------- */
