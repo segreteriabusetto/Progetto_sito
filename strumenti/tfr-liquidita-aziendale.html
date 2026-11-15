@@ -6,8 +6,7 @@
 <meta name="description" content="Per l'azienda: TFR in azienda o al fondo pensione, e come impiegare la liquidità in eccesso con l'Euribor di oggi.">
 <meta name="theme-color" content="#001a3d">
 <title>Simulatore TFR e liquidità aziendale</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <style>
 /* Testata a fascia (colore del consulente) con le due schede; ogni pagina = colonna dati fissa a sinistra + relazione per il cliente; colonna unica su telefono e in stampa */
 :root{
@@ -1061,7 +1060,7 @@ function render(pre){
 /* ---------- PDF per il cliente (A4, generato nel browser) ---------- */
 function loadPdfLib(){return new Promise(function(res,rej){
   if(window.PDFLib)return res();
-  var u=['https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js','https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'],i=0;
+  var u=['lib/pdf-lib.min.js','https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js'],i=0;
   (function next(){
     if(i>=u.length)return rej({lib:1});
     var s=document.createElement('script');s.src=u[i++];

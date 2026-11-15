@@ -6,8 +6,7 @@
 <meta name="description" content="Due fondi a confronto: costi, rendimenti, portafoglio, gestori e particolarità, con un punteggio finale.">
 <meta name="theme-color" content="#001a3d">
 <title>Due fondi a confronto</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <style>
 /* Testata a fascia (colore del consulente) con la scelta della versione; colonna dei dati a sinistra, fissa sugli schermi larghi,
    e relazione per il cliente a destra; colonna unica su telefono e in stampa. Nelle tabelle il fondo A è a sinistra e il fondo B
@@ -1060,7 +1059,7 @@ function setLevel(l){
 /* ---------- PDF per il cliente (A4, generato nel browser, segue la versione scelta) ---------- */
 function loadPdfLib(){return new Promise(function(res,rej){
   if(window.PDFLib)return res();
-  var u=['https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js','https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'],i=0;
+  var u=['lib/pdf-lib.min.js','https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js'],i=0;
   (function next(){
     if(i>=u.length)return rej({lib:1});
     var s=document.createElement('script');s.src=u[i++];
