@@ -1586,7 +1586,7 @@ const CONFIG = {
   whatsapp: "393315207568",   // solo cifre con prefisso internazionale
   email: "marco.busetto@allianzbankfa.it",
   booking: "",          // link calendario per prenotare (Calendly, Google Calendar...)
-  address: "",          // es. "Via Roma 1, 31100 Treviso"
+  address: "Via Pepe 106, 30172 Mestre (VE)",   // studio
 
   google: {
     profile: "https://www.google.com/search?q=marco+busetto+-+consulente+finanziario+specializzato+in+pianificazione+successoria",
@@ -1727,7 +1727,7 @@ const cards = [
 ].filter(Boolean);
 if (!cards.length) cards.push(['google','Profilo Google','Contatti, indicazioni e recensioni', C.google.profile]);
 $('cards').innerHTML = cards.map(([i,t,s,h]) => `<a class="ccard" href="${esc(h)}" ${ext(h)}><span class="ic">${svg(i)}</span><span><small>${t}</small><b>${s}</b></span></a>`).join('');
-$('ftrContacts').innerHTML = cards.map(([,t,s,h]) => `<li><a href="${esc(h)}" ${ext(h)}>${s}</a></li>`).join('');
+$('ftrContacts').innerHTML = cards.map(([,t,s,h]) => `<li><a href="${esc(h)}" ${ext(h)}>${t === 'WhatsApp' ? 'WhatsApp: scrivimi un messaggio' : s}</a></li>`).join('');
 
 /* barra rapida su telefono: con un link di prenotazione «Prenota» è in evidenza, altrimenti WhatsApp */
 const bar = [tel && ['phone','Chiama',tel], wa && ['whatsapp','WhatsApp',wa,C.booking ? '' : 'pri'], C.email && ['mail','Email',`mailto:${C.email}`], C.booking && ['calendar','Prenota',C.booking,'pri']].filter(Boolean).slice(0,4);
