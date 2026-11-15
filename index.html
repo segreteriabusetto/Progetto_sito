@@ -1478,7 +1478,7 @@ const CONFIG = {
 
   phone: "+39 331 520 7568",       // cellulare
   office: "+39 041 504 0933",      // ufficio
-  whatsapp: "",         // solo cifre con prefisso, es. "393331234567"
+  whatsapp: "393315207568",   // solo cifre con prefisso internazionale
   email: "marco.busetto@allianzbankfa.it",
   booking: "",          // link calendario per prenotare (Calendly, Google Calendar...)
   address: "",          // es. "Via Roma 1, 31100 Treviso"
@@ -1611,7 +1611,9 @@ if (!cards.length) cards.push(['google','Profilo Google','Contatti, indicazioni 
 $('cards').innerHTML = cards.map(([i,t,s,h]) => `<a class="ccard" href="${esc(h)}" ${ext(h)}><span class="ic">${svg(i)}</span><span><small>${t}</small><b>${s}</b></span></a>`).join('');
 $('ftrContacts').innerHTML = cards.map(([,t,s,h]) => `<li><a href="${esc(h)}" ${ext(h)}>${s}</a></li>`).join('');
 
-const bar = [tel && ['phone','Chiama',tel], wa && ['whatsapp','WhatsApp',wa], C.email && !wa && ['mail','Email',`mailto:${C.email}`], ['calendar','Prenota',book,'pri']].filter(Boolean);
+/* barra rapida su telefono: con un link di prenotazione «Prenota» è in evidenza, altrimenti WhatsApp */
+const bar = [tel && ['phone','Chiama',tel], wa && ['whatsapp','WhatsApp',wa,C.booking ? '' : 'pri'], C.email && ['mail','Email',`mailto:${C.email}`], C.booking && ['calendar','Prenota',C.booking,'pri']].filter(Boolean).slice(0,4);
+if (!bar.length) bar.push(['calendar','Contattami','#contatti','pri']);
 mbar.innerHTML = bar.map(([i,l,h,c]) => `<a class="${c||''}" href="${esc(h)}" ${ext(h)}>${svg(i)}${l}</a>`).join('');
 
 // appointment form: opens WhatsApp or email with a ready message
