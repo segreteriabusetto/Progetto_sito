@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Marco Busetto · Consulente Finanziario · Pianificazione Successoria</title>
-<meta name="description" content="Marco Busetto, consulente finanziario specializzato in pianificazione successoria, passaggio generazionale e protezione del patrimonio. Calcola l'imposta di successione e prenota una consulenza.">
+<meta name="description" content="Marco Busetto, consulente finanziario: pianificazione successoria, passaggio generazionale e protezione del patrimonio. Calcola l'imposta di successione e fissa un primo incontro.">
 <meta property="og:title" content="Marco Busetto · Consulente Finanziario">
 <meta property="og:description" content="Pianificazione successoria, protezione del patrimonio e investimenti per famiglie e imprenditori.">
 <meta property="og:type" content="website">
@@ -327,7 +327,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .xnotes b{color:var(--ink)}
 
 /* cifre allineate (non in stile antico) per gli importi grandi */
-.big,.stat b,.fact b,.g-score b,.step .num,.step::after,.quote,.svc h3,.r-hero h2{font-variant-numeric:lining-nums}
+.big,.stat b,.fact b,.step .num,.step::after,.quote,.svc h3,.r-hero h2{font-variant-numeric:lining-nums}
 
 /* ---------- avvertenze ---------- */
 .stats-note{margin:18px 0 0;text-align:center;font-size:12.5px;color:var(--muted)}
@@ -395,8 +395,13 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 /* ---------- tools (pagine di analisi) ---------- */
 .tools-sec{overflow:hidden}
 .tools-sec .gl{opacity:.1}
+.svc .kw{margin:auto 0 16px;font-size:11px;line-height:1.7;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:#86683a}
+.svc .kw span{white-space:nowrap}
+.svc .kw i{font-style:normal;color:var(--gold);margin:0 .15em}
+.svc .kw + .read{margin-top:0}
+.svc.feat .kw{color:var(--gold-2)}
 .tool-grid{display:grid;gap:20px}
-@media (min-width:900px){.tool-grid{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:820px){.tool-grid{grid-template-columns:repeat(2,1fr)}}
 .tool{display:flex;flex-direction:column;padding:32px 28px;background:rgba(255,255,255,.04);border:1px solid var(--line-dark);border-radius:var(--r);text-decoration:none;color:#fff;transition:background .25s,border-color .25s,transform .25s}
 .tool:hover{background:rgba(255,255,255,.08);border-color:rgba(196,160,98,.6);transform:translateY(-3px)}
 .tool-tag{align-self:flex-start;font:600 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2);border:1px solid rgba(196,160,98,.5);padding:6px 9px;margin-bottom:20px}
@@ -407,22 +412,6 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .tool:hover .tool-go svg{transform:translateX(5px)}
 
 /* ---------- reviews ---------- */
-.reviews{background:var(--ivory)}
-.g-card{display:grid;gap:24px;align-items:center;background:var(--paper);border:1px solid var(--line);padding:30px 26px;border-radius:var(--r);box-shadow:var(--shadow)}
-@media (min-width:820px){.g-card{grid-template-columns:auto 1fr auto;padding:36px 40px;gap:36px}}
-.g-score{text-align:center}
-.g-score b{display:block;font:600 64px/1 var(--serif);color:var(--navy-900)}
-.stars{color:#e0a526;letter-spacing:2px;font-size:20px}
-.g-card h3{font-size:28px;color:var(--navy-900);margin-bottom:6px}
-.g-card p{margin:0;color:var(--muted)}
-.g-actions{display:flex;flex-direction:column;gap:10px}
-.t-grid{display:grid;gap:20px;margin-top:24px}
-@media (min-width:820px){.t-grid{grid-template-columns:repeat(3,1fr)}}
-.t{margin:0;background:var(--paper);border:1px solid var(--line);padding:28px 24px;border-radius:var(--r);display:flex;flex-direction:column}
-.t .q{font:600 54px/0.6 var(--serif);color:var(--gold);height:22px}
-.t p{margin:8px 0 18px;font-size:15.5px}
-.t footer{margin-top:auto;font-size:14px;color:var(--muted)}
-.t footer b{color:var(--ink)}
 
 /* ---------- faq ---------- */
 .faq-grid{display:grid;gap:36px}
@@ -675,7 +664,7 @@ section>.wrap{position:relative}
 <!--
   =====================================================================
   COME MODIFICARE IL SITO
-  - Contatti, link, recensioni, numeri e note legali: oggetto CONFIG
+  - Contatti, link, articoli, numeri e note legali: oggetto CONFIG
     nello <script> in fondo alla pagina. Un campo vuoto "" = nascosto.
   - Testi lunghi (servizi, metodo, FAQ): direttamente qui nell'HTML.
   =====================================================================
@@ -684,7 +673,7 @@ section>.wrap{position:relative}
 <div class="splash grain" id="splash" aria-hidden="true">
   <svg class="splash-mark" viewBox="0 0 120 120"><circle class="ring" cx="60" cy="60" r="56"/><text x="60" y="74" text-anchor="middle">MB</text></svg>
   <div class="splash-name">Marco Busetto</div>
-  <div class="splash-sub">Consulenza patrimoniale</div>
+  <div class="splash-sub">Consulente finanziario</div>
   <span class="splash-line"></span>
 </div>
 
@@ -692,15 +681,15 @@ section>.wrap{position:relative}
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Torna all'inizio">
       <span class="mono">MB</span>
-      <span><b>Marco Busetto</b><small>Consulenza patrimoniale</small></span>
+      <span><b>Marco Busetto</b><small>Consulente finanziario</small></span>
     </a>
     <nav class="nav" aria-label="Principale">
       <a href="#chi-sono">Chi sono</a>
       <a href="#servizi">Servizi</a>
       <a href="#articoli">Articoli</a>
       <a href="#calcolatori">Calcolatori</a>
-      <a href="#recensioni">Recensioni</a>
-      <a class="btn btn-gold" data-book href="#contatti">Prenota una consulenza</a>
+      <a href="#strumenti">Strumenti</a>
+      <a class="btn btn-gold" data-book href="#contatti">Prenota un incontro</a>
     </nav>
     <button class="menu-btn" id="menuOpen" aria-label="Apri menu" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
@@ -722,9 +711,8 @@ section>.wrap{position:relative}
   <a class="l" href="#articoli">Articoli</a>
   <a class="l" href="#calcolatori">Calcolatori</a>
   <a class="l" href="#strumenti">Strumenti di analisi</a>
-  <a class="l" href="#recensioni">Recensioni</a>
   <a class="l" href="#contatti">Contatti</a>
-  <a class="btn btn-gold" data-book href="#contatti">Prenota una consulenza</a>
+  <a class="btn btn-gold" data-book href="#contatti">Prenota un incontro</a>
   <div class="social" data-social aria-label="Profili social" hidden></div>
 </div>
 
@@ -737,11 +725,11 @@ section>.wrap{position:relative}
       <div class="hero-text">
         <p class="eyebrow" data-in>Consulente finanziario · Pianificazione successoria</p>
         <h1><span class="ln" data-in style="--d:.1s">Proteggere ciò che hai costruito.</span> <em class="ln" data-in style="--d:.25s">Trasmetterlo con serenità.</em></h1>
-        <p class="lead" data-in style="--d:.4s">Affianco famiglie, imprenditori e professionisti nella pianificazione successoria e nella gestione del patrimonio, con un metodo chiaro e una relazione che dura nel tempo.</p>
+        <p class="lead" data-in style="--d:.4s">Affianco famiglie, imprenditori e professionisti nella pianificazione successoria e nelle scelte sul patrimonio, con un metodo chiaro e una relazione che dura nel tempo.</p>
         <div class="hero-ctas" data-in style="--d:.55s">
           <a class="btn btn-gold" data-book href="#contatti">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-            Prenota una consulenza
+            Prenota un incontro
           </a>
           <a class="btn btn-ghost" href="#calcolatori">Calcola l'imposta di successione</a>
         </div>
@@ -753,9 +741,9 @@ section>.wrap{position:relative}
   <div class="trust">
     <ul class="wrap" id="trust">
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Iscritto all'Albo OCF</b>e al registro IVASS</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg><span><b>Pianificazione successoria</b>Area di specializzazione</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg><span><b>Pianificazione successoria</b>Passaggio generazionale</span></li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2a5 5 0 0 1 5.5 5.8"/></svg><span><b>Famiglie e imprenditori</b>Patrimoni da proteggere</span></li>
-      <li id="trustRating"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg><span><b>Primo incontro</b>Conoscitivo e senza impegno</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg><span><b>Primo incontro</b>Conoscitivo e senza impegno</span></li>
     </ul>
   </div>
 
@@ -772,7 +760,6 @@ section>.wrap{position:relative}
         <div class="pillar"><span class="n">III</span><h3>Continuità</h3><p>Un riferimento stabile nel tempo, che aggiorna il piano quando cambiano la vita e le regole.</p></div>
       </div>
       <div class="stats rv" id="stats" hidden></div>
-      <p class="stats-note" id="statsNote" hidden>Dati riferiti a febbraio 2026 e forniti dal consulente: non sono indicativi di risultati futuri.</p>
     </div>
   </section>
 
@@ -805,7 +792,7 @@ section>.wrap{position:relative}
       <div class="about-text rv">
         <p class="eyebrow">Chi sono</p>
         <h2>Marco Busetto</h2>
-        <p>Sono un consulente finanziario specializzato in <strong>pianificazione successoria</strong> e <strong>passaggio generazionale</strong>. Aiuto famiglie, imprenditori e professionisti a proteggere ciò che hanno costruito e a trasmetterlo alle generazioni future, con serenità e senza sorprese.</p>
+        <p>Sono un consulente finanziario e mi occupo in particolare di <strong>pianificazione successoria</strong> e <strong>passaggio generazionale</strong>. Aiuto famiglie, imprenditori e professionisti a proteggere ciò che hanno costruito e a trasmetterlo alle generazioni future, con serenità e consapevolezza.</p>
         <p>Il mio approccio parte dall'ascolto: prima comprendiamo obiettivi, priorità e legami familiari, poi costruiamo insieme un piano chiaro, sostenibile e verificabile nel tempo, in coordinamento con il notaio, il commercialista e i professionisti che già ti seguono.</p>
         <ul class="checks">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Laurea magistrale in Economia e Finanza con 110 e lode</li>
@@ -831,40 +818,46 @@ section>.wrap{position:relative}
       </div>
       <div class="svc-grid">
         <article class="svc feat corners rv">
-          <span class="tag">Specializzazione</span>
+          <span class="tag">Area principale</span>
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></div>
           <h3>Pianificazione successoria</h3>
           <p>Decidere oggi come, quando e a chi trasferire il patrimonio, riducendo costi, tempi e rischi di conflitto tra eredi.</p>
+          <p class="kw"><span>Testamento</span> <i>·</i> <span>Donazioni</span> <i>·</i> <span>Polizze vita</span></p>
           <button class="read" type="button" data-art="successione">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="14" rx="1"/><path d="M8 7V4h8v3M3 13h18"/></svg></div>
           <h3>Passaggio generazionale d'impresa</h3>
           <p>Accompagnare l'azienda di famiglia verso la generazione successiva, preservandone valore e continuità.</p>
+          <p class="kw"><span>Patto di famiglia</span> <i>·</i> <span>Key man</span> <i>·</i> <span>TFM</span></p>
           <button class="read" type="button" data-art="impresa">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/></svg></div>
           <h3>Protezione del patrimonio</h3>
           <p>Tutelare la famiglia e il tenore di vita da imprevisti, rischi e responsabilità.</p>
+          <p class="kw"><span>Vita</span> <i>·</i> <span>Invalidità</span> <i>·</i> <span>Salute</span></p>
           <button class="read" type="button" data-art="protezione">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg></div>
           <h3>Investimenti</h3>
           <p>Strategie costruite su obiettivi, orizzonte temporale e profilo di rischio, non sulle mode del momento.</p>
+          <p class="kw"><span>Fondi comuni</span> <i>·</i> <span>ETF</span> <i>·</i> <span>Titoli</span></p>
           <button class="read" type="button" data-art="investimenti">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
           <h3>Previdenza</h3>
           <p>Costruire oggi il reddito di domani, sfruttando i vantaggi fiscali previsti dalla legge.</p>
+          <p class="kw"><span>Fondi pensione</span> <i>·</i> <span>PIP</span> <i>·</i> <span>TFR</span></p>
           <button class="read" type="button" data-art="previdenza">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="12" rx="1"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v6M18 9v6"/></svg></div>
           <h3>Gestione della liquidità</h3>
           <p>Dare un obiettivo alla liquidità ferma sul conto, che l'inflazione erode anno dopo anno.</p>
+          <p class="kw"><span>Conti deposito</span> <i>·</i> <span>BOT</span> <i>·</i> <span>ETF monetari</span></p>
           <button class="read" type="button" data-art="liquidita">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
       </div>
@@ -900,7 +893,7 @@ section>.wrap{position:relative}
       </div>
       <div class="fact-grid">
         <div class="fact corners rv"><b>1 milione €</b><p>È la franchigia per coniuge e parenti in linea retta, come i figli: l'imposta del 4% si applica solo sulla parte che supera questa soglia, per ciascun erede.</p></div>
-        <div class="fact corners rv"><b>Esenti</b><p>I titoli di Stato e i capitali delle polizze vita pagati ai beneficiari non sono soggetti all'imposta di successione.</p></div>
+        <div class="fact corners rv"><b>Esenti</b><p>I titoli di Stato e, di norma, i capitali delle polizze vita pagati ai beneficiari non sono soggetti all'imposta di successione.</p></div>
         <div class="fact corners rv"><b>Senza testamento</b><p>Il patrimonio viene diviso secondo le quote del Codice civile, che potrebbero non rispecchiare le tue volontà.</p></div>
         <div class="fact corners rv"><b>5.300 €</b><p>È l'importo annuo che, dal 2026, puoi dedurre dal reddito versando nella previdenza complementare.</p></div>
       </div>
@@ -971,7 +964,7 @@ section>.wrap{position:relative}
             </div>
             <div class="row2">
               <div class="field"><label for="s2_liq">Conti e liquidità</label><div class="inp eur"><input id="s2_liq" type="number" min="0" step="1000" value="300000" inputmode="numeric"></div></div>
-              <div class="field"><label for="s2_inv">Azioni, fondi e altri investimenti</label><div class="inp eur"><input id="s2_inv" type="number" min="0" step="1000" value="3000000" inputmode="numeric"></div></div>
+              <div class="field"><label for="s2_inv">Azioni, fondi comuni, ETF e altri investimenti</label><div class="inp eur"><input id="s2_inv" type="number" min="0" step="1000" value="3000000" inputmode="numeric"></div></div>
             </div>
             <div class="row2">
               <div class="field"><label for="s2_tds">Titoli di Stato</label><div class="inp eur"><input id="s2_tds" type="number" min="0" step="1000" value="400000" inputmode="numeric"></div><small>Esenti dall'imposta</small></div>
@@ -1127,7 +1120,7 @@ section>.wrap{position:relative}
           </div>
           <p class="xnotes-t">Note esplicative</p>
           <ol class="xnotes">
-            <li><b>Strategie e ipotesi.</b> Rendimenti medi annui lordi ipotizzati, con la relativa volatilità: prudente 2,5% (volatilità 4%), moderata 3,5% (7%), bilanciata 4,5% (10%), dinamica 5,5% (14%). Orizzonte minimo indicativo: 3, 5, 7 e 10 anni. Sono ipotesi di lungo periodo a scopo illustrativo: non sono previsioni né rendimenti garantiti e non si riferiscono a prodotti specifici.</li>
+            <li><b>Strategie e ipotesi.</b> Rendimenti medi annui lordi ipotizzati, con la relativa volatilità: prudente 2,5% (volatilità 4%), moderata 3,5% (7%), bilanciata 4,5% (10%), dinamica 5,5% (14%). Orizzonte minimo indicativo: 3, 5, 7 e 10 anni. Sono ipotesi di lungo periodo a scopo illustrativo: non sono previsioni né rendimenti garantiti e non si riferiscono a prodotti specifici. Una stessa strategia può essere costruita con strumenti diversi, come fondi comuni, ETF e titoli, combinati in base al profilo di ciascuno.</li>
             <li><b>Inflazione.</b> L'importo che indichi in euro di oggi viene rivalutato con l'inflazione fino all'anno dell'obiettivo: è la somma che servirà davvero in quel momento.</li>
             <li><b>Livello di sicurezza.</b> Con il 50% l'obiettivo si raggiunge nella metà degli scenari simulati; con il 75% o il 90% il versamento richiesto è più alto, ma lo è anche la probabilità stimata di arrivarci. Nessun livello equivale a una garanzia.</li>
             <li><b>Imposte e costi.</b> Nella versione completa: imposta del 26% sul guadagno (12,5% sulla parte in titoli di Stato), applicata alla fine; costi correnti tolti dal rendimento ogni anno; imposta di bollo non considerata. Con la riduzione graduale del rischio, negli ultimi 3 anni si applicano le ipotesi della strategia prudente.</li>
@@ -1196,7 +1189,7 @@ section>.wrap{position:relative}
             <li><b>Imposte.</b> Gli interessi del conto e i rendimenti degli investimenti sono tassati al 26%; i titoli di Stato italiani ed europei al 12,5%. Nella versione completa l'imposta sull'investimento è applicata ogni anno: in molti strumenti si paga solo al disinvestimento, con un risultato leggermente migliore.</li>
             <li><b>Imposta di bollo.</b> Sul conto corrente delle persone fisiche è di 34,20 € l'anno, se la giacenza media supera 5.000 €; su conti deposito e prodotti finanziari è dello 0,20% l'anno del valore.</li>
             <li><b>Riserva per gli imprevisti.</b> Nella pianificazione si suggerisce spesso una riserva pari ad alcuni mesi di spese familiari, sempre disponibile: non va investita con orizzonti lunghi.</li>
-            <li><b>Investimento d'esempio.</b> Non si riferisce a un prodotto specifico: serve a mostrare l'effetto di un rendimento superiore all'inflazione. Ogni investimento comporta rischi, compresa la perdita del capitale, e va valutato in base al profilo, agli obiettivi e all'orizzonte di ciascuno.</li>
+            <li><b>Investimento d'esempio.</b> Non si riferisce a un prodotto specifico, ma a un portafoglio diversificato che può essere composto, ad esempio, da fondi comuni, ETF e titoli: serve a mostrare l'effetto di un rendimento superiore all'inflazione. Ogni investimento comporta rischi, compresa la perdita del capitale, e va valutato in base al profilo, agli obiettivi e all'orizzonte di ciascuno.</li>
           </ol>
         </div>
       </div>
@@ -1226,41 +1219,8 @@ section>.wrap{position:relative}
           <p>Per l'azienda conviene tenere il TFR o destinarlo ai fondi pensione? E come impiegare la liquidità in eccesso, con l'Euribor di oggi?</p>
           <span class="tool-go">Apri lo strumento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
-        <a class="tool corners rv" href="strumenti/confronto-fondi.html">
-          <span class="tool-tag">Investimenti</span>
-          <h3>Due fondi a confronto</h3>
-          <p>Costi, rendimenti, portafoglio, gestori e particolarità di due fondi, fianco a fianco, con un punteggio finale spiegato in modo semplice.</p>
-          <span class="tool-go">Apri lo strumento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
       </div>
       <p class="sec-note">Gli strumenti hanno finalità illustrative: le simulazioni dipendono dai dati inseriti e da ipotesi semplificate, non costituiscono consulenza né raccomandazione personalizzata e non sono garantite. Messaggio promozionale riguardante forme pensionistiche complementari: prima dell'adesione leggere la Parte I «Le informazioni chiave per l'aderente» e l'Appendice «Informativa sulla sostenibilità» della Nota informativa.</p>
-    </div>
-  </section>
-
-  <!-- REVIEWS -->
-  <section class="sec reviews" id="recensioni">
-    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
-    <div class="wrap">
-      <div class="sec-head center rv">
-        <p class="eyebrow">Recensioni</p>
-        <h2>La fiducia <em>dei miei clienti</em></h2>
-        <div class="orn" aria-hidden="true"><i></i></div>
-      </div>
-      <div class="g-card corners rv">
-        <div class="g-score" id="gScore">
-          <svg width="56" height="56" viewBox="0 0 48 48" aria-label="Google"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.4l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.6-3.9-12.3-9.1H4.4v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.7 28.1a13.2 13.2 0 0 1 0-8.2v-5.7H4.4a22 22 0 0 0 0 19.6z"/><path fill="#EA4335" d="M24 10.8c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.4 14.2l7.3 5.7c1.7-5.2 6.6-9.1 12.3-9.1z"/></svg>
-        </div>
-        <div>
-          <h3 id="gTitle">Le recensioni su Google</h3>
-          <p id="gText">Leggi cosa dicono le famiglie e gli imprenditori che ho accompagnato nelle loro scelte patrimoniali.</p>
-        </div>
-        <div class="g-actions">
-          <a class="btn btn-navy" id="gRead" target="_blank" rel="noopener">Leggi le recensioni</a>
-          <a class="btn btn-line" id="gWrite" target="_blank" rel="noopener" hidden>Lascia una recensione</a>
-        </div>
-      </div>
-      <div class="t-grid" id="tGrid"></div>
-      <p class="sec-note">Le recensioni sono opinioni personali dei clienti pubblicate su Google: non sono verificate né modificate dal consulente, riflettono esperienze individuali e non costituiscono garanzia di risultati futuri.</p>
     </div>
   </section>
 
@@ -1335,7 +1295,7 @@ section>.wrap{position:relative}
   <p>Vuoi una prima stima? Prova il <a href="#calcolatori" data-calc="succ">calcolatore dell'imposta di successione</a>.</p>
   <h3>Il mio approccio</h3>
   <p>Partiamo da una mappatura completa del patrimonio e simuliamo cosa accadrebbe oggi. Su questa base individuiamo le soluzioni più adatte, coordinandoci con il notaio e il commercialista che ti seguono, perché ogni scelta sia coerente con le altre.</p>
-  <p class="r-note-inline">Le indicazioni fiscali e successorie sono di carattere generale: per il tuo caso servono il parere del notaio e del commercialista e un'analisi personalizzata.</p>
+  <p class="r-note-inline">Le indicazioni fiscali e successorie sono di carattere generale: per il tuo caso servono il parere del notaio e del commercialista e un'analisi personalizzata. Per le polizze con prevalente contenuto finanziario, come alcune unit linked, la giurisprudenza ha talvolta escluso parte di questi effetti: vanno valutate caso per caso.</p>
   <div class="r-sum corners"><h4>In sintesi</h4><ul>
     <li>Senza testamento decide la legge, con quote fisse.</li>
     <li>La legittima limita la libertà di disporre, ma lascia spazio a scelte mirate.</li>
@@ -1398,7 +1358,7 @@ section>.wrap{position:relative}
   </ul></div>
 </template>
 
-<template id="art-investimenti" data-cat="Investimenti" data-time="4 min"
+<template id="art-investimenti" data-cat="Investimenti" data-time="5 min"
   data-title="Investire con metodo, non con l'umore dei mercati"
   data-lead="Investire bene è una questione di strategia e di comportamento: dare a ogni obiettivo il suo orizzonte e mantenere la rotta nei momenti di incertezza.">
   <p>Non esiste l'investimento perfetto in assoluto. Esiste l'investimento adatto a un obiettivo preciso, a un orizzonte temporale e alla tranquillità con cui una persona è disposta ad affrontare le oscillazioni.</p>
@@ -1409,13 +1369,18 @@ section>.wrap{position:relative}
   <blockquote>«Bisogna essere timorosi quando gli altri sono avidi, e avidi quando gli altri sono timorosi.» <span>Warren Buffett</span></blockquote>
   <h3>Diversificare davvero</h3>
   <p>Diversificare significa distribuire il patrimonio tra aree geografiche, settori, classi di attivo e gestori differenti. Un'ampia scelta tra case di investimento internazionali consente di costruire portafogli su misura, senza dipendere da un'unica visione.</p>
+  <h3>Fondi comuni ed ETF</h3>
+  <p>Negli ultimi anni gli <strong>ETF</strong>, fondi quotati in Borsa che di solito replicano un indice, sono entrati nei portafogli di molti risparmiatori. Offrono costi correnti in genere contenuti, un'ampia diversificazione e un contenuto trasparente. Replicare un indice, però, significa seguirlo fedelmente: nei rialzi come nei ribassi.</p>
+  <p>I <strong>fondi comuni a gestione attiva</strong> rispondono a un'esigenza diversa: affidano le scelte a un team di gestione che seleziona mercati e titoli e può modificare l'esposizione al rischio, con costi generalmente più elevati e risultati che possono essere migliori o peggiori del mercato di riferimento.</p>
+  <p>Non si tratta di scegliere da che parte stare. Spesso un portafoglio equilibrato li affianca: un <strong>nucleo</strong> di strumenti efficienti e ben diversificati, a cui si aggiungono componenti a gestione attiva dove la selezione può contare di più. Ciò che conta è il ruolo di ciascuno strumento, il costo complessivo e la coerenza con il tuo obiettivo.</p>
   <h3>Il valore del comportamento</h3>
   <p>Gli errori più costosi nascono spesso dalle emozioni: vendere nel panico, inseguire ciò che è appena salito. Una parte importante del mio lavoro è aiutarti a restare fedele al piano proprio quando è più difficile, con un monitoraggio costante e ribilanciamenti periodici.</p>
-  <p class="r-note-inline">I rendimenti passati non sono indicativi di quelli futuri. Ogni investimento comporta rischi, inclusa la possibile perdita del capitale.</p>
+  <p class="r-note-inline">I rendimenti passati non sono indicativi di quelli futuri. Ogni investimento comporta rischi, inclusa la possibile perdita del capitale. ETF e fondi comuni sono citati come categorie di strumenti e non come raccomandazione: hanno costi e rischi diversi e prima della sottoscrizione va letto il KID.</p>
   <div class="r-sum corners"><h4>In sintesi</h4><ul>
     <li>Prima l'obiettivo e l'orizzonte, poi gli strumenti.</li>
     <li>La costanza vale più del tempismo.</li>
     <li>Diversificare riduce la dipendenza da un singolo mercato.</li>
+    <li>Fondi comuni ed ETF non si escludono: contano ruolo, costi e coerenza.</li>
     <li>Gestire le emozioni è parte della strategia.</li>
   </ul></div>
 </template>
@@ -1459,7 +1424,7 @@ section>.wrap{position:relative}
   <p>Una buona regola è mantenere una <strong>riserva per gli imprevisti</strong>, la «ruota di scorta», pari ad alcuni mesi di spese familiari, sempre disponibile. Ciò che eccede può essere suddiviso in base a quando servirà.</p>
   <h3>Dividere la liquidità per obiettivi</h3>
   <ul>
-    <li><strong>Entro uno o due anni</strong>: strumenti a basso rischio e facilmente smobilizzabili, come conti deposito, titoli di Stato a breve scadenza o fondi monetari.</li>
+    <li><strong>Entro uno o due anni</strong>: strumenti a basso rischio e facilmente smobilizzabili, come conti deposito, titoli di Stato a breve scadenza, fondi comuni ed ETF monetari.</li>
     <li><strong>Nel medio periodo</strong>: soluzioni prudenti e diversificate, coerenti con la data in cui il denaro servirà.</li>
     <li><strong>Oltre i cinque anni</strong>: una parte può entrare nel piano di investimento di lungo periodo.</li>
   </ul>
@@ -1505,7 +1470,7 @@ section>.wrap{position:relative}
   </ul>
   <p>Il costo di una copertura è una frazione del capitale che protegge e dipende da età, stato di salute e somme assicurate. Per questo si parte sempre dal proprio fabbisogno: quanto spetterebbe dallo Stato, quanto servirebbe alla famiglia, quanto manca.</p>
   <div class="r-cta"><p><strong>Quanto vale davvero la tua protezione?</strong> In un primo incontro, senza impegno, calcoliamo insieme quanto ti spetterebbe dallo Stato, quanto servirebbe alla tua famiglia e come colmare la differenza.</p><a class="btn btn-gold" href="#contatti">Prenota il check-up di protezione</a></div>
-  <p class="r-note-inline">Esempio semplificato a scopo illustrativo, elaborato dal consulente: l'importo effettivo calcolato dall'INPS dipende dalla storia contributiva, dalla rivalutazione dei contributi, dai coefficienti di trasformazione e dai requisiti di legge (ad esempio almeno 5 anni di contributi, di cui 3 negli ultimi 5). Messaggio pubblicitario con finalità promozionale: prima della sottoscrizione di un prodotto assicurativo leggere il set informativo. Le coperture sono soggette a condizioni, limitazioni ed esclusioni.</p>
+  <p class="r-note-inline">Esempio semplificato a scopo illustrativo, elaborato dal consulente. Per semplicità usa un coefficiente di circa il 5% e divide l'importo annuo per 12: i coefficienti INPS per età inferiori ai 60 anni sono più bassi e la pensione è pagata in 13 mensilità, quindi le cifre reali sarebbero in genere ancora più basse. L'importo effettivo calcolato dall'INPS dipende dalla storia contributiva, dalla rivalutazione dei contributi, dai coefficienti di trasformazione e dai requisiti di legge (ad esempio almeno 5 anni di contributi, di cui 3 negli ultimi 5). Messaggio pubblicitario con finalità promozionale: prima della sottoscrizione di un prodotto assicurativo leggere il set informativo. Le coperture sono soggette a condizioni, limitazioni ed esclusioni.</p>
   <div class="r-sum corners"><h4>In sintesi</h4><ul>
     <li>Il primo patrimonio da proteggere è la capacità di produrre reddito.</li>
     <li>Con la sola copertura pubblica, un'invalidità totale può dimezzare il reddito.</li>
@@ -1546,14 +1511,14 @@ section>.wrap{position:relative}
     <div class="orn" aria-hidden="true" style="margin:0 0 44px"><i></i></div>
     <div class="ftr-grid">
       <div>
-        <span class="brand"><span class="mono">MB</span><span><b>Marco Busetto</b><small>Consulenza patrimoniale</small></span></span>
+        <span class="brand"><span class="mono">MB</span><span><b>Marco Busetto</b><small>Consulente finanziario</small></span></span>
         <p style="margin:18px 0 0;max-width:380px">Pianificazione successoria, passaggio generazionale e protezione del patrimonio per famiglie, imprenditori e professionisti.</p>
         <div class="ftr-tools"><button type="button" id="vcard">Salva contatto</button><button type="button" id="share">Condividi la pagina</button></div>
         <div class="social" data-social aria-label="Profili social" hidden></div>
       </div>
       <div><h4>Navigazione</h4><ul>
         <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#metodo">Il metodo</a></li><li><a href="#articoli">Articoli</a></li>
-        <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#strumenti">Strumenti di analisi</a></li><li><a href="#recensioni">Recensioni</a></li><li><a href="#faq">Domande frequenti</a></li><li><a href="note-legali.html">Note legali e privacy</a></li></ul></div>
+        <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#strumenti">Strumenti di analisi</a></li><li><a href="#faq">Domande frequenti</a></li><li><a href="note-legali.html">Note legali e privacy</a></li></ul></div>
       <div><h4>Contatti</h4><ul id="ftrContacts"></ul></div>
     </div>
     <div class="legal">
@@ -1590,17 +1555,11 @@ const CONFIG = {
 
   google: {
     profile: "https://www.google.com/search?q=marco+busetto+-+consulente+finanziario+specializzato+in+pianificazione+successoria",
-    review: "",         // link "Scrivi una recensione" del profilo Google
-    maps: "",           // link Google Maps dello studio
-    rating: "",         // es. "5,0"
-    count: ""           // es. "32"
+    maps: ""            // link Google Maps dello studio
   },
 
-  // Recensioni reali da mostrare (copiale dal profilo Google, con il consenso dei clienti).
-  // Esempio: { text: "Testo della recensione", author: "Nome C.", when: "marzo 2026" }
-  testimonials: [],
-
-  // Numeri da mostrare sotto i valori. Esempio: { value: "15+", label: "Anni di esperienza" }
+  // Numeri da mostrare sotto i valori: solo dati oggettivi e verificabili.
+  // Niente numero di clienti, patrimonio seguito o risultati: sono dati che l'intermediario deve autorizzare.
   // Articoli e post della sezione «Articoli», dal più recente.
   //  - articolo del sito: tipo "articolo" e articolo = nome del testo (template id="art-NOME")
   //  - post social: tipo "instagram", "linkedin" o "facebook" e url = link del post
@@ -1609,15 +1568,15 @@ const CONFIG = {
   posts: [
     { tipo: "articolo", data: "2026-11-15", tema: "Protezione", articolo: "assicurarsi", icona: "shield",
       titolo: "Perché assicurarsi prima di investire",
-      estratto: "Un quarantenne con 21.000 € di stipendio: con un'invalidità totale lo Stato gli garantirebbe circa 866 € al mese. Ecco perché la protezione viene prima dell'investimento.",
+      estratto: "Un quarantenne con 21.000 € di stipendio: con un'invalidità totale riceverebbe dallo Stato circa 866 € al mese. Ecco perché la protezione viene prima dell'investimento.",
       cifra: "866 €", cifraTesto: "al mese: quanto resterebbe a Luca, 40 anni, con un'invalidità totale" }
   ],
 
   stats: [
-    { value: "70",       label: "Clienti premium seguiti" },
-    { value: "70 mln €", label: "Patrimonio gestito" },
-    { value: "110",      label: "e lode, laurea in Economia e Finanza" },
-    { value: "2021",     label: "Iscritto all'Albo OCF" }
+    { value: "2021", label: "Iscritto all'Albo unico OCF" },
+    { value: "110",  label: "e lode, laurea in Economia e Finanza" },
+    { value: "6",    label: "Aree di consulenza collegate tra loro" },
+    { value: "4",    label: "Calcolatori da usare online" }
   ],
 
   // Social e link utili (quelli del tuo Linktree). url "" = nascosto.
@@ -1725,7 +1684,7 @@ const cards = [
   C.email && ['mail','Email', esc(C.email), `mailto:${C.email}`],
   maps && ['map','Studio', esc(C.address || 'Indicazioni stradali'), maps]
 ].filter(Boolean);
-if (!cards.length) cards.push(['google','Profilo Google','Contatti, indicazioni e recensioni', C.google.profile]);
+if (!cards.length) cards.push(['google','Profilo Google','Contatti e indicazioni', C.google.profile]);
 $('cards').innerHTML = cards.map(([i,t,s,h]) => `<a class="ccard" href="${esc(h)}" ${ext(h)}><span class="ic">${svg(i)}</span><span><small>${t}</small><b>${s}</b></span></a>`).join('');
 $('ftrContacts').innerHTML = cards.map(([,t,s,h]) => `<li><a href="${esc(h)}" ${ext(h)}>${t === 'WhatsApp' ? 'WhatsApp: scrivimi un messaggio' : s}</a></li>`).join('');
 
@@ -1746,8 +1705,7 @@ if (wa || C.email) {
 
 const links = [
   ...C.links.filter(l => l.url),
-  cards[0][0] !== 'google' && C.google.profile && {icon:'google', title:'Profilo Google', sub:'Recensioni e informazioni', url:C.google.profile},
-  C.google.review && {icon:'pen', title:'Lascia una recensione', sub:'Mi aiuta a farmi conoscere', url:C.google.review}
+  cards[0][0] !== 'google' && C.google.profile && {icon:'google', title:'Profilo Google', sub:'Studio, orari e indicazioni', url:C.google.profile}
 ].filter(Boolean);
 /* ---------- articoli e post ---------- */
 { const TIPI = {articolo: ['Articolo', 'doc', 'Leggi l\'articolo'], instagram: ['Post Instagram', 'instagram', 'Vedi il post su Instagram'],
@@ -1791,16 +1749,8 @@ const links = [
 }
 $('links').innerHTML = (links.length ? '<p class="eyebrow" style="margin:0 0 4px">Link utili</p>' : '') + links.map(l => `<a class="lnk" href="${esc(l.url)}" target="_blank" rel="noopener"><span class="ic">${svg(l.icon)}</span><span><b>${esc(l.title)}</b>${l.sub?`<small>${esc(l.sub)}</small>`:''}</span><span class="ar">${svg('arrow')}</span></a>`).join('');
 
-/* ---------- reviews, stats, legal ---------- */
-$('gRead').href = C.google.profile;
-if (C.google.review) { $('gWrite').hidden = false; $('gWrite').href = C.google.review; }
-if (C.google.rating) {
-  $('gScore').innerHTML = `<b>${esc(C.google.rating)}</b><div class="stars">★★★★★</div>`;
-  $('gTitle').textContent = C.google.count ? `${C.google.count} recensioni su Google` : 'Valutazione su Google';
-  $('trustRating').innerHTML = `<a href="${esc(C.google.profile)}" target="_blank" rel="noopener" style="display:flex;gap:12px;align-items:center">${svg('star')}<span><b>${esc(C.google.rating)} su Google</b>${C.google.count ? esc(C.google.count) + ' recensioni' : 'Leggi le recensioni'}</span></a>`;
-}
-$('tGrid').innerHTML = C.testimonials.map(t => `<blockquote class="t corners rv"><span class="q">“</span><p>${esc(t.text)}</p><footer><span class="stars" style="font-size:14px">★★★★★</span><br><b>${esc(t.author)}</b>${t.when ? ' · ' + esc(t.when) : ''} · Google</footer></blockquote>`).join('');
-if (C.stats.length) { $('stats').hidden = false; $('statsNote').hidden = false; $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join(''); }
+/* ---------- stats, legal ---------- */
+if (C.stats.length) { $('stats').hidden = false; $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join(''); }
 $('legal').textContent = C.legal; $('year').textContent = new Date().getFullYear();
 
 /* ---------- calculators: tabs & version (semplificata / completa) ---------- */
@@ -1816,6 +1766,9 @@ const warn = (el, list) => $(el).innerHTML = list.filter(Boolean).map(t => `<p c
 const int = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(num(id))));
 const pos = id => Math.max(0, num(id));
 const pc = x => pct(x * 100);
+/* articolo davanti alla percentuale: «all'1,5%», «all'80%», «al 4%» */
+const vow = t => /^(8|11(?!\d)|1(?!\d))/.test(t);
+const alP = t => (vow(t) ? "all'" : 'al ') + t, ilP = t => (vow(t) ? "l'" : 'il ') + t;
 const table = (cap, head, body) => `<table>${cap ? `<caption>${cap}</caption>` : ''}<thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr class="${r.cls || ''}">${r.c.map(x => `<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 const frac = x => { for (const [v, t] of [[1, 'intero'], [1/2, '1/2'], [1/3, '1/3'], [2/3, '2/3'], [1/4, '1/4'], [3/4, '3/4']]) if (Math.abs(x - v) < 1e-9) return t; return pc(x); };
 const NO_HEIRS = "Senza coniuge, figli, genitori, fratelli o sorelle l'eredità va agli altri parenti fino al sesto grado e, in loro assenza, allo Stato: per questo caso serve un'analisi specifica.";
@@ -1916,7 +1869,7 @@ function calcSuccFull() {
   });
   const ic = imm > 0 ? ipoCat(imm, prima) : 0, tot = tax + ic;
   $('s_tot').textContent = eur(tot);
-  $('s_sub').textContent = netto > 0 ? `Pari al ${pc(tot / netto)} dell'asse ereditario netto di ${eur(netto)}.` : 'Inserisci il valore del patrimonio.';
+  $('s_sub').textContent = netto > 0 ? `Pari ${alP(pc(tot / netto))} dell'asse ereditario netto di ${eur(netto)}.` : 'Inserisci il valore del patrimonio.';
   const parts = [['Immobili', imm, '#8fb3e8'], ['Liquidità', liq, '#5a86c9'], ['Investimenti', inv, '#a9bcd6'], ['Titoli di Stato', tds, 'var(--gold)'], ['Azienda', az, '#e8d5a8'], ['Altri beni', alt, '#6f7f96']].filter(p => p[1] > 0);
   $('s_bar').innerHTML = parts.map(p => `<i style="width:${asse ? p[1] / asse * 100 : 0}%;background:${p[2]}"></i>`).join('');
   $('s_leg').innerHTML = parts.map(p => `<div><i style="background:${p[2]}"></i><span>${p[0]}</span><b>${eur(p[1])}</b></div>`).join('');
@@ -1934,12 +1887,12 @@ function calcSuccFull() {
     out.map(o => ({c: [esc(o.nome), pc(o.s), eur(o.q), eur(o.t)]})).concat([{cls: 'tot', c: ['Totale', pc(sum), eur(netto * sum), eur(tax)]}])) : '';
   const W = [];
   if (!HS.list.length) W.push(NO_HEIRS);
-  if (f.test && HS.list.length && Math.abs(sum - 1) > 0.0005) W.push(`Le quote sommano al ${pc(sum)}: correggile per arrivare al 100%.`);
+  if (f.test && HS.list.length && Math.abs(sum - 1) > 0.0005) W.push(`Le quote sommano ${alP(pc(sum))}: correggile per arrivare al 100%.`);
   if (f.test) {
     const R = riserva(f.con, f.nf, f.ng > 0);
     hs.forEach(h => {
       const min = h.key === 'con' ? (R.con || 0) : h.key.startsWith('fig') ? (R.fig || 0) / f.nf : (h.key.startsWith('gen') ? (R.asc || 0) / f.ng : 0);
-      if (min && h.s + 1e-6 < min) W.push(`${h.nome} riceve il ${pc(h.s)}, meno della quota che la legge gli riserva (${pc(min)}): potrebbe chiedere la riduzione delle disposizioni.`);
+      if (min && h.s + 1e-6 < min) W.push(`${h.nome} riceve ${ilP(pc(h.s))}, meno della quota che la legge gli riserva (${pc(min)}): potrebbe chiedere la riduzione delle disposizioni.`);
     });
   }
   if (az > 0) W.push("L'esenzione per l'azienda spetta solo alla quota che va a coniuge e figli, a condizione che proseguano l'attività o mantengano il controllo per almeno cinque anni.");
@@ -2194,7 +2147,7 @@ setCM(CM);
 
 /* ---------- structured data ---------- */
 const ld = {"@context":"https://schema.org","@type":"FinancialService","name":"Marco Busetto - Consulente Finanziario",
-  "description":"Consulente finanziario specializzato in pianificazione successoria e passaggio generazionale.","url":location.href.split('#')[0],
+  "description":"Consulente finanziario: pianificazione successoria, passaggio generazionale e protezione del patrimonio.","url":location.href.split('#')[0],
   "areaServed":"IT","knowsAbout":["Pianificazione successoria","Passaggio generazionale","Protezione del patrimonio","Investimenti","Previdenza"]};
 if (C.phone) ld.telephone = C.phone; if (C.email) ld.email = C.email; if (C.address) ld.address = C.address;
 const sameAs = links.map(l => l.url).filter(u => /^https?:/.test(u)); if (sameAs.length) ld.sameAs = sameAs;
