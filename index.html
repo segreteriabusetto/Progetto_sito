@@ -342,6 +342,56 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .legal-links{display:flex;flex-wrap:wrap;gap:6px 18px;padding-top:6px}
 .legal-links a{color:var(--gold-2);text-decoration:underline;text-underline-offset:3px}
 
+/* ---------- articoli e post ---------- */
+.posts-sec{overflow:hidden}
+.posts-sec .gl{opacity:.1}
+.post-filters{display:flex;flex-wrap:wrap;gap:8px;margin:-16px 0 26px}
+.post-filters button{font:600 13.5px/1 var(--sans);padding:10px 16px;border-radius:999px;border:1px solid var(--line-dark);background:transparent;color:#fff;cursor:pointer}
+.post-filters button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+.post-grid{display:grid;gap:20px}
+@media (min-width:760px){.post-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1080px){.post-grid{grid-template-columns:repeat(3,1fr)}}
+.post{display:flex;flex-direction:column;background:var(--ivory);color:var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:0 20px 50px -24px rgba(0,0,0,.6)}
+.post-cover{position:relative;min-height:190px;background:linear-gradient(160deg,var(--navy-900),var(--navy));color:#fff;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.post-cover::after{content:"";position:absolute;inset:12px;border:1px solid rgba(196,160,98,.45);pointer-events:none}
+.post-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.post-ic{position:absolute;top:24px;right:24px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(196,160,98,.6);display:grid;place-items:center;color:var(--gold-2)}
+.post-ic svg{width:22px;height:22px}
+.post-k{position:relative;font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2)}
+.post-num{position:relative;font:600 64px/1 var(--serif);font-variant-numeric:lining-nums;color:#fff;margin-top:10px}
+.post-num small{display:block;font:500 14px/1.4 var(--sans);color:var(--on-dark-muted);margin-top:8px;max-width:300px}
+.post-b{display:flex;flex-direction:column;flex:1;padding:24px 24px 22px}
+.post-meta{margin:0 0 10px;font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.post h3{font-size:27px;line-height:1.15;color:var(--navy-900);margin:0 0 10px}
+.post-b>p:not(.post-meta){margin:0 0 20px;color:#3a4657;font-size:15.5px}
+.post .read{margin-top:auto;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:0;border:0;background:none;font:600 14.5px/1.2 var(--sans);color:var(--navy);text-decoration:none;cursor:pointer}
+.post .read svg{width:18px;height:18px;color:var(--gold);transition:transform .25s}
+.post .read:hover svg{transform:translateX(5px)}
+@media (min-width:1080px){
+  .post.feat{grid-column:1/-1;flex-direction:row}
+  .post.feat .post-cover{flex:0 0 46%;min-height:340px;padding:40px}
+  .post.feat .post-b{padding:40px 44px;justify-content:center}
+  .post.feat h3{font-size:38px}
+  .post.feat .post-num{font-size:96px}
+}
+.post.follow{background:rgba(255,255,255,.04);border:1px solid var(--line-dark);color:#fff;box-shadow:none;justify-content:center;padding:28px 26px}
+.post.follow h3{color:#fff;font-size:26px}
+.post.follow p{margin:0 0 18px;color:var(--on-dark-muted);font-size:15px}
+.post.follow .social{margin-top:0}
+.post.follow .soc{border-color:var(--line-dark);color:var(--gold-2)}
+@media (min-width:1080px){.post.follow.wide{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:24px}.post.follow.wide p{margin:6px 0 0}}
+/* elementi dentro gli articoli */
+.r-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin:30px 0;background:var(--line);border:1px solid var(--line)}
+.r-stats div{background:#fff;padding:20px 14px;text-align:center}
+.r-stats b{display:block;font:600 40px/1 var(--serif);font-variant-numeric:lining-nums;color:var(--navy)}
+.r-stats span{display:block;margin-top:8px;font-size:13.5px;line-height:1.4;color:var(--muted)}
+.r-cta{margin:34px 0 18px;padding:24px 24px 26px;background:linear-gradient(160deg,var(--navy-900),var(--navy));color:#fff;border-radius:3px}
+.r-cta p{margin:0 0 18px;color:#e9eef5}
+.r-body .r-cta strong{color:var(--gold-2)}
+.r-body .r-cta .btn{text-decoration:none;color:var(--navy-950)}
+.r-body blockquote{font-variant-numeric:lining-nums}
+.r-cta .btn{font-size:15px}
+
 /* ---------- tools (pagine di analisi) ---------- */
 .tools-sec{overflow:hidden}
 .tools-sec .gl{opacity:.1}
@@ -647,7 +697,7 @@ section>.wrap{position:relative}
     <nav class="nav" aria-label="Principale">
       <a href="#chi-sono">Chi sono</a>
       <a href="#servizi">Servizi</a>
-      <a href="#metodo">Metodo</a>
+      <a href="#articoli">Articoli</a>
       <a href="#calcolatori">Calcolatori</a>
       <a href="#recensioni">Recensioni</a>
       <a class="btn btn-gold" data-book href="#contatti">Prenota una consulenza</a>
@@ -669,6 +719,7 @@ section>.wrap{position:relative}
   <a class="l" href="#chi-sono">Chi sono</a>
   <a class="l" href="#servizi">Servizi</a>
   <a class="l" href="#metodo">Il metodo</a>
+  <a class="l" href="#articoli">Articoli</a>
   <a class="l" href="#calcolatori">Calcolatori</a>
   <a class="l" href="#strumenti">Strumenti di analisi</a>
   <a class="l" href="#recensioni">Recensioni</a>
@@ -853,6 +904,20 @@ section>.wrap{position:relative}
         <div class="fact corners rv"><b>Senza testamento</b><p>Il patrimonio viene diviso secondo le quote del Codice civile, che potrebbero non rispecchiare le tue volontà.</p></div>
         <div class="fact corners rv"><b>5.300 €</b><p>È l'importo annuo che, dal 2026, puoi dedurre dal reddito versando nella previdenza complementare.</p></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ARTICOLI E POST -->
+  <section class="sec dark posts-sec grain" id="articoli">
+    <svg class="gl" data-gl="contact" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Articoli e post</p>
+        <h2>Idee per proteggere <em>e far crescere</em> il patrimonio</h2>
+        <p class="lead">Approfondimenti, casi concreti e i miei post sui social: tutto in un unico posto.</p>
+      </div>
+      <div class="post-filters" id="postFilters" role="group" aria-label="Filtra i contenuti" hidden></div>
+      <div class="post-grid" id="postGrid"></div>
     </div>
   </section>
 
@@ -1408,6 +1473,46 @@ section>.wrap{position:relative}
     <li>Anche per le imprese la tesoreria va pianificata.</li>
   </ul></div>
 </template>
+<template id="art-assicurarsi" data-cat="Protezione · Articolo" data-time="4 min" data-date="15 novembre 2026"
+  data-title="Perché assicurarsi prima di investire"
+  data-lead="Il tuo patrimonio più prezioso non è sul conto: è la capacità di guadagnare. Ecco quanto resterebbe davvero, con la sola copertura pubblica, se un imprevisto la mettesse fuori gioco.">
+  <p>Pensiamo agli investimenti come al primo passo per costruire il futuro. In realtà il primo passo è un altro: mettere al sicuro ciò che rende possibile risparmiare, cioè il reddito da lavoro. Senza questa base, anche il miglior piano di investimento rischia di fermarsi al primo imprevisto.</p>
+  <h3>Un esempio concreto</h3>
+  <p>Prendiamo Luca: 40 anni, lavoratore dipendente da 10 anni, uno stipendio di 21.000 € lordi l'anno, circa 1.750 € al mese. Che cosa riceverebbe dallo Stato se un infortunio o una malattia gli impedissero di lavorare?</p>
+  <div class="r-stats">
+    <div><b>866 €</b><span>al mese con un'invalidità totale</span></div>
+    <div><b>289 €</b><span>al mese con un'invalidità tra il 66% e il 99%</span></div>
+    <div><b>231 €</b><span>al mese alla famiglia, in caso di decesso</span></div>
+  </div>
+  <blockquote>Da 1.750 € a 866 € al mese: con un'invalidità totale metà del reddito sparisce. Proprio quando le spese per cure e assistenza aumentano.</blockquote>
+  <h3>Come si arriva a queste cifre</h3>
+  <p>Nel sistema contributivo l'INPS calcola la pensione sui contributi versati, il 33% dello stipendio per un dipendente, e li trasforma in una rendita con un coefficiente di conversione.</p>
+  <ul>
+    <li><strong>Invalidità totale (pensione di inabilità).</strong> Ai 10 anni già lavorati lo Stato aggiunge quelli mancanti fino ai 60 anni: (10 + 20) × 21.000 € = 630.000 €, che al 33% diventano 207.900 € di contributi. Con un coefficiente di circa il 5% si ottengono circa 10.400 € l'anno: <strong>866 € al mese</strong>.</li>
+    <li><strong>Invalidità tra il 66% e il 99% (assegno ordinario di invalidità).</strong> Contano solo i contributi già versati: 210.000 € × 33% = 69.300 €, cioè circa 3.465 € l'anno: <strong>289 € al mese</strong>. Si può continuare a lavorare, ma oltre certi redditi l'assegno si riduce.</li>
+    <li><strong>Decesso (pensione ai superstiti).</strong> Al coniuge con un figlio spetta l'80% della pensione maturata: circa 2.770 € l'anno, <strong>231 € al mese</strong>.</li>
+  </ul>
+  <p>Per un lavoratore autonomo l'aliquota contributiva è più bassa e le cifre scendono ancora: con il 26%, la pensione di inabilità dell'esempio si ferma a circa 683 € al mese.</p>
+  <h3>Perché prima di investire</h3>
+  <p>Un investimento ha bisogno di tempo per crescere. Se arriva un imprevisto senza una copertura adeguata, si è costretti a usare i risparmi, spesso nel momento peggiore: magari quando i mercati sono in calo e vendere trasforma un'oscillazione in una perdita. La protezione evita proprio questo: sostiene il tenore di vita della famiglia e lascia lavorare gli investimenti.</p>
+  <p>È la logica della <strong>piramide dei bisogni</strong>: alla base la protezione, sopra l'accumulo e gli investimenti, in cima la trasmissione del patrimonio. Una piramide si costruisce dal basso.</p>
+  <h3>Che cosa si può fare</h3>
+  <ul>
+    <li><strong>Copertura caso morte</strong>: un capitale alla famiglia per il tenore di vita, gli studi dei figli, il mutuo.</li>
+    <li><strong>Invalidità permanente</strong> da infortunio e malattia: un capitale o una rendita che compensano il reddito perso.</li>
+    <li><strong>Non autosufficienza</strong> (Long Term Care): una rendita per l'assistenza quando non si è più autonomi.</li>
+    <li><strong>Salute</strong>: il rimborso delle spese mediche e degli interventi.</li>
+  </ul>
+  <p>Il costo di una copertura è una frazione del capitale che protegge e dipende da età, stato di salute e somme assicurate. Per questo si parte sempre dal proprio fabbisogno: quanto spetterebbe dallo Stato, quanto servirebbe alla famiglia, quanto manca.</p>
+  <div class="r-cta"><p><strong>Quanto vale davvero la tua protezione?</strong> In un primo incontro, senza impegno, calcoliamo insieme quanto ti spetterebbe dallo Stato, quanto servirebbe alla tua famiglia e come colmare la differenza.</p><a class="btn btn-gold" href="#contatti">Prenota il check-up di protezione</a></div>
+  <p class="r-note-inline">Esempio semplificato a scopo illustrativo, elaborato dal consulente: l'importo effettivo calcolato dall'INPS dipende dalla storia contributiva, dalla rivalutazione dei contributi, dai coefficienti di trasformazione e dai requisiti di legge (ad esempio almeno 5 anni di contributi, di cui 3 negli ultimi 5). Messaggio pubblicitario con finalità promozionale: prima della sottoscrizione di un prodotto assicurativo leggere il set informativo. Le coperture sono soggette a condizioni, limitazioni ed esclusioni.</p>
+  <div class="r-sum corners"><h4>In sintesi</h4><ul>
+    <li>Il primo patrimonio da proteggere è la capacità di produrre reddito.</li>
+    <li>Con la sola copertura pubblica, un'invalidità totale può dimezzare il reddito.</li>
+    <li>Senza protezione, un imprevisto costringe a usare i risparmi nel momento sbagliato.</li>
+    <li>Prima si misura il proprio fabbisogno, poi si sceglie la copertura.</li>
+  </ul></div>
+</template>
 </div>
 
 <dialog class="reader" id="reader" aria-labelledby="rTitle">
@@ -1447,7 +1552,7 @@ section>.wrap{position:relative}
         <div class="social" data-social aria-label="Profili social" hidden></div>
       </div>
       <div><h4>Navigazione</h4><ul>
-        <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#metodo">Il metodo</a></li>
+        <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#metodo">Il metodo</a></li><li><a href="#articoli">Articoli</a></li>
         <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#strumenti">Strumenti di analisi</a></li><li><a href="#recensioni">Recensioni</a></li><li><a href="#faq">Domande frequenti</a></li><li><a href="note-legali.html">Note legali e privacy</a></li></ul></div>
       <div><h4>Contatti</h4><ul id="ftrContacts"></ul></div>
     </div>
@@ -1496,6 +1601,18 @@ const CONFIG = {
   testimonials: [],
 
   // Numeri da mostrare sotto i valori. Esempio: { value: "15+", label: "Anni di esperienza" }
+  // Articoli e post della sezione «Articoli», dal più recente.
+  //  - articolo del sito: tipo "articolo" e articolo = nome del testo (template id="art-NOME")
+  //  - post social: tipo "instagram", "linkedin" o "facebook" e url = link del post
+  //  Facoltativi: tema (es. "Protezione"), immagine (es. "img/post.jpg"), cifra e cifraTesto (numero in copertina), icona (shield, pen, star...)
+  //  Esempio: { tipo: "instagram", data: "2026-11-20", tema: "Investimenti", titolo: "...", estratto: "...", url: "https://www.instagram.com/p/..." },
+  posts: [
+    { tipo: "articolo", data: "2026-11-15", tema: "Protezione", articolo: "assicurarsi", icona: "shield",
+      titolo: "Perché assicurarsi prima di investire",
+      estratto: "Un quarantenne con 21.000 € di stipendio: con un'invalidità totale lo Stato gli garantirebbe circa 866 € al mese. Ecco perché la protezione viene prima dell'investimento.",
+      cifra: "866 €", cifraTesto: "al mese: quanto resterebbe a Luca, 40 anni, con un'invalidità totale" }
+  ],
+
   stats: [
     { value: "70",       label: "Clienti premium seguiti" },
     { value: "70 mln €", label: "Patrimonio gestito" },
@@ -1539,6 +1656,7 @@ const ICON = {
   youtube:'<path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.9 4 12 4 12 4s-6.9 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2C5.1 20 12 20 12 20s6.9 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m10 15 5-3-5-3z"/>',
   doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/>',
   google:'<circle cx="12" cy="12" r="9"/><path d="M12 12h6a6 6 0 1 1-1.8-4.3"/>',
+  shield:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/>',
   arrow:'<path d="m9 18 6-6-6-6"/>'
 };
 const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]||ICON.arrow}</svg>`;
@@ -1631,6 +1749,39 @@ const links = [
   cards[0][0] !== 'google' && C.google.profile && {icon:'google', title:'Profilo Google', sub:'Recensioni e informazioni', url:C.google.profile},
   C.google.review && {icon:'pen', title:'Lascia una recensione', sub:'Mi aiuta a farmi conoscere', url:C.google.review}
 ].filter(Boolean);
+/* ---------- articoli e post ---------- */
+{ const TIPI = {articolo: ['Articolo', 'doc', 'Leggi l\'articolo'], instagram: ['Post Instagram', 'instagram', 'Vedi il post su Instagram'],
+    linkedin: ['Post LinkedIn', 'linkedin', 'Vedi il post su LinkedIn'], facebook: ['Post Facebook', 'facebook', 'Vedi il post su Facebook']};
+  const dIt = d => { const x = new Date(d + 'T12:00:00'); return isNaN(x) ? '' : x.toLocaleDateString('it-IT', {day: 'numeric', month: 'long', year: 'numeric'}); };
+  const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const posts = (C.posts || []).filter(p => TIPI[p.tipo]).slice().sort((a, b) => String(b.data).localeCompare(String(a.data)));
+  const NAMES = {linkedin: 'LinkedIn', instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', whatsapp: 'Canale WhatsApp'};
+  const soc = C.links.filter(l => l.url && NAMES[l.icon]).map(l => `<a class="soc" href="${esc(l.url)}" target="_blank" rel="noopener" aria-label="${NAMES[l.icon]}" title="${NAMES[l.icon]}">${svg(l.icon)}</a>`).join('');
+  const card = (p, feat) => {
+    const [tipo, ic, cta] = TIPI[p.tipo], art = p.tipo === 'articolo';
+    const cover = p.immagine ? `<img src="${esc(p.immagine)}" alt="" loading="lazy">`
+      : `<span class="post-ic">${svg(p.icona || (art ? 'pen' : ic))}</span><span class="post-k">${esc(p.tema || tipo)}</span>${p.cifra ? `<span class="post-num">${esc(p.cifra)}<small>${esc(p.cifraTesto || '')}</small></span>` : ''}`;
+    const go = art ? `<button class="read" type="button" data-art="${esc(p.articolo)}">${cta}${arrow}</button>`
+      : `<a class="read" href="${esc(p.url)}" target="_blank" rel="noopener">${cta}${arrow}</a>`;
+    return `<article class="post rv${feat ? ' feat' : ''}" data-tipo="${p.tipo}"><div class="post-cover">${cover}</div><div class="post-b">` +
+      `<p class="post-meta">${tipo}${p.data ? ' · ' + dIt(p.data) : ''}</p><h3>${esc(p.titolo)}</h3>${p.estratto ? `<p>${esc(p.estratto)}</p>` : ''}${go}</div></article>`;
+  };
+  const follow = n => soc ? `<div class="post follow rv${n % 3 === 0 ? ' wide' : ''}" data-tipo="follow"><div><h3>Seguimi sui social</h3><p>Pillole di educazione finanziaria, casi concreti e aggiornamenti sui mercati.</p></div><div class="social">${soc}</div></div>` : '';
+  const show = f => {
+    const list = posts.filter(p => f === 'all' || p.tipo === f);
+    $('postGrid').innerHTML = list.map((p, i) => card(p, i === 0 && p.tipo === 'articolo')).join('') + follow(list.length + (list[0] && list[0].tipo === 'articolo' ? 2 : 0));
+    $('postGrid').querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+  };
+  const types = [...new Set(posts.map(p => p.tipo))];
+  if (types.length > 1) {
+    $('postFilters').hidden = false;
+    $('postFilters').innerHTML = [['all', 'Tutti']].concat(types.map(t => [t, t === 'articolo' ? 'Articoli' : TIPI[t][0].replace('Post ', '')])).map(([v, t], i) => `<button type="button" data-f="${v}" aria-pressed="${i === 0}">${t}</button>`).join('');
+    $('postFilters').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+      $('postFilters').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); show(b.dataset.f); });
+  }
+  if (posts.length || soc) { $('postGrid').innerHTML = posts.map((p, i) => card(p, i === 0 && p.tipo === 'articolo')).join('') + follow(posts.length + (posts[0] && posts[0].tipo === 'articolo' ? 2 : 0)); }
+  else $('articoli').hidden = true;
+}
 /* icone social (Chi sono, menu e piè di pagina): solo i profili con un link */
 { const NAMES = {linkedin: 'LinkedIn', instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', whatsapp: 'Canale WhatsApp'};
   const soc = C.links.filter(l => l.url && NAMES[l.icon]).map(l => [l.icon, NAMES[l.icon], l.url]);
@@ -2064,14 +2215,16 @@ $('share').onclick = async () => {
 
 /* ---------- articles reader ---------- */
 const ART = ['successione','impresa','protezione','investimenti','previdenza','liquidita'];
+const BLOG = (C.posts || []).filter(p => p.tipo === 'articolo' && p.articolo).sort((a, b) => String(b.data).localeCompare(String(a.data))).map(p => p.articolo);
 const dlg = $('reader'); let pushed = false;
 function openArticle(id, push = true) {
   const t = $('art-' + id); if (!t) return;
-  const i = ART.indexOf(id), next = ART[(i + 1) % ART.length], nt = $('art-' + next);
+  const svc = ART.includes(id), list = svc ? ART : BLOG, i = list.indexOf(id), next = list.length > 1 ? list[(i + 1) % list.length] : null;
   $('rCat').textContent = t.dataset.cat; $('rTitle').textContent = t.dataset.title; $('rLead').textContent = t.dataset.lead;
-  $('rMeta').textContent = `Lettura ${t.dataset.time} · Articolo ${i + 1} di ${ART.length}`;
+  $('rMeta').textContent = svc ? `Lettura ${t.dataset.time} · Articolo ${i + 1} di ${ART.length}` : `Lettura ${t.dataset.time}${t.dataset.date ? ' · ' + t.dataset.date : ''}`;
   $('rBody').replaceChildren(t.content.cloneNode(true));
-  $('rNext').dataset.next = next; $('rNextT').textContent = nt.dataset.title;
+  $('rNext').hidden = !next;
+  if (next) { $('rNext').dataset.next = next; $('rNextT').textContent = $('art-' + next).dataset.title; }
   $('rScroll').scrollTop = 0;
   if (!dlg.open) { dlg.showModal(); document.documentElement.style.overflow = 'hidden'; }
   if (push) { history.pushState({art:id}, '', '#articolo-' + id); pushed = true; }
