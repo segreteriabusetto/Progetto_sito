@@ -105,8 +105,6 @@ section{position:relative}
 .hero .eyebrow::before{display:none}
 .hero-ctas{display:flex;flex-direction:column;gap:12px}
 .portrait{position:relative;justify-self:center;width:min(66%,270px);order:-1}
-.portrait::before{content:"";position:absolute;left:50%;top:6%;width:96%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;
-  border:1px solid rgba(196,160,98,.55);background:radial-gradient(circle,rgba(196,160,98,.16),transparent 65%)}
 .portrait img{position:relative;width:100%;-webkit-mask-image:linear-gradient(#000 74%,transparent),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(#000 74%,transparent),linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-composite:source-in;mask-composite:intersect}
 @media (min-width:960px){
   .hero{padding-top:120px}
@@ -203,7 +201,7 @@ section{position:relative}
 .fact-grid{display:grid;gap:20px}
 @media (min-width:720px){.fact-grid{grid-template-columns:1fr 1fr}}
 @media (min-width:1080px){.fact-grid{grid-template-columns:repeat(4,1fr)}}
-.fact{background:var(--paper);border-top:2px solid var(--gold);padding:28px 24px;box-shadow:var(--shadow)}
+.fact{background:var(--paper);border:1px solid var(--line);padding:28px 24px;box-shadow:var(--shadow)}
 .fact b{display:block;font:600 40px/1.05 var(--serif);color:var(--navy);margin-bottom:12px}
 .fact p{margin:0;color:var(--muted);font-size:15px}
 
@@ -342,6 +340,69 @@ section{position:relative}
 .toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);opacity:0;background:var(--navy-950);color:#fff;padding:11px 18px;border-radius:999px;font-size:14px;transition:.25s;pointer-events:none;z-index:70}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
+/* ---------- decorative lines & ornaments ---------- */
+section>.wrap{position:relative}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;opacity:.07;mix-blend-mode:overlay}
+.ftr{position:relative}
+/* architectural grid */
+.gridlines{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:calc(min(100%,var(--wrap)) - 2*var(--pad) + 80px);pointer-events:none;display:none;--gl-c:rgba(0,36,86,.08)}
+.gridlines.h{--gl-c:rgba(255,255,255,.1)}
+@media (min-width:1200px){.gridlines{display:block}}
+.gridlines i{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(transparent,var(--gl-c) 15%,var(--gl-c) 85%,transparent);transform-origin:top}
+.gridlines i:nth-child(1){left:0}.gridlines i:nth-child(2){left:50%}.gridlines i:nth-child(3){left:100%}
+.gridlines.h i:nth-child(2){left:calc(40px + (100% - 80px)*.575)}
+.gridlines.h::before{content:"";position:absolute;left:-30vw;right:-30vw;top:104px;height:1px;background:linear-gradient(90deg,transparent,var(--gl-c) 25%,var(--gl-c) 75%,transparent)}
+.cross{position:absolute;top:104px;width:13px;height:13px;margin:-6px 0 0 -6px}
+.cross::before,.cross::after{content:"";position:absolute;background:var(--gold)}
+.cross::before{left:6px;top:0;width:1px;height:13px}
+.cross::after{left:0;top:6px;width:13px;height:1px}
+.cue{position:absolute;left:0;bottom:28px;width:1px;height:120px}
+.cue::after{content:"";position:absolute;left:-2px;top:0;width:5px;height:5px;border-radius:50%;background:var(--gold-2);box-shadow:0 0 12px var(--gold);animation:cue 2.8s cubic-bezier(.6,0,.4,1) infinite}
+.cue em{position:absolute;right:12px;top:0;writing-mode:vertical-rl;font:600 10px/1 var(--sans);font-style:normal;letter-spacing:.32em;text-transform:uppercase;color:var(--on-dark-muted)}
+@keyframes cue{0%{transform:translateY(0);opacity:0}15%,80%{opacity:1}100%{transform:translateY(112px);opacity:0}}
+@keyframes growY{from{transform:scaleY(0)}}
+@keyframes growX{from{transform:scaleX(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.anim .gridlines.h i{animation:growY 1.8s cubic-bezier(.6,0,.2,1) both;animation-delay:calc(var(--b) - .2s)}
+.anim .gridlines.h::before{animation:growX 1.8s cubic-bezier(.6,0,.2,1) both;animation-delay:calc(var(--b) - .2s)}
+.anim .cross,.anim .cue{animation:fade 1s ease both;animation-delay:calc(var(--b) + .9s)}
+/* portrait bezel */
+.bezel{position:absolute;left:50%;top:3%;width:102%;aspect-ratio:1;transform:translateX(-50%);overflow:visible;pointer-events:none}
+.bezel .b1{fill:url(#bzGlow);stroke:rgba(196,160,98,.6);stroke-width:1}
+.bezel .b2{fill:none;stroke:rgba(255,255,255,.22);stroke-width:1;stroke-dasharray:1 7}
+.bezel .ticks path{stroke:rgba(196,160,98,.45);stroke-width:1}
+.bezel .xh{stroke:url(#bzLine);stroke-width:1}
+.bezel .ticks,.bezel .orbit{transform-box:view-box;transform-origin:50% 50%}
+.bezel .ticks{animation:spin 200s linear infinite}
+.bezel .orbit{animation:spin 48s linear infinite reverse}
+.bezel .orbit circle{fill:var(--gold-2)}
+.anim .bezel{animation:ringIn 1.8s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--b)}
+/* ornaments */
+.orn{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);margin:26px auto 0}
+.orn::before,.orn::after{content:"";height:1px;width:84px;background:linear-gradient(90deg,transparent,currentColor);transform-origin:right}
+.orn::after{background:linear-gradient(90deg,currentColor,transparent);transform-origin:left}
+.orn i{width:7px;height:7px;border:1px solid currentColor;transform:rotate(45deg)}
+.rv .orn::before,.rv .orn::after,.orn.rv::before,.orn.rv::after{transform:scaleX(0);transition:transform 1.3s cubic-bezier(.2,.7,.2,1) .3s}
+.rv.in .orn::before,.rv.in .orn::after,.orn.rv.in::before,.orn.rv.in::after{transform:scaleX(1)}
+.rv:not(.center)>h2::after{content:"";display:block;width:72px;height:1px;margin-top:22px;background:linear-gradient(90deg,var(--gold),transparent);transform-origin:left;transform:scaleX(0);transition:transform 1.3s cubic-bezier(.2,.7,.2,1) .35s}
+.rv.in:not(.center)>h2::after{transform:scaleX(1)}
+/* corner frames */
+.corners{position:relative}
+.corners::before,.corners::after{content:"";position:absolute;width:16px;height:16px;border:0 solid var(--gold);opacity:.8;pointer-events:none;transition:width .45s cubic-bezier(.2,.7,.2,1),height .45s cubic-bezier(.2,.7,.2,1)}
+.corners::before{top:10px;left:10px;border-top-width:1px;border-left-width:1px}
+.corners::after{bottom:10px;right:10px;border-bottom-width:1px;border-right-width:1px}
+.corners:hover::before,.corners:hover::after{width:38px;height:38px}
+/* outline watermarks */
+.has-wm{overflow:hidden}
+.wm{position:absolute;right:-1%;top:28px;font:600 clamp(200px,30vw,440px)/.8 var(--serif);color:transparent;-webkit-text-stroke:1px rgba(196,160,98,.24);pointer-events:none;user-select:none;letter-spacing:-.02em}
+.wm-q{right:auto;left:50%;top:-56px;transform:translateX(-50%);font-size:clamp(240px,30vw,400px);-webkit-text-stroke-color:rgba(196,160,98,.2)}
+.step{z-index:0}
+.step::after{content:attr(data-n);position:absolute;z-index:-1;right:0;top:-14px;font:600 92px/1 var(--serif);color:transparent;-webkit-text-stroke:1px rgba(220,194,140,.34);pointer-events:none}
+@media (min-width:960px){.method .step{padding-top:132px}.step::after{top:38px;left:-4px;right:auto;font-size:96px}.trust li+li{border-left:1px solid rgba(196,160,98,.22);padding-left:24px}}
+/* reading progress */
+.progress{position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform-origin:left;transform:scaleX(0)}
+@media (prefers-reduced-motion:reduce){.bezel g,.cue::after{animation:none!important}.cue::after{display:none}}
+
 /* ---------- intro animation ---------- */
 .splash{display:none}
 .anim{--b:1.95s}
@@ -370,7 +431,6 @@ section{position:relative}
 .hero h1 .ln{display:block}
 .anim .hero [data-in]{animation:rise 1s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--b) + var(--d,0s))}
 .anim .portrait img{animation:portraitIn 1.4s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--b) + .15s)}
-.anim .portrait::before{animation:ringIn 1.8s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--b)}
 .anim .hero .gl{animation:glIn 2.6s ease both;animation-delay:calc(var(--b) - .3s)}
 .anim .hdr .wrap{animation:fade .9s ease both;animation-delay:calc(var(--b) + .35s)}
 .anim .trust li{animation:rise .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--b) + .75s)}
@@ -399,7 +459,7 @@ section{position:relative}
   =====================================================================
 -->
 
-<div class="splash" id="splash" aria-hidden="true">
+<div class="splash grain" id="splash" aria-hidden="true">
   <svg class="splash-mark" viewBox="0 0 120 120"><circle class="ring" cx="60" cy="60" r="56"/><text x="60" y="74" text-anchor="middle">MB</text></svg>
   <div class="splash-name">Marco Busetto</div>
   <div class="splash-sub">Consulenza patrimoniale</div>
@@ -424,6 +484,7 @@ section{position:relative}
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
     </button>
   </div>
+  <span class="progress" id="progress"></span>
 </header>
 
 <div class="mnav" id="mnav" aria-hidden="true">
@@ -444,7 +505,8 @@ section{position:relative}
 
 <main id="top">
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero grain">
+    <div class="gridlines h" aria-hidden="true"><i></i><i></i><i></i><b class="cross" style="left:0"></b><b class="cross" style="left:100%"></b><span class="cue"><em>Scorri</em></span></div>
     <svg class="gl" data-gl="hero" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
     <div class="wrap hero-grid">
       <div class="hero-text">
@@ -459,7 +521,7 @@ section{position:relative}
           <a class="btn btn-ghost" href="#calcolatori">Calcola l'imposta di successione</a>
         </div>
       </div>
-      <div class="portrait"><img id="heroPhoto" alt="Marco Busetto, consulente finanziario" width="760" height="1070"></div>
+      <div class="portrait"><svg class="bezel" id="bezel" viewBox="0 0 400 400" aria-hidden="true"></svg><img id="heroPhoto" alt="Marco Busetto, consulente finanziario" width="760" height="1070"></div>
     </div>
   </section>
 
@@ -473,9 +535,12 @@ section{position:relative}
   </div>
 
   <!-- INTRO -->
-  <section class="intro sec">
+  <section class="intro sec has-wm">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
+    <span class="wm wm-q" aria-hidden="true">“</span>
     <div class="wrap">
       <p class="quote rv">«Il patrimonio non è solo ciò che possiedi: è ciò che <em>scegli di lasciare</em> alle persone che ami.»</p>
+      <div class="orn rv" aria-hidden="true"><i></i></div>
       <div class="pillars rv">
         <div class="pillar"><span class="n">I</span><h3>Ascolto</h3><p>Ogni piano parte dalla tua storia, dalla tua famiglia e da ciò che conta davvero per te.</p></div>
         <div class="pillar"><span class="n">II</span><h3>Visione</h3><p>Guardiamo oltre il presente: protezione, crescita e trasmissione del patrimonio in un unico disegno.</p></div>
@@ -508,7 +573,9 @@ section{position:relative}
   </section>
 
   <!-- SERVICES -->
-  <section class="sec" id="servizi" style="background:var(--ivory)">
+  <section class="sec has-wm" id="servizi" style="background:var(--ivory)">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
+    <span class="wm" aria-hidden="true">MB</span>
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Servizi</p>
@@ -516,7 +583,7 @@ section{position:relative}
         <p class="lead">Dalla protezione alla crescita, fino alla trasmissione: ogni area è collegata alle altre, perché ogni scelta ha effetti sul tutto.</p>
       </div>
       <div class="svc-grid">
-        <article class="svc feat rv">
+        <article class="svc feat corners rv">
           <span class="tag">Specializzazione</span>
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></div>
           <h3>Pianificazione successoria</h3>
@@ -528,7 +595,7 @@ section{position:relative}
             <li>Coordinamento con notaio, commercialista e avvocato</li>
           </ul></details>
         </article>
-        <article class="svc rv">
+        <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="14" rx="1"/><path d="M8 7V4h8v3M3 13h18"/></svg></div>
           <h3>Passaggio generazionale d'impresa</h3>
           <p>Accompagnare l'azienda di famiglia verso la generazione successiva, preservandone valore e continuità.</p>
@@ -539,7 +606,7 @@ section{position:relative}
             <li>Pianificazione dei tempi e delle fasi del passaggio</li>
           </ul></details>
         </article>
-        <article class="svc rv">
+        <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/></svg></div>
           <h3>Protezione del patrimonio</h3>
           <p>Tutelare la famiglia e il tenore di vita da imprevisti, rischi e responsabilità.</p>
@@ -550,7 +617,7 @@ section{position:relative}
             <li>Revisione periodica delle coperture</li>
           </ul></details>
         </article>
-        <article class="svc rv">
+        <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg></div>
           <h3>Investimenti</h3>
           <p>Strategie costruite su obiettivi, orizzonte temporale e profilo di rischio, non sulle mode del momento.</p>
@@ -561,7 +628,7 @@ section{position:relative}
             <li>Monitoraggio e ribilanciamento</li>
           </ul></details>
         </article>
-        <article class="svc rv">
+        <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
           <h3>Previdenza</h3>
           <p>Costruire oggi il reddito di domani, sfruttando i vantaggi fiscali previsti dalla legge.</p>
@@ -571,7 +638,7 @@ section{position:relative}
             <li>Pianificazione del reddito in pensione</li>
           </ul></details>
         </article>
-        <article class="svc rv">
+        <article class="svc corners rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="12" rx="1"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v6M18 9v6"/></svg></div>
           <h3>Gestione della liquidità</h3>
           <p>Dare un obiettivo alla liquidità ferma sul conto, che l'inflazione erode anno dopo anno.</p>
@@ -586,7 +653,7 @@ section{position:relative}
   </section>
 
   <!-- METHOD -->
-  <section class="sec dark method" id="metodo">
+  <section class="sec dark method grain" id="metodo">
     <svg class="gl" data-gl="method" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
     <div class="wrap" style="position:relative">
       <div class="sec-head rv">
@@ -595,26 +662,28 @@ section{position:relative}
         <p class="lead">Un percorso strutturato che trasforma domande complesse in decisioni semplici.</p>
       </div>
       <ol class="steps">
-        <li class="step rv"><span class="num">1</span><h3>Ascolto</h3><p>Un primo incontro, senza impegno, per conoscere te, la tua famiglia e i tuoi obiettivi.</p></li>
-        <li class="step rv"><span class="num">2</span><h3>Analisi</h3><p>Mappiamo il patrimonio e simuliamo cosa accadrebbe oggi in caso di successione.</p></li>
-        <li class="step rv"><span class="num">3</span><h3>Piano</h3><p>Ti presento soluzioni concrete, con costi e benefici spiegati senza tecnicismi.</p></li>
-        <li class="step rv"><span class="num">4</span><h3>Accompagnamento</h3><p>Il piano evolve con la tua vita: incontri periodici e revisione costante.</p></li>
+        <li class="step rv" data-n="01"><span class="num">1</span><h3>Ascolto</h3><p>Un primo incontro, senza impegno, per conoscere te, la tua famiglia e i tuoi obiettivi.</p></li>
+        <li class="step rv" data-n="02"><span class="num">2</span><h3>Analisi</h3><p>Mappiamo il patrimonio e simuliamo cosa accadrebbe oggi in caso di successione.</p></li>
+        <li class="step rv" data-n="03"><span class="num">3</span><h3>Piano</h3><p>Ti presento soluzioni concrete, con costi e benefici spiegati senza tecnicismi.</p></li>
+        <li class="step rv" data-n="04"><span class="num">4</span><h3>Accompagnamento</h3><p>Il piano evolve con la tua vita: incontri periodici e revisione costante.</p></li>
       </ol>
     </div>
   </section>
 
   <!-- FACTS -->
   <section class="sec facts">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div class="sec-head center rv">
         <p class="eyebrow">Lo sapevi?</p>
         <h2>Quattro cose da sapere <em>sulla successione</em></h2>
+        <div class="orn" aria-hidden="true"><i></i></div>
       </div>
       <div class="fact-grid">
-        <div class="fact rv"><b>1 milione €</b><p>È la franchigia per coniuge e figli: l'imposta del 4% si applica solo sulla parte che supera questa soglia, per ciascun erede.</p></div>
-        <div class="fact rv"><b>Esenti</b><p>I titoli di Stato e i capitali delle polizze vita pagati ai beneficiari non sono soggetti all'imposta di successione.</p></div>
-        <div class="fact rv"><b>Senza testamento</b><p>Il patrimonio viene diviso secondo le quote del Codice civile, che potrebbero non rispecchiare le tue volontà.</p></div>
-        <div class="fact rv"><b>5.164,57 €</b><p>È l'importo annuo che puoi dedurre dal reddito versando nella previdenza complementare.</p></div>
+        <div class="fact corners rv"><b>1 milione €</b><p>È la franchigia per coniuge e figli: l'imposta del 4% si applica solo sulla parte che supera questa soglia, per ciascun erede.</p></div>
+        <div class="fact corners rv"><b>Esenti</b><p>I titoli di Stato e i capitali delle polizze vita pagati ai beneficiari non sono soggetti all'imposta di successione.</p></div>
+        <div class="fact corners rv"><b>Senza testamento</b><p>Il patrimonio viene diviso secondo le quote del Codice civile, che potrebbero non rispecchiare le tue volontà.</p></div>
+        <div class="fact corners rv"><b>5.164,57 €</b><p>È l'importo annuo che puoi dedurre dal reddito versando nella previdenza complementare.</p></div>
       </div>
     </div>
   </section>
@@ -656,7 +725,7 @@ section{position:relative}
           <label class="chk"><input type="checkbox" id="s_prima"> L'erede usufruisce delle agevolazioni prima casa</label>
           <label class="chk"><input type="checkbox" id="s_dis"> Erede con disabilità grave (L. 104/1992)</label>
         </form>
-        <div class="calc-out">
+        <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="out-label">Totale imposte stimate</div>
           <div class="big" id="s_tot">–</div>
@@ -677,7 +746,7 @@ section{position:relative}
           <label class="chk"><input type="checkbox" id="l_con" checked> Coniuge o unito civilmente in vita</label>
           <label class="chk" id="l_asc_w"><input type="checkbox" id="l_asc"> Genitori o altri ascendenti in vita</label>
         </form>
-        <div class="calc-out">
+        <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="out-label">Quota disponibile</div>
           <div class="big" id="l_disp">–</div>
@@ -705,7 +774,7 @@ section{position:relative}
           <div class="field"><label for="p_i">Inflazione media annua</label><div class="inp pct"><input id="p_i" type="number" min="0" max="15" step="0.1" value="2" inputmode="decimal"></div>
             <small>Serve a stimare il valore reale, cioè il potere d'acquisto finale.</small></div>
         </form>
-        <div class="calc-out">
+        <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="out-label">Capitale finale stimato</div>
           <div class="big" id="p_fin">–</div>
@@ -730,7 +799,7 @@ section{position:relative}
             <div class="field"><label for="i_y">Anni</label><div class="inp"><input id="i_y" type="number" min="1" max="50" step="1" value="10" inputmode="numeric"></div></div>
           </div>
         </form>
-        <div class="calc-out">
+        <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="out-label">Potere d'acquisto perso</div>
           <div class="big" id="i_loss">–</div>
@@ -746,12 +815,14 @@ section{position:relative}
 
   <!-- REVIEWS -->
   <section class="sec reviews" id="recensioni">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div class="sec-head center rv">
         <p class="eyebrow">Recensioni</p>
         <h2>La fiducia <em>dei miei clienti</em></h2>
+        <div class="orn" aria-hidden="true"><i></i></div>
       </div>
-      <div class="g-card rv">
+      <div class="g-card corners rv">
         <div class="g-score" id="gScore">
           <svg width="56" height="56" viewBox="0 0 48 48" aria-label="Google"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.4l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.6-3.9-12.3-9.1H4.4v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.7 28.1a13.2 13.2 0 0 1 0-8.2v-5.7H4.4a22 22 0 0 0 0 19.6z"/><path fill="#EA4335" d="M24 10.8c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.4 14.2l7.3 5.7c1.7-5.2 6.6-9.1 12.3-9.1z"/></svg>
         </div>
@@ -788,7 +859,7 @@ section{position:relative}
   </section>
 
   <!-- CONTACT -->
-  <section class="sec dark contact" id="contatti">
+  <section class="sec dark contact grain" id="contatti">
     <svg class="gl" data-gl="contact" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
     <div class="wrap contact-grid" style="position:relative">
       <div class="rv">
@@ -798,7 +869,7 @@ section{position:relative}
         <div class="cards" id="cards"></div>
       </div>
       <div class="rv">
-        <form class="form" id="form" hidden>
+        <form class="form corners" id="form" hidden>
           <h3>Richiedi un appuntamento</h3>
           <p>Lasciami i tuoi riferimenti: ti ricontatto personalmente.</p>
           <div class="field"><label for="f_nome">Nome e cognome</label><div class="inp"><input id="f_nome" required autocomplete="name"></div></div>
@@ -813,8 +884,9 @@ section{position:relative}
   </section>
 </main>
 
-<footer class="ftr">
-  <div class="wrap">
+<footer class="ftr grain">
+  <div class="wrap" style="position:relative">
+    <div class="orn" aria-hidden="true" style="margin:0 0 44px"><i></i></div>
     <div class="ftr-grid">
       <div>
         <span class="brand"><span class="mono">MB</span><span><b>Marco Busetto</b><small>Consulenza patrimoniale</small></span></span>
@@ -911,6 +983,16 @@ const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* ---------- photo ---------- */
 $('heroPhoto').src = PHOTO; $('aboutPhoto').src = PHOTO;
 
+/* ---------- portrait bezel ---------- */
+{ let t = '';
+  for (let i = 0; i < 120; i++) { const a = i/120*2*Math.PI, r1 = i % 10 ? 184 : 176, r2 = 190;
+    t += `M${(200+r1*Math.cos(a)).toFixed(1)} ${(200+r1*Math.sin(a)).toFixed(1)}L${(200+r2*Math.cos(a)).toFixed(1)} ${(200+r2*Math.sin(a)).toFixed(1)}`; }
+  $('bezel').innerHTML = `<defs><radialGradient id="bzGlow"><stop offset="0" stop-color="#c4a062" stop-opacity=".18"/><stop offset=".7" stop-color="#c4a062" stop-opacity="0"/></radialGradient>
+    <linearGradient id="bzLine" gradientUnits="userSpaceOnUse" x1="-180" x2="580"><stop offset="0" stop-color="#c4a062" stop-opacity="0"/><stop offset=".5" stop-color="#c4a062" stop-opacity=".55"/><stop offset="1" stop-color="#c4a062" stop-opacity="0"/></linearGradient></defs>
+    <path class="xh" d="M-180 200H580"/><circle class="b1" cx="200" cy="200" r="197"/><g class="ticks"><path d="${t}"/></g><circle class="b2" cx="200" cy="200" r="166"/>
+    <g class="orbit"><circle cx="200" cy="3" r="3.2"/><circle cx="200" cy="397" r="2.2"/></g>`;
+}
+
 /* ---------- engraving-style background lines ---------- */
 const GL = { hero:[900,380,26,170,9,12], about:[300,250,18,90,10,10], method:[1050,120,22,160,11,9], contact:[150,650,22,150,11,11], calc:[520,80,16,90,12,10] };
 document.querySelectorAll('[data-gl]').forEach(el => {
@@ -936,8 +1018,10 @@ if (intro) {
 }
 
 /* ---------- header & menu ---------- */
-const hdr = $('hdr'), mbar = $('mbar');
-const onScroll = () => { const y = scrollY; hdr.classList.toggle('solid', y > 40); mbar.classList.toggle('on', y > 520); };
+const hdr = $('hdr'), mbar = $('mbar'), prog = $('progress');
+const onScroll = () => { const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+  hdr.classList.toggle('solid', y > 40); mbar.classList.toggle('on', y > 520);
+  prog.style.transform = `scaleX(${max > 0 ? Math.min(1, y/max) : 0})`; };
 addEventListener('scroll', onScroll, {passive:true}); onScroll();
 const mnav = $('mnav');
 const setMenu = open => { mnav.classList.toggle('open', open); mnav.setAttribute('aria-hidden', !open); $('menuOpen').setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; };
@@ -991,7 +1075,7 @@ if (C.google.rating) {
   $('gTitle').textContent = C.google.count ? `${C.google.count} recensioni su Google` : 'Valutazione su Google';
   $('trustRating').innerHTML = `<a href="${esc(C.google.profile)}" target="_blank" rel="noopener" style="display:flex;gap:12px;align-items:center">${svg('star')}<span><b>${esc(C.google.rating)} su Google</b>${C.google.count ? esc(C.google.count) + ' recensioni' : 'Leggi le recensioni'}</span></a>`;
 }
-$('tGrid').innerHTML = C.testimonials.map(t => `<blockquote class="t rv"><span class="q">“</span><p>${esc(t.text)}</p><footer><span class="stars" style="font-size:14px">★★★★★</span><br><b>${esc(t.author)}</b>${t.when ? ' · ' + esc(t.when) : ''} · Google</footer></blockquote>`).join('');
+$('tGrid').innerHTML = C.testimonials.map(t => `<blockquote class="t corners rv"><span class="q">“</span><p>${esc(t.text)}</p><footer><span class="stars" style="font-size:14px">★★★★★</span><br><b>${esc(t.author)}</b>${t.when ? ' · ' + esc(t.when) : ''} · Google</footer></blockquote>`).join('');
 if (C.stats.length) { $('stats').hidden = false; $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join(''); }
 $('legal').textContent = C.legal; $('year').textContent = new Date().getFullYear();
 
