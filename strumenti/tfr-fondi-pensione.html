@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Confronta fondi pensione aperti, negoziali e PIP con il TFR lasciato in azienda: capitale stimato, costi, imposte e rendita.">
+<meta name="theme-color" content="#001a3d">
+<title>TFR e fondi pensione a confronto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Testata a fascia (colore del consulente) con la scelta della versione; colonna dei dati a sinistra, fissa sugli schermi larghi,
+   e relazione per il cliente a destra; colonna unica su telefono e in stampa. Nelle tabelle il fondo A è a sinistra e il fondo B
+   a destra: in verde il migliore su quella voce, in rosso il peggiore. Versione semplificata per il cliente, completa per l'analisi. */
+:root{
+  --bg:#eef2f1; --surface:#ffffff; --ink:#17211f; --ink-2:#4d5b59; --line:#d8e0de;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#e3eeed;
+  --band:#003781; --band-ink:#ffffff; --brass:#b08d47;
+  --good:#1d7a46; --bad:#b3372f; --good-bg:#edf6f0; --bad-bg:#fcf0ee; --warn-bg:#fbf2d9; --warn-ink:#6b4d00;
+  --s1:#2a78d6; --s2:#eb6834;
+  --k1:#2a78d6; --k2:#003781; --k3:#c98a16; --k4:#7a5cc2; --k5:#9aa5a4;
+  --r:14px;
+  --display:"Source Serif 4", Georgia, serif; --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+    --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+    --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+    --good:#5fcf8f; --bad:#f08a80; --good-bg:#16291f; --bad-bg:#311c1a; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+    --s1:#3987e5; --s2:#d95926;
+    --k1:#5a9be8; --k2:#5fb9c1; --k3:#e0a93a; --k4:#a58ae0; --k5:#7d8a89;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+  --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+  --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+  --good:#5fcf8f; --bad:#f08a80; --good-bg:#16291f; --bad-bg:#311c1a; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+  --s1:#3987e5; --s2:#d95926;
+  --k1:#5a9be8; --k2:#5fb9c1; --k3:#e0a93a; --k4:#a58ae0; --k5:#7d8a89;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+a{color:var(--accent)}
+a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* testata */
+.site{background:var(--band);color:var(--band-ink)}
+.site :focus-visible{outline-color:var(--band-ink)}
+.hin{max-width:1160px;margin:0 auto;padding:30px 20px 0}
+.htop{display:flex;justify-content:space-between;align-items:flex-end;gap:18px 40px;flex-wrap:wrap;padding-bottom:22px}
+.site h1{font-family:var(--display);font-weight:600;font-size:clamp(27px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;margin:0;max-width:20ch;text-wrap:balance}
+.site .tag{margin:10px 0 0;font-size:15.5px;line-height:1.45;opacity:.85;max-width:52ch}
+.by{max-width:400px;font-size:13px;line-height:1.45}
+.by p{margin:0}
+.by .who{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25}
+.by .ql{opacity:.82;margin-top:2px}
+.cts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px!important}
+.cts a{color:inherit;text-decoration:none;border:1px solid currentColor;border-radius:999px;padding:5px 13px;font-size:13px;white-space:nowrap}
+.site .cts a{border-color:rgba(255,255,255,.4)}
+.site .cts a:hover{background:rgba(255,255,255,.12)}
+.hbar{display:flex;align-items:center;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;padding:14px 0 18px;border-top:1px solid rgba(255,255,255,.16)}
+.vs{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;font-size:13.5px;min-width:0}
+.vs .fx{display:inline-flex;align-items:center;gap:7px;font-weight:600;min-width:0}
+.vs .fx i{flex:none;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.vs .vv{opacity:.7;font-family:var(--display);font-style:italic}
+.modo{margin-left:auto;display:flex;align-items:center;border:1px solid rgba(255,255,255,.38);border-radius:999px;padding:3px}
+.modo span{padding:0 8px 0 11px;font-size:13px;opacity:.82}
+.modo button{font:500 13.5px var(--body);border:0;background:transparent;color:var(--band-ink);padding:6px 15px;border-radius:999px;cursor:pointer}
+.modo button[aria-pressed="true"]{background:var(--band-ink);color:var(--band);font-weight:600}
+
+/* pagina */
+.wrap{max-width:1160px;margin:0 auto;padding:24px 20px 60px}
+.page{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:22px;align-items:start}
+@media (min-width:881px){
+  .page>.col:first-child{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;border-radius:var(--r);scrollbar-width:thin}
+}
+@media (max-width:880px){.page{grid-template-columns:minmax(0,1fr)}}
+.col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:0}
+h2{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.25;margin:0 0 12px;text-wrap:balance}
+
+/* modulo dei dati */
+.ed h2{margin-bottom:4px}
+.cap{font-size:14.5px;font-weight:600;color:var(--ink);margin:0 0 10px}
+.grp,.grp0{margin-top:16px}
+.grp.key{background:var(--accent-soft);border-radius:12px;padding:14px 14px 6px}
+.grp.key .cap{color:var(--accent)}
+.f{display:grid;gap:5px;margin-bottom:12px;min-width:0}
+.f label{font-size:14px;line-height:1.35}
+.f label small,.gl small,.tl small{display:block;color:var(--ink-2);font-size:12px;line-height:1.35;margin-top:1px;font-weight:400}
+.inp{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;background:var(--surface);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.inp input{width:100%;min-width:0;border:0;background:transparent;color:var(--ink);font:500 15px var(--body);padding:9px 10px;text-align:right;font-variant-numeric:tabular-nums}
+.inp input:focus-visible{outline:none}
+.inp span{padding-right:10px;color:var(--ink-2);font-size:13px;white-space:nowrap}
+input.txt,select.sel,textarea.txt,.fg input,.fg select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;padding:8px 10px}
+select.sel{font-size:14.5px;padding:9px 10px;cursor:pointer}
+.grp.key select.sel{font-weight:600}
+textarea.txt{resize:vertical;line-height:1.4;font-size:13.5px}
+.fg input.n{text-align:right;font-variant-numeric:tabular-nums}
+input.txt:focus-visible,select.sel:focus-visible,textarea.txt:focus-visible,.fg input:focus-visible,.fg select:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.fine{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin:10px 0 0;max-width:80ch}
+.fine b{color:var(--ink);font-weight:600}
+details.fgd{border-top:1px solid var(--line);margin-top:10px}
+details.fgd>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0 10px;font-size:14.5px;font-weight:600}
+details.fgd>summary::-webkit-details-marker{display:none}
+details.fgd>summary::after{content:"";flex:none;width:8px;height:8px;border-right:1.6px solid var(--ink-2);border-bottom:1.6px solid var(--ink-2);transform:rotate(45deg);margin:-4px 4px 0 0;transition:transform .15s}
+details.fgd[open]>summary::after{transform:rotate(-135deg);margin-top:4px}
+.fg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px 8px;align-items:center;padding-bottom:12px}
+.fg .gh{font-size:11.5px;font-weight:600;color:var(--ink-2);letter-spacing:.02em}
+.fg .gh:first-child{display:none}
+.fg .gl,.fg .tl,.fg .tx2,.fg .ck.wide{grid-column:1/-1}
+.fg .gl,.fg .tl{font-size:13.5px;line-height:1.35;margin:8px 0 0}
+.tx2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.ck{display:flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer}
+.ck input{flex:none;width:17px;height:17px;margin:0;accent-color:var(--accent)}
+.ck.wide{align-items:flex-start;line-height:1.4;margin:10px 0 2px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn2{font:500 13px var(--body);background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:7px 14px;cursor:pointer}
+.btn2:hover{background:var(--accent-soft)}
+sup{line-height:0}
+.nw{white-space:nowrap}
+.nm{font:600 10.5px/1 var(--body);color:var(--accent);background:none;border:0;padding:2px 3px;margin-left:1px;cursor:pointer;border-radius:3px}
+.nm:hover{background:var(--accent-soft)}
+
+/* intestazione della relazione */
+.rep-head{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;align-items:flex-start}
+.rep-head h2{font-size:27px}
+.rep-head>div:first-child{flex:1 1 420px;min-width:0}
+.rep-head .act{flex:none}
+.rep-head .sub{margin:6px 0 10px;color:var(--ink-2);font-size:15.5px;max-width:60ch}
+.meta{display:flex;gap:4px 20px;flex-wrap:wrap;margin:0;font-size:14px;color:var(--ink-2)}
+.meta b,.cred b{color:var(--ink);font-weight:600}
+.cred{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-2);max-width:72ch}
+.promo{margin:6px 0 0;font-size:12px;font-style:italic;color:var(--ink-2);max-width:78ch}
+.act{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14.5px var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:11px 20px;cursor:pointer}
+.btn svg{width:16px;height:16px;flex:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:progress}
+.status{margin:0;font-size:12.5px;color:var(--ink-2);max-width:28ch;text-align:right}
+
+/* sintesi: chi vince e punteggi */
+.win{display:flex;gap:16px;align-items:center;background:var(--band);color:var(--band-ink);border-radius:16px;padding:20px 22px;margin:0 0 14px}
+.win p{margin:0}
+.wb{flex:none;width:52px;height:52px;border-radius:50%;background:var(--band-ink);color:var(--band);box-shadow:0 0 0 3px var(--brass);font:600 20px var(--display);display:grid;place-items:center}
+.wk{font-size:14px;font-weight:500;opacity:.85}
+.wt{font-family:var(--display);font-size:clamp(23px,2.8vw,30px);line-height:1.15;font-weight:600;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:anywhere;margin-top:2px!important}
+.ws{font-size:15.5px;line-height:1.5;margin-top:8px!important;opacity:.95;max-width:72ch}
+.ws b{font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile .l{font-size:13px;color:var(--ink-2);line-height:1.35}
+.tile .v{font-size:19px;font-weight:600;margin-top:4px;line-height:1.25}
+.tile.hi{background:var(--accent-soft);border-color:transparent}
+.tile.hi .v{font-family:var(--display);font-size:26px;letter-spacing:-.01em;line-height:1.15}
+.tile .s{font-size:12.5px;color:var(--ink-2);line-height:1.4;margin-top:4px;font-variant-numeric:tabular-nums}
+.tile .v.pos{color:var(--good)}
+.xt{margin-top:14px}
+.xt .cap{font-size:13px;color:var(--ink-2);margin-bottom:8px}
+.lead{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 16px;font-size:15.5px;line-height:1.55;margin:0 0 14px}
+.lead b{font-weight:600}
+.lead b.nw,.ws b.nw{white-space:nowrap}
+.lgd{display:flex;flex-wrap:wrap;gap:4px 18px;margin:12px 0 0;font-size:13px;color:var(--ink-2)}
+.lgd span{display:inline-flex;align-items:center;gap:7px}
+.lgd i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.lgd i.g{background:var(--good)}.lgd i.r{background:var(--bad)}.lgd i.n{background:var(--line)}
+.ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;line-height:1.5}
+.ul li{position:relative;padding-left:18px}
+.ul li::before{content:"";position:absolute;left:1px;top:.58em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.cav{margin-top:16px}
+.intro{margin:-4px 0 14px!important}
+
+/* tabelle A | B */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--ink-2);font-size:12.5px;line-height:1.3;vertical-align:bottom;border-bottom:1px solid var(--ink-2)}
+th.l{width:34%}
+th.ab{color:var(--ink);font-weight:600;font-size:13px;width:33%}
+th.ab i,.fch i,.legend i.d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:0}
+i.d1{background:var(--s1)}i.d2{background:var(--s2)}
+th.ab small{display:block;font-weight:400;color:var(--ink-2);font-size:12px;margin-top:1px}
+td.l .rl{font-weight:600}
+td.l .cd{display:block}
+.cd{display:block;font-size:12.5px;line-height:1.4;color:var(--ink-2);font-weight:400;margin-top:2px}
+.cd.s2{color:var(--ink);font-weight:600}
+td.v .cv{display:block;font-size:15.5px;font-weight:600;line-height:1.3}
+td.v .cv.t{font-size:14px;font-weight:500;line-height:1.4}
+td.v.good{background:var(--good-bg)}
+td.v.bad{background:var(--bad-bg)}
+td.v.good .cv{color:var(--good)}
+td.v.bad .cv{color:var(--bad)}
+.tg{display:block;margin-top:5px;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--ink-2)}
+td.good .tg{color:var(--good)}td.bad .tg{color:var(--bad)}
+tr.strong td{border-bottom-color:var(--ink-2)}
+tr.strong td.l{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+tr.strong td.v .cv{font-size:17px}
+.hs{display:none}
+/* telefono: l'etichetta va sopra e i valori dei due fondi sotto, affiancati */
+@media (max-width:600px){
+  .tw{overflow-x:visible}
+  .tw table,.tw thead,.tw tbody{display:block}
+  .tw tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:6px;row-gap:4px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .tw thead tr{align-items:end;border-bottom:1px solid var(--ink-2);padding-top:0}
+  .tw th,.tw td{display:block;border:0;padding:2px 4px;width:auto!important}
+  .tw thead th.l{display:none}
+  .tw td.l{grid-column:1/-1;padding:0 2px}
+  .tw td.v{border-radius:8px;padding:6px 8px}
+  .tw tr.strong td.l{background:transparent;box-shadow:none}
+  .tw tr.strong{box-shadow:inset 3px 0 0 var(--accent);padding-left:8px;background:var(--accent-soft)}
+  td.v .cv{font-size:14.5px}
+  tr.strong td.v .cv{font-size:15.5px}
+  .hf{display:none}.hs{display:inline}
+}
+
+/* elementi dentro le celle */
+.sri{display:flex;gap:3px;margin:5px 0 3px}
+.sri i{width:15px;height:7px;border-radius:2px;background:var(--line)}
+.sri i.on{background:var(--accent)}
+.stars{color:var(--brass);letter-spacing:1px;font-size:14px;margin-top:2px}
+.stk{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--bg);margin:7px 0 6px}
+.stk i{display:block;height:100%}
+.lg{display:grid;gap:2px;font-size:12.5px;color:var(--ink-2)}
+.lg span{display:flex;align-items:center;gap:6px}
+.lg span i{flex:none;width:8px;height:8px;border-radius:2px}
+.lg b{margin-left:auto;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.bl{display:grid;gap:6px;margin-top:5px}
+.br{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 8px;font-size:12.5px;line-height:1.3}
+.br .bv{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.br i{grid-column:1/-1;height:4px;border-radius:2px;background:var(--accent);opacity:.85}
+.tl2{margin:4px 0 0;padding-left:18px;display:grid;gap:3px;font-size:12.5px;line-height:1.35}
+.tl2 li span{color:var(--ink-2);white-space:nowrap}
+
+/* due colonne: particolarità, scelte dei gestori, regole comuni */
+.fl{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px 28px}
+.fch{display:flex;align-items:baseline;gap:0;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:17px;font-weight:600;line-height:1.3}
+.fch small{display:block;font-family:var(--body);font-size:12.5px;font-weight:400;color:var(--ink-2)}
+.pl{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14px;line-height:1.5}
+.pl li{position:relative;padding-left:20px}
+.pl li::before{content:"";position:absolute;left:1px;top:.5em;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.pl li.pro::before{background:var(--good)}
+.pl li.con::before{background:var(--bad)}
+.pl li.give::before{background:transparent;border:1.5px solid var(--accent);width:6px;height:6px}
+.pl b{font-weight:600}
+.none{margin:0;color:var(--ink-2);font-size:14px}
+.mv{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.mv li{border-left:3px solid var(--line);padding:0 0 0 12px;font-size:14px;line-height:1.5}
+.mv li.pos{border-color:var(--good)}.mv li.neg{border-color:var(--bad)}
+.mv .mt{font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-2)}
+.mv li.pos .mt{color:var(--good)}.mv li.neg .mt{color:var(--bad)}
+.mv .mw{font-size:12.5px;color:var(--ink-2);margin-left:8px}
+.mv b{display:block;font-weight:600;margin-top:1px}
+.mv p{margin:2px 0 0;color:var(--ink-2);font-size:13.5px}
+.ms{margin:14px 0 0;font-family:var(--display);font-style:italic;font-size:15px;line-height:1.5}
+
+/* grafici */
+.legend{display:flex;gap:6px 18px;font-size:13px;color:var(--ink-2);margin:2px 0 8px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center}
+.legend i.sq{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px}
+.legend i.ln{display:inline-block;width:18px;height:0;border-top:2px dashed var(--ink);margin-right:7px}
+.chart{position:relative;margin:0 0 14px}
+.chart svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:7px 10px;border-radius:8px;font-size:12.5px;line-height:1.4;width:max-content;max-width:260px;display:none;transform:translate(-50%,-105%);z-index:2;font-variant-numeric:tabular-nums}
+
+/* note, avvertenze, firma */
+.notes{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.notes li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:13.5px;line-height:1.5;border-radius:8px;padding:3px 6px 3px 2px;max-width:86ch;transition:background .3s}
+.notes li.hl{background:var(--accent-soft)}
+.notes .k{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;text-align:right}
+.notes b{font-weight:600}
+.avv p{margin:0 0 8px;font-size:13px;line-height:1.5;color:var(--ink-2);max-width:86ch}
+.avv p.k{color:var(--ink);font-weight:600}
+.avv p:last-child{margin-bottom:0}
+.firma{display:flex;justify-content:space-between;align-items:center;gap:14px 28px;flex-wrap:wrap;background:var(--band);color:var(--band-ink);border-color:transparent;font-size:13.5px;line-height:1.45}
+.firma p{margin:0}
+.firma .by1{opacity:.82}
+.firma .who{font-family:var(--display);font-size:21px;font-weight:600;line-height:1.25}
+.firma .ql{opacity:.85;max-width:52ch}
+.firma .cts{margin-top:0!important}
+.firma .cts a{border-color:rgba(255,255,255,.45)}
+.firma .cts a:hover{background:rgba(255,255,255,.12)}
+
+/* telefono */
+@media (max-width:600px){
+  .hin{padding:22px 16px 0}
+  .htop{padding-bottom:16px}
+  .by{max-width:none}
+  .by .ql{display:none}
+  .site .tag{font-size:14.5px}
+  .cts a{font-size:12.5px;padding:4px 10px}
+  .hbar{padding:12px 0 14px}
+  .vs{font-size:12.5px}
+  .modo{width:100%;margin:0}
+  .modo button{flex:1}
+  .wrap{padding:18px 12px 48px}
+  .card{padding:16px}
+  .rep-head h2{font-size:24px}
+  .win{padding:16px;gap:12px;align-items:flex-start}
+  .wb{width:42px;height:42px;font-size:17px}
+  .tile .v{font-size:17px}.tile.hi .v{font-size:22px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* ---------- Stampa (A4) ---------- */
+@page{size:A4;margin:14mm 13mm 18mm}
+@page{
+  @bottom-left{content:"Elaborato da Marco Busetto, consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157 · +39 331 520 7568 · marco.busetto@allianzbankfa.it";font:600 6.5pt sans-serif;color:#003781}
+  @bottom-right{content:"Pagina " counter(page) " di " counter(pages);font:7.5pt sans-serif;color:#555}
+}
+@media print{
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+    color-scheme:light;
+    --bg:#ffffff; --surface:#ffffff; --ink:#14201f; --ink-2:#4c5a59; --line:#cfd6d6;
+    --accent:#003781; --accent-ink:#ffffff; --accent-soft:#e6f0f0; --band:#003781; --band-ink:#ffffff;
+    --good:#1d7a46; --bad:#b3372f; --good-bg:#edf6f0; --bad-bg:#fcf0ee;
+    --s1:#2a78d6; --s2:#eb6834;
+    --k1:#2a78d6; --k2:#003781; --k3:#c98a16; --k4:#7a5cc2; --k5:#9aa5a4;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:10pt}
+  .wrap{max-width:none;padding:0}
+  .site,.no-print,.tip{display:none!important}
+  .page{display:block}
+  .col{gap:10pt}
+  .card{border:0;padding:0;border-radius:0}
+  .rep-head{border-top:3pt solid var(--accent);border-bottom:1px solid var(--line);padding:8pt 0}
+  h2{font-size:17pt;color:var(--accent)}
+  h3{font-size:11pt;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:2pt;margin-bottom:6pt;break-after:avoid}
+  .tiles{grid-template-columns:repeat(3,1fr);gap:6pt}
+  .tile{padding:6pt 8pt;border-radius:4pt}
+  .tile .v{font-size:12pt}.tile.hi .v{font-size:15pt}
+  .tile .l,.tile .s{font-size:8pt}
+  .lead{font-size:10pt;padding:7pt 9pt;margin-bottom:6pt}
+  .win{padding:8pt 10pt;border-radius:5pt;margin-bottom:6pt;gap:8pt;background:var(--accent)}.wb{width:26pt;height:26pt;font-size:11pt}.wk{font-size:7.5pt}.wt{font-size:15pt}.ws{font-size:9.5pt}
+  table{font-size:9pt}th{font-size:8pt}th,td{padding:3pt 5pt}td.v .cv{font-size:9.5pt}
+  .tw{overflow:visible}
+  thead{display:table-header-group}
+  tr,.tile,.notes li,.lead,.win,.avv p,.firma,.fl>div,.mv li{break-inside:avoid}
+  .notes{gap:4pt}.notes li{font-size:8.5pt;max-width:none}
+  .cd{font-size:8pt}
+  .fl{grid-template-columns:1fr 1fr;gap:14pt}.pl,.ul{font-size:9pt;gap:3pt}
+  .avv p{font-size:8.5pt;max-width:none;margin-bottom:4pt}
+  .fine,.cred,.promo{font-size:8pt;max-width:none}
+  .firma{background:none;color:var(--ink);border-top:2pt solid var(--accent);padding:6pt 0 0;font-size:9.5pt}.firma .who{font-size:13pt;color:var(--accent)}.firma .cts a{border:0;padding:0 8pt 0 0;color:var(--ink)}
+  .nm{font-size:7pt;padding:0 1pt}
+}
+.f.fr{grid-template-columns:minmax(0,1fr) 150px;align-items:center;gap:10px}
+.grp.key .fine{margin:-2px 0 10px}
+
+/* ---------- Confronto tra forme pensionistiche e TFR: tabelle con più colonne di numeri, riquadri della sintesi, modulo dei dati ---------- */
+:root{--s3:#1baf7a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s3:#199e70}}
+:root[data-theme="dark"]{--s3:#199e70}
+[data-modo="s"] #c-form [data-full]{display:none!important}
+[data-modo="c"] .solo-s{display:none}
+.vs .fx.tf i{width:16px;height:0;border-radius:0;border-top:2px dashed currentColor;box-shadow:none;background:transparent}
+th.l{width:auto}
+th:not(.l),td.num{text-align:right}
+td.num{white-space:nowrap}
+td.num.wr{white-space:normal;overflow-wrap:anywhere}
+td.cb{font-weight:600}
+td.pos{color:var(--good)}td.neg{color:var(--bad)}
+tr.b td{font-weight:600;border-bottom-color:var(--ink-2)}
+tr.strong td{background:var(--accent-soft);font-weight:600;border-bottom-color:var(--ink-2)}
+tr.strong td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+tr.muted td{color:var(--ink-2)}
+.sintesi h3{margin-bottom:12px}
+.tile.key{background:var(--accent-soft);border-color:var(--accent)}
+.tile .v.txt{font-size:16px;line-height:1.3}
+.sint .tile .v,.sint .tile.hi .v{font-family:var(--body);font-size:15px;letter-spacing:0;line-height:1.3}
+.tile .m{font-family:var(--display);font-size:25px;font-weight:600;line-height:1.15;margin-top:3px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tile.hi .m{font-size:29px}
+.tile .s.pos{color:var(--good);font-weight:600}.tile .s.neg{color:var(--bad);font-weight:600}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px 28px}
+.duo h3{font-size:17.5px}
+.duo .give .ul li::before{background:transparent;border:1.5px solid var(--accent);width:5px;height:5px}
+.duo.ren{margin-top:2px}
+.print-only{display:none}
+/* modulo dei dati */
+.grp:not(.key){padding-top:14px;border-top:1px solid var(--line)}
+.f.wide{grid-template-columns:minmax(0,1fr) 182px;align-items:center;gap:10px}
+.inp select{border:0;border-left:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:13px;padding:9px 4px 9px 6px;flex:none;cursor:pointer}
+.out{margin:0 0 12px;padding:9px 12px;background:var(--surface);border-radius:9px;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.out b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.35;margin:2px 0 12px;cursor:pointer}
+.chk input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent)}
+.chk small{display:block;color:var(--ink-2);font-size:12px;line-height:1.35;margin-top:2px}
+.frw{display:grid;grid-template-columns:56px 112px minmax(0,1fr);gap:6px;align-items:center;margin-bottom:8px}
+.frw label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.frw select,.frw input{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;padding:8px}
+.frw input:disabled{opacity:.45}
+.g3,.g4{display:grid;gap:6px;align-items:center}
+.g4{margin-top:4px}
+.gh{font-size:11.5px;font-weight:600;color:var(--ink-2);text-align:center}
+.gl{font-size:13px;line-height:1.25}
+.gl small{display:block;color:var(--ink-2);font-size:11.5px;line-height:1.3;margin-top:1px}
+.gsec{grid-column:1/-1;font-size:12px;line-height:1.35;color:var(--ink-2);border-top:1px solid var(--line);padding-top:7px;margin-top:4px}
+.gsec b{color:var(--ink);font-weight:600}
+.gsec.first{border-top:0;padding-top:0;margin-top:0}
+.g3 input,.g4 input{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit;font-size:13.5px;padding:7px 3px;text-align:center;font-variant-numeric:tabular-nums;-moz-appearance:textfield;appearance:textfield}
+.g3 input::placeholder{color:var(--ink-2);opacity:.75}
+.g4 input:disabled{opacity:.4}
+.g3 input::-webkit-outer-spin-button,.g3 input::-webkit-inner-spin-button,.g4 input::-webkit-outer-spin-button,.g4 input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.g3 input:focus-visible,.g4 input:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.btn2{margin-top:10px}
+@media (max-width:600px){
+  .tw tr{grid-template-columns:repeat(var(--nc,3),minmax(0,1fr))}
+  .tw td.num{font-size:13px;text-align:left}
+  .tw tr.strong{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent);padding-left:8px}
+  .tw tr.strong td{background:transparent;box-shadow:none}
+  .tw th:not(.l){text-align:left;font-size:11.5px}
+  .tile .m{font-size:22px}.tile.hi .m{font-size:24px}
+}
+@media print{
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){--s3:#1baf7a}
+  .print-only{display:block}
+  .tile .m{font-size:13pt}.tile.hi .m{font-size:15pt}
+  .tiles.key{grid-template-columns:repeat(4,1fr)}
+  .duo{grid-template-columns:1fr 1fr;gap:14pt}.duo>div{break-inside:avoid}
+}
+
+/* ===== Tema del sito di Marco Busetto: colori, caratteri e barra di ritorno al sito ===== */
+:root{
+  --bg:#f7f4ee; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#5b6677; --line:#e7e1d5;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9;
+  --band:#001a3d; --band-ink:#ffffff; --brass:#c4a062;
+  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a;
+  --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+  --display:"Cormorant Garamond",Georgia,serif; --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
+    --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
+    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --good-bg:#16291f; --bad-bg:#311c1a;
+    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}}
+:root[data-theme="dark"]{--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
+    --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
+    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --good-bg:#16291f; --bad-bg:#311c1a;
+    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}
+@media print{:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --bg:#ffffff; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#4c5a6b; --line:#d9d3c7;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9; --band:#003781; --band-ink:#ffffff;
+  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a; --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+}}
+.site{background:linear-gradient(165deg,#00142f 0%,#002456 55%,#003781 100%)}
+h1,h2,h3,.wt,.wb,.who,.fch,.tile .v,.tile .m{font-variant-numeric:lining-nums tabular-nums}
+h2,h3{font-weight:600}
+.site h1{font-size:clamp(32px,4.2vw,46px)}
+.mb-back{background:#00142f;border-bottom:1px solid rgba(196,160,98,.4);font:500 13.5px/1.3 var(--body)}
+.mb-back .in{max-width:1160px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mb-back a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.mb-back a:hover{color:#dcc28c}
+.mb-back .mono{width:30px;height:30px;border:1px solid #c4a062;border-radius:50%;display:grid;place-items:center;font:600 13px/1 var(--display);color:#dcc28c}
+.mb-back .alt{color:#dcc28c}
+@media (max-width:600px){.mb-back .in{padding:10px 12px}.mb-back .alt{display:none}}
+@media print{.mb-back{display:none}}
+</style>
+</head>
+<body>
+<nav class="mb-back no-print" aria-label="Sito di Marco Busetto"><div class="in"><a href="../index.html"><span class="mono">MB</span><span>Torna al sito di Marco Busetto</span></a><a class="alt" href="../index.html#strumenti">Altri strumenti di analisi</a></div></nav>
+
+<header class="site">
+ <div class="hin">
+  <div class="htop">
+   <div>
+    <h1>TFR e fondi pensione a confronto</h1>
+    <p class="tag">Fondi aperti, fondi negoziali e PIP, con il TFR lasciato in azienda: capitale stimato, costi, imposte e rendita</p>
+   </div>
+   <div class="by">
+    <p class="who">Marco Busetto</p>
+    <p class="ql">Consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157</p>
+    <p class="cts"><a href="tel:+393315207568">+39 331 520 7568</a><a href="mailto:marco.busetto@allianzbankfa.it">marco.busetto@allianzbankfa.it</a></p>
+   </div>
+  </div>
+  <div class="hbar">
+   <div class="vs" id="c-vs"></div>
+   <div class="modo no-print" role="group" aria-label="Versione del documento"><span>Versione</span><button type="button" data-m="s" aria-pressed="true">Semplificata</button><button type="button" data-m="c" aria-pressed="false">Completa</button></div>
+  </div>
+ </div>
+</header>
+<div class="wrap">
+<section class="page">
+  <div class="col no-print"><form class="card ed" id="c-form" novalidate></form></div>
+  <div class="col" id="c-rep"></div>
+</section>
+</div>
+
+<script>
+/* Fuori da Claude il salvataggio passa dal browser: il PDF generato viene scaricato direttamente. */
+if(!window.claude){window.claude={use:function(n){return n!=='downloads'?null:{save:function(o){
+  var u=URL.createObjectURL(new Blob([o.data],{type:'application/pdf'})),a=document.createElement('a');
+  a.href=u;a.download=o.filename||'Analisi.pdf';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(u);a.remove()},2000);return Promise.resolve();}}}}}
+</script>
+<script>
+/* ================= DATI DI SETTORE (COVIP, 31 dicembre 2025) ================= */
+var H=[5,10,20];                    /* orizzonti del confronto, in anni */
+var DUR=[2,5,10,20];                /* durate dell'ISC, in anni */
+var TIPI={fpa:['Fondo aperto','Aperto'],fpn:['Fondo negoziale','Negoziale'],pip:['PIP','PIP']};
+var FORME=[];                       /* fondi messi a confronto, nell'ordine scelto */
+function setForme(keys){
+  FORME=keys.map(function(k,i){
+    var dup=keys.filter(function(x){return x===k}).length>1,n=dup?' '+(keys.slice(0,i+1).filter(function(x){return x===k}).length):'';
+    return {k:k,nome:TIPI[k][0]+n,breve:TIPI[k][1]+n};
+  });
+}
+setForme(['fpa','fpn','pip']);
+/* Struttura di costo tipo per forma. La commissione sul patrimonio (pp, per linea) è tarata in modo che
+   l'ISC a 10 anni calcolato coincida con l'ISC medio di settore: garantita 1,19/0,67/1,87; obbligazionaria
+   1,06/0,36/1,94; bilanciata 1,44/0,38/2,14; azionaria 1,72/0,38/2,62 (aperti/negoziali/PIP). */
+var TIPO={fpa:{ad:50,fx:25,pv:0,us:0},fpn:{ad:10,fx:20,pv:0,us:0},pip:{ad:0,fx:0,pv:2.5,us:0}};
+/* r5, r10, r20 = rendimenti netti medi annui composti di settore a 5, 10 e 20 anni: sono la base del calcolo del capitale.
+   Sono già al netto dei costi di gestione e dell'imposta sui rendimenti, ma non dei costi a carico diretto dell'aderente.
+   pp = commissione sul patrimonio tipo: è già compresa nei rendimenti e serve solo per calcolare l'ISC. */
+var LINEE={
+  gar:{nome:'Garantita',pp:{fpa:0.97,fpn:0.52,pip:1.41},r5:{fpa:0.5,fpn:0.7,pip:1.3},r10:{fpa:0.6,fpn:0.7,pip:1.5},r20:{}},
+  obp:{nome:'Obbligazionaria pura',pp:{fpa:0.84,fpn:0.21,pip:1.48},r5:{fpa:-1.2,fpn:0.9,pip:-0.2},r10:{fpa:0.1,fpn:0.5,pip:0},r20:{}},
+  obm:{nome:'Obbligazionaria mista',pp:{fpa:0.84,fpn:0.21,pip:1.48},r5:{fpa:0.5,fpn:2.4},r10:{fpa:0.8,fpn:2.6},r20:{}},
+  bil:{nome:'Bilanciata',pp:{fpa:1.22,fpn:0.23,pip:1.68},r5:{fpa:2.9,fpn:2.4,pip:2.2},r10:{fpa:2.9,fpn:2.7,pip:1.9},r20:{fpa:3.0,fpn:3.2}},
+  az:{nome:'Azionaria',pp:{fpa:1.5,fpn:0.23,pip:2.16},r5:{fpa:6.2,fpn:5.1,pip:7.0},r10:{fpa:5.1,fpn:4.8,pip:5.1},r20:{fpa:3.8,fpn:4.2}}
+};
+/* Rivalutazione netta media annua del TFR a 5, 10 e 20 anni. 5 e 10 anni: COVIP. 20 anni (2006-2025): elaborazione sui
+   coefficienti annuali di rivalutazione, al netto dell'imposta sostitutiva (11% fino al 2014, 17% dal 2015): 2,42%. */
+var TFR_ST=[3.4,2.5,2.4];
+var TETTO=5300;                     /* limite annuo di deducibilità dei contributi, dal 2026 */
+
+/* ================= CALCOLI (funzioni pure) ================= */
+function fv(C,i,N){return Math.abs(i)<1e-12?C*N:C*(Math.pow(1+i,N)-1)/i*(1+i)}   /* versamenti a inizio anno */
+
+/* ISC con il metodo COVIP: 2.500 euro a inizio anno, rendimento 4%, costi esclusa la tassazione;
+   il costo di uscita (trasferimento) conta per tutte le durate tranne i 35 anni. c = {ad, fx, pv, pp, us}, percentuali in frazione. */
+function iscCalc(c,N){
+  var pos=0,t,lo=-0.95,hi=0.04,k,m;
+  for(t=1;t<=N;t++)pos=(pos+2500*(1-c.pv)-c.fx-(t===1?c.ad:0))*(1.04-c.pp);
+  if(N<35)pos-=c.us;
+  for(k=0;k<80;k++){m=(lo+hi)/2;if(fv(2500,m,N)>pos)hi=m;else lo=m}
+  return 0.04-(lo+hi)/2;
+}
+function irpef(x){x=Math.max(0,x);return x<=28000?x*0.23:(x<=50000?6440+(x-28000)*0.33:13700+(x-50000)*0.43)}   /* scaglioni 2026 */
+function aliqMarg(x){return x<=28000?0.23:(x<=50000?0.33:0.43)}
+function aliqFondo(anni){return Math.max(0.09,0.15-0.003*Math.max(0,anni-15))}
+function sub(a,b){return a==null||b==null?null:a-b}
+/* Capitale di un fondo dopo N anni con il rendimento netto annuo r (frazione). r è già al netto dei costi di gestione e
+   dell'imposta sui rendimenti: si tolgono solo i costi a carico diretto dell'aderente.
+   p = {V0 versamento iniziale, C versamenti annui, c:{ad,fx,pv,us}}. Il versamento iniziale entra subito;
+   i versamenti annui entrano in corso d'anno (mezzo anno di rendimento). */
+function capFondo(p,r,N){
+  var c=p.c,pos=p.V0*(1-c.pv)-c.ad,t;
+  for(t=1;t<=N;t++){pos=pos*(1+r)+(p.C*(1-c.pv)-c.fx)*(1+r/2);if(pos<0)pos=0}
+  return Math.max(0,pos-c.us);
+}
+/* TFR in azienda dopo N anni: quota annua a fine anno, rivalutazione netta annua rho (frazione) sul maturato. */
+function capTFR(A,rho,N){
+  var pos=0,t;
+  for(t=1;t<=N;t++)pos=pos*(1+rho)+A;
+  return pos;
+}
+/* q = {tfr, ral, v0, vol (annuo), volTutti, dat, datTutti, rt:[3 rivalutazioni nette del TFR],
+        fondi:[{k, r:[3 rendimenti netti], c:{ad,fx,pv,us}}]}; tassi in frazione, null = dato non disponibile.
+   Gli indici 0, 1, 2 corrispondono agli orizzonti di H. Dove manca il rendimento il risultato è null.
+   Gli importi sono arrotondati all'euro e le differenze sono calcolate sugli importi arrotondati: così nel documento
+   ogni differenza e ogni totale coincide con i numeri da cui deriva.
+   cap = capitale prima dell'imposta alla liquidazione; taxL, net, risp, vant = stima dopo le imposte. */
+function eur(v){return v==null?null:Math.round(v)}
+function calcola(q){
+  var A=q.tfr?Math.max(0,q.ral/13.5-0.005*q.ral):0,marg=aliqMarg(q.ral*(1-0.0919)),aT=A>0?irpef(12*A)/(12*A):0.23,T=null;
+  if(q.tfr){
+    T={vers:H.map(function(N){return eur(A*N)}),cap:H.map(function(N,k){return q.rt[k]==null?null:eur(capTFR(A,q.rt[k],N))})};
+    T.riv=H.map(function(N,k){return sub(T.cap[k],T.vers[k])});
+    T.taxL=H.map(function(N){return eur(aT*A*N)});
+    T.net=H.map(function(N,k){return sub(T.cap[k],T.taxL[k])});
+  }
+  var zero={ad:0,fx:0,pv:0,us:0};
+  var fondi=q.fondi.map(function(f){
+    var neg=f.k==='fpn',v0=(q.volTutti||neg)?q.v0:0,vol=(q.volTutti||neg)?q.vol:0,dat=(q.datTutti||neg)?q.dat:0,C=A+vol+dat;
+    var ded1=Math.min(v0+vol+dat,TETTO),ded=Math.min(vol+dat,TETTO),lav1=Math.min(v0+vol,Math.max(0,TETTO-dat)),lav=Math.min(vol,Math.max(0,TETTO-dat));
+    var o={k:f.k,v0:v0,vol:vol,dat:dat,C:C};
+    o.vers=H.map(function(N){return eur(C*N+v0)});
+    o.own=H.map(function(N){return eur(vol*N+v0)});
+    o.cap=H.map(function(N,k){return f.r[k]==null?null:eur(capFondo({V0:v0,C:C,c:f.c},f.r[k],N))});
+    o.cap0=H.map(function(N,k){return f.r[k]==null?null:eur(capFondo({V0:v0,C:C,c:zero},f.r[k],N))});
+    o.costi=H.map(function(N,k){return sub(o.cap0[k],o.cap[k])});
+    o.rend=H.map(function(N,k){return sub(o.cap0[k],o.vers[k])});
+    o.punti=H.map(function(N,k){return sub(o.cap[k],o.own[k])});      /* capitale meno i versamenti volontari: base dei confronti */
+    o.diff=H.map(function(N,k){return T?sub(o.punti[k],T.cap[k]):null});
+    o.aliq=H.map(aliqFondo);
+    o.taxL=H.map(function(N,k){return o.cap[k]==null?null:eur(Math.min(o.cap[k],A*N+ded1+(N-1)*ded)*o.aliq[k])});
+    o.net=H.map(function(N,k){return sub(o.cap[k],o.taxL[k])});
+    o.risp=H.map(function(N){return eur(marg*(lav1+(N-1)*lav))});
+    o.vant=H.map(function(N,k){return T&&o.net[k]!=null&&T.net[k]!=null?o.net[k]+o.risp[k]-o.own[k]-T.net[k]:null});
+    return o;
+  });
+  /* Per ogni orizzonte: fondi con il dato, dal capitale più alto al più basso (al netto dei versamenti volontari).
+     primo = fondo con il capitale più alto; null se manca il dato, se i primi due sono pari o se, tra più fondi,
+     uno solo ha il dato (senza confronto non c'è un primo). */
+  var ord=H.map(function(N,k){
+    return fondi.map(function(f,i){return i}).filter(function(i){return fondi[i].punti[k]!=null})
+      .sort(function(a,b){return fondi[b].punti[k]-fondi[a].punti[k]||a-b});
+  });
+  var pari=ord.map(function(o,k){return o.length>1&&fondi[o[0]].punti[k]===fondi[o[1]].punti[k]});
+  var primo=ord.map(function(o,k){return o.length&&!pari[k]&&(o.length>1||fondi.length===1)?o[0]:null});
+  return {A:A,marg:marg,aliqTFR:aT,tfr:T,fondi:fondi,ord:ord,pari:pari,primo:primo};
+}
+
+/* ---------- Rendita: effetto del tasso tecnico (esempio) ----------
+   Tavola di sopravvivenza semplificata (legge di Gompertz: età modale 90,85 anni, dispersione 9), tarata in modo che
+   a 62 anni, senza tasso tecnico, 100.000 euro diano 4.080 euro l'anno (fattore 24,51): è l'ordine di grandezza dei
+   coefficienti pubblicati dai fondi, non la tavola di un fondo. coefRendita = rendita annua posticipata per 1 euro
+   di capitale, all'età x e con tasso tecnico i (frazione). */
+function coefRendita(x,i){
+  var s=0,t,k=Math.exp((x-90.85)/9);
+  for(t=1;x+t<=120;t++)s+=Math.exp(-k*(Math.exp(t/9)-1))/Math.pow(1+i,t);
+  return 1/s;
+}
+/* p = {K capitale, eta, col:[{i tasso tecnico, riv rivalutazione annua della rata, coef coefficiente inserito a mano o null}]} (frazioni).
+   Rata iniziale = capitale per coefficiente (inserito a mano, oppure calcolato sulla tavola semplificata con quel tasso tecnico);
+   ogni anno la rata cresce della rivalutazione indicata, mai meno di zero. g = rendimento riconosciuto dalla gestione a cui
+   corrisponde quella rivalutazione: (1 + tasso tecnico) x (1 + rivalutazione) - 1.
+   rata(j,k) = k-esima rata annua della colonna j; tot(j,n) = incassato nei primi n anni.
+   primo = colonna con la rata iniziale più alta (null se le prime due sono pari all'euro); anniRata e anniTot = per quanti anni,
+   dall'inizio, la rata e il totale incassato di quella colonna restano più alti di tutte le altre. */
+function simRendita(p){
+  var maxA=Math.max(1,Math.min(60,120-Math.round(p.eta)));
+  var v=p.col.map(function(c){
+    var man=c.coef!=null,cf=man?c.coef:coefRendita(p.eta,c.i),riv=Math.max(0,c.riv);
+    return {i:c.i,riv:riv,man:man,c:cf,R:p.K*cf,f:1+riv,g:(1+c.i)*(1+riv)-1};
+  });
+  function rata(j,k){return v[j].R*Math.pow(v[j].f,k-1)}
+  function tot(j,n){var s=0,k;for(k=1;k<=n;k++)s+=rata(j,k);return s}
+  function sopra(a){var j;for(j=0;j<v.length;j++)if(j!==primo&&!(a[primo]>a[j]+0.005))return false;return true}
+  var ord=v.map(function(o,j){return j}).sort(function(a,b){return Math.round(v[b].R)-Math.round(v[a].R)||a-b});
+  var pari=ord.length>1&&Math.round(v[ord[0]].R)===Math.round(v[ord[1]].R),primo=ord.length&&!pari?ord[0]:null,aR=0,aT=0,k,s;
+  if(primo!=null&&v.length>1){
+    for(k=1;k<=maxA&&sopra(v.map(function(o,j){return rata(j,k)}));k++)aR=k;
+    s=v.map(function(){return 0});
+    for(k=1;k<=maxA;k++){s=s.map(function(x,j){return x+rata(j,k)});if(!sopra(s))break;aT=k}
+  }
+  return {v:v,rata:rata,tot:tot,ord:ord,pari:pari,primo:primo,anniRata:aR,anniTot:aT,max:maxA};
+}
+
+/* ================= INTERFACCIA ================= */
+(function(){
+/* versione: s = semplificata (per il cliente), c = completa (tutti i dati e i dettagli) */
+var MKEY='confronto-fondi-pensione-tfr-versione',MODE='s';try{var mm=localStorage.getItem(MKEY);if(mm==='s'||mm==='c')MODE=mm}catch(e){}
+var AUTORE='Marco Busetto',QUALIFICA="consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157";
+var TEL='+39 331 520 7568',TELH='+393315207568',MAIL='marco.busetto@allianzbankfa.it';
+var OGGI=new Date(),DATA=OGGI.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'});
+var COVIP_AVV="Messaggio promozionale riguardante forme pensionistiche complementari – prima dell'adesione leggere la Parte I 'Le informazioni chiave per l'aderente' e l'Appendice 'Informativa sulla sostenibilità', della Nota informativa.";
+var ISCID=['ia','ib','ic','id'],STID=['ra','rb','rd'];     /* caselle: ISC a 2, 5, 10, 20 anni; rendimenti passati a 5, 10, 20 anni */
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function grp(n){return String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function E(v){if(v==null||!isFinite(v))return 'n.d.';var r=Math.round(v);return (r<0?'−':'')+grp(r)+' €'}
+function S(v){return (Math.round(v)>0?'+':'')+E(v)}
+function P(v,d){if(v==null||!isFinite(v))return 'n.d.';d=d==null?2:d;var s=Math.abs(v).toFixed(d);return (v<0&&parseFloat(s)!==0?'−':'')+s.replace('.',',')+'%'}
+function num(id){var t=$(id).value.trim();if(t==='')return null;var v=parseFloat(t.replace(',','.'));return isFinite(v)?v:null}
+function nz(id){var v=num(id);return v==null?0:v}
+function same(a,b){return (a==null&&b==null)||(a!=null&&b!=null&&Math.abs(a-b)<1e-9)}
+
+/* ---------- Note: significato e fonte ---------- */
+function noteFor(tfrOn){
+  var n=[
+   ['calc','Come è fatto il calcolo',"È una simulazione costruita sui rendimenti passati, non una previsione né una garanzia: i rendimenti futuri potranno essere diversi, anche di molto. Per ogni durata il capitale è calcolato applicando ai versamenti il rendimento netto medio annuo ottenuto dal fondo negli ultimi 5, 10 e 20 anni, come se si ripetesse uguale ogni anno. "+
+     (tfrOn?"Il TFR maturato ogni anno è la retribuzione lorda divisa per 13,5, meno lo 0,5% che va all'INPS: circa il 6,91% (art. 2120 c.c.). ":"")+
+     "Il versamento iniziale entra subito nel fondo; "+(tfrOn?"il TFR, ":"")+"i versamenti periodici e il contributo del datore entrano in corso d'anno. I rendimenti pubblicati sono già al netto dei costi di gestione e dell'imposta sui rendimenti: nel calcolo si tolgono soltanto i costi a carico diretto dell'aderente. "+
+     (tfrOn?"Il TFR lasciato in azienda cresce con la rivalutazione netta media dello stesso periodo. Retribuzione e versamenti restano costanti. ":"I versamenti restano costanti. ")+
+     "Il capitale più alto è indicato, per ogni durata, tra i fondi di cui è disponibile il rendimento."],
+   ['costi','Costi e ISC',"Le voci sono quelle della Scheda «I costi» (Parte I della Nota informativa) di ciascun fondo. Spese di adesione, spesa annua fissa, costi in percentuale dei versamenti e spese di uscita sono a carico diretto dell'aderente: i rendimenti pubblicati non ne tengono conto e nel calcolo sono tolti dai versamenti. La commissione annua sul patrimonio è invece già compresa nei rendimenti passati e non viene tolta una seconda volta. L'ISC, indicatore sintetico dei costi, dice di quanto l'insieme dei costi riduce ogni anno il rendimento: qui è calcolato dalle voci di costo con il metodo COVIP (2.500 € versati a inizio anno, rendimento 4%) per durate di 2, 5, 10 e 20 anni, oppure è inserito a mano dal consulente; la Scheda «I costi» lo riporta a 2, 5, 10 e 35 anni. Non comprende le commissioni di incentivo e di negoziazione. I valori iniziali sono una struttura di costo tipo, tarata sull'ISC medio di settore a 10 anni rilevato dalla COVIP al 31 dicembre 2025: i singoli fondi possono costare molto meno o molto più della media."],
+   ['storico','Rendimenti passati',"Rendimenti medi annui composti, al netto dei costi di gestione e dell'imposta sui rendimenti; non tengono conto dei costi a carico diretto dell'aderente. I valori iniziali sono le medie di settore rilevate dalla COVIP al 31 dicembre 2025: per un fondo specifico vanno sostituiti con quelli della sua Nota informativa. "+
+     (tfrOn?"Per il TFR, rivalutazione al netto dell'imposta sostitutiva (17% dal 2015, 11% prima); il dato a 20 anni è un'elaborazione sui coefficienti annuali di rivalutazione 2006-2025. ":"")+
+     "Per i PIP: gestioni separate nella linea garantita, fondi unit linked nelle altre; i PIP attuali esistono dal 2007 e non hanno dati a 20 anni. Linee con lo stesso nome possono avere quote di azioni diverse: un rendimento passato più alto può dipendere da un rischio più alto. I rendimenti passati non sono necessariamente indicativi di quelli futuri."],
+   ['fisco','Imposte',"I rendimenti usati nel calcolo sono già al netto dell'imposta annuale: 20% sui rendimenti dei fondi pensione (art. 17 D.Lgs. 252/2005; sui titoli di Stato l'aliquota effettiva è del 12,5%)"+(tfrOn?", 17% sulla rivalutazione del TFR":"")+". Sintesi, grafico e tabella «Come si forma il capitale» non considerano invece l'imposta dovuta alla liquidazione. Fondi pensione: sulla parte di capitale che deriva "+(tfrOn?"dal TFR e dai contributi dedotti":"dai contributi dedotti")+" l'imposta è del 15%, ridotta di 0,30 punti per ogni anno di partecipazione oltre il quindicesimo, fino al 9% (art. 11, comma 6); per le prestazioni erogate in forma frazionata l'aliquota va dal 20% al 15%. "+
+     (tfrOn?"TFR in azienda: alla liquidazione si applica la tassazione separata con l'aliquota media IRPEF, che parte dal 23% (artt. 17 e 19 TUIR), qui stimata sugli scaglioni 2026 (23%, 33% e 43%) e poi ricalcolata dall'Agenzia delle Entrate. ":"")+
+     "Versamenti volontari e contributo del datore sono deducibili dal reddito fino a 5.300 € l'anno (art. 8 D.Lgs. 252/2005): il risparmio è stimato con l'aliquota IRPEF più alta applicata alla retribuzione, senza addizionali. Dal 1° gennaio 2027 le norme sulle imposte sui redditi passano al nuovo Testo unico (D.Lgs. 117/2026), con una diversa numerazione."],
+   ['dat','Contributo del datore di lavoro',"Il contratto collettivo prevede di norma un contributo dell'azienda per chi aderisce al fondo negoziale di categoria e versa anche la propria quota. Dal 31 ottobre 2026 chi è iscritto al fondo negoziale da almeno due anni può trasferire la posizione a un fondo aperto o a un PIP conservando il contributo del datore anche per i versamenti futuri (art. 14, comma 6, D.Lgs. 252/2005, modificato dalla L. 199/2025). Chi aderisce direttamente a un fondo aperto o a un PIP lo riceve solo se lo prevedono accordi collettivi o aziendali. L'applicazione pratica della nuova regola è ancora in via di definizione: va verificata con il datore di lavoro prima di decidere."],
+   ['ritfp','Ritirare il denaro prima della pensione: fondi pensione',"Anticipazioni (art. 11, comma 7, D.Lgs. 252/2005): in qualsiasi momento fino al 75% della posizione per spese sanitarie gravi e straordinarie proprie, del coniuge o dei figli; dopo 8 anni di iscrizione fino al 75% per l'acquisto o la ristrutturazione della prima casa, propria o dei figli; dopo 8 anni fino al 30% per altre esigenze, senza giustificazione. In totale non oltre il 75%; le somme anticipate si possono reintegrare. Riscatto (art. 14): il 50% con inoccupazione tra 12 e 48 mesi, cassa integrazione o procedure di mobilità; l'intera posizione con invalidità permanente che riduce la capacità di lavoro a meno di un terzo o con inoccupazione oltre 48 mesi; negli altri casi di perdita dei requisiti di partecipazione previsti da statuti e regolamenti. Chi cessa l'attività può chiedere la rendita anticipata (RITA) nei 5 anni che precedono la pensione di vecchiaia, con almeno 20 anni di contributi, oppure nei 10 anni precedenti se inoccupato da oltre 24 mesi; servono 5 anni di partecipazione. Imposte: dal 15% al 9% per spese sanitarie, riscatti per inoccupazione o invalidità e RITA; 23% per prima casa, altre esigenze e riscatti per altre cause. In caso di morte la posizione va agli eredi o ai beneficiari designati. Dopo due anni la posizione si può trasferire a un altro fondo senza imposte."]
+  ];
+  if(tfrOn)n.push(['rittfr','Ritirare il denaro prima della pensione: TFR in azienda',"Anticipazione (art. 2120 c.c.): una sola volta nel rapporto di lavoro, dopo almeno 8 anni di servizio presso lo stesso datore, fino al 70% del TFR maturato, per spese sanitarie straordinarie o per l'acquisto della prima casa propria o dei figli; è ammessa anche durante i congedi parentali e per la formazione. Ogni anno il datore accoglie le richieste entro il 10% degli aventi diritto e il 4% del totale dei dipendenti; contratti collettivi e accordi individuali possono prevedere condizioni più favorevoli. Il TFR è pagato per intero a ogni cessazione del rapporto di lavoro, con tassazione separata."]);
+  return n;
+}
+var NOTE=noteFor(true);
+function nn(key){for(var i=0;i<NOTE.length;i++)if(NOTE[i][0]===key)return i+1;return 0}
+function proList(tfrOn){return [
+ "È aperto a tutti e segue la persona: non dipende dal contratto di lavoro e resta lo stesso cambiando azienda, settore o attività.",
+ "Offre più linee di investimento, dalla garantita all'azionaria, tra cui scegliere e da cambiare nel tempo.",
+ "Versamenti liberi: importo e frequenza si scelgono e si modificano quando serve, anche per i familiari a carico.",
+ tfrOn?"Vantaggi fiscali rispetto al TFR, come in ogni fondo pensione: versamenti deducibili fino a 5.300 € l'anno e imposta finale dal 15% al 9% invece di almeno il 23%."
+      :"Vantaggi fiscali: versamenti deducibili fino a 5.300 € l'anno, rendimenti tassati al 20% e imposta finale dal 15% al 9%.",
+ "Dal 31 ottobre 2026 chi arriva dal fondo negoziale dopo due anni conserva il contributo del datore di lavoro (nota "+nn('dat')+").",
+ "Un consulente di riferimento per scegliere la linea e seguire la posizione nel tempo."
+]}
+function attList(tfrOn){return [
+ "I costi: in media i fondi aperti costano più dei fondi negoziali. Contano quelli del fondo scelto, indicati nella sua Scheda «I costi» (nota "+nn('costi')+").",
+ "I rendimenti: quelli passati possono non ripetersi, e un rendimento più alto può dipendere da un rischio più alto (nota "+nn('storico')+").",
+ "Il contributo del datore di lavoro: nel fondo negoziale spetta per contratto, negli altri fondi solo nei casi della nota "+nn('dat')+".",
+ "Il vincolo: nel fondo le somme restano investite fino alla pensione, salvo i casi della nota "+nn('ritfp')+(tfrOn?"; per il TFR in azienda valgono le regole della nota "+nn('rittfr'):"")+".",
+ "La linea: va scelta in base agli anni che mancano alla pensione e al rischio che si è disposti a sopportare."
+]}
+var FONTI="Fonti: COVIP, Relazione per l'anno 2025 e dati statistici al 31 dicembre 2025 (ISC e rendimenti medi di settore); ISTAT, coefficienti di rivalutazione del TFR; D.Lgs. 252/2005; L. 199/2025; D.L. 62/2026 convertito dalla L. 112/2026; art. 2120 c.c.";
+function lab(t,m){if(!m)return t;var i=t.lastIndexOf(' ');return (i<0?'':t.slice(0,i+1))+'<span class="nw">'+t.slice(i+1)+m+'</span>'}
+function mk(n){return n?'<sup><button type="button" class="nm" data-n="cn-'+parseInt(n,10)+'" aria-label="Vai alla nota '+n+'">'+n+'</button></sup>':''}
+
+/* ---------- Dati richiesti ---------- */
+function field(id,label,unit,val,step,hint,note){
+  return '<div class="f fr" id="c-w-'+id+'"><label for="c-'+id+'">'+lab(label,mk(nn(note)))+'<small>'+hint+'</small></label><div class="inp"><input type="number" inputmode="decimal" id="c-'+id+'" value="'+val+'" step="'+step+'" min="0"><span>'+unit+'</span></div></div>';
+}
+function rowG(label,sm,code,step,note,extra){
+  var h='<span class="gl">'+lab(label,mk(nn(note)))+'<small>'+sm+'</small></span>';
+  FORME.forEach(function(f,i){h+='<input type="number" inputmode="decimal" step="'+step+'" id="c-'+code+i+'" aria-label="'+label+', '+f.nome.toLowerCase()+(extra||'')+'">'});
+  return h;
+}
+function rowS(label,code){
+  var h='<span class="gl">'+label+'</span>';
+  FORME.forEach(function(f,i){h+='<input type="number" inputmode="decimal" step="0.1" id="c-'+code+i+'" aria-label="Rendimento netto a '+label+', '+f.nome.toLowerCase()+'">'});
+  return h+'<input type="number" inputmode="decimal" step="0.1" id="c-'+code+'t" aria-label="Rivalutazione netta del TFR a '+label+'">';
+}
+function formHTML(){
+  var h='<h2>Dati del confronto</h2><p class="fine">Inserisci i dati del cliente e, quando li hai, sostituisci i valori medi con i rendimenti e i costi dei fondi da confrontare.</p>'+
+    '<p class="fine solo-s">Versione semplificata: costi dei fondi e dati della rendita restano quelli della versione completa e sono riportati nel PDF.</p>';
+  h+='<div class="grp"><p class="cap">Intestazione</p>'+
+     '<div class="f ft"><label for="c-cli">Cliente</label><input class="txt" type="text" id="c-cli" placeholder="Nome e cognome" autocomplete="off" maxlength="80"></div>'+
+     '<div class="f ft"><label for="c-int">Intermediario per cui opera il consulente</label><input class="txt" type="text" id="c-int" value="Allianz Bank Financial Advisors S.p.A." autocomplete="off" maxlength="80"></div></div>';
+  h+='<div class="grp key"><p class="cap">Cliente e versamenti</p>'+
+     '<div class="f ft"><label for="c-tfrm">TFR<small>se incluso, è versato nei fondi e confrontato con il TFR lasciato in azienda</small></label><select class="sel" id="c-tfrm"><option value="si">Incluso nell\'analisi</option><option value="no">Escluso dall\'analisi</option></select></div>'+
+     field('ral','Retribuzione annua lorda','€',30000,500,'serve per il TFR e per la stima delle imposte','')+
+     '<p class="out" id="c-tfr-w">TFR maturato ogni anno: <b id="c-tfr"></b></p>'+
+     field('v0','Versamento iniziale','€',0,100,"una tantum, all'inizio",'')+
+     '<div class="f wide"><label for="c-vp">Versamento periodico<small>mensile o annuale</small></label><div class="inp"><input type="number" inputmode="decimal" id="c-vp" value="0" step="10" min="0"><select id="c-vf" aria-label="Frequenza del versamento periodico"><option value="m">€ al mese</option><option value="a">€ l\'anno</option></select></div></div>'+
+     '<div class="f ft"><label for="c-volsc"><small>Versamento iniziale e periodico vanno</small></label><select class="sel" id="c-volsc"><option value="tutti">In tutti i fondi</option><option value="fpn">Solo nel fondo negoziale</option></select></div>'+
+     field('dat','Contributo del datore di lavoro','€',0,50,"previsto dal contratto, all'anno",'dat')+
+     '<div class="f ft"><label for="c-datsc"><small>Il contributo del datore va</small></label><select class="sel" id="c-datsc"><option value="fpn">Solo nel fondo negoziale</option><option value="tutti">In tutti i fondi</option></select></div></div>';
+  var op=function(sel,none){return (none?'<option value="">Nessuno</option>':'')+['fpa','fpn','pip'].map(function(k){return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+TIPI[k][1]+'</option>'}).join('')};
+  h+='<div class="grp"><p class="cap">Linea e fondi da confrontare</p>'+
+     '<div class="f ft"><label for="c-linea">Linea di investimento<small>si confrontano linee della stessa categoria</small></label><select class="sel" id="c-linea">'+
+     Object.keys(LINEE).map(function(k){return '<option value="'+k+'"'+(k==='bil'?' selected':'')+'>'+LINEE[k].nome+'</option>'}).join('')+'</select></div>'+
+     ['fpa','fpn','pip'].map(function(k,i){return '<div class="frw"><label for="c-t'+i+'">Fondo '+(i+1)+'</label><select id="c-t'+i+'">'+op(k,i===2)+'</select><input type="text" id="c-n'+i+'" maxlength="40" autocomplete="off" placeholder="Nome (facoltativo)" aria-label="Nome del fondo '+(i+1)+'"></div>'}).join('')+
+     '<p class="fine">Il primo fondo è quello messo in evidenza nel confronto.</p></div>';
+  h+='<div id="c-fondi">'+fondiHTML()+'</div>';
+  h+='<div class="grp key"><p class="cap">Rendita: tasso tecnico e rivalutazione</p>'+
+     '<label class="chk"><input type="checkbox" id="c-ren" checked><span>Aggiungi al documento il confronto sulla rendita</span></label>'+
+     '<div data-full="1"><div class="f ft"><label for="c-rm">Che cosa confrontare</label><select class="sel" id="c-rm"><option value="es">Due rendite di esempio</option><option value="fondi">Le rendite dei fondi a confronto</option></select></div>'+
+     field('rk','Capitale trasformato in rendita','€',100000,1000,"importo dell'esempio",'')+
+     field('re','Età alla pensione','anni',67,1,'da 50 a 80','')+
+     '<div id="c-rgrid">'+rendHTML('es')+'</div>'+
+     '<p class="fine">Tasso tecnico: rendimento già compreso nella prima rata. Rivalutazione: di quanto cresce la rata ogni anno; a parità di rendimento della gestione, con un tasso tecnico più alto è più bassa. Rendita iniziale: in grigio quella calcolata su una tavola semplificata; scrivi quella del Documento sulle rendite del fondo per usarla.</p></div>'+
+     '<p class="out sim" id="c-ren-out" role="status"></p></div>';
+  h+='<div class="grp"><p class="cap">Altre sezioni del documento</p>'+
+     '<label class="chk"><input type="checkbox" id="c-tax" checked><span>Stima «Dopo le imposte»<small>tabella a parte: il grafico non considera l\'imposta dovuta alla liquidazione</small></span></label></div>';
+  return h;
+}
+/* Rendita: colonne dell'esempio (due rendite generiche) oppure una colonna per ciascun fondo a confronto.
+   RMODO è il modo con cui è costruita la griglia in questo momento: cambia solo quando la griglia viene ricostruita. */
+var RMODO='es';
+function rendCols(modo){return modo==='fondi'?FORME.map(function(f){return f.breve}):['Rendita A','Rendita B']}
+function rendHTML(modo){
+  var cs=rendCols(modo);
+  var row=function(label,sm,code,step,extra){
+    var h='<span class="gl">'+label+'<small>'+sm+'</small></span>';
+    cs.forEach(function(c,j){h+='<input type="number" inputmode="decimal" step="'+step+'" min="0" id="c-'+code+j+'" aria-label="'+label+', '+c+(extra||'')+'">'});
+    return h;
+  };
+  return '<div class="g3" style="grid-template-columns:minmax(0,1.45fr) repeat('+cs.length+',minmax(0,1fr))" role="group" aria-label="Rendite a confronto"><span></span>'+
+    cs.map(function(c){return '<span class="gh">'+c+'</span>'}).join('')+
+    row('Tasso tecnico',"% l'anno",'ri',0.25)+row('Rivalutazione annua',"% l'anno",'rr',0.1)+row('Rendita annua iniziale','€ ogni 100.000 € di capitale','rc',1,' (vuoto: calcolata)')+'</div>';
+}
+/* Valori di partenza. Esempio: A senza tasso tecnico e con rivalutazione del 2%, B con tasso tecnico del 2% e senza rivalutazione
+   (stesso rendimento della gestione, 2%). Fondi: valori uguali per tutti, da sostituire con quelli del Documento sulle rendite. */
+function resetRend(modo){
+  rendCols(modo).forEach(function(c,j){
+    var b=modo!=='fondi'&&j===1;
+    setv('c-ri'+j,b?2:0);setv('c-rr'+j,b?0:2);setv('c-rc'+j,null);
+  });
+}
+function fondiHTML(){
+  var n=FORME.length,gh=FORME.map(function(f){return '<span class="gh">'+f.breve+'</span>'}).join(''),h='';
+  h+='<div class="grp key"><p class="cap">Rendimenti passati netti (dati COVIP)</p><div class="g4" style="grid-template-columns:minmax(0,1.1fr) repeat('+(n+1)+',minmax(0,1fr))" role="group" aria-label="Rendimenti netti passati">'+
+     '<span class="gl"><small>% l\'anno, ultimi</small></span>'+gh+'<span class="gh">TFR</span>'+
+     rowS('5 anni',STID[0])+rowS('10 anni',STID[1])+rowS('20 anni',STID[2])+
+     '</div><p class="fine">Sono la base del grafico: rendimento netto medio annuo composto, già al netto dei costi di gestione e dell\'imposta sui rendimenti. Valori iniziali: medie di settore COVIP per la linea scelta. Per un fondo specifico usa i dati della sua Nota informativa o dell\'Elenco dei rendimenti sul sito COVIP. Casella vuota: dato non disponibile.</p></div>';
+  h+='<div class="grp" data-full="1"><p class="cap">Costi dei fondi</p><div class="g3" style="grid-template-columns:minmax(0,1.45fr) repeat('+n+',minmax(0,1fr))" role="group" aria-label="Costi dei fondi">'+
+     '<span></span>'+gh+
+     '<span class="gsec first"><b>A carico diretto dell\'aderente</b>: nel calcolo sono tolti dai versamenti.</span>'+
+     rowG('Spese di adesione','€, una tantum','ad',1,'costi')+
+     rowG('Spesa annua fissa',"€ l'anno",'fx',1,'')+
+     rowG('Costi sui versamenti','% di ogni versamento','pv',0.1,'')+
+     rowG('Spese di uscita','€, a fine periodo','us',1,'')+
+     '<span class="gsec"><b>Già compresa nei rendimenti passati</b>: serve solo per calcolare l\'ISC.</span>'+
+     rowG('Commissione sul patrimonio',"% l'anno",'pp',0.01,'')+
+     '<span class="gsec"><b>ISC</b>: in grigio quello calcolato dalle voci di costo. Scrivilo nella casella per inserirlo a mano.</span>'+
+     DUR.map(function(T,j){return rowG('ISC a '+T+' anni','%',ISCID[j],0.01,'',' (vuoto: calcolato)')}).join('')+
+     '</div><p class="fine">Valori iniziali: struttura di costo tipo per la linea scelta; cambiando linea tornano i valori medi. L\'ISC è riportato nella tabella dei costi e non entra nel calcolo del capitale. La Scheda «I costi» lo indica a 2, 5, 10 e 35 anni: per i 20 anni usa un valore compreso tra quello a 10 e quello a 35.</p>'+
+     '<button type="button" class="btn2" id="c-reset">Ripristina i valori medi</button></div>';
+  return h;
+}
+function setv(id,v){$(id).value=v==null?'':String(v)}
+function resetGrid(){
+  var L=LINEE[$('c-linea').value],st=[L.r5,L.r10,L.r20];
+  FORME.forEach(function(f,i){
+    var t=TIPO[f.k];
+    setv('c-ad'+i,t.ad);setv('c-fx'+i,t.fx);setv('c-pv'+i,t.pv);setv('c-pp'+i,L.pp[f.k]);setv('c-us'+i,t.us);
+    ISCID.forEach(function(c){setv('c-'+c+i,null)});
+    STID.forEach(function(c,h){setv('c-'+c+i,st[h][f.k])});
+  });
+  STID.forEach(function(c,h){setv('c-'+c+'t',TFR_ST[h])});
+}
+
+/* ---------- Modello della relazione ---------- */
+function anniTxt(a){return a.length<2?String(a[0]):a.slice(0,-1).join(', ')+' e '+a[a.length-1]}
+function pt(v){return P(v,Math.abs(v-Math.round(v))<1e-9?0:(Math.abs(v*10-Math.round(v*10))<1e-9?1:2))}   /* percentuale senza decimali inutili */
+function buildReport(){
+  var SEMP=MODE==='s',key=$('c-linea').value,L=LINEE[key],idx=FORME.map(function(f,i){return i}),NF=idx.length;
+  var tfrOn=$('c-tfrm').value==='si',taxOn=$('c-tax').checked,renOn=$('c-ren').checked,nT=NF+(tfrOn?1:0);
+  var cols=function(w0,n){var a=[{w:w0,al:'l'}],j;for(j=0;j<n;j++)a.push({w:(1-w0)/n,al:'r'});return a};
+  var tail=function(v){return tfrOn?[v]:[]};
+  var ral=Math.max(0,nz('c-ral')),v0=Math.max(0,nz('c-v0')),vp=Math.max(0,nz('c-vp')),mens=$('c-vf').value==='m',vol=vp*(mens?12:1);
+  var dat=Math.max(0,nz('c-dat')),volTutti=$('c-volsc').value==='tutti',datTutti=$('c-datsc').value==='tutti';
+  var hasNeg=FORME.some(function(f){return f.k==='fpn'}),hasFpa=FORME.some(function(f){return f.k==='fpa'});
+  var nomi=idx.map(function(i){return $('c-n'+i).value.trim()});
+  var rd=function(id){var v=num(id);return v==null?null:Math.max(-50,Math.min(50,v))};      /* rendimenti in %, entro limiti ragionevoli */
+  var pc=function(v){return v==null?null:v/100};
+  var X=idx.map(function(i){
+    return {ad:Math.max(0,nz('c-ad'+i)),fx:Math.max(0,nz('c-fx'+i)),pv:Math.min(100,Math.max(0,nz('c-pv'+i))),pp:Math.min(20,Math.max(0,nz('c-pp'+i))),us:Math.max(0,nz('c-us'+i)),
+      typed:ISCID.map(function(c){var v=num('c-'+c+i);return v==null?null:Math.max(0,v)})};
+  });
+  var R=STID.map(function(c){return idx.map(function(i){return rd('c-'+c+i)})});     /* R[orizzonte][fondo]: rendimento netto, in % */
+  var RT=STID.map(function(c){return tfrOn?rd('c-'+c+'t'):null});                    /* rivalutazione netta del TFR, in % */
+  var isc=idx.map(function(i){
+    var c={ad:X[i].ad,fx:X[i].fx,pv:X[i].pv/100,pp:X[i].pp/100,us:X[i].us};
+    return DUR.map(function(N,j){var calc=iscCalc(c,N)*100,t=X[i].typed[j];return {calc:calc,v:t!=null?t:calc,man:t!=null}});
+  });
+  var anyMan=isc.some(function(a){return a.some(function(o){return o.man})}),allMan=isc.every(function(a){return a.every(function(o){return o.man})});
+  var customC=idx.some(function(i){var t=TIPO[FORME[i].k];return !same(X[i].ad,t.ad)||!same(X[i].fx,t.fx)||!same(X[i].pv,t.pv)||!same(X[i].us,t.us)||!same(X[i].pp,L.pp[FORME[i].k])});
+  var customR=[L.r5,L.r10,L.r20].some(function(d,h){return idx.some(function(i){return !same(R[h][i],d[FORME[i].k])})||(tfrOn&&!same(RT[h],TFR_ST[h]))});
+  var sim=calcola({tfr:tfrOn,ral:ral,v0:v0,vol:vol,volTutti:volTutti,dat:dat,datTutti:datTutti,rt:RT.map(pc),
+    fondi:X.map(function(x,i){return {k:FORME[i].k,r:R.map(function(a){return pc(a[i])}),c:{ad:x.ad,fx:x.fx,pv:x.pv/100,us:x.us}}})});
+  var F=sim.fondi,T=sim.tfr,W=sim.primo,TFRN='TFR lasciato in azienda',linea=L.nome.toLowerCase();
+  var nome=function(i){return FORME[i].nome+(nomi[i]?' – '+nomi[i]:'')};
+  var minus=function(t){return t.indexOf('PIP')===0?t:t.charAt(0).toLowerCase()+t.slice(1)};
+  var nm=function(i){return minus(nome(i))},nmb=function(i){return minus(FORME[i].nome)},corto=function(i){return nomi[i]||FORME[i].breve};
+  var anyV0=F.some(function(f){return f.v0>0}),anyVol=F.some(function(f){return f.vol>0}),anyDat=F.some(function(f){return f.dat>0}),anyOwn=anyV0||anyVol;
+  var ownDiv=F.some(function(f){return Math.abs(f.own[2]-F[0].own[2])>=1});      /* versamenti volontari non uguali in tutti i fondi */
+  var tolti=(tfrOn&&anyOwn)||(NF>1&&ownDiv);
+  var tone=function(v){return v==null?'':(Math.round(v)>=0?'pos':'neg')};
+  var conDato=H.map(function(N,k){return F.some(function(f){return f.cap[k]!=null})});
+  var hd=conDato[2]?2:(conDato[1]?1:(conDato[0]?0:2)),ND=H[hd];                  /* orizzonte delle tabelle di dettaglio: il più lungo con almeno un dato */
+  var mancano=H.some(function(N,k){return F.some(function(f){return f.cap[k]==null})||(tfrOn&&T.cap[k]==null)});
+  NOTE=noteFor(tfrOn);
+  /* caselle di servizio nel modulo */
+  $('c-tfr').textContent=E(sim.A);
+  $('c-tfr-w').hidden=!tfrOn;$('c-w-ral').hidden=!tfrOn&&!taxOn;
+  STID.forEach(function(c){$('c-'+c+'t').disabled=!tfrOn});
+  idx.forEach(function(i){ISCID.forEach(function(c,j){$('c-'+c+i).placeholder=isc[i][j].calc.toFixed(2).replace('.',',')})});
+
+  var rep={cliente:$('c-cli').value.trim(),interm:$('c-int').value.trim(),sections:[],
+    titolo:tfrOn?'TFR e fondi pensione a confronto':'Fondi pensione a confronto',
+    sotto:tfrOn?'Fondi pensione e TFR in azienda: rendimenti passati, costi e capitale stimato a 5, 10 e 20 anni':'Rendimenti passati, costi e capitale stimato a 5, 10 e 20 anni'};
+  rep.tfrOn=tfrOn;rep.vs=idx.map(function(i){return nome(i)});
+  var vt=[];if(v0>0)vt.push(E(v0)+' iniziali');if(vp>0)vt.push(E(vp)+(mens?' al mese':" l'anno"));
+  rep.key=[
+    tfrOn?{l:'TFR maturato ogni anno',v:E(sim.A),s:'retribuzione annua lorda '+E(ral),n:nn('calc')}:{l:'TFR',v:"Escluso dall'analisi",txt:1,s:'si considerano solo i versamenti indicati'},
+    {l:'Versamenti volontari',v:vt.length?vt.join(' + '):'Non previsti',txt:1,s:vt.length?(volTutti?'in tutti i fondi':'solo nel fondo negoziale'+(hasNeg?'':', non presente nel confronto')):''},
+    {l:'Contributo del datore di lavoro',v:dat>0?E(dat)+" l'anno":'Non considerato',txt:1,s:dat>0?(datTutti?'in tutti i fondi':'solo nel fondo negoziale'+(hasNeg?'':', non presente nel confronto')):'da verificare nel contratto di lavoro',n:nn('dat')},
+    {l:'Linea e rendimenti',v:L.nome,txt:1,s:customR?'rendimenti passati netti inseriti dal consulente':'rendimenti passati netti: medie di settore COVIP al 31.12.2025',n:nn('storico')}
+  ];
+  /* come chiamare un fondo dentro una frase: con il nome dato dal consulente, se c'è, altrimenti con il tipo */
+  var ilN=function(i){return nomi[i]?nomi[i]:'il '+nmb(i)},delN=function(i){return nomi[i]?'di '+nomi[i]:'del '+nmb(i)},sulN=function(i){return nomi[i]?'su '+nomi[i]:'sul '+nmb(i)};
+  var tfrTxt=function(d){return S(d)+(Math.round(d)>=0?' sul TFR':' rispetto al TFR')};
+  /* sintesi: per ogni durata, il fondo con il capitale più alto */
+  var tiles=H.map(function(N,k){
+    var w=W[k],o={l:'Dopo '+N+' anni',txt:1},sec=sim.ord[k][1],righe=[];
+    if(w==null){
+      if(sim.pari[k]){o.v='Pari merito';o.m=E(F[sim.ord[k][0]].cap[k])}
+      else if(sim.ord[k].length){          /* un solo fondo ha il rendimento: nessun confronto, quindi nessun primo */
+        var u=sim.ord[k][0];o.v=nomi[u]||FORME[u].nome;o.m=E(F[u].cap[k]);o.s='unico fondo con il rendimento a '+N+' anni';
+        if(tfrOn&&F[u].diff[k]!=null){o.s2=tfrTxt(F[u].diff[k]);o.st2=tone(F[u].diff[k])}
+      }
+      else{o.v='Dato non disponibile';o.s='manca il rendimento a '+N+' anni'}
+      return o;
+    }
+    o.v=nomi[w]||FORME[w].nome;o.m=E(F[w].cap[k]);
+    if(sec!=null)righe.push({t:'+'+E(F[w].punti[k]-F[sec].punti[k])+' '+sulN(sec),st:'pos'});
+    if(tfrOn)righe.push(F[w].diff[k]!=null?{t:tfrTxt(F[w].diff[k]),st:tone(F[w].diff[k])}:{t:'TFR: dato non disponibile',st:''});
+    if(!righe.length)righe.push({t:'versati '+E(F[w].vers[k]),st:''});
+    o.s=righe[0].t;o.st=righe[0].st;
+    if(righe[1]){o.s2=righe[1].t;o.st2=righe[1].st}
+    return o;
+  });
+  /* riga in evidenza: chi ha il capitale più alto e di quanto */
+  var win={badge:0,runs:[]};
+  if(!F.some(function(f){return f.vers[2]>0}))win.t='Inserisci almeno un versamento per vedere il confronto.';
+  else if(!conDato.some(function(x){return x}))win.t='Inserisci almeno un rendimento passato per vedere il confronto.';
+  else{
+    var gruppi=[];
+    if(NF>1)H.forEach(function(N,k){
+      if(W[k]==null)return;
+      var g=null;gruppi.forEach(function(x){if(x.i===W[k])g=x});
+      if(g)g.hs.push(N);else gruppi.push({i:W[k],hs:[N]});
+    });
+    if(NF===1){win.k=nome(0);win.t=F[0].cap[hd]!=null?E(F[0].cap[hd])+' dopo '+ND+' anni':'Dato non disponibile'}
+    else if(!gruppi.length){win.k='Capitale stimato';win.t=sim.pari.some(function(x){return x})?'Pari merito tra i fondi a confronto':'Dato non disponibile'}
+    else if(gruppi.length===1){win.badge=1;win.k='Capitale più alto a '+anniTxt(gruppi[0].hs)+' anni';win.t=nome(gruppi[0].i)}
+    else{win.badge=1;win.k='Capitale più alto';win.t=gruppi.map(function(g){return (nomi[g.i]||FORME[g.i].nome)+' a '+anniTxt(g.hs)+' anni'}).join('\n')}
+    /* dettaglio alla durata più lunga: il fondo con il capitale più alto (o il primo, se non c'è) rispetto al secondo e al TFR */
+    var wd=W[hd],fi=wd!=null?wd:(sim.ord[hd].length?sim.ord[hd][0]:0),ff=F[fi];
+    if(ff.cap[hd]!=null){
+      var altro=sim.ord[hd].filter(function(i){return i!==fi})[0],dv=tfrOn?ff.diff[hd]:null,parti=[];
+      if(wd!=null&&altro!=null)parti.push([{t:E(ff.punti[hd]-F[altro].punti[hd]),b:1},{t:'in più '+delN(altro)}]);
+      if(dv!=null)parti.push([{t:E(Math.abs(dv)),b:1},{t:(Math.round(dv)>=0?'in più':'in meno')+' del TFR lasciato in azienda'}]);
+      if(NF>1||parti.length){
+        if(NF>1)win.runs.push({t:'Dopo '+ND+' anni '+ilN(fi)+' arriva a'},{t:E(ff.cap[hd])+(parti.length?':':'.'),b:1});
+        parti.forEach(function(p,j){if(j)win.runs.push({t:'e'});win.runs=win.runs.concat(p)});
+        if(parti.length)win.runs[win.runs.length-1].t+='.';
+      }
+    }
+    if(tolti)win.runs.push({t:'Nei confronti sono già tolti i versamenti volontari.'});
+  }
+  rep.sections.push({type:'tiles',title:'In sintesi',n:nn('calc'),win:win,items:tiles,
+    cap:"Capitale calcolato con i rendimenti passati, prima dell'imposta dovuta alla liquidazione."+(tolti?' Nei confronti sono già tolti i versamenti volontari, che sono soldi in più messi dal cliente.':'')});
+  /* capitale a 5, 10 e 20 anni, con i rendimenti passati */
+  var crow=idx.map(function(i){return {c:[nome(i)].concat(H.map(function(N,k){return {t:E(F[i].cap[k]),b:NF>1&&W[k]===i}}))}});      /* in grassetto il capitale più alto */
+  if(tfrOn){
+    crow.push({c:[TFRN].concat(H.map(function(N,k){return E(T.cap[k])})),muted:1});
+    crow.push({c:[(nomi[0]||FORME[0].nome)+' rispetto al TFR'].concat(H.map(function(N,k){var d=F[0].diff[k];return d==null?'n.d.':{t:S(d),tone:tone(d)}}))});
+  }
+  if(NF>1)crow.push({c:['Capitale più alto'].concat(H.map(function(N,k){return W[k]!=null?{t:corto(W[k]),wr:1}:(sim.pari[k]?{t:'Pari merito',wr:1}:'n.d.')})),hi:1});
+  if(NF>1&&!SEMP)crow.push({c:['Vantaggio sul secondo fondo'].concat(H.map(function(N,k){var o=sim.ord[k];return W[k]!=null&&o.length>1?S(F[o[0]].punti[k]-F[o[1]].punti[k]):'–'}))});
+  var comp=[];if(anyOwn)comp.push('i versamenti volontari');if(anyDat)comp.push('il contributo del datore');
+  rep.sections.push({type:'chart',title:'Capitale stimato dopo 5, 10 e 20 anni',n:nn('calc'),groups:['5 anni','10 anni','20 anni'],
+    series:idx.map(function(i){return {name:nome(i),breve:FORME[i].breve,corto:corto(i),v:F[i].cap,r:R.map(function(a){return a[i]})}}),
+    ref:tfrOn?{name:TFRN,v:T.cap,r:RT}:null,win:NF>1?W:[null,null,null],
+    chart:{title:'Capitale stimato dopo 5, 10 e 20 anni',groups:['Dopo 5 anni','Dopo 10 anni','Dopo 20 anni'],
+      series:idx.map(function(i){return {name:nome(i),v:F[i].cap,r:R.map(function(a){return a[i]})}}),ref:tfrOn?{name:TFRN,v:T.cap,r:RT}:null},
+    table:{head:['','5 anni','10 anni','20 anni'],cols:cols(.34,3),rows:crow},
+    cap:"Capitale calcolato applicando ai versamenti il rendimento netto medio annuo degli ultimi 5, 10 e 20 anni, come se si ripetesse uguale ogni anno: è già al netto dei costi di gestione e dell'imposta sui rendimenti, e sono tolti anche i costi a carico diretto dell'aderente. Non è considerata l'imposta dovuta alla liquidazione"+(taxOn?' (stimata nella tabella «Dopo le imposte»)':'')+'.'+
+      (comp.length?' Il capitale dei fondi comprende '+comp.join(' e ')+(anyOwn?' indicati':' indicato')+' nelle ipotesi.':'')+
+      (NF>1&&ownDiv?' Il capitale più alto è individuato dopo aver tolto i versamenti volontari, che sono soldi in più messi dal cliente.':'')+
+      (mancano?' n.d. = manca il rendimento del periodo.':'')+
+      ' I rendimenti passati non sono necessariamente indicativi di quelli futuri.'});
+  /* rendimenti passati: la base del calcolo */
+  var per=['Ultimi 5 anni','Ultimi 10 anni','Ultimi 20 anni'];
+  if(!SEMP)rep.sections.push({type:'table',title:'I rendimenti passati usati nel calcolo',n:nn('storico'),
+    head:['Rendimento netto medio annuo'].concat(idx.map(function(i){return nome(i)+(FORME[i].k==='pip'&&!nomi[i]?(key==='gar'?' (gestioni separate)':' (unit linked)'):'')}),tail('TFR in azienda')),
+    short:[''].concat(idx.map(corto),tail('TFR')),cols:cols(.32,nT),
+    rows:per.map(function(p,h){return {c:[p].concat(idx.map(function(i){var v=R[h][i];return {t:P(v,1),tone:v!=null&&v<0?'neg':''}}),tfrOn?[{t:P(RT[h],1),tone:RT[h]!=null&&RT[h]<0?'neg':''}]:[])}}),
+    cap:"Rendimenti medi annui composti, già al netto dei costi di gestione e dell'imposta sui rendimenti: nel calcolo del capitale si tolgono solo i costi a carico diretto dell'aderente."+(mancano?' n.d. = dato non disponibile.':'')+' I rendimenti passati non sono necessariamente indicativi di quelli futuri. '+
+      (customR?'Rendimenti inseriti dal consulente: vanno ripresi dalla Nota informativa di ciascun fondo.':'Fonte: COVIP, medie di settore al 31 dicembre 2025 (periodi 2021-2025, 2016-2025 e 2006-2025), linea '+linea+(tfrOn?'; TFR a 20 anni: elaborazione sui coefficienti annuali di rivalutazione':'')+'.')});
+  /* come si forma il capitale */
+  var rows=[];
+  if(tfrOn)rows.push({c:['TFR versato o maturato'].concat(idx.map(function(){return E(T.vers[hd])}),[E(T.vers[hd])])});
+  if(anyV0)rows.push({c:['Versamento iniziale'].concat(idx.map(function(i){return F[i].v0>0?E(F[i].v0):'–'}),tail('–'))});
+  if(anyVol)rows.push({c:[mens?'Versamenti mensili':'Versamenti annuali'].concat(idx.map(function(i){return F[i].vol>0?E(F[i].vol*ND):'–'}),tail('–'))});
+  if(anyDat)rows.push({c:[{t:'Contributo del datore di lavoro',n:nn('dat')}].concat(idx.map(function(i){return F[i].dat>0?E(F[i].dat*ND):'–'}),tail('–'))});
+  rows.push({c:['Rendimenti generati'].concat(idx.map(function(i){return S(F[i].rend[hd])}),tfrOn?[S(T.riv[hd])]:[])});
+  rows.push({c:[{t:'Costi a carico diretto',n:nn('costi')}].concat(idx.map(function(i){return F[i].costi[hd]==null?'n.d.':E(-F[i].costi[hd])}),tail('–'))});
+  rows.push({c:['Capitale stimato'].concat(idx.map(function(i){return E(F[i].cap[hd])}),tfrOn?[E(T.cap[hd])]:[]),hi:1});
+  if(tfrOn)rows.push({c:['Differenza rispetto al TFR in azienda'].concat(idx.map(function(i){var d=F[i].diff[hd];return d==null?'n.d.':{t:S(d),tone:tone(d)}}),['–']),b:1});
+  if(!SEMP)rep.sections.push({type:'table',title:'Come si forma il capitale in '+ND+' anni',head:['Voce'].concat(idx.map(nome),tail('TFR in azienda')),short:[''].concat(idx.map(corto),tail('TFR')),cols:cols(.32,nT),rows:rows,
+    cap:'Rendimenti generati: con il rendimento netto medio degli ultimi '+ND+' anni, già al netto dei costi di gestione e dell\'imposta sui rendimenti'+(tfrOn?'; per il TFR, rivalutazione netta':'')+'. Costi a carico diretto: differenza tra il capitale che si avrebbe senza questi costi e quello stimato.'+
+      (tfrOn&&anyOwn?' La differenza rispetto al TFR toglie i versamenti volontari, che sono soldi in più messi dal cliente.':'')});
+  /* stima dopo le imposte */
+  if(taxOn){
+    var tr=[{c:['Capitale stimato'].concat(idx.map(function(i){return E(F[i].cap[hd])}),tfrOn?[E(T.cap[hd])]:[])},
+      {c:['Imposta alla liquidazione'].concat(idx.map(function(i){return F[i].taxL[hd]==null?'n.d.':E(-F[i].taxL[hd])}),tfrOn?[T.cap[hd]==null?'n.d.':E(-T.taxL[hd])]:[])},
+      {c:['Capitale dopo le imposte'].concat(idx.map(function(i){return E(F[i].net[hd])}),tfrOn?[E(T.net[hd])]:[]),b:!tfrOn?0:1,hi:!tfrOn?1:0}];
+    var anyRisp=F.some(function(f){return f.risp[hd]>0});
+    if(anyRisp)tr.push({c:['Risparmio IRPEF sui versamenti dedotti'].concat(idx.map(function(i){return F[i].risp[hd]>0?S(F[i].risp[hd]):'–'}),tail('–'))});
+    if(tfrOn)tr.push({c:['Vantaggio sul TFR dopo le imposte'].concat(idx.map(function(i){var d=F[i].vant[hd];return d==null?'n.d.':{t:S(d),tone:tone(d)}}),['–']),hi:1});
+    rep.sections.push({type:'table',title:'Dopo le imposte: stima a '+ND+' anni',n:nn('fisco'),head:['Voce'].concat(idx.map(nome),tail('TFR in azienda')),short:[''].concat(idx.map(corto),tail('TFR')),cols:cols(.32,nT),rows:tr,
+      cap:"L'imposta annuale sui rendimenti è già compresa nei rendimenti usati. Imposta alla liquidazione dopo "+ND+' anni: '+P(F[0].aliq[hd]*100,1)+' per i fondi pensione, sulla parte che deriva '+(tfrOn?'dal TFR e dai contributi dedotti; '+P(sim.aliqTFR*100,1)+' per il TFR':'dai contributi dedotti')+'.'+
+        (anyRisp?' Risparmio IRPEF stimato con aliquota del '+P(sim.marg*100,0)+'.':'')+
+        (tfrOn&&anyOwn?' Il vantaggio toglie i versamenti volontari e aggiunge il risparmio IRPEF.':'')});
+  }
+  /* costi */
+  var voce=function(t,fn){return {c:[t].concat(idx.map(function(i){return fn(X[i])}))}};
+  var crows=[voce('Spese di adesione, una tantum',function(x){return E(x.ad)}),voce('Spesa annua fissa',function(x){return E(x.fx)}),
+    voce('Costi su ogni versamento',function(x){return P(x.pv,2)}),voce('Spese di uscita',function(x){return E(x.us)}),
+    voce('Commissione annua sul patrimonio (già nei rendimenti)',function(x){return P(x.pp,2)})];
+  DUR.forEach(function(Td,j){crows.push({c:['ISC a '+Td+' anni'].concat(idx.map(function(i){return P(isc[i][j].v,2)+(isc[i][j].man?'*':'')})),b:Td!==10,hi:Td===10,isc:Td})});
+  if(SEMP){var anyPv=X.some(function(x){return x.pv>0}),anyUs=X.some(function(x){return x.us>0});
+    crows=crows.filter(function(r,j){return j===0||j===1||(j===2&&anyPv)||(j===3&&anyUs)||r.isc===10})}
+  rep.sections.push({type:'table',title:'I costi dei fondi',n:nn('costi'),head:['Voce di costo'].concat(idx.map(nome)),short:[''].concat(idx.map(corto)),cols:cols(.37,NF),rows:crows,
+    cap:(SEMP?"Spese di adesione, spesa annua e costi sui versamenti sono a carico diretto dell'aderente e nel calcolo sono tolti dai versamenti. ":"Le prime quattro voci sono a carico diretto dell'aderente e nel calcolo sono tolte dai versamenti; la commissione sul patrimonio è già compresa nei rendimenti passati. ")+
+      (allMan?'ISC inserito dal consulente. ':'ISC calcolato dalle voci di costo con il metodo COVIP'+(anyMan?"; con l'asterisco, ISC inserito dal consulente. ":'. '))+
+      (customC?'Costi inseriti dal consulente: vanno ripresi dalla Scheda «I costi» di ciascun fondo.':'Costi iniziali: struttura tipo tarata sugli ISC medi di settore COVIP al 31 dicembre 2025, linea '+linea+'.')});
+  var att={title:'Da verificare prima di scegliere',items:attList(tfrOn),give:hasFpa?1:0};
+  rep.sections.push(hasFpa?{type:'duo',cols:[{title:'Perché valutare il fondo pensione aperto',items:proList(tfrOn)},att]}:{type:'duo',cols:[att]});
+  /* rendita: chi dà di più da subito. Colonne: due rendite di esempio oppure i fondi a confronto (il risultato compare anche nel modulo) */
+  {
+    var fondiR=RMODO==='fondi',rj=fondiR?idx:[0,1],nR=rj.length;
+    var reV=num('c-re'),rk=Math.max(0,nz('c-rk')),re=Math.min(80,Math.max(50,Math.round(reV==null?67:reV)));
+    var rin=rj.map(function(j){
+      var a=num('c-ri'+j),b=num('c-rr'+j),c=num('c-rc'+j);
+      return {i:Math.max(0,Math.min(6,a==null?0:a))/100,riv:Math.max(0,Math.min(10,b==null?0:b))/100,coef:c!=null&&c>0?c/100000:null};
+    });
+    rj.forEach(function(j){$('c-rc'+j).placeholder=grp(coefRendita(re,rin[j].i)*100000)});
+    var rs=simRendita({K:rk,eta:re,col:rin}),rv=rs.v,rw=nR>1?rs.primo:null,r2=rs.ord[1];
+    var tassiDiv=rv.some(function(o){return Math.abs(o.i-rv[0].i)>1e-9});
+    var rnome=function(j){return fondiR?nome(j):(tassiDiv?'Tasso tecnico '+pt(rv[j].i*100):'Rendita '+'AB'.charAt(j))};
+    var rcorto=function(j){return fondiR?corto(j):rnome(j)};
+    var primi=function(n){return n===1?'il primo anno':'i primi '+n+' anni'};
+    var d1=rw!=null?Math.round(rv[rw].R)-Math.round(rv[r2].R):0;        /* differenza tra le due rate come sono scritte */
+    var durata=rw==null?'':(rs.anniRata>=rs.max?'la rata resta la più alta per tutta la durata della rendita'
+      :'la rata resta la più alta per '+primi(rs.anniRata)+(rs.anniTot>=rs.max?' e il totale incassato per tutta la durata considerata':' e il totale incassato per '+primi(rs.anniTot)+', cioè fino a '+(re+rs.anniTot)+' anni di età'));
+    var rwin={badge:rw!=null?1:0,runs:[]};
+    if(rw!=null){
+      rwin.k='Rendita più alta da subito';
+      rwin.t=fondiR?nome(rw):(tassiDiv?'Con il tasso tecnico al '+pt(rv[rw].i*100):rnome(rw));
+      rwin.runs=[{t:E(rv[rw].R)+" l'anno",b:1},{t:'invece di'},{t:E(rv[r2].R)+(fondiR&&nR>2?' ('+nmb(r2)+')':'')+':',nw:1},{t:E(d1)+' in più',b:1},{t:'fin dalla prima rata.'}];
+    }else{
+      rwin.k='Rendita iniziale';rwin.t='Stesso importo: '+E(rv[0].R)+" l'anno";
+      rwin.runs=[{t:fondiR?'Con questi valori le rendite partono uguali: indica il tasso tecnico e la rivalutazione di ciascun fondo.':'Con questi valori le due rendite partono uguali: indica due tassi tecnici diversi.'}];
+    }
+    var ritems=["Il tasso tecnico (o tasso di attualizzazione) è un rendimento che la compagnia riconosce in anticipo nel calcolo della rendita: più è alto, più alta è la rata iniziale; in cambio, a parità di rendimento della gestione, la rivalutazione degli anni successivi è più bassa."];
+    if(rw!=null)ritems.push('Con questi valori '+durata+'.');
+    if(!SEMP)ritems.push("Perché conviene ricevere di più subito: il denaro arriva nei primi anni di pensione, quando di solito serve di più, e il rendimento anticipato resta acquisito anche se in futuro la gestione rendesse meno.");
+    ritems.push("Da sapere: chi vive molto a lungo può ricevere in totale di più con la rendita che parte più bassa ma cresce di più; una rata che cresce protegge anche meglio dall'inflazione. Tasso tecnico e regole di rivalutazione sono nel Documento sulle rendite del fondo: non tutti i fondi permettono di sceglierli.");
+    /* in verde l'importo più alto della riga, se è uno solo */
+    var rrow=function(t,fn,primo){
+      var a=rj.map(function(j){return Math.round(fn(j))}),mx=Math.max.apply(null,a),solo=a.filter(function(x){return x===mx}).length===1;
+      return {c:[t].concat(a.map(function(x,j){return {t:E(x)+(primo&&rv[j].man?'*':''),tone:solo&&x===mx?'pos':''}})),hi:primo};
+    };
+    var rrows=[];
+    if(fondiR||!tassiDiv)rrows.push({c:['Tasso tecnico'].concat(rv.map(function(o){return pt(o.i*100)})),muted:1});
+    rrows.push({c:['Rivalutazione annua'].concat(rv.map(function(o){return P(o.riv*100,1)})),muted:1});
+    rrows.push(rrow('Rata annua il primo anno',function(j){return rs.rata(j,1)},1),rrow('Rata annua dopo 10 anni',function(j){return rs.rata(j,11)}));
+    if(!SEMP)rrows.push(rrow('Rata annua dopo 20 anni',function(j){return rs.rata(j,21)}),rrow('Incassato in 10 anni',function(j){return rs.tot(j,10)}));
+    rrows.push(rrow('Incassato in 20 anni',function(j){return rs.tot(j,20)}));
+    if(!SEMP)rrows.push(rrow('Incassato in 30 anni',function(j){return rs.tot(j,30)}));
+    var anyRM=rv.some(function(o){return o.man}),allRM=rv.every(function(o){return o.man});
+    /* rendimento della gestione a cui corrisponde la rivalutazione indicata: se la rivalutazione è zero, è al massimo il tasso tecnico */
+    var gtxt=function(o){return (o.riv>0?'del ':'fino al ')+P(o.g*100,1)};
+    var gUg=rv.every(function(o){return gtxt(o)===gtxt(rv[0])});
+    $('c-ren-out').textContent=rw!=null?rcorto(rw)+': '+E(rv[rw].R)+" l'anno invece di "+E(rv[r2].R)+' ('+E(d1)+' in più). '+durata.charAt(0).toUpperCase()+durata.slice(1)+'.'
+      :'Con questi valori le rendite partono uguali: '+E(rv[0].R)+" l'anno.";
+    if(renOn)rep.sections.push({type:'rendita',title:'La rendita: perché conta il tasso tecnico',n:nn('rendita'),win:rwin,items:ritems,
+      table:{head:[''].concat(rj.map(rcorto)),cols:[{w:.4,al:'l'}].concat(rj.map(function(){return {w:.6/nR,al:'r'}})),rows:rrows},
+      cap:'Esempio illustrativo: '+E(rk)+' trasformati in rendita vitalizia a '+re+' anni, rata annua posticipata; ogni anno la rata cresce della rivalutazione indicata e non diminuisce. '+
+        (fondiR?'Tasso tecnico e rivalutazione sono indicati dal consulente: vanno verificati nel Documento sulle rendite di ciascun fondo. ':'Tasso tecnico e rivalutazione sono ipotesi. ')+
+        'La rivalutazione indicata corrisponde a un rendimento riconosciuto dalla gestione '+(gUg?gtxt(rv[0])+(nR>2?' per tutte':' per entrambe'):rv.map(function(o,j){var c=rcorto(j);return gtxt(o)+' ('+(fondiR?c:c.charAt(0).toLowerCase()+c.slice(1))+')'}).join(nR>2?', ':' e '))+'. '+
+        (allRM?'Rendite iniziali inserite dal consulente. ':'Rendite iniziali calcolate su una tavola di sopravvivenza semplificata'+(fondiR?', uguale per tutti i fondi':'')+", tarata in modo che a 62 anni, senza tasso tecnico, 100.000 € diano 4.080 € l'anno"+(anyRM?"; con l'asterisco, rendita iniziale inserita dal consulente":'')+'. ')+
+        "I coefficienti di ciascun fondo sono nel suo Documento sulle rendite e possono essere diversi. In verde l'importo più alto di ogni riga. Importi al lordo delle imposte."});
+  }
+  rep.sections.push({type:'notes',title:'Note',items:NOTE});
+  rep.sections.push({type:'avv',title:'Avvertenze',items:[
+    COVIP_AVV,
+    "I rendimenti passati non sono necessariamente indicativi di quelli futuri. I rendimenti dei fondi pensione non sono garantiti, salvo quanto previsto dalle linee con garanzia, e il valore della posizione può anche diminuire.",
+    "Simulazione a scopo illustrativo: gli importi sono calcolati applicando i rendimenti passati, che potranno non ripetersi; dipendono dalle ipotesi indicate, non considerano l'imposta dovuta alla liquidazione dove non è indicato diversamente, non sono garantiti e non impegnano il consulente, l'intermediario né i fondi. Le stime ufficiali della pensione complementare sono nel paragrafo «Quanto potresti ricevere quando andrai in pensione» della Nota informativa e nei motori di calcolo dei singoli fondi.",
+    "Costi e rendimenti iniziali sono medie di settore: quelli dei singoli fondi sono nella Scheda «I costi» e nei documenti di ciascun fondo, disponibili sui siti dei fondi e della COVIP (www.covip.it). Chi è già iscritto a un fondo pensione deve confrontare la Scheda «I costi» del proprio fondo con quella del fondo proposto.",
+    "Chi può aderire a una forma pensionistica collettiva prevista dal proprio contratto di lavoro ha diritto, aderendovi, al contributo del datore di lavoro: è un elemento da valutare prima di scegliere una forma diversa.",
+    "Il documento non è una consulenza in materia di investimenti né una raccomandazione personalizzata e non sostituisce la documentazione d'offerta. L'adesione avviene soltanto con la sottoscrizione del Modulo di adesione, dopo la consegna dei documenti previsti e la compilazione del Questionario di autovalutazione.",
+    "Documento elaborato da "+AUTORE+", "+QUALIFICA+(rep.interm?", che opera per conto di "+rep.interm+" e ne promuove e colloca prodotti e servizi":"")+". Dati e riferimenti normativi aggiornati alla data del documento ("+DATA+"). "+FONTI
+  ]});
+  rep.sections.push({type:'firma'});
+  return rep;
+}
+
+/* ---------- Resa a schermo ---------- */
+/* Stesso stile degli altri confronti: testata a fascia con la versione (semplificata o completa), sintesi in alto,
+   tabelle leggere, grafico a barre con il TFR lasciato in azienda come riferimento, note, avvertenze e firma. */
+var DLICON='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function shellHTML(){
+  return '<div class="card rep-head"><div><h2 id="c-rh-t"></h2><p class="sub" id="c-rh-s"></p>'+
+    '<p class="meta"><span id="c-rh-az">Preparato per: <b id="c-rh-cli"></b></span><span>Data: <b>'+DATA+'</b></span><span>Versione: <b id="c-rh-v"></b></span></p>'+
+    '<p class="cred">Elaborato da <b>'+AUTORE+'</b>, '+QUALIFICA+' · '+TEL+' · '+MAIL+'</p><p class="promo">'+esc(COVIP_AVV)+'</p></div>'+
+    '<div class="act no-print"><button type="button" class="btn" id="c-pdf" hidden>'+DLICON+'Scarica il PDF</button><button type="button" class="btn" id="c-print" hidden>Stampa o salva in PDF</button><p class="status" id="c-status" role="status"></p></div></div>'+
+    '<div class="col" id="c-body"></div>';
+}
+function tilesHTML(items,cls,hiLast){
+  return '<div class="tiles '+cls+'">'+items.map(function(it,j){
+    var hi=hiLast&&j===items.length-1;
+    return '<div class="tile'+(cls==='key'?' key':'')+(hi?' hi':'')+'"><div class="l">'+lab(esc(it.l),mk(it.n))+'</div><div class="v'+(it.txt?' txt':'')+'">'+esc(it.v)+'</div>'+
+      (it.m?'<div class="m">'+esc(it.m)+'</div>':'')+(it.s?'<div class="s '+(it.st||'')+'">'+esc(it.s)+'</div>':'')+(it.s2?'<div class="s '+(it.st2||'')+'">'+esc(it.s2)+'</div>':'')+'</div>';
+  }).join('')+'</div>';
+}
+function runsHTML(runs){return runs.map(function(r){return r.b?'<b'+(String(r.t).length<=26?' class="nw"':'')+'>'+esc(r.t)+'</b>':(r.nw?'<span class="nw">'+esc(r.t)+'</span>':esc(r.t))}).join(' ')}
+/* riga in evidenza: chi è primo, in grande, e di quanto */
+function winHTML(w){
+  return '<div class="win">'+(w.badge?'<span class="wb" aria-hidden="true">1°</span>':'')+'<div>'+(w.k?'<p class="wk">'+esc(w.k)+'</p>':'')+'<p class="wt">'+esc(w.t).replace(/\n/g,'<br>')+'</p>'+
+    (w.runs&&w.runs.length?'<p class="ws">'+runsHTML(w.runs)+'</p>':'')+'</div></div>';
+}
+function tableHTML(s){
+  var h='<div class="tw"><table style="--nc:'+(s.cols.length-1)+'"><thead><tr>'+s.head.map(function(t,i){
+    var sh=s.short&&s.short[i]!=null&&s.short[i]!==t;       /* intestazione breve per il telefono */
+    return '<th'+(s.cols[i].al==='l'?' class="l"':'')+'>'+(sh?'<span class="hf">'+esc(t)+'</span><span class="hs">'+esc(s.short[i])+'</span>':esc(t))+'</th>';
+  }).join('')+'</tr></thead><tbody>';
+  s.rows.forEach(function(r){
+    h+='<tr class="'+(r.hi?'strong':(r.b?'b':''))+(r.muted?' muted':'')+'">'+r.c.map(function(c,i){
+      var al=s.cols[i].al==='l'?'l':'num';
+      if(c&&typeof c==='object')return '<td class="'+al+' '+(c.tone||'')+(c.wr?' wr':'')+(c.b?' cb':'')+'">'+lab(esc(c.t),mk(c.n))+'</td>';
+      return '<td class="'+al+'">'+esc(c)+'</td>';
+    }).join('')+'</tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+function legendHTML(ch){
+  return '<div class="legend">'+ch.series.map(function(se,k){return '<span><i class="sq" style="background:var(--s'+(k+1)+')"></i>'+esc(se.name)+'</span>'}).join('')+
+    (ch.ref?'<span><i class="ln"></i>'+esc(ch.ref.name)+'</span>':'')+'</div>';
+}
+function ulHTML(items){return '<ul class="ul">'+items.map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul>'}
+function bodyHTML(rep){
+  var h='<div class="print-only"><h3>Ipotesi del confronto</h3>'+tilesHTML(rep.key,'key',0)+'</div>';
+  rep.sections.forEach(function(s,i){
+    var hd='<h3>'+lab(esc(s.title||''),mk(s.n))+'</h3>';
+    if(s.type==='tiles')h+='<div class="sintesi">'+hd+(s.win?winHTML(s.win):'')+tilesHTML(s.items,'sint',1)+(s.cap?'<p class="fine">'+esc(s.cap)+'</p>':'')+'</div>';
+    else if(s.type==='chart')h+='<div class="card cchart">'+hd+(s.lead?'<p class="lead">'+runsHTML(s.lead)+'</p>':'')+legendHTML(s.chart)+'<div class="chart" id="c-chart-'+i+'"></div>'+tableHTML(s.table)+'<p class="fine">'+esc(s.cap)+'</p></div>';
+    else if(s.type==='table')h+='<div class="card">'+hd+(s.lead?'<p class="lead">'+runsHTML(s.lead)+'</p>':'')+tableHTML(s)+(s.cap?'<p class="fine">'+esc(s.cap)+'</p>':'')+'</div>';
+    else if(s.type==='duo')h+='<div class="card"><div class="duo">'+s.cols.map(function(c){return '<div'+(c.give?' class="give"':'')+'><h3>'+esc(c.title)+'</h3>'+ulHTML(c.items)+'</div>'}).join('')+'</div></div>';
+    else if(s.type==='rendita')h+='<div class="card">'+hd+winHTML(s.win)+'<div class="duo ren"><div>'+ulHTML(s.items)+'</div><div>'+tableHTML(s.table)+'<p class="fine">'+esc(s.cap)+'</p></div></div></div>';
+    else if(s.type==='notes')h+='<div class="card"><h3>'+esc(s.title)+'</h3><ol class="notes">'+s.items.map(function(a,j){return '<li id="cn-'+(j+1)+'"><span class="k">'+(j+1)+'</span><span><b>'+esc(a[1])+'.</b> '+esc(a[2])+'</span></li>'}).join('')+'</ol></div>';
+    else if(s.type==='avv')h+='<div class="card avv"><h3>'+esc(s.title)+'</h3>'+s.items.map(function(t,j){return '<p'+(j===0?' class="k"':'')+'>'+esc(t)+'</p>'}).join('')+'</div>';
+    else if(s.type==='firma')h+='<div class="card firma"><div><p class="by1">Elaborato da</p><p class="who">'+AUTORE+'</p><p class="ql">'+QUALIFICA.charAt(0).toUpperCase()+QUALIFICA.slice(1)+'</p></div><p class="cts"><a href="tel:'+TELH+'">'+TEL+'</a><a href="mailto:'+MAIL+'">'+MAIL+'</a></p></div>';
+  });
+  return h;
+}
+
+/* ---------- Grafico a barre affiancate (un colore per fondo), con il TFR lasciato in azienda come linea tratteggiata ---------- */
+function niceStep(range,n){var raw=range/n,e=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)),m=raw/e;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*e}
+function scalaG(ch){
+  var lo=0,hi=0;ch.series.concat(ch.ref?[ch.ref]:[]).forEach(function(se){se.v.forEach(function(v){if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v)}})});
+  if(hi-lo<1e-9)hi=lo+1000;
+  var st=niceStep(hi-lo,4);return {a:Math.floor(lo/st+1e-9)*st,b:Math.ceil(hi/st-1e-9)*st,st:st};
+}
+function drawGB(host,ch){
+  var W=Math.max(300,Math.round(host.clientWidth)||720),H=Math.round(Math.max(230,Math.min(300,W*0.44))),sc=scalaG(ch),ng=ch.groups.length,ns=ch.series.length;
+  var L=14+6.4*Math.max(E(sc.a).length,E(sc.b).length),Rg=8,Tp=24,Bt=30,pw=W-L-Rg,ph=H-Tp-Bt;
+  var Y=function(v){return Tp+(sc.b-v)/(sc.b-sc.a)*ph},y0=Y(0),gw=pw/ng,gap=4,bw=Math.max(8,Math.min(ns>2?42:54,(gw*0.72-(ns-1)*gap)/ns));
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(ch.title||'Capitale stimato')+'"><g font-size="11" fill="var(--ink-2)">',lbs='';
+  for(var v=sc.a;v<=sc.b+1e-9;v+=sc.st){var yy=Y(v),z=Math.abs(v)<1e-9;
+    s+='<line x1="'+L+'" x2="'+(W-Rg)+'" y1="'+yy.toFixed(1)+'" y2="'+yy.toFixed(1)+'" stroke="var(--'+(z?'ink-2':'line')+')" stroke-width="'+(z?1.1:0.6)+'"/><text x="'+(L-7)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end">'+E(v)+'</text>'}
+  ch.groups.forEach(function(g,i){
+    var cx=L+gw*i+gw/2,tot=ns*bw+(ns-1)*gap,xa=cx-tot/2,vals=ch.series.map(function(se){return se.v[i]});
+    var lw=Math.max.apply(null,vals.map(function(v){return v==null?0:E(v).length*6.1})),both=bw+gap>=lw+2,best=-1;
+    vals.forEach(function(v,k){if(v!=null&&(best<0||v>vals[best]))best=k});
+    vals.forEach(function(v,k){
+      var x=xa+k*(bw+gap);
+      if(v==null){s+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(y0-5).toFixed(1)+'" text-anchor="middle" font-size="10">n.d.</text>';return}
+      var ya=Y(Math.max(0,v)),yb=Y(Math.min(0,v)),hh=Math.max(1,yb-ya);
+      s+='<rect x="'+x.toFixed(1)+'" y="'+ya.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+hh.toFixed(1)+'" rx="'+Math.min(3,bw/4).toFixed(1)+'" fill="var(--s'+(k+1)+')"/>';
+      if(both||(k===best&&lw<=gw-6))lbs+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(ya-5).toFixed(1)+'" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">'+E(v)+'</text>';
+    });
+    if(ch.ref&&ch.ref.v[i]!=null){var yr=Y(ch.ref.v[i]).toFixed(1);
+      s+='<line x1="'+(xa-9).toFixed(1)+'" x2="'+(xa+tot+9).toFixed(1)+'" y1="'+yr+'" y2="'+yr+'" stroke="var(--surface)" stroke-width="5"/><line x1="'+(xa-9).toFixed(1)+'" x2="'+(xa+tot+9).toFixed(1)+'" y1="'+yr+'" y2="'+yr+'" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>'}
+    s+='<text x="'+cx.toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" font-size="12">'+esc(g)+'</text>';
+    s+='<rect data-i="'+i+'" x="'+(L+gw*i).toFixed(1)+'" y="'+Tp+'" width="'+gw.toFixed(1)+'" height="'+ph+'" fill="transparent"/>';
+  });
+  host.innerHTML=s+lbs+'</g></svg><div class="tip"></div>';
+  var tip=host.querySelector('.tip');
+  var riga=function(o,i){return esc(o.name)+': '+E(o.v[i])+(o.r&&o.r[i]!=null&&o.v[i]!=null?' ('+P(o.r[i],1)+" l'anno)":'')};
+  host.querySelectorAll('rect[data-i]').forEach(function(rc){
+    function show(){var i=+rc.dataset.i,bx=rc.getBoundingClientRect(),hx=host.getBoundingClientRect();
+      tip.innerHTML='<strong>'+esc(ch.groups[i])+'</strong><br>'+ch.series.map(function(se){return riga(se,i)}).join('<br>')+(ch.ref?'<br>'+riga(ch.ref,i):'');
+      tip.style.display='block';
+      var half=tip.offsetWidth/2,x=bx.left-hx.left+bx.width/2;
+      tip.style.left=Math.min(hx.width-half,Math.max(half,x))+'px';tip.style.top=(bx.top-hx.top+34)+'px'}
+    rc.addEventListener('mouseenter',show);rc.addEventListener('click',show);
+    rc.addEventListener('mouseleave',function(){tip.style.display='none'});
+  });
+}
+var LAST=null;
+function drawCharts(){if(LAST)LAST.sections.forEach(function(s,i){if(s.chart){var el=$('c-chart-'+i);if(el)drawGB(el,s.chart)}})}
+function render(){
+  var rep=buildReport();LAST=rep;
+  $('c-rh-t').textContent=rep.titolo;$('c-rh-s').textContent=rep.sotto;
+  $('c-rh-cli').textContent=rep.cliente;$('c-rh-az').hidden=!rep.cliente;
+  $('c-rh-v').textContent=MODE==='c'?'completa':'semplificata';
+  $('c-vs').innerHTML=rep.vs.map(function(n,k){return '<span class="fx"><i style="background:var(--s'+(k+1)+')"></i>'+esc(n)+'</span>'}).join('')+
+    (rep.tfrOn?'<span class="fx tf"><i></i>TFR in azienda</span>':'');
+  $('c-body').innerHTML=bodyHTML(rep);
+  drawCharts();
+}
+
+/* ---------- PDF per il cliente (A4, generato nel browser, segue la versione scelta) ---------- */
+function loadPdfLib(){return new Promise(function(res,rej){
+  if(window.PDFLib)return res();
+  var u=['https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js','https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'],i=0;
+  (function next(){
+    if(i>=u.length)return rej({lib:1});
+    var s=document.createElement('script');s.src=u[i++];
+    s.onload=function(){window.PDFLib?res():next()};s.onerror=next;document.head.appendChild(s);
+  })();
+})}
+function buildPDF(rep){
+  var Lb=window.PDFLib,rgb=Lb.rgb,doc,F,B,I,page,y,W=595.28,Hp=841.89,M=36,CW=W-2*M,BOT=M+26,ok={},full=MODE==='c';
+  var C={ink:rgb(.08,.125,.12),ink2:rgb(.3,.35,.35),line:rgb(.82,.86,.86),acc:rgb(0,.216,.506),soft:rgb(.933,.949,.976),good:rgb(.11,.48,.27),bad:rgb(.7,.22,.18),
+    white:rgb(1,1,1),brass:rgb(.769,.627,.384),s:[rgb(.184,.373,.659),rgb(.769,.627,.384),rgb(.247,.561,.478)]};
+  function cl(s){
+    s=String(s==null?'':s);var o='';
+    for(var i=0;i<s.length;i++){
+      var ch=s[i],k=s.charCodeAt(i);
+      if(k===0x2212)ch='-';else if(k===0xA0||k===0x202F||k===0x2009)ch=' ';else if(k===0x2265){o+='>=';continue}else if(k===0x2264){o+='<=';continue}
+      if(ok[ch]===undefined){try{F.encodeText(ch);ok[ch]=true}catch(e){ok[ch]=false}}
+      o+=ok[ch]?ch:'?';
+    }
+    return o;
+  }
+  function tw(s,f,z){return f.widthOfTextAtSize(s,z)}
+  function T(s,x,yy,z,f,c,al){s=cl(s);f=f||F;var w=tw(s,f,z);if(s)page.drawText(s,{x:al==='r'?x-w:(al==='c'?x-w/2:x),y:yy,size:z,font:f,color:c||C.ink});return w}
+  function wrap(s,f,z,w){var out=[],cur='';cl(s).split(/\s+/).forEach(function(wd){if(!wd)return;var t=cur?cur+' '+wd:wd;if(!cur||tw(t,f,z)<=w)cur=t;else{out.push(cur);cur=wd}});if(cur)out.push(cur);return out.length?out:['']}
+  function fit(s,f,z,w){s=cl(s);if(tw(s,f,z)<=w)return s;while(s.length>1&&tw(s+'…',f,z)>w)s=s.slice(0,-1);return s+'…'}
+  function np(){page=doc.addPage([W,Hp]);y=Hp-M}
+  function need(h){if(y-h<BOT){np();return true}return false}
+  function hl(yy,th,col,x0,x1){page.drawLine({start:{x:x0==null?M:x0,y:yy},end:{x:x1==null?W-M:x1,y:yy},thickness:th,color:col})}
+  function sec(t,minH,n){need(minH||50);y-=17;var w=T(t,M,y,11,B,C.acc);if(n)T(String(n),M+w+2,y+4,6,B,C.acc);y-=5;hl(y,.5,C.line);y-=7}
+  function rich(runs,x0,mw,z,lh,dry){
+    var x=x0,segs=[],n=0,yy=y-z;
+    function flush(){if(!dry){var xx=x0;segs.forEach(function(s){xx+=(s.g||0);xx+=T(s.t,xx,yy,z,s.f,s.c)})}segs=[];n++;yy-=lh;x=x0}
+    runs.forEach(function(r){cl(r.t).split(/\s+/).forEach(function(wd){
+      if(!wd)return;var sp=x>x0?' ':'',w=tw(sp+wd,r.f,z);
+      if(x+w>x0+mw&&x>x0){flush();sp='';w=tw(wd,r.f,z)}
+      var last=segs[segs.length-1],g=0;
+      if(last&&last.f===r.f&&last.c===r.c)last.t+=sp+wd;else{g=last?1.2:0;segs.push({t:sp+wd,f:r.f,c:r.c,g:g})}
+      x+=w+g;
+    })});
+    if(segs.length)flush();
+    if(!dry)y-=n*lh;
+    return n;
+  }
+  function para(t,f,z){var runs=[{t:t,f:f||F,c:C.ink2}],n=rich(runs,M,CW,z||7.2,9,true);need(n*9+4);rich(runs,M,CW,z||7.2,9,false);y-=3}
+  /* riquadri con i numeri chiave; hiLast = l'ultimo in evidenza */
+  function boxes(items,key,hiLast){
+    var n=items.length,gap=8,w=(CW-gap*(n-1))/n,pad=8,iw=w-2*pad;
+    var lay=items.map(function(it,j){
+      var hi=hiLast&&j===n-1,z=key||it.txt?(hi?12:11):(hi?15:13),vl=wrap(it.v,B,z,iw);if(vl.length>1){z=9.5;vl=wrap(it.v,B,z,iw)}
+      var a={ll:wrap(it.l,F,7.5,iw-(it.n?16:0)),vl:vl,z:z,hi:hi,mz:hi?13:11.5,sl:it.s?wrap(it.s,it.st?B:F,7,iw):[],s2:it.s2?wrap(it.s2,it.st2?B:F,7,iw):[]};
+      a.h=pad+6+(a.ll.length-1)*9+(z+4)+(vl.length-1)*(z+2)+(it.m?a.mz+3:0)+(a.sl.length?11+(a.sl.length-1)*8.5:0)+a.s2.length*9+pad-1;return a;
+    });
+    var hh=Math.max.apply(null,lay.map(function(a){return a.h}));
+    need(hh+8);
+    items.forEach(function(it,i){
+      var x=M+i*(w+gap),a=lay[i],ly=y-pad-6,soft=key||a.hi;
+      page.drawRectangle({x:x,y:y-hh,width:w,height:hh,color:soft?C.soft:C.white,borderColor:soft?C.acc:C.line,borderWidth:a.hi?1.4:(key?.9:.7)});
+      a.ll.forEach(function(s,k){var wd=T(s,x+pad,ly-k*9,7.5,F,C.ink2);if(k===a.ll.length-1&&it.n)T(String(it.n),x+pad+wd+1.5,ly-k*9+3,5.5,B,C.acc)});
+      var vy=ly-(a.ll.length-1)*9-(a.z+4);
+      a.vl.forEach(function(s,k){T(s,x+pad,vy-k*(a.z+2),a.z,B,C.ink)});
+      var my=vy-(a.vl.length-1)*(a.z+2);
+      if(it.m){my-=a.mz+3;T(it.m,x+pad,my,a.mz,B,C.ink)}
+      var sy=my-11,sc=it.st==='pos'?C.good:(it.st==='neg'?C.bad:C.ink2);
+      a.sl.forEach(function(s,k){T(s,x+pad,sy-k*8.5,7,it.st?B:F,sc)});
+      var s2y=sy-(a.sl.length-1)*8.5-9,c2=it.st2==='pos'?C.good:(it.st2==='neg'?C.bad:C.ink2);
+      a.s2.forEach(function(s,k){T(s,x+pad,s2y-k*9,7,it.st2?B:F,c2)});
+    });
+    y-=hh+4;
+  }
+  /* riga in evidenza: fascia piena con il primo classificato in grande e l'anello color ottone */
+  function winBox(w,minAfter){
+    var pad=11,bx=w.badge?33:0,x0=M+pad+bx,mw=CW-2*pad-bx;
+    var tl=[],rr=(w.runs||[]).map(function(r){return {t:r.t,f:r.b?B:F,c:C.white}});
+    String(w.t).split('\n').forEach(function(l){tl=tl.concat(wrap(l,B,14,mw))});
+    var nr=rr.length?rich(rr,x0,mw,9,11.5,true):0,hh=pad+(w.k?9:0)+tl.length*16+(nr?nr*11.5+2:0)+pad+1;
+    need(hh+8+(minAfter||0));
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.acc});
+    if(w.badge){page.drawCircle({x:M+pad+12,y:y-hh/2,size:13.5,color:C.brass});page.drawCircle({x:M+pad+12,y:y-hh/2,size:11.8,color:C.white});T('1°',M+pad+12,y-hh/2-3.7,10.5,B,C.acc,'c')}
+    var top=y,yy=y-pad;
+    if(w.k){yy-=7;T(w.k,x0,yy,7.8,F,C.white);yy-=2}
+    tl.forEach(function(sx){yy-=14;T(sx,x0,yy,14,B,C.white);yy-=2});
+    if(nr){y=yy-1;rich(rr,x0,mw,9,11.5,false)}
+    y=top-hh-6;
+  }
+  function leadBox(runs){
+    var rr=runs.map(function(r){return {t:r.t,f:r.b?B:F,c:C.ink}}),pad=8,z=8.8,lh=11.5,x0=M+pad+5,mw=CW-2*pad-5;
+    var n=rich(rr,x0,mw,z,lh,true),hh=n*lh+2*pad-3;
+    need(hh+10);
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.soft});
+    page.drawRectangle({x:M,y:y-hh,width:3,height:hh,color:C.acc});
+    var top=y;y-=pad-1.5;rich(rr,x0,mw,z,lh,false);y=top-hh-6;
+  }
+  function estT(tb){return 30+tb.rows.length*15}
+  /* tabella; X0, TW = posizione e larghezza (se mancano: tutta la larghezza della pagina) */
+  function table(tb,X0,TW){
+    X0=X0==null?M:X0;TW=TW||CW;
+    var cols=tb.cols,xs=[],x=X0,z=8.5,lh=10.5;cols.forEach(function(c){xs.push(x);x+=c.w*TW});
+    function head(){
+      var ls=tb.head.map(function(t,i){return wrap(t,B,7.5,cols[i].w*TW-8)}),mx=Math.max.apply(null,ls.map(function(a){return a.length}));
+      ls.forEach(function(a,i){a.forEach(function(s,k){var yy=y-9-(k+mx-a.length)*9;
+        if(cols[i].al==='l')T(s,xs[i]+4,yy,7.5,B,C.ink2);else T(s,xs[i]+cols[i].w*TW-4,yy,7.5,B,C.ink2,'r')})});
+      y-=mx*9+5;hl(y,.8,C.ink2,X0,X0+TW);
+    }
+    need(60);head();
+    tb.rows.forEach(function(r){
+      var st=!!r.hi,bold=st||r.b,zz=st?9.2:z,cells=r.c.map(function(c,i){
+        var o=(c&&typeof c==='object')?c:{t:c==null?'':String(c)},f=(bold||o.b)?B:F;
+        return {o:o,f:f,ls:wrap(o.t,f,zz,cols[i].w*TW-8-(o.n?10:0))};
+      });
+      var nl=Math.max.apply(null,cells.map(function(c){return c.ls.length})),rh=nl*lh+(st?6:4);
+      if(y-rh<BOT){np();head()}
+      if(st){page.drawRectangle({x:X0,y:y-rh,width:TW,height:rh,color:C.soft});page.drawRectangle({x:X0,y:y-rh,width:2.5,height:rh,color:C.acc})}
+      cells.forEach(function(c,i){
+        var cw=cols[i].w*TW,col=c.o.tone==='neg'?C.bad:(c.o.tone==='pos'?C.good:(r.muted?C.ink2:C.ink));
+        c.ls.forEach(function(s,k){
+          var yy=y-(st?11:10)-k*lh,wd;
+          if(cols[i].al==='l'){wd=T(s,xs[i]+(st?6:4),yy,zz,c.f,col);if(c.o.n&&k===c.ls.length-1)T(String(c.o.n),xs[i]+(st?6:4)+wd+1.5,yy+3.2,5.5,B,C.acc)}
+          else T(s,xs[i]+cw-4,yy,zz,c.f,col,'r');
+        });
+      });
+      y-=rh;hl(y,(r.b||st)?.6:.3,(r.b||st)?C.ink2:C.line,X0,X0+TW);
+    });
+    y-=5;
+  }
+  /* grafico a barre affiancate, con il TFR lasciato in azienda come linea tratteggiata */
+  function chart(ch){
+    var h=110,sc=scalaG(ch),ng=ch.groups.length,ns=ch.series.length,lw=tw(cl(E(sc.b)),F,7)+9,x0=M+lw,pw=CW-lw,lx=M;
+    ch.series.forEach(function(se,k){var t=fit(se.name,F,8,CW*0.45),wd=10+tw(t,F,8)+14;if(lx+wd>M+CW&&lx>M){lx=M;y-=11}
+      page.drawRectangle({x:lx,y:y-9,width:7,height:7,color:C.s[k]});lx+=10;lx+=T(t,lx,y-9,8,F,C.ink2)+14});
+    if(ch.ref){if(lx+140>M+CW){lx=M;y-=11}
+      page.drawLine({start:{x:lx,y:y-5.5},end:{x:lx+16,y:y-5.5},thickness:1.4,color:C.ink,dashArray:[4,3]});T(ch.ref.name,lx+20,y-9,8,F,C.ink2)}
+    y-=24;var bot=y-h,Y=function(v){return bot+(v-sc.a)/(sc.b-sc.a)*h},y0=Y(0);
+    for(var v=sc.a;v<=sc.b+1e-9;v+=sc.st){var yy=Y(v),z=Math.abs(v)<1e-9;page.drawLine({start:{x:x0,y:yy},end:{x:x0+pw,y:yy},thickness:z?.8:.4,color:z?C.ink2:C.line});T(E(v),x0-5,yy-2.5,7,F,C.ink2,'r')}
+    var gw=pw/ng,gap=3,bw=Math.max(5,Math.min(ns>2?28:34,(gw*0.72-(ns-1)*gap)/ns)),fz=6.8,lbs=[];
+    ch.groups.forEach(function(g,i){
+      var cx=x0+gw*i+gw/2,tot=ns*bw+(ns-1)*gap,xa=cx-tot/2,vals=ch.series.map(function(se){return se.v[i]});
+      var lwm=Math.max.apply(null,vals.map(function(v){return v==null?0:tw(cl(E(v)),B,fz)})),both=bw+gap>=lwm+2,best=-1;
+      vals.forEach(function(v,k){if(v!=null&&(best<0||v>vals[best]))best=k});
+      vals.forEach(function(v,k){
+        var x=xa+k*(bw+gap);
+        if(v==null){T('n.d.',x+bw/2,y0+3,6.5,F,C.ink2,'c');return}
+        var ya=Y(Math.max(0,v)),yb=Y(Math.min(0,v));
+        page.drawRectangle({x:x,y:yb,width:bw,height:Math.max(.8,ya-yb),color:C.s[k]});
+        if(both||(k===best&&lwm<=gw-4))lbs.push({t:E(v),x:x+bw/2,y:ya+3});
+      });
+      if(ch.ref&&ch.ref.v[i]!=null){var yr=Y(ch.ref.v[i]);
+        page.drawLine({start:{x:xa-8,y:yr},end:{x:xa+tot+8,y:yr},thickness:3.2,color:C.white});
+        page.drawLine({start:{x:xa-8,y:yr},end:{x:xa+tot+8,y:yr},thickness:1.3,color:C.ink,dashArray:[4,3]})}
+      T(g,cx,bot-11,7.6,F,C.ink2,'c');
+    });
+    lbs.forEach(function(l){var w=tw(cl(l.t),B,fz);page.drawRectangle({x:l.x-w/2-1.5,y:l.y-1.6,width:w+3,height:fz+2.6,color:C.white});T(l.t,l.x,l.y,fz,B,C.ink,'c')});
+    y=bot-22;
+  }
+  function duo(s){
+    var gap=20,nc=s.cols.length,w=nc>1?(CW-gap)/2:CW,z=8,lh=10.5;
+    var lay=s.cols.map(function(c){var its=c.items.map(function(t){return wrap(t,F,z,w-12)});return {its:its,h:its.reduce(function(a,l){return a+l.length*lh+3},12)}});
+    var hh=Math.max.apply(null,lay.map(function(a){return a.h}));
+    need(hh+26);y-=17;
+    s.cols.forEach(function(c,k){
+      var x=M+k*(w+gap),yy=y;
+      T(c.title,x,yy,10.5,B,C.acc);yy-=5;page.drawLine({start:{x:x,y:yy},end:{x:x+w,y:yy},thickness:.5,color:C.line});yy-=4;
+      lay[k].its.forEach(function(ls){ls.forEach(function(sx,j){yy-=lh;
+        if(j===0){if(c.give)page.drawCircle({x:x+3.5,y:yy+2.8,size:2.2,borderColor:C.acc,borderWidth:1});else page.drawCircle({x:x+3.5,y:yy+2.8,size:2.4,color:C.acc})}
+        T(sx,x+12,yy,z,F,C.ink)});yy-=3});
+    });
+    y-=hh+1;
+  }
+  /* rendita: riga in evidenza, poi testo a sinistra e tabella a destra */
+  function rendita(s){
+    var gap=20,w=(CW-gap)/2,xr=M+w+gap,z=8,lh=10.5;
+    var its=s.items.map(function(t){return wrap(t,F,z,w-12)}),hL=its.reduce(function(a,l){return a+l.length*lh+3},4);
+    var cap=wrap(s.cap,F,7.2,w),hR=30+s.table.rows.length*14.5+6+cap.length*9,hh=Math.max(hL,hR);
+    sec(s.title,hh+84,s.n);
+    winBox(s.win,hh);
+    var top=y;
+    y=top-1;its.forEach(function(ls){ls.forEach(function(sx,j){y-=lh;if(j===0)page.drawCircle({x:M+3.5,y:y+2.8,size:2.4,color:C.acc});T(sx,M+12,y,z,F,C.ink)});y-=3});
+    var yl=y;
+    y=top+3;table(s.table,xr,w);
+    cap.forEach(function(sx){y-=9;T(sx,xr,y,7.2,F,C.ink2)});
+    y=Math.min(yl,y)-4;
+  }
+  function notes(items){
+    items.forEach(function(a,i){
+      var runs=[{t:a[1]+'.',f:B,c:C.ink},{t:a[2],f:F,c:C.ink}],nl=rich(runs,M+16,CW-16,7.5,9.5,true);
+      need(nl*9.5+5);T(String(i+1),M+10,y-7.5,7.5,B,C.acc,'r');rich(runs,M+16,CW-16,7.5,9.5,false);y-=3;
+    });
+  }
+  function avv(items){
+    items.forEach(function(t,i){
+      var runs=[{t:t,f:i===0?B:F,c:i===0?C.ink:C.ink2}],nl=rich(runs,M,CW,7.5,9.5,true);
+      need(nl*9.5+4);rich(runs,M,CW,7.5,9.5,false);y-=3.5;
+    });
+  }
+  function firma(){
+    if(y-62<BOT)return;                         /* stessi dati già nel piè di pagina: niente pagina solo per la firma */
+    y-=8;
+    page.drawRectangle({x:M,y:y-48,width:CW,height:48,color:C.acc});
+    T('Elaborato da',M+14,y-13,7.5,F,C.white);
+    T(AUTORE,M+14,y-27,13,B,C.white);
+    T(QUALIFICA.charAt(0).toUpperCase()+QUALIFICA.slice(1),M+14,y-39,7.8,F,C.white);
+    T(TEL,W-M-14,y-21,8.5,B,C.white,'r');T(MAIL,W-M-14,y-33,8.5,F,C.white,'r');
+    y-=54;
+  }
+  return Lb.PDFDocument.create().then(function(d){
+    doc=d;return Promise.all([doc.embedFont(Lb.StandardFonts.Helvetica),doc.embedFont(Lb.StandardFonts.HelveticaBold),doc.embedFont(Lb.StandardFonts.HelveticaOblique)]);
+  }).then(function(ff){
+    F=ff[0];B=ff[1];I=ff[2];
+    doc.setTitle(rep.titolo+(rep.cliente?' - '+rep.cliente:''));doc.setAuthor(AUTORE);doc.setCreator(rep.titolo);
+    np();
+    /* fascia di testata, come la pagina a schermo */
+    var sl=wrap(rep.sotto,F,8.8,CW).slice(0,3),bh=64+sl.length*11;
+    page.drawRectangle({x:0,y:Hp-bh,width:W,height:bh,color:C.acc});
+    T(rep.titolo,M,Hp-40,18,B,C.white);
+    sl.forEach(function(sx,k){T(sx,M,Hp-56-k*11,8.8,F,C.white)});
+    y=Hp-bh-20;var x=M;
+    if(rep.cliente){x+=T('Preparato per: ',x,y,9,F,C.ink2);x+=T(fit(rep.cliente,B,9,230),x,y,9,B)+16}
+    x+=T('Data: ',x,y,9,F,C.ink2);x+=T(DATA,x,y,9,B)+16;
+    x+=T('Versione: ',x,y,9,F,C.ink2);T(full?'completa':'semplificata',x,y,9,B);
+    y-=13;var w=T('Elaborato da '+AUTORE,M,y,9,B,C.acc);T(', '+QUALIFICA,M+w,y,8,F,C.ink2);
+    y-=11;T(TEL+' · '+MAIL,M,y,8,F,C.ink2);
+    y-=7;hl(y,.7,C.line);y-=1;
+    wrap(COVIP_AVV,I,7,CW).forEach(function(s){y-=9;T(s,M,y,7,I,C.ink2)});y-=1;
+    sec('Ipotesi del confronto',90);boxes(rep.key,true,0);
+    rep.sections.forEach(function(s){
+      if(s.type==='tiles'){sec(s.title,s.win?190:110,s.n);if(s.win)winBox(s.win,90);boxes(s.items,false,1);if(s.cap)para(s.cap)}
+      else if(s.type==='chart'){sec(s.title,186+estT(s.table)+24,s.n);if(s.lead)leadBox(s.lead);chart(s.chart);table(s.table);if(s.cap)para(s.cap)}
+      else if(s.type==='table'){sec(s.title,Math.min(460,estT(s)+52)+(s.lead?50:0),s.n);if(s.lead)leadBox(s.lead);table(s);if(s.cap)para(s.cap)}
+      else if(s.type==='duo')duo(s);
+      else if(s.type==='rendita')rendita(s);
+      else if(s.type==='notes'){sec(s.title,80);notes(s.items)}
+      else if(s.type==='avv'){sec(s.title,70);avv(s.items)}
+      else if(s.type==='firma')firma();
+    });
+    var pp=doc.getPages();
+    pp.forEach(function(pg,i){page=pg;hl(M+17,.5,C.line);
+      T('Elaborato da '+AUTORE+', '+QUALIFICA,M,M+7,7,B,C.acc);
+      T(TEL+' · '+MAIL+' · Simulazione indicativa, '+DATA,M,M-2.5,7,F,C.ink2);
+      T('Pagina '+(i+1)+' di '+pp.length,W-M,M-2.5,7.5,F,C.ink2,'r')});
+    return doc.save();
+  });
+}
+
+/* ---------- Azioni: PDF o stampa ---------- */
+var DL=null;
+function setAct(kind){$('c-pdf').hidden=kind!=='pdf';$('c-print').hidden=kind!=='print'}
+function initAct(tries){
+  var c=window.claude;
+  if(c&&typeof c.use==='function'){
+    Promise.resolve(c.use('downloads')).then(function(ns){if(ns&&typeof ns.save==='function'){DL=ns;setAct('pdf')}},function(){});
+  }else if(tries<60)setTimeout(function(){initAct(tries+1)},250);
+}
+function savePDF(){
+  var btn=$('c-pdf'),st=$('c-status'),rep=LAST;
+  btn.disabled=true;st.textContent='Preparo il PDF…';
+  loadPdfLib().then(function(){return buildPDF(rep)}).then(function(bytes){
+    var nome=(rep.titolo+(MODE==='s'?' (sintesi)':'')+(rep.cliente?' - '+rep.cliente:'')).replace(/[\\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().slice(0,110).replace(/[.\s]+$/,'')+'.pdf';
+    return DL.save({filename:nome,data:bytes});
+  }).then(function(){st.textContent='PDF pronto: controlla i download del dispositivo.'},function(e){
+    var c=e&&e.code;
+    st.textContent=e&&e.lib?'Non riesco a caricare il componente PDF: controlla la connessione e riprova.':
+      c==='declined'?'Salvataggio annullato.':
+      c==='rate_limited'?'Attendi qualche secondo e riprova.':
+      (c==='rejected_extension'||c==='extension_not_enabled')?'In questa vista il formato PDF non è disponibile.':
+      c?'In questa vista il salvataggio non è disponibile.':'Non sono riuscito a creare il PDF. Riprova.';
+    if(!c&&!(e&&e.lib)&&window.console)console.error(e);
+  }).then(function(){btn.disabled=false});
+}
+
+/* ---------- Avvio ---------- */
+$('c-form').innerHTML=formHTML();$('c-rep').innerHTML=shellHTML();
+function setModo(m){
+  MODE=m==='c'?'c':'s';document.documentElement.setAttribute('data-modo',MODE);try{localStorage.setItem(MKEY,MODE)}catch(e){}
+  document.querySelectorAll('.modo button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.m===MODE))});
+}
+setModo(MODE);
+document.querySelectorAll('.modo button').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.m!==MODE){setModo(b.dataset.m);render()}})});
+resetGrid();resetRend('es');
+$('c-form').addEventListener('input',render);
+$('c-form').addEventListener('change',function(e){
+  var id=e.target&&e.target.id;
+  if(/^c-t[0-2]$/.test(id||'')){
+    /* cambio di un fondo: le colonne che non cambiano tipo conservano i valori inseriti; il TFR li conserva sempre */
+    var old=FORME.map(function(f){return f.k}),keys=[0,1,2].map(function(i){return $('c-t'+i).value}).filter(function(k){return k}),keep={};
+    var perFondo=['ad','fx','pv','pp','us'].concat(ISCID,STID),rf=RMODO==='fondi';
+    if(rf)perFondo=perFondo.concat(['ri','rr','rc']);            /* anche i dati della rendita, se sono riferiti ai fondi */
+    keys.forEach(function(k,i){if(old[i]===k)perFondo.forEach(function(c){keep['c-'+c+i]=$('c-'+c+i).value})});
+    STID.forEach(function(c){keep['c-'+c+'t']=$('c-'+c+'t').value});
+    [0,1,2].forEach(function(i){if(old[i]!==keys[i])$('c-n'+i).value='';$('c-n'+i).disabled=i>=keys.length});
+    setForme(keys);$('c-fondi').innerHTML=fondiHTML();resetGrid();
+    if(rf){$('c-rgrid').innerHTML=rendHTML('fondi');resetRend('fondi')}
+    Object.keys(keep).forEach(function(k){$(k).value=keep[k]});
+  }
+  if(id==='c-linea')resetGrid();
+  if(id==='c-rm'){RMODO=e.target.value;$('c-rgrid').innerHTML=rendHTML(RMODO);resetRend(RMODO)}
+  render();
+});
+$('c-form').addEventListener('click',function(e){if(e.target&&e.target.id==='c-reset'){resetGrid();render()}});
+$('c-form').addEventListener('submit',function(e){e.preventDefault()});
+$('c-pdf').addEventListener('click',savePDF);
+$('c-print').addEventListener('click',function(){try{window.print()}catch(e){}});
+document.addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('.nm'):null;if(!b)return;
+  var el=$(b.dataset.n);if(!el)return;
+  var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({behavior:calm?'auto':'smooth',block:'center'});el.classList.add('hl');setTimeout(function(){el.classList.remove('hl')},1800);
+});
+var rz=null,lastW=0;
+window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){var w=document.documentElement.clientWidth;if(w!==lastW){lastW=w;drawCharts()}},150)});
+render();
+var solo=false;try{solo=window.self===window.top}catch(e){}
+if(solo)setAct('print');
+initAct(0);
+})();
+</script>
+</body>
+</html>

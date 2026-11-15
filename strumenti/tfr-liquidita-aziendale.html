@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Per l'azienda: TFR in azienda o al fondo pensione, e come impiegare la liquidità in eccesso con l'Euribor di oggi.">
+<meta name="theme-color" content="#001a3d">
+<title>Simulatore TFR e liquidità aziendale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Testata a fascia (colore del consulente) con le due schede; ogni pagina = colonna dati fissa a sinistra + relazione per il cliente; colonna unica su telefono e in stampa */
+:root{
+  --bg:#eef2f1; --surface:#ffffff; --ink:#17211f; --ink-2:#4d5b59; --line:#d8e0de;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#e3eeed;
+  --band:#003781; --band-ink:#ffffff; --brass:#b08d47;
+  --good:#1d7a46; --bad:#b3372f; --warn-bg:#fbf2d9; --warn-ink:#6b4d00;
+  --s1:#2a78d6; --s2:#eb6834;
+  --r:14px;
+  --display:"Source Serif 4", Georgia, serif; --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+    --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+    --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+    --good:#5fcf8f; --bad:#f08a80; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+    --s1:#3987e5; --s2:#d95926;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+  --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+  --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+  --good:#5fcf8f; --bad:#f08a80; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+  --s1:#3987e5; --s2:#d95926;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+a{color:var(--accent)}
+a:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* testata */
+.site{background:var(--band);color:var(--band-ink)}
+.site :focus-visible{outline-color:var(--band-ink)}
+.hin{max-width:1160px;margin:0 auto;padding:30px 20px 0}
+.htop{display:flex;justify-content:space-between;align-items:flex-end;gap:18px 40px;flex-wrap:wrap;padding-bottom:24px}
+.site h1{font-family:var(--display);font-weight:600;font-size:clamp(27px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;margin:0;max-width:17ch;text-wrap:balance}
+.site .tag{margin:10px 0 0;font-size:15.5px;line-height:1.45;opacity:.85;max-width:46ch}
+.by{max-width:400px;font-size:13px;line-height:1.45}
+.by p{margin:0}
+.by .who{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25}
+.by .ql{opacity:.82;margin-top:2px}
+.cts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px!important}
+.cts a{color:inherit;text-decoration:none;border:1px solid currentColor;border-radius:999px;padding:5px 13px;font-size:13px;white-space:nowrap}
+.site .cts a{border-color:rgba(255,255,255,.4)}
+.site .cts a:hover{background:rgba(255,255,255,.12)}
+nav{display:flex;align-items:flex-end;gap:6px;flex-wrap:wrap}
+nav a{padding:12px 20px 13px;border-radius:12px 12px 0 0;background:rgba(255,255,255,.1);color:var(--band-ink);text-decoration:none;font-weight:500}
+nav a:hover{background:rgba(255,255,255,.18)}
+nav a[aria-current="page"]{background:var(--bg);color:var(--accent);font-weight:600}
+.modo{margin:0 0 9px auto;display:flex;align-items:center;border:1px solid rgba(255,255,255,.38);border-radius:999px;padding:3px}
+.modo span{padding:0 8px 0 11px;font-size:13px;opacity:.82}
+.modo button{font:500 13.5px var(--body);border:0;background:transparent;color:var(--band-ink);padding:6px 15px;border-radius:999px;cursor:pointer}
+.modo button[aria-pressed="true"]{background:var(--band-ink);color:var(--band);font-weight:600}
+[data-modo="c"] .solo-s{display:none}
+
+/* pagine */
+.wrap{max-width:1160px;margin:0 auto;padding:24px 20px 60px}
+.page{display:none}
+.page.on{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:22px;align-items:start}
+@media (min-width:881px){
+  .page>.col:first-child{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;border-radius:var(--r);scrollbar-width:thin}
+}
+@media (max-width:880px){.page.on{grid-template-columns:minmax(0,1fr)}}
+.col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:0}
+h2{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.25;margin:0 0 12px;text-wrap:balance}
+
+/* modulo dei dati */
+.cap{font-size:14.5px;font-weight:600;color:var(--ink);margin:0 0 10px}
+.grp{margin-top:16px}
+.grp:not(.key){padding-top:14px;border-top:1px solid var(--line)}
+.grp.key{background:var(--accent-soft);border-radius:12px;padding:14px 14px 6px}
+.grp.key .cap{color:var(--accent)}
+.f{display:grid;grid-template-columns:minmax(0,1fr) 124px;gap:10px;align-items:center;margin-bottom:12px}
+.f.ft{grid-template-columns:minmax(0,1fr);gap:5px}
+.f label{font-size:14px;line-height:1.35}
+.f small,.chk small{display:block;color:var(--ink-2);font-size:12px;line-height:1.35;margin-top:2px}
+.inp{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;background:var(--surface);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.inp input{width:100%;min-width:0;border:0;background:transparent;color:var(--ink);font:500 15px var(--body);padding:9px 10px;text-align:right;font-variant-numeric:tabular-nums}
+.inp input:focus-visible{outline:none}
+.inp span{padding-right:10px;color:var(--ink-2);font-size:13px;white-space:nowrap}
+input.txt,select.sel{width:100%;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;padding:10px 12px}
+select.sel{font-size:14.5px;padding:9px 10px;cursor:pointer}
+input.txt:focus-visible,select.sel:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.35;margin:2px 0 12px;cursor:pointer}
+.chk input{flex:none;width:18px;height:18px;margin:1px 0 0;accent-color:var(--accent)}
+.out{margin:0 0 12px;padding:9px 12px;background:var(--surface);border-radius:9px;font-size:13.5px;line-height:1.45}
+.out b{font-weight:600;font-variant-numeric:tabular-nums}
+sup{line-height:0}
+.nw{white-space:nowrap}
+.nm{font:600 10.5px/1 var(--body);color:var(--accent);background:none;border:0;padding:2px 3px;margin-left:1px;cursor:pointer;border-radius:3px}
+.nm:hover{background:var(--accent-soft)}
+
+/* intestazione della relazione */
+.rep-head{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;align-items:flex-start}
+.rep-head h2{font-size:27px}
+.rep-head>div:first-child{flex:1 1 420px;min-width:0}
+.rep-head .act{flex:none}
+.rep-head .sub{margin:6px 0 10px;color:var(--ink-2);font-size:15.5px;max-width:58ch}
+.meta{display:flex;gap:4px 20px;flex-wrap:wrap;margin:0;font-size:14px;color:var(--ink-2)}
+.meta b,.cred b{color:var(--ink);font-weight:600}
+.cred{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-2);max-width:72ch}
+.promo{margin:6px 0 0;font-size:12px;font-style:italic;color:var(--ink-2);max-width:78ch}
+.act{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14.5px var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:11px 20px;cursor:pointer}
+.btn svg{width:16px;height:16px;flex:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:progress}
+.status{margin:0;font-size:12.5px;color:var(--ink-2);max-width:28ch;text-align:right}
+
+/* sintesi: chi vince e numeri chiave */
+.win{display:flex;gap:16px;align-items:center;background:var(--band);color:var(--band-ink);border-radius:16px;padding:20px 22px;margin:0 0 14px}
+.win p{margin:0}
+.wb{flex:none;width:52px;height:52px;border-radius:50%;background:var(--band-ink);color:var(--band);box-shadow:0 0 0 3px var(--brass);font:600 20px var(--display);display:grid;place-items:center}
+.wk{font-size:14px;font-weight:500;opacity:.85}
+.wt{font-family:var(--display);font-size:clamp(25px,3vw,32px);line-height:1.15;font-weight:600;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:anywhere;margin-top:2px!important}
+.ws{font-size:15.5px;line-height:1.5;margin-top:8px!important;opacity:.95;max-width:70ch}
+.ws b{font-weight:600;white-space:nowrap}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile.key{background:var(--accent-soft);border-color:var(--accent)}
+.tile .l{font-size:13px;color:var(--ink-2);line-height:1.35}
+.tile .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:4px;line-height:1.2}
+.tile .v.txt{font-size:16px;line-height:1.3}
+.tile.hi{background:var(--accent-soft);border-color:transparent}
+.tile.hi .v{font-family:var(--display);font-size:32px;letter-spacing:-.01em;line-height:1.1}
+.tile.hi .v.txt{font-size:20px}
+.tile .s{font-size:12.5px;color:var(--ink-2);line-height:1.4;margin-top:4px;font-variant-numeric:tabular-nums}
+.pos{color:var(--good)!important}.neg{color:var(--bad)!important}
+.lead{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 16px;font-size:15.5px;line-height:1.55;margin:0 0 14px}
+.lead b{font-weight:600;white-space:nowrap}
+.alert{background:var(--warn-bg);color:var(--warn-ink);border-left:3px solid currentColor;border-radius:0 10px 10px 0;padding:12px 14px;font-size:14px}
+
+/* tabelle */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+th{font-weight:500;color:var(--ink-2);font-size:12.5px;line-height:1.3;vertical-align:bottom;border-bottom:1px solid var(--ink-2)}
+td{vertical-align:top}
+th.l,td.l{text-align:left}
+td.num,td.nwc{white-space:nowrap}
+tr.strong td{background:var(--accent-soft);font-weight:600;font-size:14.5px}
+tr.strong td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+tr.muted td{color:var(--ink-2)}
+td.barc{min-width:90px;vertical-align:middle}
+.track{height:12px;background:var(--bg);border-radius:6px;overflow:hidden}
+.bar{height:100%;background:var(--s1);border-radius:0 6px 6px 0}
+.bar.n{background:transparent;border:2px solid var(--s2)}
+.hs,.hint{display:none}
+.cd{display:block;font-size:12.5px;line-height:1.4;color:var(--ink-2);font-weight:400;margin-top:2px;white-space:normal}
+/* telefono: le tabelle strette diventano righe con l'etichetta sopra e i valori sotto; quelle larghe (.sc) scorrono in orizzontale */
+@media (max-width:600px){
+  .tw:not(.sc){overflow-x:visible}
+  .tw:not(.sc) table,.tw:not(.sc) thead,.tw:not(.sc) tbody{display:block}
+  .tw:not(.sc) tr{display:grid;grid-template-columns:repeat(var(--nc,3),minmax(0,1fr));column-gap:6px;padding:7px 6px;border-bottom:1px solid var(--line)}
+  .tw:not(.sc) thead tr{align-items:end;border-bottom:1px solid var(--ink-2)}
+  .tw:not(.sc) th,.tw:not(.sc) td{display:block;border:0;padding:1px 2px;background:transparent;box-shadow:none}
+  .tw:not(.sc) th{font-size:11.5px;overflow-wrap:anywhere}
+  .tw:not(.sc) thead th.l{display:none}
+  .tw:not(.sc) td.l{grid-column:1/-1}
+  .tw:not(.sc) td.num{font-size:13px}
+  .tw:not(.sc) tr.strong td.num{font-size:14px}
+  .tw:not(.sc) td.num.wr{white-space:normal}
+  .tw:not(.sc) tr.strong{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+  .hf{display:none}.hs{display:inline}
+  .tw.sl thead,.tw.sl td.barc{display:none}
+  .tw.sl td[data-h]::before{content:attr(data-h);display:block;font-size:11px;font-weight:400;color:var(--ink-2);line-height:1.25;white-space:normal}
+  .tw.sl td.num{padding-top:3px}
+  .hint{display:block!important}
+}
+.fine{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin:10px 0 0;max-width:80ch}
+
+/* grafici */
+.legend{display:flex;gap:6px 16px;font-size:13px;color:var(--ink-2);margin-bottom:8px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+.legend i.ar{width:14px;opacity:.38}
+.legend i.ln{width:18px;height:0;border-top:2px solid var(--ink);border-radius:0;vertical-align:middle}
+.chart{position:relative;margin-bottom:10px}
+.chart svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:7px 10px;border-radius:8px;font-size:12.5px;line-height:1.4;width:max-content;max-width:240px;display:none;transform:translate(-50%,-105%);z-index:2;font-variant-numeric:tabular-nums}
+
+/* spiegazioni, note, avvertenze, firma */
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px 28px}
+.duo h3{font-size:17.5px}
+.ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;line-height:1.5}
+.ul li{position:relative;padding-left:18px}
+.ul li::before{content:"";position:absolute;left:1px;top:.58em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.duo .give .ul li::before{background:transparent;border:1.5px solid var(--accent);width:5px;height:5px}
+.ask{background:var(--accent-soft);border-color:transparent}
+.ask .intro{margin:0 0 12px;font-size:14.5px;line-height:1.55;max-width:78ch}
+.qs{margin:0;padding-left:22px;display:grid;gap:12px;font-size:14px;line-height:1.5;max-width:84ch}
+.qs li::marker{color:var(--accent);font-weight:600}
+.qs b{font-weight:600}
+.uv{display:block;margin-top:3px;color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums}
+.notes{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.notes li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:13.5px;line-height:1.5;border-radius:8px;padding:3px 6px 3px 2px;max-width:86ch;transition:background .3s}
+.notes li.hl{background:var(--accent-soft)}
+.notes .k{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;text-align:right}
+.notes b{font-weight:600}
+.avv p{margin:0 0 8px;font-size:13px;line-height:1.5;color:var(--ink-2);max-width:86ch}
+.avv p.k{color:var(--ink);font-weight:600}
+.avv p:last-child{margin-bottom:0}
+.firma{display:flex;justify-content:space-between;align-items:center;gap:14px 28px;flex-wrap:wrap;background:var(--band);color:var(--band-ink);border-color:transparent;font-size:13.5px;line-height:1.45}
+.firma p{margin:0}
+.firma .by1{opacity:.82}
+.firma .who{font-family:var(--display);font-size:21px;font-weight:600;line-height:1.25}
+.firma .ql{opacity:.85;max-width:52ch}
+.firma .cts{margin-top:0!important}
+.firma .cts a{border-color:rgba(255,255,255,.45)}
+.firma .cts a:hover{background:rgba(255,255,255,.12)}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+.kv div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:3px 0}
+.print-only{display:none}
+
+/* telefono */
+@media (max-width:600px){
+  .hin{padding:22px 16px 0}
+  .htop{padding-bottom:18px}
+  .by{max-width:none}
+  .by .ql{display:none}
+  .site .tag{font-size:14.5px}
+  .cts a{font-size:12.5px;padding:4px 10px}
+  .modo{order:-1;width:100%;margin:0 0 14px}
+  .modo button{flex:1}
+  nav a{flex:1;text-align:center;padding:11px 8px 12px}
+  .wrap{padding:18px 12px 48px}
+  .card{padding:16px}
+  .rep-head h2{font-size:24px}
+  .win{padding:16px;gap:12px;align-items:flex-start}
+  .wb{width:42px;height:42px;font-size:17px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* ---------- Stampa (A4) ---------- */
+@page{size:A4;margin:14mm 13mm 18mm}
+@page{
+  @bottom-left{content:"Elaborato da Marco Busetto, consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157 · +39 331 520 7568 · marco.busetto@allianzbankfa.it";font:600 6.5pt sans-serif;color:#003781}
+  @bottom-right{content:"Pagina " counter(page) " di " counter(pages);font:7.5pt sans-serif;color:#555}
+}
+@media print{
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+    color-scheme:light;
+    --bg:#ffffff; --surface:#ffffff; --ink:#14201f; --ink-2:#4c5a59; --line:#cfd6d6;
+    --accent:#003781; --accent-ink:#ffffff; --accent-soft:#e6f0f0;
+    --good:#1d7a46; --bad:#b3372f; --warn-bg:#fdf3d7; --warn-ink:#6b4d00;
+    --s1:#2a78d6; --s2:#eb6834;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:10pt}
+  .wrap{max-width:none;padding:0}
+  .site,nav,.no-print,.tip{display:none!important}
+  .page.on{display:block}
+  .print-only{display:flex}
+  .col{gap:10pt}
+  .card{border:0;padding:0;border-radius:0}
+  .rep-head{border-top:3pt solid var(--accent);border-bottom:1px solid var(--line);padding:8pt 0}
+  h2{font-size:17pt;color:var(--accent)}
+  h3{font-size:11pt;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:2pt;margin-bottom:6pt;break-after:avoid}
+  .tiles{grid-template-columns:repeat(4,1fr);gap:6pt}
+  .tiles.k3{grid-template-columns:repeat(3,1fr)}
+  .tile{padding:6pt 8pt;border-radius:4pt}
+  .tile .v{font-size:14pt}.tile .v.txt{font-size:10.5pt}.tile.hi{border-width:1.5pt}.tile.hi .v{font-size:17pt}.tile.hi .v.txt{font-size:12pt}
+  .tile .l,.tile .s{font-size:8pt}
+  .lead{font-size:10pt;padding:7pt 9pt;margin-bottom:6pt}
+  .win{padding:8pt 10pt;border-radius:5pt;margin-bottom:6pt;gap:8pt}.wb{width:26pt;height:26pt;font-size:11pt}.wk{font-size:7.5pt}.wt{font-size:15pt}.ws{font-size:9.5pt}
+  .kv{font-size:9pt}
+  table{font-size:9pt}th{font-size:8pt}tr.strong td{font-size:9.8pt}th,td{padding:3pt 5pt}
+  .tw{overflow:visible}
+  thead{display:table-header-group}
+  tr,.tile,.notes li,.alert,.cchart,.kv div,.lead,.win,.avv p,.firma{break-inside:avoid}
+  .notes{gap:4pt}.notes li{font-size:8.5pt;max-width:none}
+  .cd{font-size:8pt}
+  .duo{grid-template-columns:1fr 1fr;gap:14pt}.ul{font-size:9pt;gap:3pt}
+  .ask{border-left:2pt solid var(--accent);padding-left:8pt}.ask .intro,.qs{font-size:9pt;max-width:none}.qs{gap:4pt}.uv{font-size:8.5pt}
+  .duo>div,.qs li{break-inside:avoid}
+  .avv p{font-size:8.5pt;max-width:none;margin-bottom:4pt}
+  .fine,.cred,.promo{font-size:8pt;max-width:none}
+  .firma{background:none;color:var(--ink);border-top:2pt solid var(--accent);padding:6pt 0 0;font-size:9.5pt}.firma .who{font-size:13pt;color:var(--accent)}.firma .cts a{border:0;padding:0 8pt 0 0;color:var(--ink)}
+  .win{background:var(--accent)}.ask{background:none;border-left:2pt solid var(--accent);padding-left:8pt}.tile.hi .v{font-family:var(--display)}
+  .nm{font-size:7pt;padding:0 1pt}
+}
+
+/* ===== Tema del sito di Marco Busetto: colori, caratteri e barra di ritorno al sito ===== */
+:root{
+  --bg:#f7f4ee; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#5b6677; --line:#e7e1d5;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9;
+  --band:#001a3d; --band-ink:#ffffff; --brass:#c4a062;
+  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a;
+  --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+  --display:"Cormorant Garamond",Georgia,serif; --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
+    --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
+    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --good-bg:#16291f; --bad-bg:#311c1a;
+    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}}
+:root[data-theme="dark"]{--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
+    --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
+    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --good-bg:#16291f; --bad-bg:#311c1a;
+    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}
+@media print{:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --bg:#ffffff; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#4c5a6b; --line:#d9d3c7;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9; --band:#003781; --band-ink:#ffffff;
+  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a; --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+}}
+.site{background:linear-gradient(165deg,#00142f 0%,#002456 55%,#003781 100%)}
+h1,h2,h3,.wt,.wb,.who,.fch,.tile .v,.tile .m{font-variant-numeric:lining-nums tabular-nums}
+h2,h3{font-weight:600}
+.site h1{font-size:clamp(32px,4.2vw,46px)}
+.mb-back{background:#00142f;border-bottom:1px solid rgba(196,160,98,.4);font:500 13.5px/1.3 var(--body)}
+.mb-back .in{max-width:1160px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mb-back a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.mb-back a:hover{color:#dcc28c}
+.mb-back .mono{width:30px;height:30px;border:1px solid #c4a062;border-radius:50%;display:grid;place-items:center;font:600 13px/1 var(--display);color:#dcc28c}
+.mb-back .alt{color:#dcc28c}
+@media (max-width:600px){.mb-back .in{padding:10px 12px}.mb-back .alt{display:none}}
+@media print{.mb-back{display:none}}
+</style>
+</head>
+<body>
+<nav class="mb-back no-print" aria-label="Sito di Marco Busetto"><div class="in"><a href="../index.html"><span class="mono">MB</span><span>Torna al sito di Marco Busetto</span></a><a class="alt" href="../index.html#strumenti">Altri strumenti di analisi</a></div></nav>
+
+<header class="site">
+ <div class="hin">
+  <div class="htop">
+   <div>
+    <h1>Simulatore TFR e liquidità aziendale</h1>
+    <p class="tag">Analisi per l'impresa: dove conviene il TFR dei dipendenti e come impiegare la liquidità in eccesso.</p>
+   </div>
+   <div class="by">
+    <p class="who">Marco Busetto</p>
+    <p class="ql">Consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157</p>
+    <p class="cts"><a href="tel:+393315207568">+39 331 520 7568</a><a href="mailto:marco.busetto@allianzbankfa.it">marco.busetto@allianzbankfa.it</a></p>
+   </div>
+  </div>
+  <nav class="no-print" aria-label="Pagine">
+   <a href="#tfr" id="nav-tfr"><span class="hf">TFR o fondo pensione</span><span class="hs">TFR o fondo</span></a>
+   <a href="#liquidita" id="nav-liquidita"><span class="hf">Gestione della liquidità</span><span class="hs">Liquidità</span></a>
+   <div class="modo" role="group" aria-label="Versione del documento"><span>Versione</span><button type="button" data-m="s" aria-pressed="true">Semplificata</button><button type="button" data-m="c" aria-pressed="false">Completa</button></div>
+  </nav>
+ </div>
+</header>
+<div class="wrap">
+<section class="page" id="page-tfr">
+  <div class="col no-print"><form class="card" id="t-form" novalidate></form></div>
+  <div class="col" id="t-rep"></div>
+</section>
+<section class="page" id="page-liquidita">
+  <div class="col no-print"><form class="card" id="l-form" novalidate></form></div>
+  <div class="col" id="l-rep"></div>
+</section>
+</div>
+
+<script>
+/* Fuori da Claude il salvataggio passa dal browser: il PDF generato viene scaricato direttamente. */
+if(!window.claude){window.claude={use:function(n){return n!=='downloads'?null:{save:function(o){
+  var u=URL.createObjectURL(new Blob([o.data],{type:'application/pdf'})),a=document.createElement('a');
+  a.href=u;a.download=o.filename||'Analisi.pdf';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(u);a.remove()},2000);return Promise.resolve();}}}}}
+</script>
+<script>
+/* ================= CALCOLI (funzioni pure) ================= */
+var K_TFR=1/13.5-0.005;                                  /* TFR maturando / retribuzioni = 6,91% */
+function soglia(anno){return anno<=2027?60:(anno<=2031?50:40)}  /* soglia Fondo Tesoreria INPS */
+/* TFR: confronto tra TFR lasciato in azienda (A) e TFR maturando conferito al fondo pensione (B).
+   Ogni voce annua è arrotondata all'euro e i totali sono somme delle voci arrotondate: così tutte le somme del documento tornano.
+   A e D restano esatti: vantaggio netto = A - tasso x D, quindi tasso di pareggio = A / D. */
+function calcTFR(p){
+  var rival=0.015+0.75*Math.max(0,p.infl),ded=p.dip<50?0.06:0.04,retr=p.mat/K_TFR,k=1-p.ires;
+  var SA=p.pre,SB=p.pre,C=0,cum=0,A=0,D=0,rows=[],T={};
+  var keys=['conf','bDed','bFG','bOI','bTax','fisc','bRiv','ben','cFin','cContr','costi','net'];
+  keys.forEach(function(q){T[q]=0});
+  for(var t=0;t<p.anni;t++){
+    var x={year:p.start+t};x.tes=!!p.tesSempre||p.dip>=soglia(x.year);
+    var conf=p.mat*p.ades,flow=x.tes?0:conf,rivA=SA*rival,rivB=SB*rival,rivD=rivA-rivB;
+    var bDed=flow*ded*p.ires,bFG=x.tes?0:retr*0.002*p.ades,bOI=x.tes?0:retr*0.0028*p.ades,bTax=-(bFG+bOI)*p.ires,bRiv=rivD*k;
+    var base=Math.max(0,C+flow/2),cContr=retr*p.contr*p.ades*1.10*k;
+    A+=bDed+bFG+bOI+bTax+bRiv-cContr;D+=base*k;
+    x.conf=Math.round(conf);x.bDed=Math.round(bDed);x.bFG=Math.round(bFG);x.bOI=Math.round(bOI);x.bTax=Math.round(bTax);
+    x.bRiv=Math.round(bRiv);x.cFin=Math.round(base*p.rate*k);x.cContr=Math.round(cContr);
+    x.fisc=x.bDed+x.bFG+x.bOI+x.bTax;x.ben=x.fisc+x.bRiv;x.costi=x.cFin+x.cContr;x.net=x.ben-x.costi;
+    cum+=x.net;x.cum=cum;
+    SA=SA+rivA*0.83+(x.tes?0:p.mat);SB=SB+rivB*0.83+(x.tes?0:p.mat*(1-p.ades));C=C+flow-0.17*rivD;
+    x.SA=SA;x.SB=SB;
+    keys.forEach(function(q){T[q]+=x[q]});rows.push(x);
+  }
+  return {rows:rows,tot:T,rival:rival,ded:ded,retr:retr,A:A,D:D,pareggio:D>0?A/D:null};
+}
+/* chi vince: sotto una differenza di pochi euro (arrotondamenti) è parità */
+function esitoTFR(net,anni){var tol=Math.max(5,2*anni);return net>tol?'fondo':(net<-tol?'tfr':'pari')}
+/* Liquidità: risultato annuo dei tre usi dell'eccedenza. Bolli facoltativi:
+   bInv = 0,20% sull'importo impiegato; bProp = 0,20% sul saldo lasciato sul conto (conto deposito); bFisso = importo fisso del conto corrente, uguale in tutti gli usi */
+function calcLiq(p,eur){
+  var E=Math.max(0,p.liq-p.ris),k=1-p.ires,rB=eur+p.spInv,rD=Math.max(0,eur+p.spBank),R=Math.min(E,p.deb),rest=E-R,fisso=p.bFisso||0;
+  function bollo(x){return Math.min(x*0.002,14000)}
+  function sulConto(x){return {prov:x*p.rcc,bollo:p.bProp?bollo(x):0}}
+  function impiegato(x){return {prov:x*rB,bollo:p.bInv?bollo(x):0}}
+  function row(id,nome,q,debito){
+    var o={id:id,nome:nome,prov:Math.round(q.prov*k),bollo:Math.round((q.bollo+fisso)*k),oneri:Math.round(debito*rD*k)};
+    o.net=o.prov-o.bollo-o.oneri;return o;
+  }
+  var s=[row('conto','Lasciare sul conto',sulConto(E),p.deb),row('impiego',"Impiegare l'eccedenza",impiegato(E),p.deb)];
+  if(R>0){
+    var a=sulConto(rest),b=impiegato(rest),imp=rest>0&&(b.prov-b.bollo>a.prov-a.bollo);
+    s.push(row('debito',rest>0?(imp?'Ridurre il debito e impiegare il resto':'Ridurre il debito e lasciare il resto sul conto'):'Ridurre il debito',imp?b:a,p.deb-R));
+  }
+  var best=s.reduce(function(a,b){return b.net>a.net?b:a});
+  return {E:E,rB:rB,rD:rD,R:R,rest:rest,strat:s,best:best,rNet:(rB-(p.bInv?(E>0?bollo(E)/E:0.002):0))*k};
+}
+
+/* ================= INTERFACCIA ================= */
+(function(){
+var AUTORE='Marco Busetto',QUALIFICA="consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157";
+var TEL='+39 331 520 7568',TELH='+393315207568',MAIL='marco.busetto@allianzbankfa.it';
+var OGGI=new Date(),START=OGGI.getFullYear()+1;
+var DATA=OGGI.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'});
+var COVIP_AVV="Messaggio promozionale riguardante forme pensionistiche complementari – prima dell'adesione leggere la Parte I 'Le informazioni chiave per l'aderente' e l'Appendice 'Informativa sulla sostenibilità', della Nota informativa.";
+var INFO_AVV="Documento informativo: non è una consulenza in materia di investimenti, né una raccomandazione personalizzata, né un'offerta o una sollecitazione all'investimento.";
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function grp(n){return String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function E(v){var r=Math.round(v);return (r<0?'−':'')+grp(r)+' €'}
+function P(v,d){d=d==null?2:d;var s=Math.abs(v*100).toFixed(d);return (v<0&&parseFloat(s)!==0?'−':'')+s.replace('.',',')+'%'}
+function Pm(v){return P(v,Math.round(v*10000)%10===0?1:2)}          /* un decimale, due se servono */
+function tone(v){return v>0.5?'pos':(v<-0.5?'neg':'')}
+function val(id,def){var v=parseFloat($(id).value);return isFinite(v)?v:def}
+function clamp(v,a,b){return Math.min(b,Math.max(a,v))}
+
+/* ---------- Note: significato e fonte normativa. {chiave} = numero di un'altra nota ---------- */
+var EUR_TXT="Euro Interbank Offered Rate: è il tasso a cui le principali banche europee si prestano denaro in euro, rilevato ogni giorno lavorativo dall'EMMI (European Money Markets Institute) per le scadenze a 1 settimana e a 1, 3, 6 e 12 mesi. È il parametro dei finanziamenti a tasso variabile e orienta i rendimenti degli impieghi a breve termine. Va inserito il valore del giorno per la scadenza che interessa: a inizio novembre 2026 l'Euribor a 3 mesi era intorno al 2,75%.";
+var TFR_NOTES=[
+ ['pre','TFR pregresso',"È il debito verso i dipendenti per il TFR già maturato. In bilancio si trova nello Stato patrimoniale, passivo, voce C «Trattamento di fine rapporto di lavoro subordinato» (art. 2424 c.c.). Resta in azienda anche se i dipendenti aderiscono al fondo pensione, perché al fondo va solo il TFR che matura da quel momento (art. 8 D.Lgs. 252/2005), salvo accordo per trasferirlo. Continua quindi a rivalutarsi in entrambi i casi."],
+ ['mat','TFR maturando',"È la quota che matura ogni anno: retribuzione annua divisa per 13,5 (art. 2120 c.c.), meno lo 0,50% delle retribuzioni che l'azienda versa all'INPS e recupera dal TFR (art. 3 L. 297/1982). In pratica è circa il 6,91% delle retribuzioni, e da qui il simulatore ricava le retribuzioni su cui calcolare i contributi. In bilancio è nel Conto economico, voce B.9.c, che però comprende anche la rivalutazione del fondo: va indicata la sola quota dell'anno, ricavabile dalla nota integrativa o dal prospetto TFR del consulente del lavoro."],
+ ['stima','Stima del TFR maturando',"Il dato esatto è nel prospetto TFR del consulente del lavoro. Quando non è disponibile, ad esempio se si parte da un bilancio riclassificato come quello di Atoka, si stima dal costo del lavoro (voce B.9): per ogni 100 € di stipendi l'azienda spende circa 30 € di contributi (di solito tra 28 e 32, secondo settore e qualifiche) e 6,91 € di TFR, quindi il TFR è circa il 5% del costo del lavoro (6,91 ÷ 136,91). Il controllo con il fondo TFR: la crescita del fondo da un anno all'altro, meno la rivalutazione al netto dell'imposta del 17% (2,32% nel 2024 e 2,31% nel 2025, qui arrotondata al 2,3%), è uguale al TFR maturando meno le liquidazioni e gli anticipi pagati nell'anno. La sola differenza tra i due saldi non basta, perché le uscite la riducono e la rivalutazione la aumenta. La stima comprende anche il TFR di chi lo versa già a un fondo pensione, che va escluso: per questo va confermata con il commercialista o il consulente del lavoro."],
+ ['dip','Numero medio dei dipendenti',"È indicato nella nota integrativa (art. 2427, n. 15, c.c.). Determina la misura della deduzione extra (nota {ded}) e l'obbligo di versare il TFR al Fondo Tesoreria INPS (nota {tes})."],
+ ['eur','Euribor',EUR_TXT],
+ ['liq','Costo della liquidità',"Il TFR lasciato in azienda è come un prestito dei dipendenti che costa solo la rivalutazione (nota {riv}), per di più deducibile. Se va al fondo pensione, quella cassa esce ogni mese e l'azienda la deve sostituire: quanto le costa dipende dalla sua situazione. Se usa il fido o altro credito bancario, paga gli interessi: Euribor (nota {eur}) più lo spread della banca. Se ha liquidità investita a breve (conti deposito, titoli, fondi monetari), rinuncia al rendimento: circa l'Euribor, più o meno un piccolo spread. Se ha liquidità ferma sul conto corrente, rinuncia solo al tasso del conto, di solito vicino a zero. Se reinveste la cassa nell'attività (magazzino, crediti, investimenti), rinuncia al rendimento di quegli investimenti. Il fondo pensione vince quando i risparmi fiscali e contributivi e la rivalutazione evitata superano questo costo: per questo conviene quasi sempre all'azienda con liquidità propria, mentre per quella che usa il fido dipende da Euribor e spread. Il costo si applica alla cassa uscita (media dell'anno) al netto delle imposte, perché gli interessi passivi sono deducibili e i rendimenti a cui si rinuncia sarebbero stati tassati (interessi considerati interamente deducibili: limite del 30% del ROL, art. 96 D.P.R. 917/1986). Negli anni la cassa uscita si accumula e il costo cresce: per questo, allungando la durata, il livello di pareggio scende (nota {par})."],
+ ['ades','Quota conferita al fondo pensione',"Ogni dipendente sceglie se lasciare il TFR in azienda o destinarlo a un fondo pensione: la quota indica quanta parte del TFR maturando va al fondo. Dal 1° luglio 2026 chi è assunto per la prima volta nel settore privato aderisce automaticamente al fondo previsto dal contratto, con TFR e contributi, se non rinuncia entro 60 giorni (art. 8 D.Lgs. 252/2005, modificato dalla L. 199/2025)."],
+ ['contr','Contributo datoriale',"Se il dipendente versa al fondo anche un contributo proprio, il contratto collettivo di norma impegna l'azienda a un contributo aggiuntivo, spesso tra l'1% e il 2% della retribuzione. È un costo deducibile, su cui l'azienda versa all'INPS un contributo di solidarietà del 10% al posto dei contributi ordinari (art. 16 D.Lgs. 252/2005). Non è dovuto se il dipendente conferisce il solo TFR."],
+ ['riv','Rivalutazione del TFR',"Il TFR lasciato in azienda cresce ogni anno dell'1,5% fisso più il 75% dell'aumento dei prezzi misurato dall'ISTAT (art. 2120, comma 4, c.c.): nel 2025 è stata del 2,31% e nei primi nove mesi del 2026 ha già raggiunto il 4,29%. È un costo dell'azienda, deducibile dal reddito. Sul TFR conferito al fondo pensione l'azienda non la sostiene più. Sulla rivalutazione si paga un'imposta sostitutiva del 17%, a carico del dipendente e trattenuta dal suo TFR (art. 11 D.Lgs. 47/2000)."],
+ ['ded','Deduzione extra',"Oltre al normale costo del TFR, l'azienda deduce dal reddito d'impresa un ulteriore 6% del TFR conferito ai fondi pensione, oppure il 4% se ha almeno 50 addetti. Il risparmio è pari a TFR conferito × percentuale di deduzione × aliquota d'imposta (art. 10, comma 1, D.Lgs. 252/2005)."],
+ ['fg','Esonero dal Fondo di garanzia',"Ogni datore di lavoro versa all'INPS lo 0,20% delle retribuzioni (0,40% per i dirigenti industriali) al Fondo che paga il TFR ai dipendenti quando l'azienda è insolvente (art. 2 L. 297/1982). Il contributo non è più dovuto in proporzione al TFR conferito al fondo pensione (art. 10, comma 2, D.Lgs. 252/2005)."],
+ ['oi','Riduzione degli oneri impropri',"È uno sconto sui contributi INPS per assegni familiari, maternità e disoccupazione: 0,28% delle retribuzioni, misura a regime dal 2014, in proporzione al TFR conferito (art. 10, comma 3, D.Lgs. 252/2005 e art. 8 D.L. 203/2005)."],
+ ['tax','Maggiore imposta sui contributi risparmiati',"I contributi non più versati (note {fg} e {oi}) non sono più un costo deducibile, quindi l'imposta sul reddito aumenta in proporzione. Il risparmio è indicato al netto di questo effetto."],
+ ['par','Livello di pareggio',"È il costo della liquidità al quale benefici e costi si compensano nel periodo simulato; quando il costo è Euribor più uno spread, è indicato come Euribor di pareggio. Sotto questo livello per l'azienda conviene il fondo pensione, sopra conviene il TFR in azienda. Sale con l'inflazione, perché cresce la rivalutazione del TFR lasciato in azienda (nota {riv}), e scende allungando la durata, perché la cassa uscita si accumula (nota {liq})."],
+ ['tes','Fondo Tesoreria INPS',"Sopra una certa dimensione l'azienda deve versare all'INPS il TFR maturando che i dipendenti non destinano ai fondi pensione (art. 1, commi 755-756, L. 296/2006). Restano obbligate le aziende che lo erano già, cioè con almeno 50 addetti nel 2006 o nell'anno di inizio dell'attività. La Legge di Bilancio 2026 (L. 199/2025; circolare INPS n. 12/2026) ha esteso l'obbligo a chi raggiunge la soglia in seguito, sulla media dei dipendenti dell'anno precedente: 60 nel 2026-2027, 50 nel 2028-2031, 40 dal 2032. Per queste aziende il TFR esce comunque dalla cassa e le agevolazioni delle note {ded}-{oi} spettano in ogni caso: scegliere il fondo pensione non cambia né le imposte né la liquidità."]
+];
+var LIQ_NOTES=[
+ ['eur','Euribor',EUR_TXT],
+ ['liq','Disponibilità liquide',"Si trovano nello Stato patrimoniale, attivo, voce C.IV (art. 2424 c.c.): depositi bancari e postali, assegni, denaro in cassa."],
+ ['deb','Debiti verso banche',"Si trovano nello Stato patrimoniale, passivo, voce D.4 (art. 2424 c.c.). Va indicata la sola parte a tasso variabile, cioè fidi di cassa, anticipi e mutui indicizzati: è quella il cui costo segue l'Euribor."],
+ ['ris','Riserva operativa',"È la liquidità che deve restare sempre disponibile per stipendi, fornitori, imposte e imprevisti: si stima sul fabbisogno di cassa dei prossimi mesi. Solo l'eccedenza può essere impiegata o usata per ridurre il debito."],
+ ['imp','Impiego a Euribor più spread',"Gli strumenti a breve termine e a basso rischio, come conti deposito, titoli di Stato a breve e fondi monetari, rendono di solito poco meno o poco più dell'Euribor. Lo spread misura questa differenza, già al netto dei costi dello strumento. Il rendimento non è garantito e dipende dallo strumento scelto."],
+ ['costo','Costo del debito',"Il debito a tasso variabile costa l'Euribor più lo spread applicato dalla banca. Ogni euro rimborsato evita interessi a quel tasso: finché lo spread della banca supera quello dell'impiego, ridurre il debito rende più che investire, qualunque sia l'Euribor. Prima di rimborsare vanno verificati i costi di estinzione e la possibilità di riutilizzare il fido."],
+ ['tax','Imposte',"Per una società gli interessi attivi e i proventi finanziari entrano nel reddito d'impresa e scontano l'IRES del 24%; la ritenuta del 26% applicata dalla banca vale come acconto (art. 26 D.P.R. 600/1973). Gli interessi passivi e l'imposta di bollo riducono il reddito: gli interessi sono qui considerati interamente deducibili (limite del 30% del ROL, art. 96 D.P.R. 917/1986)."],
+ ['bollo','Imposta di bollo',"Sul conto corrente è un importo fisso: 100 € l'anno per società ed enti, 34,20 € per le persone fisiche e le ditte individuali (non dovuto, per queste, se la giacenza media non supera 5.000 €). Su conti deposito, titoli e fondi è lo 0,20% l'anno del valore; per i soggetti diversi dalle persone fisiche non supera 14.000 €, limite che il simulatore applica sempre (art. 13, commi 2-bis e 2-ter, Tariffa allegata al D.P.R. 642/1972; dal 2027 Testo unico D.Lgs. 123/2025). Qui ogni bollo si aggiunge a scelta: quello sul conto corrente è uguale in tutti gli usi, quindi abbassa i risultati ma non cambia il confronto."]
+];
+var NORME="Riferimenti normativi aggiornati a novembre 2026. Dal 1° gennaio 2027 le norme sulle imposte sui redditi passano al nuovo Testo unico (D.Lgs. 117/2026), con una diversa numerazione degli articoli.";
+var FONTI_T="Fonti: art. 2120 c.c.; D.Lgs. 252/2005 (artt. 8, 10 e 16); L. 297/1982; L. 296/2006 (art. 1, commi 755-756); L. 199/2025 e circolare INPS n. 12/2026; ISTAT, coefficienti di rivalutazione del TFR; EMMI, Euribor.";
+var FONTI_L="Fonti: EMMI, Euribor; art. 2424 c.c.; D.P.R. 642/1972, Tariffa, art. 13, commi 2-bis e 2-ter; D.P.R. 917/1986, art. 96; D.P.R. 600/1973, art. 26.";
+
+/* ---------- Dati richiesti ---------- */
+var INTEST={cap:'Intestazione',fields:[
+  {id:'cli',text:1,label:'Azienda cliente',ph:'Ragione sociale'},
+  {id:'int',text:1,label:'Intermediario per cui opera il consulente',val:'Allianz Bank Financial Advisors S.p.A.'}]};
+var FORMS={
+ t:[INTEST,
+    {cap:'Dati dal bilancio',key:1,fields:[
+      {id:'pre',full:1,label:'TFR pregresso',unit:'€',val:300000,step:1000,hint:'Fondo TFR: Stato patrimoniale, passivo, voce C',note:'pre'},
+      {id:'matFonte',sel:[['esatto','Dato esatto (prospetto TFR)'],['stima','Stima dal costo del lavoro (es. Atoka)']],label:'TFR maturando annuo: da dove si ricava',note:'stima'},
+      {id:'mat',when:'matFonte:esatto',label:'TFR maturando annuo',unit:'€',val:52000,step:500,hint:"Quota dell'anno senza rivalutazione: prospetto TFR o nota integrativa",note:'mat'},
+      {id:'cdl',when:'matFonte:stima',label:'Costo del lavoro',unit:'€',val:1030000,step:1000,hint:'Conto economico, voce B.9; in Atoka «Costo del lavoro»',note:'stima'},
+      {id:'contrAz',full:1,when:'matFonte:stima',label:"Contributi a carico dell'azienda",unit:'%',val:30,step:0.5,hint:'In % degli stipendi: di solito tra il 28% e il 32%'},
+      {id:'prevTFR',full:1,when:'matFonte:stima',label:"Fondo TFR dell'anno prima",unit:'€',ph:'facoltativo',step:1000,hint:'Serve a controllare la stima con la crescita del fondo'},
+      {out:'stima',when:'matFonte:stima'},
+      {id:'dip',label:'Numero medio dipendenti',unit:'',val:25,step:1,hint:'Nota integrativa',note:'dip'},
+      {id:'tes',full:1,chk:1,label:'Azienda già obbligata al Fondo Tesoreria INPS',hint:"Almeno 50 addetti nel 2006 o nell'anno di inizio dell'attività",note:'tes'}]},
+    {cap:'Costo della liquidità',key:1,fields:[
+      {id:'fonte',sel:[['fido','Usa il fido bancario'],['imp','Ha liquidità investita a breve'],['cc','Ha liquidità sul conto corrente'],['roi',"Reinveste la cassa nell'attività"]],label:"Senza quel TFR, la cassa dell'azienda:",note:'liq'},
+      {id:'eur',when:'fonte:fido|imp',label:'Euribor',unit:'%',val:2.75,step:0.01,neg:1,hint:'Fixing del giorno, per la scadenza scelta (ad esempio 3 mesi)',note:'eur'},
+      {id:'spread',when:'fonte:fido',label:'Spread della banca sul fido',unit:'%',val:2.25,step:0.05,neg:1,hint:'Costo del fido = Euribor + spread'},
+      {id:'spImp',when:'fonte:imp',label:"Spread dell'impiego sull'Euribor",unit:'%',val:-0.2,step:0.05,neg:1,hint:'Conti deposito, titoli e fondi a breve: di solito vicino a zero, al netto dei costi'},
+      {id:'tcc',when:'fonte:cc',label:'Tasso del conto corrente',unit:'%',val:0.1,step:0.05,hint:'Tasso lordo riconosciuto dalla banca'},
+      {id:'roi',when:'fonte:roi',label:"Rendimento degli investimenti nell'attività",unit:'%',val:8,step:0.5,hint:'Quanto rende il denaro reinvestito (magazzino, crediti, investimenti): stima da condividere con l\'imprenditore'},
+      {out:'rate'}]},
+    {cap:'Scelte e ipotesi',fields:[
+      {id:'ades',full:1,label:'TFR maturando conferito al fondo',unit:'%',val:100,step:5,hint:'Quota del TFR dei dipendenti che aderiscono',note:'ades'},
+      {id:'contr',full:1,label:'Contributo datoriale al fondo',unit:'%',val:0,step:0.1,hint:'In % delle retribuzioni; 0 se al fondo va il solo TFR',note:'contr'},
+      {id:'ires',full:1,label:"Aliquota d'imposta sul reddito",unit:'%',val:24,step:0.5,hint:'IRES 24%; per ditte e società di persone, IRPEF marginale'},
+      {id:'infl',full:1,label:'Inflazione attesa',unit:'%',val:2,step:0.1,neg:1,hint:"Rivalutazione del TFR: 1,5% + 75% dell'inflazione. Settembre 2026: +4,0% in un anno",note:'riv'},
+      {id:'anni',label:'Durata della simulazione',unit:'anni',val:10,step:1}]}],
+ l:[INTEST,
+    {cap:'Tasso di riferimento',key:1,fields:[
+      {id:'eur',label:'Euribor',unit:'%',val:2.75,step:0.01,neg:1,hint:'Fixing del giorno, per la scadenza scelta (ad esempio 3 mesi)',note:'eur'}]},
+    {cap:'Dati dal bilancio',key:1,fields:[
+      {id:'liq',label:'Disponibilità liquide',unit:'€',val:500000,step:10000,hint:'Stato patrimoniale, attivo, voce C.IV',note:'liq'},
+      {id:'deb',label:'Debiti verso banche a tasso variabile',unit:'€',val:200000,step:10000,hint:'Stato patrimoniale, passivo, voce D.4',note:'deb'}]},
+    {cap:'Scelte e ipotesi',fields:[
+      {id:'ris',label:'Riserva operativa',unit:'€',val:150000,step:10000,hint:'Liquidità da tenere sempre disponibile',note:'ris'},
+      {id:'rcc',full:1,label:'Tasso riconosciuto sul conto',unit:'%',val:0.1,step:0.05},
+      {id:'spInv',full:1,label:"Spread dell'impiego sull'Euribor",unit:'%',val:-0.2,step:0.05,neg:1,hint:'Rendimento = Euribor + spread, al netto dei costi',note:'imp'},
+      {id:'spBank',full:1,label:'Spread della banca sul debito',unit:'%',val:2.25,step:0.05,hint:'Costo del debito = Euribor + spread',note:'costo'},
+      {id:'ires',full:1,label:"Aliquota d'imposta sul reddito",unit:'%',val:24,step:0.5,note:'tax'}]},
+    {cap:'Imposta di bollo: da aggiungere a scelta',full:1,fields:[
+      {id:'bInv',chk:1,on:1,label:"Bollo sull'investimento: 0,20% l'anno",hint:'Titoli, fondi e conti deposito; massimo 14.000 €',note:'bollo'},
+      {id:'bCc',chk:1,label:'Bollo sul conto',hint:'Conto corrente (importo fisso) o conto deposito (0,20%)',note:'bollo'},
+      {id:'bTipo',sel:[['soc','Conto corrente, società o ente: 100 €'],['pf','Conto corrente, persona fisica o ditta: 34,20 €'],['cd','Conto deposito: 0,20% del saldo']],label:'Tipo di conto'}]}]
+};
+/* versione: s = semplificata (meno dati, più spiegazioni), c = completa (tutti i dati e le variabili) */
+var MODE='s';try{var mm=localStorage.getItem('simTFR-versione');if(mm==='s'||mm==='c')MODE=mm}catch(e){}
+var SYNC={cli:'cli',int:'int',eur:'eur',ires:'ires',spread:'spBank',spImp:'spInv',tcc:'rcc'};                       /* campi comuni alle due pagine: si aggiornano insieme */
+var PAGES={
+ t:{notes:TFR_NOTES,title:'TFR in azienda o al fondo pensione',sub:"Che cosa conviene all'azienda: risparmi fiscali e contributivi, costo della liquidità ed effetto dell'Euribor",
+    promo:COVIP_AVV,keyTitle:'Dati dal bilancio',file:'Analisi TFR',build:tfrReport},
+ l:{notes:LIQ_NOTES,title:'Gestione della liquidità aziendale',sub:"Come usare la liquidità in eccesso, con l'Euribor impostato",
+    promo:INFO_AVV,keyTitle:'Euribor e dati dal bilancio',file:'Analisi liquidita',build:liqReport}
+};
+function nn(pre,key){var a=PAGES[pre].notes;for(var i=0;i<a.length;i++)if(a[i][0]===key)return i+1;return 0}
+/* i rimandi tra le note prendono il numero dalla posizione: così restano giusti se le note cambiano ordine */
+['t','l'].forEach(function(pre){PAGES[pre].notes.forEach(function(a){a[2]=a[2].replace(/\{(\w+)\}/g,function(m,k){return nn(pre,k)})})});
+function lab(t,m){if(!m)return t;var i=t.lastIndexOf(' ');return (i<0?'':t.slice(0,i+1))+'<span class="nw">'+t.slice(i+1)+m+'</span>'}
+function mk(pre,num){return num?'<sup><button type="button" class="nm" data-n="'+pre+'n-'+parseInt(num,10)+'" aria-label="Vai alla nota '+num+'">'+num+'</button></sup>':''}
+function firmaAvv(interm){return "Documento elaborato da "+AUTORE+", "+QUALIFICA+(interm?", che opera per conto di "+interm+" e ne promuove e colloca prodotti e servizi":"")+". Dati e riferimenti normativi aggiornati alla data del documento ("+DATA+")."}
+
+/* ---------- Modello della relazione: pagina TFR ---------- */
+var CHI={fondo:'Fondo pensione',tfr:'TFR in azienda',pari:'Parità'};
+/* TFR maturando: dato esatto oppure stima dal costo del lavoro, con controllo sulla crescita del fondo TFR */
+var RIV_CHK=0.023;
+function stimaMat(){
+  if($('t-matFonte').value!=='stima')return null;
+  var cdl=Math.max(0,val('t-cdl',0)),ca=clamp(val('t-contrAz',30)/100,0,1),q=K_TFR/(1+ca+K_TFR),mat=Math.round(cdl*q/100)*100;
+  var o={cdl:cdl,ca:ca,q:q,mat:mat,prev:null},pv=parseFloat($('t-prevTFR').value);
+  if(isFinite(pv)&&pv>0){
+    var pre=Math.max(0,val('t-pre',0)),G=pre-pv,riv=Math.round(pv*RIV_CHK*0.83),res=G-riv;
+    o.prev={pv:pv,G:G,riv:riv,res:res};
+    if(res<=0)o.prev.txt="Il fondo TFR non è cresciuto più della rivalutazione: nell'anno sono state pagate liquidazioni o anticipi, quindi il controllo non è utilizzabile.";
+    else{var d=res/Math.max(1,mat)-1;o.prev.ok=Math.abs(d)<=0.15;
+      o.prev.txt='Controllo: il fondo TFR è cresciuto di '+E(G)+'; tolta la rivalutazione netta stimata ('+E(riv)+'), restano '+E(res)+', '+
+        (o.prev.ok?'in linea con la stima (differenza '+art(Math.abs(d),1)+P(Math.abs(d),0)+').':(d<0?'meno della stima: nell\'anno ci sono state liquidazioni o anticipi, oppure parte del TFR va già a fondi pensione.':'più della stima: i contributi potrebbero essere più bassi di quelli ipotizzati.'))}
+  }
+  return o;
+}
+/* costo della liquidità secondo la situazione di cassa dell'azienda */
+var FONTI={fido:{nome:'Usa il fido bancario',breve:'Fido',formula:'Euribor + spread della banca',link:1},
+  imp:{nome:'Ha liquidità investita a breve',breve:'Liquidità investita',formula:"Euribor + spread dell'impiego",link:1},
+  cc:{nome:'Ha liquidità sul conto corrente',breve:'Conto corrente',formula:'tasso del conto',link:0},
+  roi:{nome:"Reinveste la cassa nell'attività",breve:'Reinvestimento',formula:'rendimento degli investimenti',link:0}};
+function costoLiq(f){
+  f=f||$('t-fonte').value;var o=FONTI[f],e=val('t-eur',0)/100,sp=0,r;
+  if(f==='fido'){sp=val('t-spread',0)/100;r=e+sp}else if(f==='imp'){sp=val('t-spImp',0)/100;r=e+sp}else if(f==='cc')r=val('t-tcc',0)/100;else r=val('t-roi',0)/100;
+  return {id:f,nome:o.nome,breve:o.breve,formula:o.formula,link:o.link,sp:sp,rate:Math.max(0,r),eur:e};
+}
+function tfrParams(){
+  var cl=costoLiq(),eur=cl.eur,spread=cl.sp,st=stimaMat();
+  return {stima:st,pre:Math.max(0,val('t-pre',0)),mat:st?st.mat:Math.max(0,val('t-mat',0)),dip:Math.max(0,Math.round(val('t-dip',0))),tesSempre:$('t-tes').checked,
+    ades:clamp(val('t-ades',0)/100,0,1),ires:clamp(val('t-ires',0)/100,0,1),infl:val('t-infl',0)/100,eur:eur,spread:spread,rate:cl.rate,cl:cl,link:cl.link,
+    contr:Math.max(0,val('t-contr',0)/100),anni:clamp(Math.round(val('t-anni',10)),1,25),start:START};
+}
+/* articolo davanti a una percentuale: il 4,72% / lo 0,10% / l'8% / l'11%; con di = true: del / dello / dell' */
+function art(v,di){var s=P(v),k=s.replace('−','').split(',')[0];
+  if(s.charAt(0)==='0')return di?'dello ':'lo ';
+  if(k==='1'||k==='11'||k.charAt(0)==='8')return di?"dell'":"l'";
+  return di?'del ':'il ';}
+function AP(v,di){return art(v,di)+P(v)}
+function conDati(p,o){var q={},k;for(k in p)q[k]=p[k];for(k in o)q[k]=o[k];return q}
+function conEuribor(p,e){return conDati(p,{eur:e,rate:Math.max(0,e+p.spread)})}
+function tfrReport(){
+  var p=tfrParams(),r=calcTFR(p),a=r.rows[0],T=r.tot,N=p.anni,z=r.rows[N-1],n=function(k){return nn('t',k)};
+  var tes=r.rows.filter(function(x){return x.tes}),anni=N===1?'1 anno':N+' anni',per=N===1?String(p.start):p.start+'–'+(p.start+N-1);
+  var tutti=tes.length===N,nulla=T.conf===0,esito=esitoTFR(T.net,N);
+  var par=r.pareggio,mai=par!=null&&r.A<=0,LK=p.link,eurPar=(par!=null&&!mai)?par-(LK?p.spread:0):null;
+  var eurPct=val('t-eur',0),inflPct=val('t-infl',0),xCur=LK?eurPct:p.rate*100;
+  var S=MODE==='s';
+  var XL=LK?'Euribor':'Costo della liquidità',xl=LK?"l'Euribor":'il costo della liquidità',X0=LK?p.eur:p.rate;
+  var rep={id:'t',cliente:$('t-cli').value.trim(),interm:$('t-int').value.trim(),rate:P(p.rate),
+    key:[{l:'TFR pregresso',v:E(p.pre),s:'Fondo TFR: Stato patrimoniale, passivo, voce C',n:n('pre')},
+         {l:'TFR maturando annuo',v:E(p.mat),s:p.stima?'Stima: '+P(p.stima.q)+' del costo del lavoro, da confermare':"Quota dell'anno, senza rivalutazione",n:n(p.stima?'stima':'mat')},
+         {l:'Numero medio dipendenti',v:String(p.dip),s:p.tesSempre?'Azienda già obbligata al Fondo Tesoreria INPS':'Dalla nota integrativa',n:n('dip')}],
+    hyp:[['Situazione di cassa',p.cl.nome]].concat(LK?[['Euribor',P(p.eur)],[p.cl.id==='fido'?'Spread della banca sul fido':"Spread dell'impiego sull'Euribor",P(p.spread)]]:[]).concat([['Costo della liquidità',P(p.rate)],
+         ['TFR maturando conferito al fondo',P(p.ades,0)],['Contributo datoriale al fondo',P(p.contr)],['Retribuzioni stimate dal TFR maturando',E(r.retr)],
+         ["Aliquota d'imposta sul reddito",P(p.ires,1)],['Inflazione attesa',Pm(p.infl)],['Rivalutazione del TFR',P(r.rival)],['Periodo simulato',per]]),
+    sections:[]};
+  if(S)rep.key=[rep.key[1],rep.key[2],{l:"Senza quel TFR, l'azienda",v:p.cl.nome,txt:1,s:'Costo della liquidità '+P(p.rate),n:n('liq')}];
+  if(p.stima)rep.hyp.unshift(['Costo del lavoro (per la stima del TFR)',E(p.stima.cdl)],['TFR maturando stimato',E(p.mat)]);
+
+  /* riga in evidenza: chi vince per l'azienda */
+  var win=null;
+  if(nulla){/* niente da confrontare */}
+  else if(tutti){
+    win={k:'Azienda soggetta al Fondo Tesoreria INPS',t:"Per l'azienda la scelta è neutra",
+      runs:[{t:"Il TFR che matura esce comunque dall'azienda, verso il fondo pensione o verso l'INPS, con le stesse agevolazioni."}]};
+    if(T.cContr>0)win.runs.push({t:'Resta il costo del contributo datoriale:'},{t:E(T.cContr),b:1},{t:'in '+anni+', dopo le imposte.'});
+  }else if(esito==='pari'){
+    win={k:"Per l'azienda",t:'Fondo pensione e TFR in azienda si equivalgono',runs:[{t:'Con i dati inseriti la differenza in '+anni+' è di'},{t:E(Math.abs(T.net))+'.',b:1}]};
+    if(eurPar!=null)win.runs.push({t:(LK?"L'Euribor":'Il costo della liquidità')+' di pareggio è'},{t:AP(eurPar)+'.',b:1});
+  }else if(esito==='fondo'){
+    win={badge:1,k:"Per l'azienda vince",t:'Il fondo pensione',
+      runs:[{t:"Con il fondo pensione l'azienda risparmia"},{t:E(T.net),b:1},{t:'in '+anni+', dopo le imposte, rispetto al TFR lasciato in azienda.'}]};
+    if(eurPar!=null)win.runs.push({t:'Resta in vantaggio finché '+xl+' non supera'},{t:AP(eurPar),b:1},{t:'(impostato: '+P(X0)+').'});
+  }else{
+    win={badge:1,k:"Per l'azienda vince",t:'Il TFR in azienda',
+      runs:[{t:'Lasciando il TFR in azienda si risparmiano'},{t:E(-T.net),b:1},{t:'in '+anni+', dopo le imposte, rispetto al fondo pensione.'}]};
+    if(eurPar!=null)win.runs.push({t:'Il fondo pensione passerebbe in vantaggio con '+xl+' sotto'},{t:AP(eurPar),b:1},{t:'(impostato: '+P(X0)+').'});
+    else if(mai)win.runs.push({t:'I costi superano i benefici con qualsiasi costo della liquidità.'});
+  }
+  var t3=par==null?{v:'—',s:'Nessuna liquidità in uscita nel periodo'}:(mai?{v:'Nessuno',txt:1,s:'I costi superano i benefici anche a tasso zero'}:
+    {v:P(eurPar),s:LK?'con uno spread '+AP(p.spread,1)+': costo della liquidità di pareggio '+P(par):'oltre questo livello conviene il TFR in azienda'});
+  rep.sections.push({type:'tiles',title:'In sintesi',win:win,items:[
+    {hi:1,l:'Vantaggio netto del fondo pensione in '+anni,v:E(T.net),tone:tone(T.net),s:'benefici '+E(T.ben)+' meno costi '+E(T.costi)+', dopo le imposte'},
+    {l:'Risparmio fiscale e contributivo '+(tes.length&&!tutti?'nel '+p.start:'annuo'),v:E(a.fisc),s:a.conf>0&&!a.tes?'pari al '+P(a.fisc/a.conf,1)+' del TFR conferito':'',n:n('ded')+'-'+n('tax')},
+    {hi:1,l:(LK?'Euribor':'Costo della liquidità')+' di pareggio',v:t3.v,txt:t3.txt,s:t3.s,n:n('par')},
+    {l:'Debito TFR in bilancio tra '+anni,v:E(z.SB),s:'con il fondo pensione; '+E(z.SA)+' se il TFR resta in azienda',n:n('pre')}].slice(0,S?3:4)});
+  if(nulla)rep.sections.push({type:'alert',n:n('ades'),text:'Nessun TFR conferito al fondo pensione: indica il TFR maturando e la quota conferita per vedere il confronto.'});
+  if(tes.length)rep.sections.push({type:'alert',n:n('tes'),text:(p.tesSempre?"L'azienda è già obbligata al Fondo Tesoreria INPS":'Con '+p.dip+" dipendenti l'azienda rientra nell'obbligo del Fondo Tesoreria INPS"+(tutti?' per tutto il periodo':' dal '+tes[0].year))+
+    (tutti?": il TFR non destinato ai fondi pensione va comunque versato all'INPS, con le stesse agevolazioni. Il passaggio al fondo pensione non cambia né le imposte né la liquidità"+(p.contr>0?', salvo il contributo datoriale.':'.'):
+    ": da quell'anno il TFR che matura esce comunque dall'azienda, verso il fondo pensione o verso l'INPS, con le stesse agevolazioni. Il confronto riguarda quindi il TFR conferito negli anni precedenti.")});
+
+  /* come funziona il confronto, in parole semplici */
+  rep.sections.push({type:'duo',cols:[
+    {title:"Con il fondo pensione l'azienda risparmia",items:[
+      "Una deduzione extra dal reddito del "+P(r.ded,0)+" del TFR conferito: meno imposte.",
+      "Il contributo INPS al Fondo di garanzia (0,20% delle retribuzioni) e parte degli oneri impropri (0,28%), in proporzione al TFR conferito.",
+      "La rivalutazione annua sul TFR conferito (1,5% più il 75% dell'inflazione), che lasciato in azienda continuerebbe a crescere.",
+      "Le uscite di cassa improvvise per liquidazioni e anticipi su quel TFR: le paga il fondo pensione."]},
+    {give:1,title:"Con il fondo pensione l'azienda rinuncia a",items:[
+      "Trattenere il TFR in cassa: ogni mese il TFR che matura esce verso il fondo.",
+      "Se usa il fido, paga gli interessi su quella cassa (Euribor più lo spread della banca); se ha liquidità propria, rinuncia solo al rendimento che ne ricaverebbe.",
+      "Se il contratto collettivo lo prevede e il dipendente versa anche un proprio contributo, l'azienda aggiunge il contributo datoriale."]}],
+    cap:"Chi vince dipende soprattutto da quanto costa all'azienda sostituire quella cassa e dall'inflazione: le sezioni più sotto lo mostrano."});
+
+  /* il punto chiave: chi vince secondo la situazione di cassa */
+  if(r.D>0&&a.conf>0){
+    var lead2=[{t:'Tenere il TFR in azienda è come ricevere un prestito dai dipendenti che costa solo la rivalutazione:'},{t:P(r.rival),b:1},
+      {t:"l'anno, deducibile. Con il fondo pensione quel denaro esce ogni mese e l'azienda lo deve sostituire: se usa il fido paga gli interessi alla banca, se ha liquidità propria rinuncia soltanto a quello che le rende. In cambio ottiene risparmi fiscali e contributivi pari a circa il"},
+      {t:P(a.fisc/a.conf,1),b:1},{t:'del TFR conferito ogni anno e non paga più la rivalutazione.'}];
+    if(mai)lead2.push({t:'Con i dati inseriti, però, i costi superano i benefici in ogni caso.'});
+    else lead2.push({t:'Il TFR in azienda vince solo se sostituire quella cassa costa più'},{t:AP(par,1),b:1},{t:"l'anno"+(N>1?' (su '+anni+')':'')+": in pratica quando l'azienda usa un fido caro o reinveste la cassa con rendimenti alti."});
+    var scen=['fido','imp','cc','roi'].map(function(f){
+      var c=f===p.cl.id?p.cl:costoLiq(f),q=f===p.cl.id?r:calcTFR(conDati(p,{rate:c.rate})),e=esitoTFR(q.tot.net,N),sel=f===p.cl.id;
+      return {strong:sel,c:[{t:c.nome+(sel?' (scelta)':''),ts:c.breve+(sel?' (scelta)':'')},P(c.rate),{t:E(q.tot.net),tone:tone(q.tot.net)},{t:CHI[e],wr:1}]};
+    });
+    var cv=function(f){return P(costoLiq(f).rate)};
+    rep.sections.push({type:'table',title:'Chi vince secondo la situazione di cassa',n:n('liq'),lead:lead2,
+      head:["Senza quel TFR, l'azienda",'Costo della liquidità','Vantaggio netto del fondo in '+anni,'Chi vince'],short:[null,'Costo liquidità','Vantaggio netto',null],
+      cols:[{w:.36,al:'l'},{w:.18,al:'r'},{w:.26,al:'r'},{w:.2,al:'r'}],rows:scen,
+      cap:'Stessi dati, cambia solo il costo della liquidità: fido = Euribor + spread della banca ('+cv('fido')+'); liquidità investita = Euribor + spread dell\'impiego ('+cv('imp')+'); conto corrente = tasso del conto ('+cv('cc')+'); reinvestimento nell\'attività = rendimento degli investimenti ('+cv('roi')+'). Per cambiare questi valori scegli la situazione nei dati.'});
+  }
+
+  /* come si forma il risultato */
+  var rows=[
+    {c:['TFR maturando conferito al fondo pensione',E(a.conf),E(T.conf)],muted:1},
+    {c:[{t:'Deduzione extra del '+P(r.ded,0)+' sul TFR conferito',n:n('ded')},E(a.bDed),E(T.bDed)]},
+    {c:[{t:'Esonero dal Fondo di garanzia (0,20% delle retribuzioni)',n:n('fg')},E(a.bFG),E(T.bFG)]},
+    {c:[{t:'Riduzione degli oneri impropri (0,28% delle retribuzioni)',n:n('oi')},E(a.bOI),E(T.bOI)]},
+    {c:[{t:'Maggiore imposta sui contributi risparmiati',n:n('tax')},E(a.bTax),E(T.bTax)]},
+    {c:['Risparmio fiscale e contributivo',E(a.fisc),E(T.fisc)],strong:1},
+    {c:[{t:'Rivalutazione evitata sul TFR conferito',n:n('riv')},E(a.bRiv),E(T.bRiv)]},
+    {c:[{t:'Costo della liquidità non più trattenuta',n:n('liq')},E(-a.cFin),E(-T.cFin)]}];
+  if(p.contr>0)rows.push({c:[{t:'Contributo datoriale, con solidarietà del 10%',n:n('contr')},E(-a.cContr),E(-T.cContr)]});
+  rows.push({c:['Vantaggio netto del fondo pensione',{t:E(a.net),tone:tone(a.net)},{t:E(T.net),tone:tone(T.net)}],strong:1});
+  if(S){
+    var srw=[
+      {c:[{t:'Risparmio fiscale e contributivo',n:n('ded'),d:"Deduzione extra del "+P(r.ded,0)+" del TFR conferito e contributi INPS non più dovuti (Fondo di garanzia e oneri impropri), al netto delle imposte."},E(T.fisc)]},
+      {c:[{t:'Rivalutazione evitata',n:n('riv'),d:"Sul TFR versato al fondo l'azienda non paga più la rivalutazione annua: il risparmio cresce di anno in anno."},E(T.bRiv)]},
+      {c:[{t:'Costo della liquidità',n:n('liq'),d:p.cl.id==='fido'?"Interessi sul fido per sostituire la cassa uscita verso il fondo.":"Rendimento a cui l'azienda rinuncia sulla cassa uscita verso il fondo."},E(-T.cFin)]}];
+    if(p.contr>0)srw.push({c:[{t:'Contributo datoriale',n:n('contr'),d:'Contributo aggiuntivo previsto dal contratto collettivo, con la solidarietà INPS del 10%.'},E(-T.cContr)]});
+    srw.push({c:['Vantaggio netto del fondo pensione',{t:E(T.net),tone:tone(T.net)}],strong:1});
+    rep.sections.push({type:'table',title:'Come si forma il risultato in '+anni,head:['Voce','Totale '+anni],
+      cols:[{w:.74,al:'l'},{w:.26,al:'r'}],rows:srw,
+      cap:'Importi dopo le imposte. I valori negativi sono costi.'});
+  }else rep.sections.push({type:'table',title:'Come si forma il risultato',head:['Voce','Anno '+p.start,'Totale '+anni],
+    cols:[{w:.56,al:'l'},{w:.22,al:'r'},{w:.22,al:'r'}],rows:rows,
+    cap:'Importi dopo le imposte. I valori negativi sono costi. La rivalutazione evitata parte da zero e cresce di anno in anno, perché matura sul TFR conferito negli anni precedenti.'});
+
+  /* chi vince se cambiano Euribor e inflazione */
+  if(r.D>0){
+    var sp=LK?p.spread*100:0,lo=xCur-1.5,hi=xCur+1.5,x0=eurPar!=null?eurPar*100:null,inR=x0!=null&&Math.abs(x0-xCur)<=(LK?4:5.5);
+    if(inR){lo=Math.min(lo,x0-0.5);hi=Math.max(hi,x0+0.5)}
+    lo=Math.floor(lo*2+1e-9)/2;hi=Math.ceil(hi*2-1e-9)/2;
+    if(!LK&&lo<0){hi+=-lo;lo=0}
+    var conX=function(x){return LK?conEuribor(p,x/100):conDati(p,{rate:Math.max(0,x/100)})};
+    var f=function(x){return r.A-Math.max(0,(x+sp)/100)*r.D},xs=[lo,hi];
+    if(-sp>lo&&-sp<hi)xs.push(-sp);
+    if(inR)xs.push(x0);
+    xs.sort(function(u,v){return u-v});
+    var lead=LK?[{t:'Situazione scelta: «'+p.cl.nome.toLowerCase()+'». Il costo della liquidità segue l\'Euribor: con uno spread'},{t:AP(p.spread,1),b:1},{t:'oggi è pari a'},{t:P(p.rate)+'.',b:1}]:
+      [{t:'Situazione scelta: «'+p.cl.nome.toLowerCase()+'». Il costo della liquidità non dipende dall\'Euribor ed è pari a'},{t:P(p.rate)+'.',b:1}];
+    if(mai)lead.push({t:'Con i dati inseriti i costi superano i benefici a qualsiasi livello: vince il TFR in azienda.'});
+    else lead.push({t:'Il fondo pensione vince finché '+xl+' resta sotto'},{t:AP(eurPar)+';',b:1},{t:'sopra questo livello vince il TFR in azienda.'});
+    var ds=[-1.5,-1,-0.5,0,0.5,1,1.5].filter(function(d){return LK||xCur+d>=-1e-9});
+    while(ds.length<7)ds.push(ds[ds.length-1]+0.5);
+    var srows=ds.map(function(d){
+      var x=xCur+d,q=d===0?r:calcTFR(conX(x)),lb=P(x/100)+(d===0?' (impostato)':''),rt=LK?Math.max(0,(x+sp)/100):Math.max(0,x/100);
+      var c=[{t:lb,ts:XL+' '+lb}];if(LK)c.push(P(rt));
+      return {strong:d===0,c:c.concat([{t:E(q.tot.net),tone:tone(q.tot.net)},{t:CHI[esitoTFR(q.tot.net,N)],wr:1}])};
+    });
+    rep.sections.push({type:'sens',title:LK?"Chi vince se l'Euribor cambia":'Chi vince se cambia il costo della liquidità',n:n('par'),lead:lead,
+      chart:{xl:XL,curl:LK?'Euribor impostato':'Costo impostato',link:LK,lo:lo,hi:hi,pts:xs.map(function(x){return {x:x,y:(inR&&x===x0)?0:f(x)}}),x0:inR?x0:null,cur:{x:xCur,y:T.net},
+        line:'Vantaggio netto del fondo pensione in '+anni,
+        at:function(x){var q=calcTFR(conX(x));return {e:x/100,rate:LK?Math.max(0,(x+sp)/100):Math.max(0,x/100),net:q.tot.net,chi:esitoTFR(q.tot.net,N)}}},
+      table:S?null:LK?{head:['Euribor','Costo della liquidità','Vantaggio netto del fondo in '+anni,'Chi vince'],short:[null,'Costo liquidità','Vantaggio netto',null],
+        cols:[{w:.26,al:'l'},{w:.22,al:'r'},{w:.28,al:'r'},{w:.24,al:'r'}],rows:srows}:
+        {head:['Costo della liquidità','Vantaggio netto del fondo in '+anni,'Chi vince'],short:[null,'Vantaggio netto',null],
+        cols:[{w:.4,al:'l'},{w:.32,al:'r'},{w:.28,al:'r'}],rows:srows},
+      cap:'Vantaggio netto del fondo pensione in '+anni+', dopo le imposte, a parità di tutti gli altri dati: positivo se vince il fondo pensione, negativo se vince il TFR in azienda.'+(LK?' Costo della liquidità = '+p.cl.formula+' ('+P(p.spread)+').':'')});
+    var infs=[{v:inflPct,set:1}];
+    [-1,1,2].forEach(function(d){var v=Math.round(Math.max(0,inflPct+d)*100)/100;if(!infs.some(function(o){return Math.abs(o.v-v)<0.005}))infs.push({v:v})});
+    infs.sort(function(u,w){return u.v-w.v});
+    if(!S)rep.sections.push({type:'table',title:"E se cambia l'inflazione",n:n('riv'),
+      head:['Inflazione','Rivalutazione del TFR',XL+' di pareggio','Vantaggio netto del fondo in '+anni,'Chi vince'],short:[null,'Rivalutaz. TFR',LK?'Euribor di pareggio':'Costo di pareggio','Vantaggio netto',null],
+      cols:[{w:.18,al:'l'},{w:.17,al:'r'},{w:.17,al:'r'},{w:.3,al:'r'},{w:.18,al:'r'}],
+      rows:infs.map(function(o){
+        var q=o.set?r:calcTFR(conDati(p,{infl:o.v/100})),lb=Pm(o.v/100)+(o.set?' (impostata)':'');
+        return {strong:!!o.set,c:[{t:lb,ts:'Inflazione '+lb},P(q.rival),q.pareggio==null?'—':(q.A<=0?'Nessuno':P(q.pareggio-(LK?p.spread:0))),{t:E(q.tot.net),tone:tone(q.tot.net)},{t:CHI[esitoTFR(q.tot.net,N)],wr:1}]};
+      }),
+      cap:"A parità di "+(LK?'Euribor ('+P(p.eur)+')':'costo della liquidità ('+P(p.rate)+')')+" e di tutti gli altri dati. Più l'inflazione è alta, più costa il TFR lasciato in azienda (rivalutazione: 1,5% + 75% dell'inflazione) e più conviene il fondo pensione."});
+  }
+
+  /* andamento nel tempo */
+  rep.sections.push({type:'chart',title:'Benefici e costi anno per anno',legend:['Benefici','Costi'],
+    cap:S?"I benefici (risparmi fiscali e contributivi e rivalutazione evitata) sono pieni da subito; il costo della liquidità cresce ogni anno, perché la cassa uscita verso il fondo si accumula. Per questo il risultato dipende anche dalla durata considerata.":'',
+    data:r.rows.map(function(x){return {x:String(x.year),a:x.ben,b:x.costi,net:x.net}})});
+  var yr=r.rows.map(function(x){return {c:[x.year+(x.tes?' *':''),E(x.ben),E(x.costi),{t:E(x.net),tone:tone(x.net)},{t:E(x.cum),tone:tone(x.cum)},E(x.SA),E(x.SB)]}});
+  yr.push({c:['Totale',E(T.ben),E(T.costi),{t:E(T.net),tone:tone(T.net)},'','',''],strong:1});
+  if(!S)rep.sections.push({type:'table',wide:1,title:'Andamento anno per anno',
+    head:['Anno','Benefici','Costi','Vantaggio netto','Vantaggio cumulato','Debito TFR se resta in azienda','Debito TFR con il fondo pensione'],
+    cols:[{w:.1,al:'l'},{w:.13,al:'r'},{w:.13,al:'r'},{w:.15,al:'r'},{w:.15,al:'r'},{w:.17,al:'r'},{w:.17,al:'r'}],rows:yr,
+    cap:'Importi dopo le imposte. Benefici: risparmi fiscali e contributivi più rivalutazione evitata. Costi: liquidità non più trattenuta ed eventuale contributo datoriale.'+
+      (tes.length?" * Anni in cui l'azienda rientra nell'obbligo del Fondo Tesoreria INPS (nota "+n('tes')+').':'')});
+  var st=p.stima;
+  rep.sections.push({type:'check',title:'Prossimo passo: i dati da confermare con il commercialista',
+    intro:"L'analisi usa i dati di bilancio disponibili"+(st?' e una stima del TFR maturando':'')+". Per passare alla decisione, il commercialista o il consulente del lavoro dell'azienda può confermare in pochi minuti questi dati; con i valori definitivi il calcolo si aggiorna subito.",
+    items:[
+      {t:"TFR maturato nell'anno, senza rivalutazione",d:"È nel prospetto TFR del consulente del lavoro"+(st?'; qui è stimato dal costo del lavoro (nota '+n('stima')+').':'.'),
+        v:st?E(p.mat)+', stimato come '+P(st.q)+' del costo del lavoro di '+E(st.cdl)+'.'+(st.prev?' '+st.prev.txt:''):E(p.mat)+'.'},
+      {t:'TFR già destinato ai fondi pensione',d:"Quanti dipendenti aderiscono già e con quale quota: quel TFR esce già dall'azienda e va escluso dal confronto.",
+        v:"TFR maturando oggi tutto in azienda, conferito al fondo per il "+P(p.ades,0)+'.'},
+      {t:'Numero medio dei dipendenti e Fondo Tesoreria INPS',d:"La media dell'anno precedente e se l'azienda era già obbligata a versare il TFR all'INPS (almeno 50 addetti nel 2006 o nell'anno di inizio dell'attività).",
+        v:p.dip+' dipendenti; '+(p.tesSempre?'azienda già obbligata.':'azienda non obbligata in partenza.')},
+      {t:"Situazione di cassa e costo della liquidità",d:"Se l'azienda usa il fido (con quale spread) o ha liquidità propria, e dove la tiene: è il dato che più decide chi vince.",
+        v:p.cl.nome.toLowerCase()+'; '+(LK?'Euribor '+P(p.eur)+(p.spread<0?' meno ':' più ')+'spread '+P(Math.abs(p.spread))+' = '+P(p.rate):p.cl.formula+' '+P(p.rate))+'.'},
+      {full:1,t:"Aliquota d'imposta e deducibilità degli interessi",d:"L'aliquota effettiva (IRES o IRPEF) e la capienza del limite del 30% del ROL per gli interessi passivi.",
+        v:'aliquota del '+P(p.ires,1)+'; interessi interamente deducibili.'},
+      {full:1,t:'Contributo datoriale',d:'Quanto prevede il contratto collettivo applicato quando il dipendente versa un proprio contributo al fondo.',
+        v:p.contr>0?P(p.contr)+' delle retribuzioni.':'non considerato.'}].filter(function(q){return !S||!q.full})});
+  rep.sections.push({type:'notes',title:'Note e riferimenti normativi',items:TFR_NOTES});
+  rep.sections.push({type:'avv',title:'Avvertenze',items:[
+    COVIP_AVV,
+    "La destinazione del TFR è una scelta libera e personale di ciascun lavoratore (art. 8 D.Lgs. 252/2005): l'azienda non può imporla né ostacolarla. Il documento misura soltanto gli effetti sui conti dell'azienda, non la convenienza per il lavoratore, che dipende da rendimenti, costi e regole del fondo scelto.",
+    "Simulazione a scopo illustrativo: gli importi dipendono dai dati e dalle ipotesi indicate (retribuzioni e TFR maturando costanti; nessuna cessazione o anticipazione nel periodo; Euribor, spread e inflazione costanti; interessi sulla liquidità non capitalizzati; IRAP non considerata), non sono garantiti e non impegnano il consulente né l'intermediario. Euribor e inflazione possono cambiare anche in modo rilevante.",
+    "Prima di ogni decisione le cifre vanno verificate con il commercialista e il consulente del lavoro dell'azienda. "+NORME,
+    "Il documento non è una consulenza in materia di investimenti né una raccomandazione personalizzata e non sostituisce la documentazione d'offerta delle forme pensionistiche complementari. L'adesione dei lavoratori avviene con la sottoscrizione del Modulo di adesione, dopo la consegna dei documenti previsti, o con l'adesione automatica prevista dalla legge.",
+    firmaAvv(rep.interm)+' '+FONTI_T]});
+  rep.sections.push({type:'firma'});
+  return rep;
+}
+
+/* ---------- Modello della relazione: pagina liquidità ---------- */
+function liqParams(){
+  var cc=$('l-bCc').checked,tipo=$('l-bTipo').value;
+  return {liq:Math.max(0,val('l-liq',0)),deb:Math.max(0,val('l-deb',0)),ris:Math.max(0,val('l-ris',0)),rcc:val('l-rcc',0)/100,
+    spInv:val('l-spInv',0)/100,spBank:val('l-spBank',0)/100,ires:clamp(val('l-ires',0)/100,0,1),
+    bInv:$('l-bInv').checked,bProp:cc&&tipo==='cd',bFisso:cc&&tipo!=='cd'?(tipo==='pf'?34.2:100):0,tipo:cc?tipo:''};
+}
+function bolliTxt(p){
+  var a=[];
+  if(p.bInv)a.push("sull'investimento, 0,20% l'anno");
+  if(p.tipo==='cd')a.push("sul conto deposito, 0,20% l'anno");
+  else if(p.tipo)a.push("sul conto corrente, "+(p.tipo==='pf'?'34,20 €':'100 €')+" l'anno");
+  return a.length?'Imposta di bollo inclusa '+a.join(', e '):'Imposta di bollo non considerata';
+}
+function liqReport(){
+  var p=liqParams(),eur=val('l-eur',0)/100,r=calcLiq(p,eur),base=r.strat[0],has=r.E>0,n=function(k){return nn('l',k)};
+  var mx=Math.max.apply(null,r.strat.map(function(s){return Math.abs(s.net)}))||1,ns=r.strat.length,bt=bolliTxt(p);
+  var conBollo=r.strat.some(function(s){return s.bollo>0});
+  var rep={id:'l',cliente:$('l-cli').value.trim(),interm:$('l-int').value.trim(),
+    key:[{l:'Euribor',v:P(eur),s:'Tasso di riferimento impostato',n:n('eur')},
+         {l:'Disponibilità liquide',v:E(p.liq),s:'Stato patrimoniale, attivo, voce C.IV',n:n('liq')},
+         {l:'Debiti verso banche a tasso variabile',v:E(p.deb),s:'Stato patrimoniale, passivo, voce D.4',n:n('deb')}],
+    hyp:[['Riserva operativa',E(p.ris)],['Eccedenza oltre la riserva',E(r.E)],['Tasso riconosciuto sul conto',P(p.rcc)],
+         ["Spread dell'impiego sull'Euribor",P(p.spInv)],['Spread della banca sul debito',P(p.spBank)],["Aliquota d'imposta sul reddito",P(p.ires,1)],
+         ["Bollo sull'investimento",p.bInv?"0,20% l'anno":'Non considerato'],
+         ['Bollo sul conto',p.tipo==='cd'?"Conto deposito, 0,20% l'anno":(p.tipo?'Conto corrente, '+(p.tipo==='pf'?'34,20 €':'100 €'):'Non considerato')]],
+    sections:[]};
+  var win=null;
+  if(has){
+    var alt=r.strat.filter(function(s){return s.id!==r.best.id}),sec=alt.reduce(function(a,b){return b.net>a.net?b:a}),d=r.best.net-sec.net;
+    win={badge:1,k:"Uso più conveniente dell'eccedenza",t:r.best.nome,
+      runs:[{t:'Risultato annuo dopo imposte'+(conBollo?' e bollo':'')+':'},{t:E(r.best.net)+',',b:1}].concat(d>0?[{t:'cioè'},{t:E(d),b:1},{t:'in più rispetto a «'+sec.nome.toLowerCase()+'».'}]:[{t:'uguale a «'+sec.nome.toLowerCase()+'».'}])};
+    if(r.best.id==='conto'&&r.strat.length>1)win.runs.push({t:'Con questi dati impiegare o ridurre il debito non rende di più.'});
+  }
+  rep.sections.push({type:'tiles',title:'In sintesi',win:win,items:[
+    {l:'Eccedenza oltre la riserva',v:E(r.E),s:'su '+E(p.liq)+' di disponibilità liquide',n:n('ris')},
+    {hi:1,l:'Vantaggio rispetto al conto',v:has?E(r.best.net-base.net):'—',tone:has?tone(r.best.net-base.net):'',s:has?(r.best.id==='conto'?'Lasciare sul conto è già la scelta migliore':"l'anno, con l'uso più conveniente"):'La liquidità non supera la riserva'},
+    {l:"Rendimento netto dell'impiego",v:P(r.rNet),s:'Euribor '+P(eur)+' più spread, dopo '+(p.bInv?'bollo e ':'')+'imposte',n:n('imp')},
+    {l:'Costo del debito',v:P(r.rD),s:P(r.rD*(1-p.ires))+' dopo le imposte',n:n('costo')}]});
+  if(!has)rep.sections.push({type:'alert',n:n('ris'),text:"La liquidità non supera la riserva operativa: non c'è eccedenza da impiegare o da usare per ridurre il debito."});
+  rep.sections.push({type:'duo',cols:[
+    {title:"I tre usi dell'eccedenza a confronto",items:[
+      "Lasciarla sul conto: rende il tasso del conto, di solito vicino a zero.",
+      "Impiegarla a breve termine (conti deposito, titoli di Stato a breve, fondi monetari): rende circa l'Euribor più o meno uno spread, meno l'eventuale bollo.",
+      "Usarla per ridurre il debito a tasso variabile: ogni euro rimborsato fa risparmiare gli interessi, cioè l'Euribor più lo spread della banca."]},
+    {title:'Che cosa decide il risultato',items:[
+      "La differenza tra lo spread della banca sul debito e lo spread dell'impiego: se il debito costa più di quanto rende l'impiego, conviene ridurlo, qualunque sia l'Euribor.",
+      "Il livello dell'Euribor: più è alto, più rende l'impiego e più costa il debito.",
+      "La riserva operativa: resta sempre disponibile e non entra nel confronto."]}]});
+  var S=MODE==='s';
+  if(S){
+    var DESC={conto:"Interessi del conto sull'eccedenza, meno gli interessi pagati sul debito.",
+      impiego:"Rendimento dell'impiego"+(p.bInv?', meno il bollo,':'')+" meno gli interessi pagati sul debito.",
+      debito:"Interessi risparmiati sul debito rimborsato, più il rendimento della parte che avanza."};
+    rep.sections.push({type:'table',title:"Risultato annuo per ciascun uso dell'eccedenza",head:["Uso dell'eccedenza",'Risultato annuo','Rispetto al conto'],
+      short:[null,'Risultato','Vs conto'],cols:[{w:.6,al:'l'},{w:.2,al:'r'},{w:.2,al:'r'}],
+      rows:r.strat.map(function(s){return {strong:has&&s.id===r.best.id,c:[{t:s.nome,d:DESC[s.id],n:s.id==='impiego'?n('imp'):(s.id==='debito'?n('costo'):0)},{t:E(s.net),tone:tone(s.net)},E(s.net-base.net)]}}),
+      cap:"Importi annui dopo le imposte (nota "+n('tax')+"). "+bt+" (nota "+n('bollo')+"). In evidenza l'uso più conveniente."});
+  }
+  var head=["Uso dell'eccedenza",'Proventi netti'],cols=[{w:.28,al:'l'},{w:.13,al:'r'}];
+  if(conBollo){head.push('Imposta di bollo');cols.push({w:.12,al:'r'})}
+  head=head.concat(['Interessi sul debito','Risultato annuo','','Rispetto al conto']);
+  var rest=1-.28-.13-(conBollo?.12:0);cols=cols.concat([{w:rest*.24,al:'r'},{w:rest*.24,al:'r'},{w:rest*.26,al:'r'},{w:rest*.26,al:'r'}]);
+  if(!S)rep.sections.push({type:'table',wide:1,title:"Risultato annuo per ciascun uso dell'eccedenza",head:head,cols:cols,
+    short:[null,'Proventi'].concat(conBollo?['Bollo']:[],['Interessi','Risultato','','Vs conto']),
+    rows:r.strat.map(function(s){var c=[{t:s.nome,n:s.id==='impiego'?n('imp'):(s.id==='debito'?n('costo'):0)},E(s.prov)];
+      if(conBollo)c.push(E(-s.bollo));
+      c=c.concat([E(-s.oneri),{t:E(s.net),tone:tone(s.net)},{bar:Math.abs(s.net)/mx,neg:s.net<0},E(s.net-base.net)]);
+      return {strong:has&&s.id===r.best.id,c:c}}),
+    cap:"Importi annui dopo le imposte (nota "+n('tax')+"). Risultato = proventi sull'eccedenza"+(conBollo?' meno imposta di bollo':'')+" meno interessi sul debito. "+bt+" (nota "+n('bollo')+"). Barra piena: risultato positivo; barra vuota: negativo. In evidenza l'uso più conveniente."});
+  var w=(1-.2-.3)/ns;
+  if(!S)rep.sections.push({type:'table',title:"Se l'Euribor cambia",head:['Euribor'].concat(r.strat.map(function(s){return s.nome}),['Uso più conveniente']),
+    short:[null].concat(r.strat.map(function(s){return {conto:'Conto',impiego:'Impiego',debito:'Debito'}[s.id]}),['Migliore']),
+    cols:[{w:.2,al:'l'}].concat(r.strat.map(function(){return {w:w,al:'r'}}),[{w:.3,al:'r'}]),
+    rows:[-0.01,-0.005,0,0.005,0.01].map(function(d){var q=calcLiq(p,eur+d),lb=P(eur+d)+(d===0?' (impostato)':'');
+      return {strong:d===0,c:[{t:lb,ts:'Euribor '+lb}].concat(q.strat.map(function(s){return {t:E(s.net),tone:tone(s.net)}}),[{t:q.E>0?q.best.nome:'—',ts:q.E>0?{conto:'Conto',impiego:'Impiego',debito:'Debito'}[q.best.id]:'—',wr:1}])}}),
+    cap:'Risultato annuo dopo le imposte'+(conBollo?' e il bollo':'')+', a parità di tutti gli altri dati.'});
+  rep.sections.push({type:'check',title:'Prossimo passo: i dati da confermare con il commercialista',
+    intro:"L'analisi usa i dati di bilancio disponibili e alcune ipotesi. Prima di decidere conviene confermarle con il commercialista dell'azienda e con le condizioni della banca; con i valori definitivi il calcolo si aggiorna subito.",
+    items:[
+      {t:'Riserva operativa',d:'Il fabbisogno di cassa dei prossimi mesi: stipendi, fornitori, imposte e scadenze stagionali.',v:E(p.ris)+' da tenere sempre disponibili.'},
+      {t:'Debiti a tasso variabile e loro costo',d:"Quali affidamenti seguono l'Euribor, con quale spread, ed eventuali costi di estinzione o vincoli al riutilizzo del fido.",v:E(p.deb)+' a Euribor più '+P(p.spBank)+'.'},
+      {t:'Tasso del conto e imposta di bollo',d:"Il tasso effettivamente riconosciuto sul conto e i bolli già addebitati, dall'estratto conto e dai rendiconti.",v:P(p.rcc)+' sul conto; '+bt.charAt(0).toLowerCase()+bt.slice(1)+'.'},
+      {t:"Aliquota d'imposta",d:"L'aliquota effettiva (IRES o IRPEF) e la deducibilità degli interessi passivi.",v:P(p.ires,1)+'.'}]});
+  rep.sections.push({type:'notes',title:'Note e riferimenti normativi',items:LIQ_NOTES});
+  rep.sections.push({type:'avv',title:'Avvertenze',items:[
+    INFO_AVV,
+    "Simulazione a scopo illustrativo: gli importi dipendono dai dati e dalle ipotesi indicate (Euribor e saldi costanti per un anno; reddito d'impresa capiente; interessi sulla riserva esclusi perché uguali in tutti i casi), non sono garantiti e non impegnano il consulente né l'intermediario. "+bt+'.',
+    "I rendimenti degli impieghi non sono garantiti e dipendono dallo strumento scelto, dai suoi costi e dai suoi rischi, riportati nella relativa documentazione d'offerta, da leggere prima della sottoscrizione. Prima di rimborsare un debito vanno verificati i costi di estinzione e la possibilità di riutilizzare il fido.",
+    "Prima di ogni decisione le cifre vanno verificate con il commercialista dell'azienda. "+NORME,
+    firmaAvv(rep.interm)+' '+FONTI_L]});
+  rep.sections.push({type:'firma'});
+  return rep;
+}
+
+/* ---------- Resa a schermo ---------- */
+function formHTML(pre){
+  var h='<h2>Dati</h2><p class="fine">I valori iniziali sono esempi: sostituiscili con quelli dell\'azienda.</p>'+
+    '<p class="fine solo-s">Versione semplificata: le altre ipotesi ('+(pre==='t'?"aliquota, inflazione, quota conferita, contributo datoriale":"tassi, spread, aliquota e bolli")+') restano ai valori della versione completa e sono riportate nel PDF.</p>';
+  FORMS[pre].forEach(function(g){
+    h+='<div class="grp'+(g.key?' key':'')+'"'+(g.full?' data-full="1"':'')+'><p class="cap">'+g.cap+'</p>';
+    g.fields.forEach(function(d){
+      var id=pre+'-'+d.id,nt=d.note?mk(pre,nn(pre,d.note)):'',x;
+      if(d.out)x='<p class="out" id="'+pre+'-out-'+d.out+'" aria-live="polite"></p>';
+      else if(d.text)x='<div class="f ft"><label for="'+id+'">'+d.label+'</label><input class="txt" type="text" id="'+id+'"'+(d.ph?' placeholder="'+d.ph+'"':'')+(d.val?' value="'+esc(d.val)+'"':'')+' autocomplete="off" maxlength="80"></div>';
+      else if(d.chk)x='<label class="chk"><input type="checkbox" id="'+id+'"'+(d.on?' checked':'')+'><span>'+lab(d.label,nt)+(d.hint?'<small>'+d.hint+'</small>':'')+'</span></label>';
+      else if(d.sel)x='<div class="f ft"><label for="'+id+'">'+lab(d.label,nt)+'</label><select class="sel" id="'+id+'">'+d.sel.map(function(o){return '<option value="'+o[0]+'">'+o[1]+'</option>'}).join('')+'</select></div>';
+      else x='<div class="f"><label for="'+id+'">'+lab(d.label,nt)+(d.hint?'<small>'+d.hint+'</small>':'')+'</label>'+
+         '<div class="inp"><input type="number" inputmode="decimal" id="'+id+'" value="'+(d.val==null?'':d.val)+'"'+(d.ph?' placeholder="'+d.ph+'"':'')+' step="'+d.step+'">'+(d.unit?'<span>'+d.unit+'</span>':'')+'</div></div>';
+      h+=(d.when||d.full)?'<div'+(d.when?' data-when="'+d.when+'"':'')+(d.full?' data-full="1"':'')+'>'+x+'</div>':x;
+    });
+    h+='</div>';
+  });
+  return h;
+}
+function shellHTML(pre){
+  var g=PAGES[pre];
+  return '<div class="card rep-head"><div><h2>'+g.title+'</h2><p class="sub">'+g.sub+'</p><p class="meta"><span id="'+pre+'-rh-az">Azienda: <b id="'+pre+'-rh-cli"></b></span><span>Data: <b>'+DATA+'</b></span></p>'+
+    '<p class="cred">Elaborato da <b>'+AUTORE+'</b>, '+QUALIFICA+' · '+TEL+' · '+MAIL+'</p><p class="promo">'+esc(g.promo)+'</p></div>'+
+    '<div class="act no-print"><button type="button" class="btn" id="'+pre+'-pdf" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Scarica il PDF</button><button type="button" class="btn" id="'+pre+'-print" hidden>Stampa o salva in PDF</button><p class="status" id="'+pre+'-status" role="status"></p></div></div>'+
+    '<div class="col" id="'+pre+'-body"></div>';
+}
+function tilesHTML(pre,items,cls){
+  return '<div class="tiles '+cls+'">'+items.map(function(it){
+    return '<div class="tile'+(cls.indexOf('key')>=0?' key':'')+(it.hi?' hi':'')+'"><div class="l">'+lab(esc(it.l),mk(pre,it.n))+'</div><div class="v '+(it.tone||'')+(it.txt?' txt':'')+'">'+esc(it.v)+'</div>'+(it.s?'<div class="s">'+esc(it.s)+'</div>':'')+'</div>';
+  }).join('')+'</div>';
+}
+function runsHTML(runs){return runs.map(function(r){return r.b?'<b>'+esc(r.t)+'</b>':esc(r.t)}).join(' ')}
+function winHTML(w){
+  return '<div class="win">'+(w.badge?'<span class="wb" aria-hidden="true">1°</span>':'')+'<div>'+(w.k?'<p class="wk">'+esc(w.k)+'</p>':'')+'<p class="wt">'+esc(w.t)+'</p>'+(w.runs&&w.runs.length?'<p class="ws">'+runsHTML(w.runs)+'</p>':'')+'</div></div>';
+}
+function tableHTML(pre,s){
+  var h='<div class="tw'+(s.wide?' sc':'')+'"><table style="--nc:'+(s.cols.length-1)+'"><thead><tr>'+s.head.map(function(t,i){
+    var sh=s.short&&s.short[i]!=null&&s.short[i]!==t;
+    return '<th'+(s.cols[i].al==='l'?' class="l"':'')+'>'+(sh?'<span class="hf">'+esc(t)+'</span><span class="hs">'+esc(s.short[i])+'</span>':esc(t))+'</th>';
+  }).join('')+'</tr></thead><tbody>';
+  s.rows.forEach(function(r){
+    h+='<tr class="'+(r.strong?'strong':'')+(r.muted?' muted':'')+'">'+r.c.map(function(c,i){
+      var al=s.cols[i].al==='l'?'l':'num';
+      if(c&&c.bar!=null)return '<td class="barc"><div class="track"><div class="bar'+(c.neg?' n':'')+'" style="width:'+Math.max(3,Math.round(c.bar*100))+'%"></div></div></td>';
+      if(c&&typeof c==='object'){var tx=lab(esc(c.t),mk(pre,c.n));if(c.ts)tx='<span class="hf">'+tx+'</span><span class="hs">'+esc(c.ts)+'</span>';if(c.d)tx+='<small class="cd">'+esc(c.d)+'</small>';return '<td class="'+al+' '+(c.tone||'')+(c.wr?' wr':'')+'">'+tx+'</td>'}
+      return '<td class="'+al+'">'+esc(c)+'</td>';
+    }).join('')+'</tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+function bodyHTML(rep){
+  var pre=rep.id,h='<div class="print-only col"><div><h3>'+PAGES[pre].keyTitle+'</h3>'+tilesHTML(pre,rep.key,'key k3')+'</div><div><h3>Ipotesi della simulazione</h3><div class="kv">'+
+    rep.hyp.map(function(a){return '<div><span>'+esc(a[0])+'</span><b>'+esc(a[1])+'</b></div>'}).join('')+'</div></div></div>';
+  rep.sections.forEach(function(s,i){
+    if(s.type==='tiles')h+='<div><h3>'+s.title+'</h3>'+(s.win?winHTML(s.win):'')+tilesHTML(pre,s.items,'')+'</div>';
+    else if(s.type==='alert')h+='<div class="alert">'+lab(esc(s.text),mk(pre,s.n))+'</div>';
+    else if(s.type==='table')h+='<div class="card"><h3>'+lab(esc(s.title),mk(pre,s.n))+'</h3>'+(s.lead?'<p class="lead">'+runsHTML(s.lead)+'</p>':'')+tableHTML(pre,s)+(s.cap?'<p class="fine">'+esc(s.cap)+'</p>':'')+'</div>';
+    else if(s.type==='sens')h+='<div class="card cchart"><h3>'+lab(esc(s.title),mk(pre,s.n))+'</h3><p class="lead">'+runsHTML(s.lead)+'</p>'+
+      '<div class="legend"><span><i class="ln"></i>'+esc(s.chart.line)+'</span><span><i class="ar" style="background:var(--good)"></i>Vince il fondo pensione</span><span><i class="ar" style="background:var(--bad)"></i>Vince il TFR in azienda</span></div>'+
+      '<div class="chart" id="'+pre+'-chart-'+i+'"></div>'+(s.table?tableHTML(pre,s.table):'')+'<p class="fine">'+esc(s.cap)+'</p></div>';
+    else if(s.type==='chart')h+='<div class="card cchart"><h3>'+s.title+'</h3><div class="legend"><span><i style="background:var(--s1)"></i>'+s.legend[0]+'</span><span><i style="background:var(--s2)"></i>'+s.legend[1]+'</span></div><div class="chart" id="'+pre+'-chart-'+i+'"></div>'+(s.cap?'<p class="fine">'+esc(s.cap)+'</p>':'')+'</div>';
+    else if(s.type==='duo')h+='<div class="card"><div class="duo">'+s.cols.map(function(c){return '<div'+(c.give?' class="give"':'')+'><h3>'+esc(c.title)+'</h3><ul class="ul">'+c.items.map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul></div>'}).join('')+'</div>'+(s.cap?'<p class="fine">'+esc(s.cap)+'</p>':'')+'</div>';
+    else if(s.type==='check')h+='<div class="card ask"><h3>'+esc(s.title)+'</h3><p class="intro">'+esc(s.intro)+'</p><ol class="qs">'+s.items.map(function(q){return '<li><b>'+esc(q.t)+'.</b> '+esc(q.d)+'<span class="uv">Nella simulazione: '+esc(q.v)+'</span></li>'}).join('')+'</ol></div>';
+    else if(s.type==='notes')h+='<div class="card"><h3>'+s.title+'</h3><ol class="notes">'+s.items.map(function(a,j){return '<li id="'+pre+'n-'+(j+1)+'"><span class="k">'+(j+1)+'</span><span><b>'+esc(a[1])+'.</b> '+esc(a[2])+'</span></li>'}).join('')+'</ol></div>';
+    else if(s.type==='avv')h+='<div class="card avv"><h3>'+esc(s.title)+'</h3>'+s.items.map(function(t,j){return '<p'+(j===0?' class="k"':'')+'>'+esc(t)+'</p>'}).join('')+'</div>';
+    else if(s.type==='firma')h+='<div class="card firma"><div><p class="by1">Elaborato da</p><p class="who">'+AUTORE+'</p><p class="ql">'+QUALIFICA.charAt(0).toUpperCase()+QUALIFICA.slice(1)+'</p></div><p class="cts"><a href="tel:'+TELH+'">'+TEL+'</a><a href="mailto:'+MAIL+'">'+MAIL+'</a></p></div>';
+  });
+  return h;
+}
+function niceStep(range,n){var raw=range/n,e=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)),m=raw/e;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*e}
+function niceMax(v){if(v<=0)return 1;var st=niceStep(v,4);return Math.ceil(v/st-1e-9)*st}
+/* scala del vantaggio netto: comprende sempre lo zero */
+function scalaY(pts){
+  var a=0,b=0;pts.forEach(function(q){a=Math.min(a,q.y);b=Math.max(b,q.y)});
+  if(b-a<1){a-=1;b+=1}
+  var st=niceStep(b-a,4);return {a:Math.floor(a/st+1e-9)*st,b:Math.ceil(b/st-1e-9)*st,st:st};
+}
+/* aree sopra e sotto lo zero (dati: x = Euribor in punti, y = euro), divise nei punti in cui la linea taglia lo zero */
+function aree(pts){
+  var out=[],cur=null;
+  function close(x){if(cur){cur.p.push([x,0]);out.push(cur);cur=null}}
+  for(var i=0;i<pts.length;i++){
+    var q=pts[i],o=i>0?pts[i-1]:null,sg=q.y>0?1:(q.y<0?-1:0),x1=q.x;
+    if(o&&o.y*q.y<0){x1=o.x+(q.x-o.x)*o.y/(o.y-q.y);close(x1)}
+    else if(o&&o.y===0)x1=o.x;
+    if(sg===0){close(q.x);continue}
+    if(!cur)cur={sg:sg,p:[[x1,0]]};
+    cur.p.push([q.x,q.y]);
+  }
+  if(pts.length)close(pts[pts.length-1].x);
+  return out;
+}
+function xTicks(lo,hi){var st=hi-lo>4?1:0.5,t=[];for(var v=Math.ceil(lo/st-1e-9)*st;v<=hi+1e-9;v+=st)t.push(Math.round(v*100)/100);return t}
+function pc(v){return String(v.toFixed(Math.round(v*100)%10===0?(Math.round(v*10)%10===0?0:1):2)).replace('.',',').replace('-','−')+'%'}
+function drawSens(host,ch){
+  var W=Math.max(300,Math.round(host.clientWidth)||720),Hh=Math.round(Math.max(230,Math.min(300,W*0.45))),sy=scalaY(ch.pts.concat([ch.cur]));
+  var L=16+6.6*(grp(Math.max(Math.abs(sy.a),Math.abs(sy.b))).length+3),Rg=20,Tp=14,B=34,pw=W-L-Rg,ph=Hh-Tp-B;
+  var X=function(v){return L+(v-ch.lo)/(ch.hi-ch.lo)*pw},Y=function(v){return Tp+(sy.b-v)/(sy.b-sy.a)*ph},y0=Y(0);
+  var s='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Vantaggio netto del fondo pensione al variare: '+esc(ch.xl)+'"><g font-size="11" fill="var(--ink-2)">';
+  aree(ch.pts).forEach(function(a){s+='<path d="M'+a.p.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1)}).join('L')+'Z" fill="var(--'+(a.sg>0?'good':'bad')+')" opacity=".16"/>'});
+  for(var v=sy.a;v<=sy.b+1e-6;v+=sy.st){var yy=Y(v),z=Math.abs(v)<1e-9;s+='<line x1="'+L+'" x2="'+(W-Rg)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--'+(z?'ink-2':'line')+')" stroke-width="'+(z?1.2:0.6)+'"/><text x="'+(L-7)+'" y="'+(yy+4)+'" text-anchor="end">'+E(v)+'</text>'}
+  var tk=xTicks(ch.lo,ch.hi);
+  tk.forEach(function(v){var xx=X(v);s+='<line x1="'+xx+'" x2="'+xx+'" y1="'+(Tp+ph)+'" y2="'+(Tp+ph+4)+'" stroke="var(--ink-2)"/><text x="'+xx+'" y="'+(Tp+ph+17)+'" text-anchor="middle">'+pc(v)+'</text>'});
+  s+='<text x="'+(L+pw/2)+'" y="'+(Hh-3)+'" text-anchor="middle" font-size="11">'+esc(ch.xl)+'</text>';
+  if(ch.x0!=null){var xp=X(ch.x0);s+='<line x1="'+xp+'" x2="'+xp+'" y1="'+Tp+'" y2="'+(Tp+ph)+'" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="4 4"/>'+
+    '<text x="'+Math.min(W-Rg-4,Math.max(L+4,xp))+'" y="'+(Tp+11)+'" text-anchor="'+(xp>W-90?'end':(xp<L+90?'start':'middle'))+'" font-size="11.5" font-weight="600" fill="var(--ink)" stroke="var(--surface)" stroke-width="3.5" paint-order="stroke">Pareggio '+pc(ch.x0)+'</text>'}
+  s+='<path d="M'+ch.pts.map(function(q){return X(q.x).toFixed(1)+' '+Y(q.y).toFixed(1)}).join('L')+'" fill="none" stroke="var(--ink)" stroke-width="2"/>';
+  var hasP=ch.pts.some(function(q){return q.y>0}),hasN=ch.pts.some(function(q){return q.y<0});
+  var big=W>=520;
+  var q0=ch.pts[0],q1=ch.pts[ch.pts.length-1];
+  if(hasP&&big&&y0-Y(q0.y)>26)s+='<text x="'+(L+8)+'" y="'+(y0-8)+'" font-size="12" font-weight="600" fill="var(--good)">Vince il fondo pensione</text>';
+  if(hasN&&big&&Y(q1.y)-y0>30)s+='<text x="'+(W-Rg-6)+'" y="'+(y0+18)+'" text-anchor="end" font-size="12" font-weight="600" fill="var(--bad)">Vince il TFR in azienda</text>';
+  var cx=X(ch.cur.x),cy=Y(ch.cur.y);
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="5.5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>';
+  var rt=cx>W-140;s+='<text x="'+(rt?cx-9:cx+9)+'" y="'+(rt?cy+17:cy-9)+'" text-anchor="'+(cx>W-140?'end':'start')+'" font-size="11.5" font-weight="600" fill="var(--ink)" stroke="var(--surface)" stroke-width="3.5" paint-order="stroke">'+esc(ch.curl)+'</text>';
+  s+='<line class="hv" x1="0" x2="0" y1="'+Tp+'" y2="'+(Tp+ph)+'" stroke="var(--ink-2)" stroke-width="1" visibility="hidden"/><circle class="hp" r="4" fill="var(--ink)" visibility="hidden"/>';
+  s+='<rect class="hit" x="'+L+'" y="'+Tp+'" width="'+pw+'" height="'+ph+'" fill="transparent"/>';
+  host.innerHTML=s+'</g></svg><div class="tip"></div>';
+  var svg=host.querySelector('svg'),tip=host.querySelector('.tip'),hv=host.querySelector('.hv'),hp=host.querySelector('.hp');
+  function show(ev){
+    var bx=svg.getBoundingClientRect(),sc=W/bx.width,px=(ev.clientX-bx.left)*sc;
+    var xv=Math.round((ch.lo+(px-L)/pw*(ch.hi-ch.lo))*20)/20;xv=Math.min(ch.hi,Math.max(ch.lo,xv));
+    var d=ch.at(xv),xx=X(xv),yy=Y(d.net);
+    hv.setAttribute('x1',xx);hv.setAttribute('x2',xx);hv.setAttribute('visibility','visible');
+    hp.setAttribute('cx',xx);hp.setAttribute('cy',Math.min(Tp+ph,Math.max(Tp,yy)));hp.setAttribute('visibility','visible');
+    tip.innerHTML='<strong>'+esc(ch.xl)+' '+P(d.e)+'</strong>'+(ch.link?'<br>Costo della liquidità '+P(d.rate):'')+'<br>Vantaggio netto del fondo '+E(d.net)+'<br><strong>'+(d.chi==='fondo'?'Vince il fondo pensione':(d.chi==='tfr'?'Vince il TFR in azienda':'Parità'))+'</strong>';
+    tip.style.display='block';
+    var hw=host.getBoundingClientRect().width,half=tip.offsetWidth/2,x=xx/sc;
+    tip.style.left=Math.min(hw-half,Math.max(half,x))+'px';tip.style.top=(Math.max(Tp,yy)/sc+4)+'px';
+  }
+  function hide(){tip.style.display='none';hv.setAttribute('visibility','hidden');hp.setAttribute('visibility','hidden')}
+  var hit=host.querySelector('.hit');
+  hit.addEventListener('mousemove',show);hit.addEventListener('click',show);hit.addEventListener('mouseleave',hide);
+}
+function drawBars(host,data){
+  var W=Math.max(300,Math.round(host.clientWidth)||720),H=Math.round(Math.max(220,Math.min(280,W*0.42)));
+  var mx=niceMax(Math.max.apply(null,data.map(function(d){return Math.max(d.a,d.b,0)})));
+  var L=16+6.6*(grp(mx).length+2),Rg=8,Tp=10,B=28,pw=W-L-Rg,ph=H-Tp-B;
+  var y=function(v){return Tp+ph-(Math.max(0,v)/mx)*ph},bw=pw/data.length,w=Math.max(3,Math.min(18,bw*0.32));
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Benefici e costi per anno"><g font-size="11" fill="var(--ink-2)">';
+  for(var i=0;i<=4;i++){var v=mx*i/4,yy=y(v);s+='<line x1="'+L+'" x2="'+(W-Rg)+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--'+(i?'line':'ink-2')+')" stroke-width="'+(i?0.6:1)+'"/><text x="'+(L-7)+'" y="'+(yy+4)+'" text-anchor="end">'+grp(v)+' €</text>'}
+  var step=Math.ceil(data.length/Math.max(4,Math.floor(pw/48)));
+  data.forEach(function(d,i){
+    var cx=L+bw*i+bw/2;
+    [[d.a,'var(--s1)',cx-w-1],[d.b,'var(--s2)',cx+1]].forEach(function(m){
+      var top=y(m[0]),hh=Tp+ph-top,r=Math.min(4,hh,w/2);
+      if(hh>0.3)s+='<path fill="'+m[1]+'" d="M'+m[2]+' '+(Tp+ph)+'V'+(top+r)+'q0 -'+r+' '+r+' -'+r+'h'+(w-2*r)+'q'+r+' 0 '+r+' '+r+'V'+(Tp+ph)+'z"/>';
+    });
+    if(i%step===0)s+='<text x="'+cx+'" y="'+(H-9)+'" text-anchor="middle">'+d.x+'</text>';
+    s+='<rect data-i="'+i+'" x="'+(L+bw*i)+'" y="'+Tp+'" width="'+bw+'" height="'+ph+'" fill="transparent"/>';
+  });
+  host.innerHTML=s+'</g></svg><div class="tip"></div>';
+  var tip=host.querySelector('.tip');
+  host.querySelectorAll('rect[data-i]').forEach(function(rc){
+    function show(){var d=data[+rc.dataset.i],bx=rc.getBoundingClientRect(),hx=host.getBoundingClientRect();
+      tip.innerHTML='<strong>'+d.x+'</strong><br>Benefici '+E(d.a)+'<br>Costi '+E(d.b)+'<br>Netto '+E(d.net);
+      tip.style.display='block';
+      var half=tip.offsetWidth/2,x=bx.left-hx.left+bx.width/2;
+      tip.style.left=Math.min(hx.width-half,Math.max(half,x))+'px';tip.style.top=(bx.top-hx.top+60)+'px'}
+    rc.addEventListener('mouseenter',show);rc.addEventListener('click',show);
+    rc.addEventListener('mouseleave',function(){tip.style.display='none'});
+  });
+}
+function drawCharts(pre){
+  var rep=PAGES[pre].last;if(!rep)return;
+  rep.sections.forEach(function(s,i){var el=$(pre+'-chart-'+i);if(!el)return;if(s.type==='chart')drawBars(el,s.data);else if(s.type==='sens')drawSens(el,s.chart)});
+}
+function render(pre){
+  /* campi visibili: secondo le scelte fatte (data-when) e la versione (data-full = solo nella completa) */
+  document.querySelectorAll('#'+pre+'-form [data-when], #'+pre+'-form [data-full]').forEach(function(el){
+    var off=MODE==='s'&&el.dataset.full==='1';
+    if(!off&&el.dataset.when){var w=el.dataset.when.split(':');off=w[1].split('|').indexOf($(pre+'-'+w[0]).value)<0}
+    el.hidden=off;
+  });
+  if(pre==='t'){
+    var cl=costoLiq(),o=$('t-out-rate');if(o)o.innerHTML='Costo della liquidità = '+cl.formula+' = <b>'+P(cl.rate)+'</b>';
+    var sm=stimaMat(),so=$('t-out-stima');
+    if(sm&&so)so.innerHTML='TFR maturando stimato: <b>'+E(sm.mat)+'</b> ('+P(sm.q)+' del costo del lavoro)'+(sm.prev?'<br>'+esc(sm.prev.txt):'');
+  }
+  if(pre==='l')$('l-bTipo').disabled=!$('l-bCc').checked;
+  var rep=PAGES[pre].build();PAGES[pre].last=rep;
+  $(pre+'-rh-cli').textContent=rep.cliente;$(pre+'-rh-az').hidden=!rep.cliente;
+  $(pre+'-body').innerHTML=bodyHTML(rep);
+  drawCharts(pre);
+}
+
+/* ---------- PDF per il cliente (A4, generato nel browser) ---------- */
+function loadPdfLib(){return new Promise(function(res,rej){
+  if(window.PDFLib)return res();
+  var u=['https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js','https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'],i=0;
+  (function next(){
+    if(i>=u.length)return rej({lib:1});
+    var s=document.createElement('script');s.src=u[i++];
+    s.onload=function(){window.PDFLib?res():next()};s.onerror=next;document.head.appendChild(s);
+  })();
+})}
+function buildPDF(rep){
+  var Lb=window.PDFLib,rgb=Lb.rgb,g=PAGES[rep.id],doc,F,B,I,page,y,W=595.28,H=841.89,M=36,CW=W-2*M,BOT=M+26,ok={};
+  var C={ink:rgb(.08,.125,.12),ink2:rgb(.3,.35,.35),line:rgb(.82,.86,.86),acc:rgb(0,.216,.506),soft:rgb(.933,.949,.976),good:rgb(.11,.48,.27),bad:rgb(.7,.22,.18),
+    s1:rgb(.184,.373,.659),s2:rgb(.769,.627,.384),warn:rgb(.99,.95,.84),warnInk:rgb(.42,.3,0),track:rgb(.93,.945,.95),white:rgb(1,1,1),brass:rgb(.769,.627,.384)};
+  function cl(s){
+    s=String(s==null?'':s);var o='';
+    for(var i=0;i<s.length;i++){
+      var ch=s[i],k=s.charCodeAt(i);
+      if(k===0x2212)ch='-';else if(k===0xA0||k===0x202F||k===0x2009)ch=' ';else if(k===0x2265){o+='>=';continue}else if(k===0x2264){o+='<=';continue}
+      if(ok[ch]===undefined){try{F.encodeText(ch);ok[ch]=true}catch(e){ok[ch]=false}}
+      o+=ok[ch]?ch:'?';
+    }
+    return o;
+  }
+  function tw(s,f,z){return f.widthOfTextAtSize(s,z)}
+  function T(s,x,yy,z,f,c,al){s=cl(s);f=f||F;var w=tw(s,f,z);if(s)page.drawText(s,{x:al==='r'?x-w:(al==='c'?x-w/2:x),y:yy,size:z,font:f,color:c||C.ink});return w}
+  function wrap(s,f,z,w){var out=[],cur='';cl(s).split(/\s+/).forEach(function(wd){if(!wd)return;var t=cur?cur+' '+wd:wd;if(!cur||tw(t,f,z)<=w)cur=t;else{out.push(cur);cur=wd}});if(cur)out.push(cur);return out.length?out:['']}
+  function fit(s,f,z,w){s=cl(s);if(tw(s,f,z)<=w)return s;while(s.length>1&&tw(s+'…',f,z)>w)s=s.slice(0,-1);return s+'…'}
+  function np(){page=doc.addPage([W,H]);y=H-M}
+  function need(h){if(y-h<BOT)np()}
+  function hl(yy,th,col){page.drawLine({start:{x:M,y:yy},end:{x:W-M,y:yy},thickness:th,color:col})}
+  function sec(t,minH,n){need(minH||50);y-=17;var w=T(t,M,y,10.5,B,C.acc);if(n)T(String(n),M+w+2,y+3.6,6,B,C.acc);y-=5;hl(y,.5,C.line);y-=6}
+  function rich(runs,x0,mw,z,lh,dry){
+    var x=x0,segs=[],n=0,yy=y-z;
+    function flush(){if(!dry){var xx=x0;segs.forEach(function(s){xx+=(s.g||0);xx+=T(s.t,xx,yy,z,s.f,s.c)})}segs=[];n++;yy-=lh;x=x0}
+    runs.forEach(function(r){cl(r.t).split(/\s+/).forEach(function(wd){
+      if(!wd)return;var sp=x>x0?' ':'',w=tw(sp+wd,r.f,z);
+      if(x+w>x0+mw&&x>x0){flush();sp='';w=tw(wd,r.f,z)}
+      var last=segs[segs.length-1],g=0;
+      if(last&&last.f===r.f&&last.c===r.c)last.t+=sp+wd;else{g=last?1.2:0;segs.push({t:sp+wd,f:r.f,c:r.c,g:g})}
+      x+=w+g;
+    })});
+    if(segs.length)flush();
+    if(!dry)y-=n*lh;
+    return n;
+  }
+  function para(t,f,z){var runs=[{t:t,f:f||F,c:C.ink2}],n=rich(runs,M,CW,z||7.2,9,true);need(n*9+4);rich(runs,M,CW,z||7.2,9,false);y-=3}
+  function boxes(items,key){
+    var n=items.length,gap=8,w=(CW-gap*(n-1))/n,pad=8,iw=w-2*pad;
+    var lay=items.map(function(it){
+      var z=it.hi?(it.txt?13:16):(it.txt?11:13),vl=wrap(it.v,B,z,iw);if(vl.length>1){z=9.5;vl=wrap(it.v,B,z,iw)}
+      var a={ll:wrap(it.l,F,7.5,iw-(it.n?16:0)),vl:vl,z:z,sl:it.s?wrap(it.s,F,7,iw):[]};
+      a.h=pad+6+(a.ll.length-1)*9+(z+4)+(vl.length-1)*(z+2)+(a.sl.length?11+(a.sl.length-1)*8.5:0)+pad-1;return a;
+    });
+    var hh=Math.max.apply(null,lay.map(function(a){return a.h}));
+    need(hh+8);
+    items.forEach(function(it,i){
+      var x=M+i*(w+gap),a=lay[i],ly=y-pad-6;
+      page.drawRectangle({x:x,y:y-hh,width:w,height:hh,color:(key||it.hi)?C.soft:C.white,borderColor:(key||it.hi)?C.acc:C.line,borderWidth:it.hi?1.6:(key?.9:.7)});
+      a.ll.forEach(function(s,k){var wd=T(s,x+pad,ly-k*9,7.5,F,C.ink2);if(k===a.ll.length-1&&it.n)T(String(it.n),x+pad+wd+1.5,ly-k*9+3,5.5,B,C.acc)});
+      var vy=ly-(a.ll.length-1)*9-(a.z+4);
+      a.vl.forEach(function(s,k){T(s,x+pad,vy-k*(a.z+2),a.z,B,it.tone==='pos'?C.good:(it.tone==='neg'?C.bad:C.ink))});
+      var sy=vy-(a.vl.length-1)*(a.z+2)-11;
+      a.sl.forEach(function(s,k){T(s,x+pad,sy-k*8.5,7,F,C.ink2)});
+    });
+    y-=hh+4;
+  }
+  function kv(items){
+    var cw=(CW-24)/2,rows=Math.ceil(items.length/2);need(rows*13+8);
+    items.forEach(function(it,i){var c=i<rows?0:1,r=i<rows?i:i-rows,x=M+c*(cw+24),yy=y-10-r*13;
+      T(fit(it[0],F,8.5,cw-80),x,yy,8.5,F,C.ink2);T(it[1],x+cw,yy,8.5,B,C.ink,'r');
+      page.drawLine({start:{x:x,y:yy-3.5},end:{x:x+cw,y:yy-3.5},thickness:.3,color:C.line})});
+    y-=rows*13+4;
+  }
+  function alertBox(t){
+    var ls=wrap(t,F,8.5,CW-22),hh=ls.length*11+10;need(hh+8);
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.warn});page.drawRectangle({x:M,y:y-hh,width:3,height:hh,color:C.warnInk});
+    ls.forEach(function(s,k){T(s,M+12,y-13-k*11,8.5,F,C.warnInk)});y-=hh+4;
+  }
+  function winBox(w,minAfter){
+    var pad=11,bx=w.badge?33:0,x0=M+pad+bx,mw=CW-2*pad-bx;
+    var tl=wrap(w.t,B,15,mw),rr=(w.runs||[]).map(function(r){return {t:r.t,f:r.b?B:F,c:C.white}});
+    var nr=rr.length?rich(rr,x0,mw,9,11.5,true):0,hh=pad+(w.k?9:0)+tl.length*17+(nr?nr*11.5+2:0)+pad+1;
+    need(hh+8+(minAfter||0));
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.acc});
+    if(w.badge){page.drawCircle({x:M+pad+12,y:y-hh/2,size:13.5,color:C.brass});page.drawCircle({x:M+pad+12,y:y-hh/2,size:11.8,color:C.white});T('1°',M+pad+12,y-hh/2-3.7,10.5,B,C.acc,'c')}
+    var top=y,yy=y-pad;
+    if(w.k){yy-=7;T(w.k,x0,yy,7.8,F,C.white);yy-=2}
+    tl.forEach(function(sx){yy-=15;T(sx,x0,yy,15,B,C.white);yy-=2});
+    if(nr){y=yy-1;rich(rr,x0,mw,9,11.5,false)}
+    y=top-hh-6;
+  }
+  function leadBox(runs){
+    var rr=runs.map(function(r){return {t:r.t,f:r.b?B:F,c:C.ink}}),pad=8,z=8.8,lh=11.5,x0=M+pad+5,mw=CW-2*pad-5;
+    var n=rich(rr,x0,mw,z,lh,true),hh=n*lh+2*pad-3;
+    need(hh+10);
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.soft});
+    page.drawRectangle({x:M,y:y-hh,width:3,height:hh,color:C.acc});
+    var top=y;y-=pad-1.5;rich(rr,x0,mw,z,lh,false);y=top-hh-6;
+  }
+  function estT(tb){return 30+tb.rows.length*15}
+  function table(tb){
+    var cols=tb.cols,xs=[],x=M,z=8.5,lh=10.5;cols.forEach(function(c){xs.push(x);x+=c.w*CW});
+    function head(){
+      var ls=tb.head.map(function(t,i){return wrap(t,B,7.5,cols[i].w*CW-8)}),mx=Math.max.apply(null,ls.map(function(a){return a.length}));
+      ls.forEach(function(a,i){a.forEach(function(s,k){var yy=y-9-(k+mx-a.length)*9;
+        if(cols[i].al==='l')T(s,xs[i]+4,yy,7.5,B,C.ink2);else T(s,xs[i]+cols[i].w*CW-4,yy,7.5,B,C.ink2,'r')})});
+      y-=mx*9+5;hl(y,.8,C.ink2);
+    }
+    need(60);head();
+    tb.rows.forEach(function(r){
+      var f=r.strong?B:F,zz=r.strong?9.3:z,cells=r.c.map(function(c,i){
+        if(c&&c.bar!=null)return {bar:c};
+        var o=(c&&typeof c==='object')?c:{t:c==null?'':String(c)};
+        return {o:o,ls:wrap(o.t,f,zz,cols[i].w*CW-8-(o.n?10:0)),dl:o.d?wrap(o.d,F,7.2,cols[i].w*CW-8):null};
+      });
+      var hc=Math.max.apply(null,cells.map(function(c){return c.ls?c.ls.length*lh+(c.dl?c.dl.length*8.8+1.5:0):lh})),rh=hc+(r.strong?6:4);
+      if(y-rh<BOT){np();head()}
+      if(r.strong)page.drawRectangle({x:M,y:y-rh,width:CW,height:rh,color:C.soft});
+      cells.forEach(function(c,i){
+        var cw=cols[i].w*CW;
+        if(c.bar){
+          var bx=xs[i]+8,bw=cw-16,by=y-rh/2-3.5,ww=Math.max(2,bw*c.bar.bar);
+          page.drawRectangle({x:bx,y:by,width:bw,height:7,color:C.track});
+          if(c.bar.neg)page.drawRectangle({x:bx+.5,y:by+.5,width:Math.max(1,ww-1),height:6,borderColor:C.s2,borderWidth:1});
+          else page.drawRectangle({x:bx,y:by,width:ww,height:7,color:C.s1});
+          return;
+        }
+        var col=c.o.tone==='pos'?C.good:(c.o.tone==='neg'?C.bad:(r.muted?C.ink2:C.ink));
+        c.ls.forEach(function(s,k){
+          var yy=y-(r.strong?11:10)-k*lh,wd;
+          if(cols[i].al==='l'){wd=T(s,xs[i]+4,yy,zz,f,col);if(c.o.n&&k===c.ls.length-1)T(String(c.o.n),xs[i]+4+wd+1.5,yy+3.2,5.5,B,C.acc)}
+          else T(s,xs[i]+cw-4,yy,zz,f,col,'r');
+        });
+        if(c.dl)c.dl.forEach(function(s,k){T(s,xs[i]+4,y-(r.strong?11:10)-c.ls.length*lh-1.5-k*8.8,7.2,F,C.ink2)});
+      });
+      y-=rh;hl(y,.3,C.line);
+    });
+    y-=5;
+  }
+  function bars(ch){
+    var h=118,mx=niceMax(Math.max.apply(null,ch.data.map(function(d){return Math.max(d.a,d.b,0)}))),lw=tw(cl(grp(mx)+' €'),F,7)+9,x0=M+lw,pw=CW-lw,n=ch.data.length;
+    var lx=M;ch.legend.forEach(function(lb,i){page.drawRectangle({x:lx,y:y-9,width:7,height:7,color:i?C.s2:C.s1});lx+=10;lx+=T(lb,lx,y-9,8,F,C.ink2)+14});
+    y-=18;var bot=y-h;
+    for(var i=0;i<=4;i++){var yy=bot+h*i/4;page.drawLine({start:{x:x0,y:yy},end:{x:x0+pw,y:yy},thickness:i?.4:.8,color:i?C.line:C.ink2});T(grp(mx*i/4)+' €',x0-5,yy-2.5,7,F,C.ink2,'r')}
+    var gw=pw/n,bw=Math.max(2,Math.min(13,gw*.3)),step=Math.ceil(n/12);
+    ch.data.forEach(function(d,i){
+      var cx=x0+gw*i+gw/2,ha=h*Math.max(0,d.a)/mx,hb=h*Math.max(0,d.b)/mx;
+      if(ha>.2)page.drawRectangle({x:cx-bw-1,y:bot,width:bw,height:ha,color:C.s1});
+      if(hb>.2)page.drawRectangle({x:cx+1,y:bot,width:bw,height:hb,color:C.s2});
+      if(i%step===0)T(d.x,cx,bot-10,7,F,C.ink2,'c');
+    });
+    y=bot-16;
+  }
+  /* vantaggio netto al variare dell'Euribor: linea, aree colorate, pareggio e punto impostato */
+  function sens(ch){
+    var h=128,sy=scalaY(ch.pts.concat([ch.cur])),lw=tw(cl(E(Math.abs(sy.a)>Math.abs(sy.b)?sy.a:sy.b)),F,7)+9,x0=M+lw,pw=CW-lw-10;
+    var lx=M;
+    page.drawLine({start:{x:lx,y:y-5.5},end:{x:lx+16,y:y-5.5},thickness:1.6,color:C.ink});lx+=20;lx+=T(ch.line,lx,y-9,8,F,C.ink2)+14;
+    page.drawRectangle({x:lx,y:y-9,width:11,height:7,color:C.good,opacity:.3});lx+=15;lx+=T('Vince il fondo pensione',lx,y-9,8,F,C.ink2)+14;
+    if(lx+130>M+CW){lx=M;y-=11}
+    page.drawRectangle({x:lx,y:y-9,width:11,height:7,color:C.bad,opacity:.3});lx+=15;T('Vince il TFR in azienda',lx,y-9,8,F,C.ink2);
+    y-=30;var top=y,bot=y-h;
+    var X=function(v){return x0+(v-ch.lo)/(ch.hi-ch.lo)*pw},Y=function(v){return bot+(v-sy.a)/(sy.b-sy.a)*h};
+    aree(ch.pts).forEach(function(a){
+      var d='M'+a.p.map(function(q){return (X(q[0])-x0).toFixed(2)+' '+(top-Y(q[1])).toFixed(2)}).join('L')+'Z';
+      page.drawSvgPath(d,{x:x0,y:top,color:a.sg>0?C.good:C.bad,opacity:.18,borderWidth:0});
+    });
+    for(var v=sy.a;v<=sy.b+1e-6;v+=sy.st){var yy=Y(v),z=Math.abs(v)<1e-9;page.drawLine({start:{x:x0,y:yy},end:{x:x0+pw,y:yy},thickness:z?.9:.4,color:z?C.ink2:C.line});T(E(v),x0-5,yy-2.5,7,F,C.ink2,'r')}
+    xTicks(ch.lo,ch.hi).forEach(function(v){var xx=X(v);page.drawLine({start:{x:xx,y:bot},end:{x:xx,y:bot-3},thickness:.6,color:C.ink2});T(pc(v),xx,bot-11,7,F,C.ink2,'c')});
+    T(ch.xl,x0+pw/2,bot-21,7.5,F,C.ink2,'c');
+    if(ch.x0!=null){var xp=X(ch.x0);page.drawLine({start:{x:xp,y:bot},end:{x:xp,y:top},thickness:.9,color:C.ink,dashArray:[3,3]});
+      var lb='Pareggio '+pc(ch.x0),wl=tw(cl(lb),B,7.5),al=xp+wl/2>x0+pw?'r':(xp-wl/2<x0?'l':'c');
+      T(lb,al==='l'?xp+3:(al==='r'?xp-3:xp),top+3,7.5,B,C.ink,al==='l'?null:al)}
+    for(var i=1;i<ch.pts.length;i++){var a=ch.pts[i-1],b=ch.pts[i];page.drawLine({start:{x:X(a.x),y:Y(a.y)},end:{x:X(b.x),y:Y(b.y)},thickness:1.6,color:C.ink})}
+    var hasP=ch.pts.some(function(q){return q.y>0}),hasN=ch.pts.some(function(q){return q.y<0});
+    var p0=ch.pts[0],p1=ch.pts[ch.pts.length-1];
+    if(hasP&&Y(p0.y)-Y(0)>22)T('Vince il fondo pensione',x0+6,Y(0)+5,8,B,C.good);
+    if(hasN&&Y(0)-Y(p1.y)>22)T('Vince il TFR in azienda',x0+pw-4,Y(0)-11,8,B,C.bad,'r');
+    var cx=X(ch.cur.x),cy=Y(ch.cur.y);
+    page.drawCircle({x:cx,y:cy,size:4.5,color:C.acc,borderColor:C.white,borderWidth:1.5});
+    var rt=cx>x0+pw-90;T(ch.curl,rt?cx-7:cx+7,cy+5,7.5,B,C.ink,rt?'r':null);
+    y=bot-30;
+  }
+  function duo(s){
+    var gap=20,w=(CW-gap)/2,z=8,lh=10.5;
+    var lay=s.cols.map(function(c){var its=c.items.map(function(t){return wrap(t,F,z,w-10)});return {its:its,h:its.reduce(function(a,l){return a+l.length*lh+3},12)}});
+    var hh=Math.max.apply(null,lay.map(function(a){return a.h}));
+    need(hh+24);y-=17;
+    s.cols.forEach(function(c,k){
+      var x=M+k*(w+gap),yy=y;
+      T(c.title,x,yy,10.5,B,C.acc);yy-=5;page.drawLine({start:{x:x,y:yy},end:{x:x+w,y:yy},thickness:.5,color:C.line});yy-=4;
+      lay[k].its.forEach(function(ls){ls.forEach(function(sx,j){yy-=lh;if(j===0)T('•',x+1,yy,z,B,C.acc);T(sx,x+10,yy,z,F,C.ink)});yy-=3});
+    });
+    y-=hh+1;
+    if(s.cap)para(s.cap);
+  }
+  function check(s){
+    var ir=[{t:s.intro,f:F,c:C.ink}],ni=rich(ir,M+8,CW-8,8.2,10.5,true);
+    sec(s.title,ni*10.5+80);
+    var top=y;rich(ir,M+8,CW-8,8.2,10.5,false);y-=4;
+    s.items.forEach(function(q,i){
+      var r1=[{t:q.t+'.',f:B,c:C.ink},{t:q.d,f:F,c:C.ink}],r2=[{t:'Nella simulazione: '+q.v,f:F,c:C.ink2}];
+      var n1=rich(r1,M+22,CW-22,8,10,true),n2=rich(r2,M+22,CW-22,7.5,9.5,true);
+      if(y-(n1*10+n2*9.5+4)<BOT){page.drawRectangle({x:M,y:y,width:2.5,height:top-y,color:C.acc});np();top=y}
+      T(String(i+1)+'.',M+17,y-8,8,B,C.acc,'r');rich(r1,M+22,CW-22,8,10,false);rich(r2,M+22,CW-22,7.5,9.5,false);y-=4;
+    });
+    page.drawRectangle({x:M,y:y,width:2.5,height:top-y,color:C.acc});
+    y-=2;
+  }
+  function notes(items){
+    items.forEach(function(a,i){
+      var runs=[{t:a[1]+'.',f:B,c:C.ink},{t:a[2],f:F,c:C.ink}],nl=rich(runs,M+16,CW-16,7.5,9.5,true);
+      need(nl*9.5+5);T(String(i+1),M+10,y-7.5,7.5,B,C.acc,'r');rich(runs,M+16,CW-16,7.5,9.5,false);y-=3;
+    });
+  }
+  function avv(items){
+    items.forEach(function(t,i){
+      var runs=[{t:t,f:i===0?B:F,c:i===0?C.ink:C.ink2}],nl=rich(runs,M,CW,7.5,9.5,true);
+      need(nl*9.5+4);rich(runs,M,CW,7.5,9.5,false);y-=3.5;
+    });
+  }
+  function firma(){
+    need(60);y-=8;
+    page.drawRectangle({x:M,y:y-48,width:CW,height:48,color:C.acc});
+    T('Elaborato da',M+14,y-13,7.5,F,C.white);
+    T(AUTORE,M+14,y-27,13,B,C.white);
+    T(QUALIFICA.charAt(0).toUpperCase()+QUALIFICA.slice(1),M+14,y-39,7.8,F,C.white);
+    T(TEL,W-M-14,y-21,8.5,B,C.white,'r');T(MAIL,W-M-14,y-33,8.5,F,C.white,'r');
+    y-=54;
+  }
+  return Lb.PDFDocument.create().then(function(d){
+    doc=d;return Promise.all([doc.embedFont(Lb.StandardFonts.Helvetica),doc.embedFont(Lb.StandardFonts.HelveticaBold),doc.embedFont(Lb.StandardFonts.HelveticaOblique)]);
+  }).then(function(ff){
+    F=ff[0];B=ff[1];I=ff[2];
+    doc.setTitle(g.title+(rep.cliente?' - '+rep.cliente:''));doc.setAuthor(AUTORE);doc.setCreator('Simulatore TFR e liquidità aziendale');
+    np();
+    /* fascia di testata, come la pagina a schermo */
+    var bh=86;page.drawRectangle({x:0,y:H-bh,width:W,height:bh,color:C.acc});
+    T(g.title,M,H-40,18,B,C.white);
+    wrap(g.sub,F,8.8,CW).slice(0,2).forEach(function(sx,k){T(sx,M,H-56-k*11,8.8,F,C.white)});
+    y=H-bh-20;var x=M;
+    if(rep.cliente){x+=T('Azienda: ',x,y,9,F,C.ink2);x+=T(fit(rep.cliente,B,9,300),x,y,9,B)+16}
+    x+=T('Data: ',x,y,9,F,C.ink2);T(DATA,x,y,9,B);
+    y-=13;var w=T('Elaborato da '+AUTORE,M,y,9,B,C.acc);T(', '+QUALIFICA,M+w,y,8,F,C.ink2);
+    y-=11;T(TEL+' · '+MAIL,M,y,8,F,C.ink2);
+    y-=7;hl(y,.7,C.line);y-=1;
+    wrap(g.promo,I,7,CW).forEach(function(s){y-=9;T(s,M,y,7,I,C.ink2)});y-=1;
+    sec(g.keyTitle,90);boxes(rep.key,true);
+    sec('Ipotesi della simulazione',80);kv(rep.hyp);
+    rep.sections.forEach(function(s){
+      if(s.type==='tiles'){sec(s.title,s.win?170:95);if(s.win)winBox(s.win,80);boxes(s.items)}
+      else if(s.type==='alert'){y-=4;alertBox(s.text)}
+      else if(s.type==='table'){sec(s.title,Math.min(300,estT(s)+40)+(s.lead?60:0),s.n);if(s.lead)leadBox(s.lead);table(s);if(s.cap)para(s.cap)}
+      else if(s.type==='sens'){sec(s.title,330,s.n);leadBox(s.lead);sens(s.chart);if(s.table)table(s.table);para(s.cap)}
+      else if(s.type==='chart'){sec(s.title,186);bars(s);if(s.cap)para(s.cap)}
+      else if(s.type==='duo')duo(s);
+      else if(s.type==='check')check(s);
+      else if(s.type==='notes'){sec(s.title,80);notes(s.items)}
+      else if(s.type==='avv'){sec(s.title,70);avv(s.items)}
+      else if(s.type==='firma')firma();
+    });
+    var pp=doc.getPages();
+    pp.forEach(function(pg,i){page=pg;hl(M+17,.5,C.line);
+      T('Elaborato da '+AUTORE+', '+QUALIFICA,M,M+7,7,B,C.acc);
+      T(TEL+' · '+MAIL+' · Simulazione indicativa, '+DATA,M,M-2.5,7,F,C.ink2);
+      T('Pagina '+(i+1)+' di '+pp.length,W-M,M-2.5,7.5,F,C.ink2,'r')});
+    return doc.save();
+  });
+}
+
+/* ---------- Azioni: PDF o stampa ---------- */
+var DL=null;
+function setAct(kind){['t','l'].forEach(function(pre){$(pre+'-pdf').hidden=kind!=='pdf';$(pre+'-print').hidden=kind!=='print'})}
+function initAct(tries){
+  var c=window.claude;
+  if(c&&typeof c.use==='function'){
+    Promise.resolve(c.use('downloads')).then(function(ns){if(ns&&typeof ns.save==='function'){DL=ns;setAct('pdf')}},function(){});
+  }else if(tries<60)setTimeout(function(){initAct(tries+1)},250);
+}
+function savePDF(pre){
+  var btn=$(pre+'-pdf'),st=$(pre+'-status'),rep=PAGES[pre].last;
+  btn.disabled=true;st.textContent='Preparo il PDF…';
+  loadPdfLib().then(function(){return buildPDF(rep)}).then(function(bytes){
+    var nome=(PAGES[pre].file+(MODE==='s'?' (sintesi)':'')+(rep.cliente?' - '+rep.cliente:'')).replace(/[\\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().slice(0,110).replace(/[.\s]+$/,'')+'.pdf';
+    return DL.save({filename:nome,data:bytes});
+  }).then(function(){st.textContent='PDF pronto: controlla i download del dispositivo.'},function(e){
+    var c=e&&e.code;
+    st.textContent=e&&e.lib?'Non riesco a caricare il componente PDF: controlla la connessione e riprova.':
+      c==='declined'?'Salvataggio annullato.':
+      c==='rate_limited'?'Attendi qualche secondo e riprova.':
+      (c==='rejected_extension'||c==='extension_not_enabled')?'In questa vista il formato PDF non è disponibile.':
+      c?'In questa vista il salvataggio non è disponibile.':'Non sono riuscito a creare il PDF. Riprova.';
+    if(!c&&!(e&&e.lib)&&window.console)console.error(e);
+  }).then(function(){btn.disabled=false});
+}
+
+/* ---------- Avvio e navigazione ---------- */
+var CUR='t';
+['t','l'].forEach(function(pre){
+  $(pre+'-form').innerHTML=formHTML(pre);$(pre+'-rep').innerHTML=shellHTML(pre);
+  $(pre+'-form').addEventListener('input',function(e){
+    var id=e.target&&e.target.id||'',k=id.slice(2),o=pre==='t'?'l':'t';
+    var k2=null;for(var a in SYNC){if(pre==='t'&&a===k)k2=SYNC[a];if(pre==='l'&&SYNC[a]===k)k2=a}
+    if(k2&&$(o+'-'+k2))$(o+'-'+k2).value=e.target.value;   /* dati comuni (azienda, intermediario, Euribor, spread, tassi, aliquota) valgono per entrambe le pagine */
+    render(pre);
+  });
+  $(pre+'-form').addEventListener('change',function(){render(pre)});
+  $(pre+'-form').addEventListener('submit',function(e){e.preventDefault()});
+  $(pre+'-pdf').addEventListener('click',function(){savePDF(pre)});
+  $(pre+'-print').addEventListener('click',function(){try{window.print()}catch(e){}});
+});
+document.addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('.nm'):null;if(!b)return;
+  var el=$(b.dataset.n);if(!el)return;
+  var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({behavior:calm?'auto':'smooth',block:'center'});el.classList.add('hl');setTimeout(function(){el.classList.remove('hl')},1800);
+});
+function setModo(m){
+  MODE=m;document.documentElement.setAttribute('data-modo',m);try{localStorage.setItem('simTFR-versione',m)}catch(e){}
+  document.querySelectorAll('.modo button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===m?'true':'false')});
+  render(CUR==='t'?'l':'t');render(CUR);
+}
+document.querySelectorAll('.modo button').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.m!==MODE)setModo(b.dataset.m)})});
+document.querySelectorAll('.modo button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===MODE?'true':'false')});
+document.documentElement.setAttribute('data-modo',MODE);
+function route(){
+  var v=location.hash==='#liquidita'?'liquidita':'tfr';
+  ['tfr','liquidita'].forEach(function(k){$('page-'+k).classList.toggle('on',k===v);
+    if(k===v)$('nav-'+k).setAttribute('aria-current','page');else $('nav-'+k).removeAttribute('aria-current')});
+  CUR=v==='tfr'?'t':'l';render(CUR);
+}
+window.addEventListener('hashchange',route);
+route();
+render(CUR==='t'?'l':'t');
+var rz,lastW=document.documentElement.clientWidth;
+window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){var w=document.documentElement.clientWidth;if(w!==lastW){lastW=w;drawCharts(CUR)}},150)});
+var solo=false;try{solo=window.self===window.top}catch(e){}
+if(solo)setAct('print');
+initAct(0);
+})();
+</script>
+</body>
+</html>

@@ -257,6 +257,63 @@ section{position:relative}
 .calc-cta .btn{padding:12px 18px;font-size:14px}
 .disclaimer{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
 
+/* ---------- calculators: version switch & complete version ---------- */
+.calc-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;margin-bottom:24px}
+.calc-top .tabs{margin-bottom:0;flex:1 1 auto;min-width:0}
+.modo{flex:none;display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--paper)}
+.modo span{padding:0 8px 0 12px;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.modo button{font:600 13.5px/1 var(--sans);border:0;background:transparent;color:var(--ink);padding:10px 15px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.modo button[aria-pressed="true"]{background:var(--navy-900);color:#fff}
+@media (max-width:560px){.modo{width:100%}.modo button{flex:1}}
+[data-cm="s"] .only-c,[data-cm="c"] .only-s{display:none!important}
+.grp-t{margin:24px 0 14px;padding-top:18px;border-top:1px solid var(--line);font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.row3{display:grid;gap:0 12px;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end}
+.row3 label{font-size:13px}
+.heirs{display:grid;gap:6px;margin:4px 0 6px}
+.heir{display:grid;grid-template-columns:minmax(0,1fr) 116px 54px;gap:10px;align-items:center;font-size:14.5px}
+.heir.h{font:600 10.5px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.heir.h span:nth-child(n+2){text-align:center}
+.heir .inp.pct input{padding:10px 28px 10px 8px;text-align:right;font-size:15px}
+.heir .inp.pct input:disabled{color:var(--ink);opacity:1;background:#efebe3}
+.heir select{width:100%;font:500 14px/1.2 var(--sans);color:var(--ink);background:var(--ivory);border:1px solid var(--line);border-radius:3px;padding:9px 8px}
+.heir .dis{display:flex;justify-content:center}
+.heir .dis input{width:18px;height:18px;accent-color:var(--navy)}
+.heirs .sum{font-size:13px;color:var(--muted);text-align:right;padding-right:64px}
+.heirs .sum.bad{color:#a5422f;font-weight:600}
+.heirs .none{font-size:14px;color:var(--muted);margin:4px 0}
+.htab{margin-top:18px;overflow-x:auto}
+.htab table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.htab caption{text-align:left;font:600 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2);padding-bottom:8px}
+.htab th{font:600 10.5px/1.25 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-muted);text-align:right;padding:6px 6px;border-bottom:1px solid var(--line-dark);white-space:nowrap}
+.htab td{padding:8px 6px;text-align:right;border-bottom:1px solid var(--line-dark);white-space:nowrap}
+.htab th:first-child,.htab td:first-child{text-align:left;padding-left:0;white-space:normal}
+.htab td:last-child,.htab th:last-child{padding-right:0}
+.htab tr.tot td{font-weight:600;color:var(--gold-2);border-bottom:0}
+.htab tr.cur td{color:var(--gold-2);font-weight:600}
+.htab small{display:block;color:var(--on-dark-muted);font-size:11.5px;font-weight:400}
+details.yt{margin-top:16px;border-top:1px solid var(--line-dark)}
+details.yt summary{cursor:pointer;list-style:none;padding:12px 0 0;font:600 13px/1 var(--sans);color:var(--gold-2);display:flex;justify-content:space-between}
+details.yt summary::-webkit-details-marker{display:none}
+details.yt summary::after{content:"+";font-size:18px;line-height:.7}
+details.yt[open] summary::after{content:"–"}
+details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
+.cwarn{margin-top:16px;padding:11px 13px;border-left:2px solid var(--gold);background:rgba(196,160,98,.12);font-size:13.5px;line-height:1.5;color:#f4ecdc}
+.cwarn+.cwarn{margin-top:8px}
+
+/* ---------- tools (pagine di analisi) ---------- */
+.tools-sec{overflow:hidden}
+.tools-sec .gl{opacity:.1}
+.tool-grid{display:grid;gap:20px}
+@media (min-width:900px){.tool-grid{grid-template-columns:repeat(3,1fr)}}
+.tool{display:flex;flex-direction:column;padding:32px 28px;background:rgba(255,255,255,.04);border:1px solid var(--line-dark);border-radius:var(--r);text-decoration:none;color:#fff;transition:background .25s,border-color .25s,transform .25s}
+.tool:hover{background:rgba(255,255,255,.08);border-color:rgba(196,160,98,.6);transform:translateY(-3px)}
+.tool-tag{align-self:flex-start;font:600 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2);border:1px solid rgba(196,160,98,.5);padding:6px 9px;margin-bottom:20px}
+.tool h3{font-size:27px;line-height:1.15;color:#fff;margin-bottom:10px}
+.tool p{margin:0 0 22px;color:var(--on-dark-muted);font-size:15.5px}
+.tool-go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font:600 14.5px/1 var(--sans);color:var(--gold-2)}
+.tool-go svg{width:18px;height:18px;transition:transform .25s}
+.tool:hover .tool-go svg{transform:translateX(5px)}
+
 /* ---------- reviews ---------- */
 .reviews{background:var(--ivory)}
 .g-card{display:grid;gap:24px;align-items:center;background:var(--paper);border:1px solid var(--line);padding:30px 26px;border-radius:var(--r);box-shadow:var(--shadow)}
@@ -564,6 +621,7 @@ section>.wrap{position:relative}
   <a class="l" href="#servizi">Servizi</a>
   <a class="l" href="#metodo">Il metodo</a>
   <a class="l" href="#calcolatori">Calcolatori</a>
+  <a class="l" href="#strumenti">Strumenti di analisi</a>
   <a class="l" href="#recensioni">Recensioni</a>
   <a class="l" href="#contatti">Contatti</a>
   <a class="btn btn-gold" data-book href="#contatti">Prenota una consulenza</a>
@@ -738,59 +796,99 @@ section>.wrap{position:relative}
         <div class="orn" aria-hidden="true"><i></i></div>
       </div>
       <div class="fact-grid">
-        <div class="fact corners rv"><b>1 milione €</b><p>È la franchigia per coniuge e figli: l'imposta del 4% si applica solo sulla parte che supera questa soglia, per ciascun erede.</p></div>
+        <div class="fact corners rv"><b>1 milione €</b><p>È la franchigia per coniuge e parenti in linea retta, come i figli: l'imposta del 4% si applica solo sulla parte che supera questa soglia, per ciascun erede.</p></div>
         <div class="fact corners rv"><b>Esenti</b><p>I titoli di Stato e i capitali delle polizze vita pagati ai beneficiari non sono soggetti all'imposta di successione.</p></div>
         <div class="fact corners rv"><b>Senza testamento</b><p>Il patrimonio viene diviso secondo le quote del Codice civile, che potrebbero non rispecchiare le tue volontà.</p></div>
-        <div class="fact corners rv"><b>5.164,57 €</b><p>È l'importo annuo che puoi dedurre dal reddito versando nella previdenza complementare.</p></div>
+        <div class="fact corners rv"><b>5.300 €</b><p>È l'importo annuo che, dal 2026, puoi dedurre dal reddito versando nella previdenza complementare.</p></div>
       </div>
     </div>
   </section>
 
   <!-- CALCULATORS -->
-  <section class="sec" id="calcolatori">
+  <section class="sec" id="calcolatori" data-cm="s">
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Calcolatori</p>
         <h2>Fai una prima stima, <em>in pochi secondi</em></h2>
-        <p class="lead">Strumenti gratuiti per orientarti. Per un'analisi completa del tuo caso, parliamone insieme.</p>
+        <p class="lead">Ogni calcolatore ha due versioni: <strong>semplificata</strong>, per un'idea immediata, e <strong>completa</strong>, con tutte le voci per un'analisi più accurata.</p>
       </div>
 
-      <div class="tabs" role="tablist" aria-label="Calcolatori">
-        <button class="tab" role="tab" aria-selected="true" data-tab="succ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg>Imposta di successione</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="leg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>Quote di legittima</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="pac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg>Piano di accumulo</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="inf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 7l4 12h10l4-12"/><path d="M12 11v4"/></svg>Inflazione e liquidità</button>
+      <div class="calc-top">
+        <div class="tabs" role="tablist" aria-label="Calcolatori">
+          <button class="tab" role="tab" aria-selected="true" data-tab="succ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg>Imposta di successione</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="leg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg>Quote di legittima</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="pac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg>Piano di accumulo</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="inf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 7l4 12h10l4-12"/><path d="M12 11v4"/></svg>Inflazione e liquidità</button>
+        </div>
+        <div class="modo" role="group" aria-label="Versione dei calcolatori"><span>Versione</span><button type="button" data-m="s" aria-pressed="true">Semplificata</button><button type="button" data-m="c" aria-pressed="false">Completa</button></div>
       </div>
 
-      <!-- Successione -->
+      <!-- Imposta di successione -->
       <div class="calc on" id="calc-succ" role="tabpanel">
         <form class="calc-in" onsubmit="return false">
           <h3>Imposta di successione</h3>
-          <p class="hint">Stima l'imposta dovuta da un singolo erede sulla propria quota.</p>
-          <div class="field"><label for="s_rel">Rapporto con il defunto</label>
-            <select id="s_rel">
-              <option value="retta">Coniuge, figlio o genitore</option>
-              <option value="fratelli">Fratello o sorella</option>
-              <option value="parenti">Altri parenti fino al 4° grado o affini</option>
-              <option value="altri">Altri soggetti</option>
-            </select></div>
-          <div class="field"><label for="s_quota">Valore della quota ereditata</label><div class="inp eur"><input id="s_quota" type="number" min="0" step="1000" value="1500000" inputmode="numeric"></div>
-            <small>Per gli immobili si considera il valore catastale.</small></div>
-          <div class="row2">
-            <div class="field"><label for="s_imm">di cui immobili</label><div class="inp eur"><input id="s_imm" type="number" min="0" step="1000" value="400000" inputmode="numeric"></div></div>
-            <div class="field"><label for="s_es">di cui titoli di Stato e polizze vita</label><div class="inp eur"><input id="s_es" type="number" min="0" step="1000" value="0" inputmode="numeric"></div></div>
+          <p class="hint only-s">Stima l'imposta dovuta da un singolo erede sulla propria quota.</p>
+          <p class="hint only-c">Simula l'intera successione: patrimonio, debiti, eredi secondo la legge o il testamento, beni esenti e imposte sugli immobili.</p>
+          <div class="only-s">
+            <div class="field"><label for="s_rel">Rapporto con il defunto</label>
+              <select id="s_rel">
+                <option value="retta">Coniuge, figlio o genitore</option>
+                <option value="fratelli">Fratello o sorella</option>
+                <option value="parenti">Altri parenti fino al 4° grado o affini</option>
+                <option value="altri">Altri soggetti</option>
+              </select></div>
+            <div class="field"><label for="s_quota">Valore della quota ereditata</label><div class="inp eur"><input id="s_quota" type="number" min="0" step="1000" value="1500000" inputmode="numeric"></div>
+              <small>Per gli immobili si considera il valore catastale.</small></div>
+            <div class="row2">
+              <div class="field"><label for="s_imm">di cui immobili</label><div class="inp eur"><input id="s_imm" type="number" min="0" step="1000" value="400000" inputmode="numeric"></div></div>
+              <div class="field"><label for="s_es">di cui titoli di Stato</label><div class="inp eur"><input id="s_es" type="number" min="0" step="1000" value="0" inputmode="numeric"></div></div>
+            </div>
+            <label class="chk"><input type="checkbox" id="s_prima"> L'erede usufruisce delle agevolazioni prima casa</label>
+            <label class="chk"><input type="checkbox" id="s_dis"> Erede con disabilità grave (L. 104/1992)</label>
           </div>
-          <label class="chk"><input type="checkbox" id="s_prima"> L'erede usufruisce delle agevolazioni prima casa</label>
-          <label class="chk"><input type="checkbox" id="s_dis"> Erede con disabilità grave (L. 104/1992)</label>
+          <div class="only-c">
+            <p class="grp-t">Il patrimonio</p>
+            <div class="row2">
+              <div class="field"><label for="s2_imm">Immobili</label><div class="inp eur"><input id="s2_imm" type="number" min="0" step="1000" value="600000" inputmode="numeric"></div><small>Valore catastale</small></div>
+              <div class="field"><label for="s2_prima">di cui prima casa</label><div class="inp eur"><input id="s2_prima" type="number" min="0" step="1000" value="250000" inputmode="numeric"></div><small>Con le agevolazioni prima casa</small></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="s2_liq">Conti e liquidità</label><div class="inp eur"><input id="s2_liq" type="number" min="0" step="1000" value="300000" inputmode="numeric"></div></div>
+              <div class="field"><label for="s2_inv">Azioni, fondi e altri investimenti</label><div class="inp eur"><input id="s2_inv" type="number" min="0" step="1000" value="3000000" inputmode="numeric"></div></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="s2_tds">Titoli di Stato</label><div class="inp eur"><input id="s2_tds" type="number" min="0" step="1000" value="400000" inputmode="numeric"></div><small>Esenti dall'imposta</small></div>
+              <div class="field"><label for="s2_az">Azienda o partecipazioni</label><div class="inp eur"><input id="s2_az" type="number" min="0" step="1000" value="0" inputmode="numeric"></div><small>Esenti se vanno a coniuge o figli che proseguono l'attività</small></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="s2_alt">Altri beni</label><div class="inp eur"><input id="s2_alt" type="number" min="0" step="1000" value="0" inputmode="numeric"></div></div>
+              <div class="field"><label for="s2_pass">Debiti e spese deducibili</label><div class="inp eur"><input id="s2_pass" type="number" min="0" step="1000" value="50000" inputmode="numeric"></div><small>Mutui, debiti, spese funerarie e mediche</small></div>
+            </div>
+            <div class="field"><label for="s2_pol">Polizze vita: capitale ai beneficiari</label><div class="inp eur"><input id="s2_pol" type="number" min="0" step="1000" value="200000" inputmode="numeric"></div><small>Non entra nell'eredità ed è esente: è riportato a parte</small></div>
+            <p class="grp-t">La famiglia</p>
+            <label class="chk"><input type="checkbox" id="s2_con" checked> Coniuge o unito civilmente</label>
+            <div class="row3">
+              <div class="field"><label for="s2_fig">Figli</label><div class="inp"><input id="s2_fig" type="number" min="0" max="12" step="1" value="2" inputmode="numeric"></div></div>
+              <div class="field"><label for="s2_gen">Genitori in vita</label><div class="inp"><input id="s2_gen" type="number" min="0" max="2" step="1" value="0" inputmode="numeric"></div></div>
+              <div class="field"><label for="s2_fra">Fratelli e sorelle</label><div class="inp"><input id="s2_fra" type="number" min="0" max="12" step="1" value="0" inputmode="numeric"></div></div>
+            </div>
+            <div class="field"><label for="s2_mode">Come si divide l'eredità</label>
+              <select id="s2_mode"><option value="legge">Secondo la legge (senza testamento)</option><option value="test">Con testamento: quote personalizzate</option></select></div>
+            <div class="heirs" id="s2_heirs"></div>
+          </div>
         </form>
         <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="out-label">Totale imposte stimate</div>
           <div class="big" id="s_tot">–</div>
           <p class="out-sub" id="s_sub"></p>
+          <div class="only-c"><div class="bar" id="s_bar"></div><div class="legend" id="s_leg"></div></div>
           <div class="rows" id="s_rows"></div>
+          <div class="htab only-c" id="s_heirs_out"></div>
+          <div id="s_warn"></div>
           <div class="calc-cta"><a class="btn btn-gold" data-book href="#contatti">Analizza il tuo caso</a></div>
-          <p class="note">Stima indicativa basata sul D.Lgs. 346/1990 e successive modifiche. Non considera passività, spese deducibili, donazioni pregresse e casi particolari.</p>
+          <p class="note only-s">Stima indicativa basata sul D.Lgs. 346/1990 e successive modifiche. Non considera debiti, spese deducibili e casi particolari: li trovi nella versione completa.</p>
+          <p class="note only-c">Stima indicativa basata sul D.Lgs. 346/1990 e successive modifiche e sugli artt. 565 e seguenti del Codice civile. Debiti ed esenzioni sono ripartiti in proporzione alle quote. Non considera donazioni pregresse, limiti alla deducibilità delle spese e casi particolari.</p>
         </div>
       </div>
 
@@ -798,11 +896,20 @@ section>.wrap{position:relative}
       <div class="calc" id="calc-leg" role="tabpanel">
         <form class="calc-in" onsubmit="return false">
           <h3>Quote di legittima</h3>
-          <p class="hint">Scopri quanta parte del patrimonio spetta per legge ai familiari e di quanta puoi disporre liberamente con il testamento.</p>
+          <p class="hint only-s">Scopri quanta parte del patrimonio spetta per legge ai familiari e di quanta puoi disporre liberamente con il testamento.</p>
+          <p class="hint only-c">Confronta le quote riservate dalla legge, anche tenendo conto di debiti e donazioni, con la divisione che avverrebbe senza testamento.</p>
           <div class="field"><label for="l_pat">Valore del patrimonio</label><div class="inp eur"><input id="l_pat" type="number" min="0" step="1000" value="1000000" inputmode="numeric"></div></div>
+          <div class="row2 only-c">
+            <div class="field"><label for="l2_deb">Debiti</label><div class="inp eur"><input id="l2_deb" type="number" min="0" step="1000" value="0" inputmode="numeric"></div></div>
+            <div class="field"><label for="l2_don">Donazioni già fatte</label><div class="inp eur"><input id="l2_don" type="number" min="0" step="1000" value="200000" inputmode="numeric"></div><small>Valore al momento dell'apertura della successione</small></div>
+          </div>
           <div class="field"><label for="l_figli">Numero di figli</label><div class="inp"><input id="l_figli" type="number" min="0" max="15" step="1" value="2" inputmode="numeric"></div></div>
           <label class="chk"><input type="checkbox" id="l_con" checked> Coniuge o unito civilmente in vita</label>
-          <label class="chk" id="l_asc_w"><input type="checkbox" id="l_asc"> Genitori o altri ascendenti in vita</label>
+          <label class="chk only-s" id="l_asc_w"><input type="checkbox" id="l_asc"> Genitori o altri ascendenti in vita</label>
+          <div class="row2 only-c">
+            <div class="field"><label for="l2_gen">Genitori in vita</label><div class="inp"><input id="l2_gen" type="number" min="0" max="2" step="1" value="0" inputmode="numeric"></div></div>
+            <div class="field"><label for="l2_fra">Fratelli e sorelle</label><div class="inp"><input id="l2_fra" type="number" min="0" max="12" step="1" value="0" inputmode="numeric"></div><small>Contano solo senza testamento</small></div>
+          </div>
         </form>
         <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
@@ -811,8 +918,10 @@ section>.wrap{position:relative}
           <p class="out-sub" id="l_sub"></p>
           <div class="bar" id="l_bar"></div>
           <div class="legend" id="l_leg"></div>
+          <div class="only-c" id="l_full"></div>
+          <div id="l_warn"></div>
           <div class="calc-cta"><a class="btn btn-gold" data-book href="#contatti">Pianifica la tua successione</a></div>
-          <p class="note">Quote di riserva previste dagli artt. 536 e seguenti del Codice civile. Al coniuge spettano inoltre i diritti di abitazione sulla casa familiare e di uso dei mobili.</p>
+          <p class="note">Quote di riserva previste dagli artt. 536 e seguenti del Codice civile<span class="only-c">; successione senza testamento secondo gli artt. 565 e seguenti</span>. Al coniuge spettano inoltre i diritti di abitazione sulla casa familiare e di uso dei mobili.</p>
         </div>
       </div>
 
@@ -820,21 +929,34 @@ section>.wrap{position:relative}
       <div class="calc" id="calc-pac" role="tabpanel">
         <form class="calc-in" onsubmit="return false">
           <h3>Piano di accumulo</h3>
-          <p class="hint">Simula la crescita di un capitale con versamenti periodici e interesse composto.</p>
+          <p class="hint only-s">Simula la crescita di un capitale con versamenti periodici e interesse composto.</p>
+          <p class="hint only-c">Simulazione completa: versamenti crescenti, costi, imposte sul guadagno, scenari e capitale da raggiungere.</p>
           <div class="row2">
             <div class="field"><label for="p_ini">Capitale iniziale</label><div class="inp eur"><input id="p_ini" type="number" min="0" step="500" value="10000" inputmode="numeric"></div></div>
             <div class="field"><label for="p_men">Versamento mensile</label><div class="inp eur"><input id="p_men" type="number" min="0" step="50" value="300" inputmode="numeric"></div></div>
           </div>
           <div class="row2">
-            <div class="field"><label for="p_r">Rendimento medio annuo</label><div class="inp pct"><input id="p_r" type="number" min="-10" max="20" step="0.1" value="4" inputmode="decimal"></div></div>
+            <div class="field"><label for="p_r"><span class="only-s">Rendimento medio annuo</span><span class="only-c">Rendimento lordo atteso</span></label><div class="inp pct"><input id="p_r" type="number" min="-10" max="20" step="0.1" value="4" inputmode="decimal"></div></div>
             <div class="field"><label for="p_y">Durata in anni</label><div class="inp"><input id="p_y" type="number" min="1" max="50" step="1" value="20" inputmode="numeric"></div></div>
           </div>
           <div class="field"><label for="p_i">Inflazione media annua</label><div class="inp pct"><input id="p_i" type="number" min="0" max="15" step="0.1" value="2" inputmode="decimal"></div>
             <small>Serve a stimare il valore reale, cioè il potere d'acquisto finale.</small></div>
+          <div class="only-c">
+            <p class="grp-t">Versamenti, costi e imposte</p>
+            <div class="row2">
+              <div class="field"><label for="p_idx">Aumento annuo dei versamenti</label><div class="inp pct"><input id="p_idx" type="number" min="0" max="20" step="0.5" value="2" inputmode="decimal"></div></div>
+              <div class="field"><label for="p_ing">Commissione sui versamenti</label><div class="inp pct"><input id="p_ing" type="number" min="0" max="10" step="0.1" value="0" inputmode="decimal"></div></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="p_ter">Costi correnti annui</label><div class="inp pct"><input id="p_ter" type="number" min="0" max="5" step="0.05" value="1" inputmode="decimal"></div><small>Costi di gestione dello strumento</small></div>
+              <div class="field"><label for="p_tds">Quota in titoli di Stato</label><div class="inp pct"><input id="p_tds" type="number" min="0" max="100" step="5" value="0" inputmode="decimal"></div><small>Tassati al 12,5% invece del 26%</small></div>
+            </div>
+            <div class="field"><label for="p_goal">Capitale che vorresti raggiungere</label><div class="inp eur"><input id="p_goal" type="number" min="0" step="1000" value="150000" inputmode="numeric"></div><small>Calcoliamo il versamento mensile necessario</small></div>
+          </div>
         </form>
         <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
-          <div class="out-label">Capitale finale stimato</div>
+          <div class="out-label" id="p_lab">Capitale finale stimato</div>
           <div class="big" id="p_fin">–</div>
           <p class="out-sub" id="p_sub"></p>
           <svg class="chart" id="p_chart" viewBox="0 0 600 200" role="img" aria-label="Crescita del capitale anno per anno"></svg>
@@ -842,7 +964,10 @@ section>.wrap{position:relative}
             <div><i style="background:rgba(255,255,255,.35)"></i>Versato</div><div><i style="background:var(--gold)"></i>Rendimento</div>
           </div>
           <div class="rows" id="p_rows"></div>
-          <p class="note">Simulazione con rendimento costante e capitalizzazione mensile, al lordo di costi e tasse. I rendimenti passati non sono indicativi di quelli futuri.</p>
+          <div class="htab only-c" id="p_scen"></div>
+          <details class="yt only-c"><summary>Anno per anno</summary><div class="htab" id="p_years"></div></details>
+          <p class="note only-s">Simulazione con rendimento costante e capitalizzazione mensile, al lordo di costi e tasse. I rendimenti passati non sono indicativi di quelli futuri.</p>
+          <p class="note only-c">Simulazione con rendimento costante e capitalizzazione mensile. Costi correnti tolti ogni anno, imposta sul guadagno alla fine (26%, 12,5% sulla parte in titoli di Stato), imposta di bollo non considerata. I rendimenti non sono garantiti e quelli passati non sono indicativi di quelli futuri.</p>
         </div>
       </div>
 
@@ -850,24 +975,77 @@ section>.wrap{position:relative}
       <div class="calc" id="calc-inf" role="tabpanel">
         <form class="calc-in" onsubmit="return false">
           <h3>Inflazione e liquidità</h3>
-          <p class="hint">Quanto potere d'acquisto perde nel tempo la liquidità ferma sul conto corrente?</p>
+          <p class="hint only-s">Quanto potere d'acquisto perde nel tempo la liquidità ferma sul conto corrente?</p>
+          <p class="hint only-c">Confronta due scelte: tenere tutto sul conto oppure tenere una riserva per gli imprevisti e investire l'eccedenza.</p>
           <div class="field"><label for="i_imp">Liquidità sul conto</label><div class="inp eur"><input id="i_imp" type="number" min="0" step="1000" value="100000" inputmode="numeric"></div></div>
           <div class="row2">
             <div class="field"><label for="i_inf">Inflazione media annua</label><div class="inp pct"><input id="i_inf" type="number" min="0" max="20" step="0.1" value="2.5" inputmode="decimal"></div></div>
             <div class="field"><label for="i_y">Anni</label><div class="inp"><input id="i_y" type="number" min="1" max="50" step="1" value="10" inputmode="numeric"></div></div>
           </div>
+          <div class="only-c">
+            <p class="grp-t">Riserva per gli imprevisti</p>
+            <div class="row2">
+              <div class="field"><label for="i_spese">Spese mensili della famiglia</label><div class="inp eur"><input id="i_spese" type="number" min="0" step="100" value="3000" inputmode="numeric"></div></div>
+              <div class="field"><label for="i_mesi">Mesi di riserva</label><div class="inp"><input id="i_mesi" type="number" min="0" max="36" step="1" value="6" inputmode="numeric"></div></div>
+            </div>
+            <p class="grp-t">Il conto</p>
+            <div class="row2">
+              <div class="field"><label for="i_tcc">Tasso lordo del conto</label><div class="inp pct"><input id="i_tcc" type="number" min="0" max="10" step="0.05" value="0.1" inputmode="decimal"></div></div>
+              <div class="field"><label for="i_tipo">Tipo di conto</label><select id="i_tipo"><option value="cc">Conto corrente</option><option value="cd">Conto deposito</option></select></div>
+            </div>
+            <p class="grp-t">L'alternativa per l'eccedenza</p>
+            <div class="row2">
+              <div class="field"><label for="i_alt">Rendimento lordo atteso</label><div class="inp pct"><input id="i_alt" type="number" min="-5" max="15" step="0.1" value="3" inputmode="decimal"></div></div>
+              <div class="field"><label for="i_tax">Imposta sui rendimenti</label><select id="i_tax"><option value="0.26">26%</option><option value="0.125">12,5% (titoli di Stato)</option></select></div>
+            </div>
+          </div>
         </form>
         <div class="calc-out corners">
           <svg class="gl" data-gl="calc" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
-          <div class="out-label">Potere d'acquisto perso</div>
+          <div class="out-label" id="i_lab">Potere d'acquisto perso</div>
           <div class="big" id="i_loss">–</div>
           <p class="out-sub" id="i_sub"></p>
           <div class="rows" id="i_rows"></div>
+          <details class="yt only-c"><summary>Anno per anno</summary><div class="htab" id="i_years"></div></details>
+          <div id="i_warn"></div>
           <div class="calc-cta"><a class="btn btn-gold" data-book href="#contatti">Dai un obiettivo alla tua liquidità</a></div>
-          <p class="note">Calcolo con inflazione costante. Non considera eventuali interessi del conto, costi e imposta di bollo.</p>
+          <p class="note only-s">Calcolo con inflazione costante. Non considera eventuali interessi del conto, costi e imposta di bollo.</p>
+          <p class="note only-c">Inflazione e rendimenti costanti. Interessi del conto tassati al 26%; imposta di bollo di 34,20 € l'anno sul conto corrente sopra i 5.000 € di giacenza, dello 0,20% sul conto deposito e sull'investimento. I rendimenti dell'alternativa non sono garantiti.</p>
         </div>
       </div>
       <p class="disclaimer">I calcolatori forniscono stime indicative a scopo informativo e non costituiscono consulenza fiscale, legale o finanziaria.</p>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="sec dark tools-sec grain" id="strumenti">
+    <svg class="gl" data-gl="method" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Strumenti di analisi</p>
+        <h2>Le analisi che preparo <em>per i miei clienti</em></h2>
+        <p class="lead">Simulatori completi, ciascuno con versione semplificata e completa e con una relazione in PDF da conservare o condividere.</p>
+      </div>
+      <div class="tool-grid">
+        <a class="tool corners rv" href="strumenti/tfr-fondi-pensione.html">
+          <span class="tool-tag">Previdenza · Privati</span>
+          <h3>TFR e fondi pensione a confronto</h3>
+          <p>Fondi aperti, negoziali e PIP messi a confronto con il TFR lasciato in azienda: capitale stimato a 5, 10 e 20 anni, costi, imposte e rendita.</p>
+          <span class="tool-go">Apri lo strumento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tool corners rv" href="strumenti/tfr-liquidita-aziendale.html">
+          <span class="tool-tag">Imprese</span>
+          <h3>Simulatore TFR e liquidità aziendale</h3>
+          <p>Per l'azienda conviene tenere il TFR o destinarlo ai fondi pensione? E come impiegare la liquidità in eccesso, con l'Euribor di oggi?</p>
+          <span class="tool-go">Apri lo strumento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tool corners rv" href="strumenti/confronto-fondi.html">
+          <span class="tool-tag">Investimenti</span>
+          <h3>Due fondi a confronto</h3>
+          <p>Costi, rendimenti, portafoglio, gestori e particolarità di due fondi, fianco a fianco, con un punteggio finale spiegato in modo semplice.</p>
+          <span class="tool-go">Apri lo strumento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -963,7 +1141,7 @@ section>.wrap{position:relative}
     <li><strong>Titoli di Stato</strong>, anch'essi esclusi dalla base imponibile dell'imposta.</li>
   </ul>
   <h3>La fiscalità, in breve</h3>
-  <p>Coniuge e figli beneficiano di una franchigia di <strong>1 milione di euro</strong> ciascuno, oltre la quale si applica un'aliquota del 4%. Per fratelli e sorelle la franchigia scende a 100.000 € con aliquota del 6%; per gli altri parenti e per i soggetti estranei le aliquote salgono al 6% e all'8%, senza franchigia. Sugli immobili si aggiungono le imposte ipotecaria e catastale.</p>
+  <p>Coniuge e parenti in linea retta, come figli e genitori, beneficiano di una franchigia di <strong>1 milione di euro</strong> ciascuno, oltre la quale si applica un'aliquota del 4%. Per fratelli e sorelle la franchigia scende a 100.000 € con aliquota del 6%; per gli altri parenti e per i soggetti estranei le aliquote salgono al 6% e all'8%, senza franchigia. Sugli immobili si aggiungono le imposte ipotecaria e catastale.</p>
   <p>Vuoi una prima stima? Prova il <a href="#calcolatori" data-calc="succ">calcolatore dell'imposta di successione</a>.</p>
   <h3>Il mio approccio</h3>
   <p>Partiamo da una mappatura completa del patrimonio e simuliamo cosa accadrebbe oggi. Su questa base individuiamo le soluzioni più adatte, coordinandoci con il notaio e il commercialista che ti seguono, perché ogni scelta sia coerente con le altre.</p>
@@ -1056,7 +1234,7 @@ section>.wrap{position:relative}
   <h3>La previdenza complementare</h3>
   <p>Fondi pensione e piani individuali pensionistici sono pensati proprio per integrare la pensione pubblica, e godono di vantaggi fiscali rilevanti:</p>
   <ul>
-    <li><strong>Deducibilità</strong> dei versamenti dal reddito fino a 5.164,57 € l'anno.</li>
+    <li><strong>Deducibilità</strong> dei versamenti dal reddito fino a 5.300 € l'anno, limite in vigore dal 2026.</li>
     <li><strong>Tassazione agevolata</strong> dei rendimenti durante l'accumulo, inferiore a quella degli investimenti ordinari.</li>
     <li><strong>Prestazioni finali</strong> tassate al 15%, aliquota che scende fino al 9% con gli anni di partecipazione.</li>
   </ul>
@@ -1069,7 +1247,7 @@ section>.wrap{position:relative}
   <p>Con un'analisi previdenziale stimiamo la tua pensione futura e il divario da colmare, poi definiamo un piano di versamenti sostenibile, da rivedere nel tempo.</p>
   <div class="r-sum corners"><h4>In sintesi</h4><ul>
     <li>Conoscere il proprio divario previdenziale è il primo passo.</li>
-    <li>I versamenti sono deducibili fino a 5.164,57 € l'anno.</li>
+    <li>I versamenti sono deducibili fino a 5.300 € l'anno.</li>
     <li>Prima si inizia, più il tempo lavora a tuo favore.</li>
     <li>Si può pensare anche alla previdenza dei figli.</li>
   </ul></div>
@@ -1084,7 +1262,7 @@ section>.wrap{position:relative}
   <p>Puoi fare una simulazione sul tuo caso con il <a href="#calcolatori" data-calc="inf">calcolatore dell'inflazione</a>.</p>
   <blockquote>Ogni euro dovrebbe avere un compito: anche quello che resta fermo.</blockquote>
   <h3>Quanto tenere sul conto</h3>
-  <p>Una buona regola è mantenere una <strong>riserva per gli imprevisti</strong>, la "ruota di scorta", pari ad alcuni mesi di spese familiari, sempre disponibile. Ciò che eccede può essere suddiviso in base a quando servirà.</p>
+  <p>Una buona regola è mantenere una <strong>riserva per gli imprevisti</strong>, la «ruota di scorta», pari ad alcuni mesi di spese familiari, sempre disponibile. Ciò che eccede può essere suddiviso in base a quando servirà.</p>
   <h3>Dividere la liquidità per obiettivi</h3>
   <ul>
     <li><strong>Entro uno o due anni</strong>: strumenti a basso rischio e facilmente smobilizzabili, come conti deposito, titoli di Stato a breve scadenza o fondi monetari.</li>
@@ -1139,7 +1317,7 @@ section>.wrap{position:relative}
       </div>
       <div><h4>Navigazione</h4><ul>
         <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#metodo">Il metodo</a></li>
-        <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#recensioni">Recensioni</a></li><li><a href="#faq">Domande frequenti</a></li></ul></div>
+        <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#strumenti">Strumenti di analisi</a></li><li><a href="#recensioni">Recensioni</a></li><li><a href="#faq">Domande frequenti</a></li></ul></div>
       <div><h4>Contatti</h4><ul id="ftrContacts"></ul></div>
     </div>
     <div class="legal">
@@ -1200,14 +1378,14 @@ const CONFIG = {
     { icon: "doc",       title: "Guida gratuita alla successione", sub: "Scarica il PDF", url: "" }
   ],
 
-  legal: "Marco Busetto · Consulente finanziario abilitato all'offerta fuori sede, iscritto all'Albo unico dei consulenti finanziari (delibera OCF n. 1733 del 03/08/2021) e al RUI IVASS (n. E000694887). Opera in qualità di agente per conto di Allianz Bank Financial Advisors S.p.A."
+  legal: "Marco Busetto · Consulente finanziario abilitato all'offerta fuori sede, iscritto all'Albo unico dei consulenti finanziari (delibera OCF n. 1733 del 03/08/2021, matricola 628157) e al RUI IVASS (n. E000694887). Opera in qualità di agente per conto di Allianz Bank Financial Advisors S.p.A."
   // Aggiungi: numero e data di iscrizione OCF, società mandante, P. IVA se prevista.
 };
 /* ===================================================================== */
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const eur = n => new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Math.round(n||0));
+const eur = n => { const r = Math.round(n || 0); return (r < 0 ? '−' : '') + String(Math.abs(r)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '\u00a0€'; };   /* 9.573 €: punto delle migliaia anche sotto i 10.000 */
 const pct = n => new Intl.NumberFormat('it-IT',{maximumFractionDigits:1}).format(n) + '%';
 const num = id => { const v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
 const C = CONFIG;
@@ -1330,94 +1508,305 @@ $('tGrid').innerHTML = C.testimonials.map(t => `<blockquote class="t corners rv"
 if (C.stats.length) { $('stats').hidden = false; $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join(''); }
 $('legal').textContent = C.legal; $('year').textContent = new Date().getFullYear();
 
-/* ---------- calculators: tabs ---------- */
+/* ---------- calculators: tabs & version (semplificata / completa) ---------- */
+const CALC = $('calcolatori');
 document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === b));
   document.querySelectorAll('.calc').forEach(c => c.classList.toggle('on', c.id === 'calc-' + b.dataset.tab));
 });
-const rows = (el, list) => $(el).innerHTML = list.filter(Boolean).map(([k,v,hl]) => `<div class="${hl?'hl':''}"><span>${k}</span><b>${v}</b></div>`).join('');
+let CM = 's';
+try { const v = localStorage.getItem('mb-calc-versione'); if (v === 's' || v === 'c') CM = v; } catch (e) {}
+const rows = (el, list) => $(el).innerHTML = list.filter(Boolean).map(([k, v, hl]) => `<div class="${hl ? 'hl' : ''}"><span>${k}</span><b>${v}</b></div>`).join('');
+const warn = (el, list) => $(el).innerHTML = list.filter(Boolean).map(t => `<p class="cwarn">${t}</p>`).join('');
+const int = (id, lo, hi) => Math.min(hi, Math.max(lo, Math.round(num(id))));
+const pos = id => Math.max(0, num(id));
+const pc = x => pct(x * 100);
+const table = (cap, head, body) => `<table>${cap ? `<caption>${cap}</caption>` : ''}<thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${body.map(r => `<tr class="${r.cls || ''}">${r.c.map(x => `<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+const frac = x => { for (const [v, t] of [[1, 'intero'], [1/2, '1/2'], [1/3, '1/3'], [2/3, '2/3'], [1/4, '1/4'], [3/4, '3/4']]) if (Math.abs(x - v) < 1e-9) return t; return pc(x); };
+const NO_HEIRS = "Senza coniuge, figli, genitori, fratelli o sorelle l'eredità va agli altri parenti fino al sesto grado e, in loro assenza, allo Stato: per questo caso serve un'analisi specifica.";
 
-/* Imposta di successione — D.Lgs. 346/1990, art. 7 */
+/* Successione senza testamento — artt. 565 e seguenti c.c.
+   Con i figli: coniuge 1/2 (un figlio) o 1/3 (più figli), il resto ai figli in parti uguali.
+   Senza figli: coniuge 2/3 se concorre con genitori o fratelli, che si dividono il terzo restante (ai genitori almeno 1/4 dell'eredità, art. 582);
+   senza coniuge, genitori e fratelli succedono per capi, ma ai genitori spetta almeno la metà (art. 571). */
+function quoteLegge(con, nf, ng, nfr) {
+  const H = [], add = (key, nome, rel, s) => H.push({key, nome, rel, s});
+  const many = (n, base, nome, rel, tot) => { for (let i = 0; i < n; i++) add(base + i, n > 1 ? `${nome} ${i + 1}` : nome, rel, tot / n); };
+  if (nf > 0) {
+    const sc = con ? (nf === 1 ? 1/2 : 1/3) : 0;
+    if (con) add('con', 'Coniuge', 'retta', sc);
+    many(nf, 'fig', 'Figlio', 'retta', 1 - sc);
+    return H;
+  }
+  let rest = 1;
+  if (con) {
+    if (ng + nfr === 0) { add('con', 'Coniuge', 'retta', 1); return H; }
+    add('con', 'Coniuge', 'retta', 2/3); rest = 1/3;
+  }
+  if (ng + nfr === 0) return H;
+  const g = ng === 0 ? 0 : (nfr === 0 ? rest : Math.min(rest, Math.max(rest * ng / (ng + nfr), con ? 1/4 : 1/2)));
+  many(ng, 'gen', 'Genitore', 'retta', g);
+  many(nfr, 'fra', 'Fratello o sorella', 'fratelli', rest - g);
+  return H;
+}
+/* Quote di riserva (legittima) — artt. 536 e seguenti c.c. asc = ascendenti in vita, che contano solo senza figli */
+function riserva(con, nf, asc) {
+  if (nf > 0) return con ? (nf === 1 ? {con: 1/3, fig: 1/3, disp: 1/3} : {con: 1/4, fig: 1/2, disp: 1/4}) : (nf === 1 ? {fig: 1/2, disp: 1/2} : {fig: 2/3, disp: 1/3});
+  if (con) return asc ? {con: 1/2, asc: 1/4, disp: 1/4} : {con: 1/2, disp: 1/2};
+  return asc ? {asc: 1/3, disp: 2/3} : {disp: 1};
+}
+
+/* ---------- Imposta di successione — D.Lgs. 346/1990, art. 7 ---------- */
 const REL = {
-  retta:   {rate:.04, fr:1000000, label:'coniuge e parenti in linea retta'},
-  fratelli:{rate:.06, fr:100000,  label:'fratelli e sorelle'},
-  parenti: {rate:.06, fr:0,       label:'altri parenti fino al 4° grado e affini'},
-  altri:   {rate:.08, fr:0,       label:'altri soggetti'}
+  retta:   {rate: .04, fr: 1000000, label: 'coniuge e parenti in linea retta'},
+  fratelli:{rate: .06, fr: 100000,  label: 'fratelli e sorelle'},
+  parenti: {rate: .06, fr: 0,       label: 'altri parenti fino al 4° grado e affini'},
+  altri:   {rate: .08, fr: 0,       label: 'altri soggetti'}
 };
-function calcSucc() {
-  const r = REL[$('s_rel').value], quota = Math.max(0, num('s_quota'));
-  const imm = Math.min(Math.max(0, num('s_imm')), quota), es = Math.min(Math.max(0, num('s_es')), quota - imm);
-  const dis = $('s_dis').checked, prima = $('s_prima').checked;
-  const fr = dis ? 1500000 : r.fr;
-  const base = quota - es, imponibile = Math.max(0, base - fr), imposta = imponibile * r.rate;
-  const ipo = imm > 0 ? (prima ? 200 : Math.max(200, imm * .02)) : 0;
-  const cat = imm > 0 ? (prima ? 200 : Math.max(200, imm * .01)) : 0;
+/* imposte ipotecaria (2%) e catastale (1%), minimo 200 € ciascuna; 200 + 200 € fissi per la prima casa */
+const ipoCat = (imm, prima) => { const altri = Math.max(0, imm - prima); return (prima > 0 ? 400 : 0) + (altri > 0 ? Math.max(200, altri * .02) + Math.max(200, altri * .01) : 0); };
+
+function calcSuccSimple() {
+  const r = REL[$('s_rel').value], quota = pos('s_quota');
+  const imm = Math.min(pos('s_imm'), quota), es = Math.min(pos('s_es'), quota - imm);
+  const fr = $('s_dis').checked ? 1500000 : r.fr;
+  const imponibile = Math.max(0, quota - es - fr), imposta = imponibile * r.rate;
+  const ic = imm > 0 ? ($('s_prima').checked ? 400 : ipoCat(imm, 0)) : 0;
   const risparmio = Math.max(0, quota - fr) * r.rate - imposta;
-  $('s_tot').textContent = eur(imposta + ipo + cat);
-  $('s_sub').textContent = imposta === 0 ? 'Nessuna imposta di successione: la quota rientra nella franchigia.' : `Aliquota ${pct(r.rate*100)} per ${r.label}.`;
+  $('s_tot').textContent = eur(imposta + ic);
+  $('s_sub').textContent = imposta === 0 ? 'Nessuna imposta di successione: la quota rientra nella franchigia.' : `Aliquota ${pct(r.rate * 100)} per ${r.label}.`;
   rows('s_rows', [
     ['Franchigia applicata', eur(fr)],
-    es > 0 && ['Beni esenti (titoli di Stato, polizze)', '− ' + eur(es)],
+    es > 0 && ['Titoli di Stato (esenti)', '− ' + eur(es)],
     ['Base imponibile', eur(imponibile)],
     ['Imposta di successione', eur(imposta)],
-    imm > 0 && ['Imposte ipotecaria e catastale', eur(ipo + cat)],
-    risparmio > 0 && ['Risparmio grazie ai beni esenti', eur(risparmio), true]
+    imm > 0 && ['Imposte ipotecaria e catastale', eur(ic)],
+    risparmio > 0 && ['Risparmio grazie ai titoli di Stato', eur(risparmio), true]
   ]);
+  $('s_heirs_out').innerHTML = ''; warn('s_warn', []);
 }
 
-/* Quote di legittima — artt. 536 ss. c.c. */
+/* eredi della versione completa: generati dalla famiglia, con quota modificabile se c'è un testamento */
+const HS = {list: [], dis: {}};
+const famiglia = () => ({con: $('s2_con').checked, nf: int('s2_fig', 0, 12), ng: int('s2_gen', 0, 2), nfr: int('s2_fra', 0, 12), test: $('s2_mode').value === 'test'});
+function buildHeirs() {
+  const f = famiglia(), list = quoteLegge(f.con, f.nf, f.ng, f.nfr);
+  if (f.test) list.push({key: 'alt', nome: 'Altro beneficiario', rel: 'altri', s: 0, extra: 1});
+  document.querySelectorAll('#s2_heirs .dis input').forEach(i => HS.dis[i.dataset.k] = i.checked);
+  const prevRel = $('s2_altRel') ? $('s2_altRel').value : 'altri';
+  HS.list = list;
+  const relSel = `<select id="s2_altRel" aria-label="Rapporto dell'altro beneficiario">${[['altri', 'Altro beneficiario'], ['parenti', 'Altro parente o affine'], ['fratelli', 'Fratello o sorella'], ['retta', 'Parente in linea retta']].map(([v, t]) => `<option value="${v}"${v === prevRel ? ' selected' : ''}>${t}</option>`).join('')}</select>`;
+  $('s2_heirs').innerHTML = list.length
+    ? `<div class="heir h"><span>Erede</span><span>Quota</span><span>L. 104</span></div>` +
+      list.map(h => `<div class="heir"><span>${h.extra ? relSel : esc(h.nome)}</span><div class="inp pct"><input type="number" min="0" max="100" step="0.01" data-k="${h.key}" value="${+(h.s * 100).toFixed(2)}"${f.test ? '' : ' disabled'} aria-label="Quota di ${esc(h.nome)}"></div><label class="dis" title="Erede con disabilità grave (L. 104/1992)"><input type="checkbox" data-k="${h.key}"${HS.dis[h.key] ? ' checked' : ''} aria-label="${esc(h.nome)}: disabilità grave"></label></div>`).join('') +
+      `<div class="sum" id="s2_sum"></div>`
+    : `<p class="none">${NO_HEIRS}</p>`;
+}
+function calcSuccFull() {
+  const imm = pos('s2_imm'), prima = Math.min(pos('s2_prima'), imm), liq = pos('s2_liq'), inv = pos('s2_inv'), tds = pos('s2_tds'), az = pos('s2_az'), alt = pos('s2_alt'), pass = pos('s2_pass'), pol = pos('s2_pol');
+  const asse = imm + liq + inv + tds + az + alt, netto = Math.max(0, asse - pass), k = asse > 0 ? netto / asse : 0, f = famiglia();
+  const hs = HS.list.map(h => {
+    const inp = document.querySelector(`#s2_heirs input[type="number"][data-k="${h.key}"]`), chk = document.querySelector(`#s2_heirs .dis input[data-k="${h.key}"]`);
+    return {...h, s: f.test ? Math.max(0, parseFloat(inp && inp.value) || 0) / 100 : h.s, rel: h.extra ? $('s2_altRel').value : h.rel, dis: !!(chk && chk.checked)};
+  });
+  const sum = hs.reduce((a, h) => a + h.s, 0);
+  if ($('s2_sum')) { $('s2_sum').textContent = 'Totale ' + pc(sum); $('s2_sum').classList.toggle('bad', Math.abs(sum - 1) > 0.0005); }
+  let tax = 0, taxNo = 0, exTot = 0;
+  const out = hs.filter(h => h.s > 0).map(h => {
+    const r = REL[h.rel], q = netto * h.s, elig = h.key === 'con' || h.key.startsWith('fig');
+    const ex = h.s * k * (tds + (elig ? az : 0)), fr = h.dis ? 1500000 : r.fr;
+    const imp = Math.max(0, q - ex - fr), t = imp * r.rate;
+    tax += t; taxNo += Math.max(0, q - fr) * r.rate; exTot += ex;
+    return {nome: h.extra ? $('s2_altRel').selectedOptions[0].text : h.nome, s: h.s, q, t};
+  });
+  const ic = imm > 0 ? ipoCat(imm, prima) : 0, tot = tax + ic;
+  $('s_tot').textContent = eur(tot);
+  $('s_sub').textContent = netto > 0 ? `Pari al ${pc(tot / netto)} dell'asse ereditario netto di ${eur(netto)}.` : 'Inserisci il valore del patrimonio.';
+  const parts = [['Immobili', imm, '#8fb3e8'], ['Liquidità', liq, '#5a86c9'], ['Investimenti', inv, '#a9bcd6'], ['Titoli di Stato', tds, 'var(--gold)'], ['Azienda', az, '#e8d5a8'], ['Altri beni', alt, '#6f7f96']].filter(p => p[1] > 0);
+  $('s_bar').innerHTML = parts.map(p => `<i style="width:${asse ? p[1] / asse * 100 : 0}%;background:${p[2]}"></i>`).join('');
+  $('s_leg').innerHTML = parts.map(p => `<div><i style="background:${p[2]}"></i><span>${p[0]}</span><b>${eur(p[1])}</b></div>`).join('');
+  rows('s_rows', [
+    ['Asse ereditario', eur(asse)],
+    pass > 0 && ['Debiti e spese deducibili', '− ' + eur(pass)],
+    ['Asse netto', eur(netto)],
+    exTot > 0.5 && ['di cui esente (titoli di Stato' + (az > 0 ? ' e azienda' : '') + ')', eur(exTot)],
+    ['Imposta di successione', eur(tax)],
+    ic > 0 && ['Imposte ipotecaria e catastale', eur(ic)],
+    pol > 0 && ['Polizze vita ai beneficiari, fuori dall\'eredità ed esenti', eur(pol)],
+    taxNo - tax > 0.5 && ['Risparmio grazie ai beni esenti', eur(taxNo - tax), true]
+  ]);
+  $('s_heirs_out').innerHTML = out.length ? table('Imposta per erede', ['Erede', 'Quota', 'Riceve', 'Imposta'],
+    out.map(o => ({c: [esc(o.nome), pc(o.s), eur(o.q), eur(o.t)]})).concat([{cls: 'tot', c: ['Totale', pc(sum), eur(netto * sum), eur(tax)]}])) : '';
+  const W = [];
+  if (!HS.list.length) W.push(NO_HEIRS);
+  if (f.test && HS.list.length && Math.abs(sum - 1) > 0.0005) W.push(`Le quote sommano al ${pc(sum)}: correggile per arrivare al 100%.`);
+  if (f.test) {
+    const R = riserva(f.con, f.nf, f.ng > 0);
+    hs.forEach(h => {
+      const min = h.key === 'con' ? (R.con || 0) : h.key.startsWith('fig') ? (R.fig || 0) / f.nf : (h.key.startsWith('gen') ? (R.asc || 0) / f.ng : 0);
+      if (min && h.s + 1e-6 < min) W.push(`${h.nome} riceve il ${pc(h.s)}, meno della quota che la legge gli riserva (${pc(min)}): potrebbe chiedere la riduzione delle disposizioni.`);
+    });
+  }
+  if (az > 0) W.push("L'esenzione per l'azienda spetta solo alla quota che va a coniuge e figli, a condizione che proseguano l'attività o mantengano il controllo per almeno cinque anni.");
+  warn('s_warn', W);
+}
+const calcSucc = () => CM === 'c' ? calcSuccFull() : calcSuccSimple();
+
+/* ---------- Quote di legittima ---------- */
 function calcLeg() {
-  const pat = Math.max(0, num('l_pat')), f = Math.max(0, Math.floor(num('l_figli'))), c = $('l_con').checked;
+  const full = CM === 'c', pat = pos('l_pat'), f = int('l_figli', 0, 15), c = $('l_con').checked;
+  const ng = full ? int('l2_gen', 0, 2) : ($('l_asc').checked ? 1 : 0), nfr = full ? int('l2_fra', 0, 12) : 0;
+  const deb = full ? pos('l2_deb') : 0, don = full ? pos('l2_don') : 0;
   $('l_asc_w').classList.toggle('off', f > 0);
-  const a = f === 0 && $('l_asc').checked;
-  let q;
-  if (f > 0) q = c ? (f === 1 ? {con:[1,3],fig:[1,3],disp:[1,3]} : {con:[1,4],fig:[1,2],disp:[1,4]}) : (f === 1 ? {fig:[1,2],disp:[1,2]} : {fig:[2,3],disp:[1,3]});
-  else if (c) q = a ? {con:[1,2],asc:[1,4],disp:[1,4]} : {con:[1,2],disp:[1,2]};
-  else q = a ? {asc:[1,3],disp:[2,3]} : {disp:[1,1]};
-  const v = k => q[k] ? pat * q[k][0] / q[k][1] : 0, fr = k => q[k][1] === 1 ? 'intero' : q[k].join('/');
+  const relictum = Math.max(0, pat - deb), massa = relictum + don;     /* riunione fittizia, art. 556 c.c. */
+  const q = riserva(c, f, f === 0 && ng > 0), disp = massa * q.disp;
   const parts = [
-    q.con && ['Coniuge', v('con'), fr('con'), '#8fb3e8'],
-    q.fig && [f === 1 ? 'Figlio' : `Figli (${f}), ${eur(v('fig')/f)} ciascuno`, v('fig'), fr('fig'), '#5a86c9'],
-    q.asc && ['Ascendenti', v('asc'), fr('asc'), '#a9bcd6'],
-    ['Quota disponibile', v('disp'), fr('disp'), 'var(--gold)']
+    q.con && ['Coniuge', massa * q.con, frac(q.con), '#8fb3e8'],
+    q.fig && [f === 1 ? 'Figlio' : `Figli (${f}), ${eur(massa * q.fig / f)} ciascuno`, massa * q.fig, frac(q.fig), '#5a86c9'],
+    q.asc && [full && ng > 1 ? `Genitori (${ng})` : 'Ascendenti', massa * q.asc, frac(q.asc), '#a9bcd6'],
+    ['Quota disponibile', disp, frac(q.disp), 'var(--gold)']
   ].filter(Boolean);
-  $('l_disp').textContent = eur(v('disp'));
-  $('l_sub').textContent = q.disp[1] === 1 ? 'Senza legittimari puoi disporre liberamente di tutto il patrimonio.' : `Pari a ${fr('disp')} del patrimonio: puoi destinarla liberamente con il testamento.`;
-  $('l_bar').innerHTML = parts.map(p => `<i style="width:${pat ? p[1]/pat*100 : 0}%;background:${p[3]}"></i>`).join('');
+  $('l_disp').textContent = eur(disp);
+  $('l_sub').textContent = q.disp === 1 ? 'Senza legittimari puoi disporre liberamente di tutto il patrimonio.'
+    : `Pari a ${frac(q.disp)} ${full ? 'della massa (patrimonio meno debiti più donazioni)' : 'del patrimonio'}: puoi destinarla liberamente con il testamento.`;
+  $('l_bar').innerHTML = parts.map(p => `<i style="width:${massa ? p[1] / massa * 100 : 0}%;background:${p[3]}"></i>`).join('');
   $('l_leg').innerHTML = parts.map(p => `<div><i style="background:${p[3]}"></i><span>${p[0]} · ${p[2]}</span><b>${eur(p[1])}</b></div>`).join('');
+  const W = [];
+  if (full) {
+    const L = quoteLegge(c, f, ng, nfr);
+    $('l_full').innerHTML = `<div class="rows" style="margin-top:20px">${[['Patrimonio lasciato', eur(pat)], deb > 0 && ['Debiti', '− ' + eur(deb)], don > 0 && ['Donazioni già fatte', '+ ' + eur(don)], ['Massa per calcolare la legittima', eur(massa)]].filter(Boolean).map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>` +
+      (L.length ? `<div class="htab">${table('Senza testamento: chi riceve cosa', ['Erede', 'Quota', 'Riceve'], L.map(h => ({c: [esc(h.nome), pc(h.s), eur(relictum * h.s)]})))}</div>` : '');
+    if (!L.length) W.push(NO_HEIRS);
+    if (q.disp < 1 && don > disp) W.push(`Le donazioni già fatte (${eur(don)}) superano la quota disponibile (${eur(disp)}): se a favore di persone diverse dai legittimari, potrebbero essere ridotte su richiesta degli eredi.`);
+    if (don > 0 && L.length) W.push('Senza testamento si divide il patrimonio lasciato al netto dei debiti. Le donazioni a figli e coniuge si mettono però in comune nella divisione (collazione), salvo dispensa.');
+  } else $('l_full').innerHTML = '';
+  warn('l_warn', W);
 }
 
-/* Piano di accumulo — capitalizzazione mensile */
-function calcPac() {
-  const ini = Math.max(0, num('p_ini')), men = Math.max(0, num('p_men')), r = num('p_r')/100, y = Math.min(50, Math.max(1, Math.round(num('p_y')))), inf = num('p_i')/100;
-  const rm = Math.pow(1 + r, 1/12) - 1; let val = ini, paid = ini; const years = [];
-  for (let m = 1; m <= y*12; m++) { val = val*(1 + rm) + men; paid += men; if (m % 12 === 0) years.push([paid, val]); }
-  const real = val / Math.pow(1 + inf, y);
-  $('p_fin').textContent = eur(val);
-  $('p_sub').textContent = `Dopo ${y} anni, con un rendimento medio del ${pct(r*100)} annuo.`;
-  rows('p_rows', [['Totale versato', eur(paid)], ['Rendimento maturato', eur(val - paid), true], ['Valore reale (al netto dell\'inflazione)', eur(real)]]);
+/* ---------- Piano di accumulo ---------- */
+/* o = {ini, men, r lordo, y, idx crescita annua dei versamenti, ing commissione sui versamenti, ter costi correnti, aliq imposta sul guadagno} */
+function pacSim(o) {
+  const net = (1 + o.r) * (1 - o.ter) - 1, rm = Math.pow(1 + net, 1 / 12) - 1;
+  let val = o.ini * (1 - o.ing), paid = o.ini; const years = [];
+  for (let y = 1; y <= o.y; y++) {
+    const pm = o.men * Math.pow(1 + o.idx, y - 1);
+    for (let m = 0; m < 12; m++) { val = val * (1 + rm) + pm * (1 - o.ing); paid += pm; }
+    years.push([paid, val]);
+  }
+  const tax = Math.max(0, val - paid) * o.aliq;
+  return {val, paid, tax, net: val - tax, years};
+}
+/* versamento mensile che porta il capitale netto all'obiettivo (ricerca per bisezione) */
+function reqMonthly(o, goal) {
+  if (pacSim({...o, men: 0}).net >= goal) return 0;
+  let lo = 0, hi = Math.max(100, goal / (o.y * 12));
+  while (pacSim({...o, men: hi}).net < goal) { hi *= 2; if (hi > 1e8) return null; }
+  for (let i = 0; i < 50; i++) { const m = (lo + hi) / 2; if (pacSim({...o, men: m}).net < goal) lo = m; else hi = m; }
+  return Math.ceil(hi);
+}
+function drawPac(years) {
   const W = 600, H = 200, max = Math.max(...years.map(v => Math.max(v[0], v[1]))) || 1, bw = W / years.length;
-  $('p_chart').innerHTML = years.map(([p,v], i) => {
-    const hp = p/max*(H-10), hv = Math.max(0, v-p)/max*(H-10), x = i*bw + bw*.15, w = bw*.7;
-    return `<rect x="${x}" y="${H-hp}" width="${w}" height="${hp}" fill="rgba(255,255,255,.35)"/><rect x="${x}" y="${H-hp-hv}" width="${w}" height="${hv}" fill="#c4a062"/>`;
+  $('p_chart').innerHTML = years.map(([p, v], i) => {
+    const hp = p / max * (H - 10), hv = Math.max(0, v - p) / max * (H - 10), x = i * bw + bw * .15, w = bw * .7;
+    return `<rect x="${x}" y="${H - hp}" width="${w}" height="${hp}" fill="rgba(255,255,255,.35)"/><rect x="${x}" y="${H - hp - hv}" width="${w}" height="${hv}" fill="#c4a062"/>`;
   }).join('');
 }
+function calcPac() {
+  const full = CM === 'c', y = int('p_y', 1, 50), inf = num('p_i') / 100, defl = n => Math.pow(1 + inf, n);
+  const o = {ini: pos('p_ini'), men: pos('p_men'), r: num('p_r') / 100, y,
+    idx: full ? pos('p_idx') / 100 : 0, ing: full ? Math.min(.1, pos('p_ing') / 100) : 0, ter: full ? Math.min(.05, pos('p_ter') / 100) : 0,
+    aliq: full ? .26 - .135 * Math.min(1, pos('p_tds') / 100) : 0};
+  const s = pacSim(o);
+  drawPac(s.years);
+  if (!full) {
+    $('p_lab').textContent = 'Capitale finale stimato';
+    $('p_fin').textContent = eur(s.val);
+    $('p_sub').textContent = `Dopo ${y} anni, con un rendimento medio del ${pct(o.r * 100)} annuo.`;
+    rows('p_rows', [['Totale versato', eur(s.paid)], ['Rendimento maturato', eur(s.val - s.paid), true], ['Valore reale (al netto dell\'inflazione)', eur(s.val / defl(y))]]);
+    $('p_scen').innerHTML = $('p_years').innerHTML = '';
+    return;
+  }
+  const costs = pacSim({...o, ing: 0, ter: 0}).val - s.val, goal = pos('p_goal'), need = goal > 0 ? reqMonthly(o, goal) : null;
+  $('p_lab').textContent = 'Capitale netto stimato';
+  $('p_fin').textContent = eur(s.net);
+  $('p_sub').textContent = `Dopo ${y} anni, al netto di costi e imposte: ${eur(s.net / defl(y))} in potere d'acquisto di oggi.`;
+  rows('p_rows', [
+    ['Totale versato', eur(s.paid)],
+    ['Valore lordo finale', eur(s.val)],
+    ['Costi pagati nel periodo', '− ' + eur(costs)],
+    ['Imposte sul guadagno', '− ' + eur(s.tax)],
+    ['Capitale netto', eur(s.net), true],
+    ['Valore reale (al netto dell\'inflazione)', eur(s.net / defl(y))],
+    goal > 0 && [`Versamento mensile per arrivare a ${eur(goal)}`, need === 0 ? 'Già raggiunto' : (need == null ? 'Non raggiungibile' : eur(need) + (o.idx > 0 ? ' il primo anno' : '')), true]
+  ]);
+  $('p_scen').innerHTML = table('Scenari di rendimento', ['Scenario', 'Capitale netto', 'Valore reale'], [-2, 0, 2].map(d => {
+    const so = d === 0 ? s : pacSim({...o, r: o.r + d / 100});
+    return {cls: d === 0 ? 'cur' : '', c: [`${d < 0 ? 'Prudente' : d > 0 ? 'Favorevole' : 'Base'}<small>${pct(o.r * 100 + d)} lordo l'anno</small>`, eur(so.net), eur(so.net / defl(y))]};
+  }));
+  $('p_years').innerHTML = table(null, ['Anno', 'Versato', 'Valore', 'Valore reale'], s.years.map(([p, v], i) => ({c: [String(i + 1), eur(p), eur(v), eur(v / defl(i + 1))]})));
+}
 
-/* Inflazione */
+/* ---------- Inflazione e liquidità ---------- */
+/* conto: interessi tassati al 26%, bollo 34,20 € sul conto corrente sopra 5.000 € o 0,20% sul conto deposito;
+   investimento: rendimento netto d'imposta, bollo 0,20% l'anno */
+function liqSim(o) {
+  let c = o.conto, v = o.inv, it = 0, bo = 0; const years = [];
+  for (let y = 1; y <= o.y; y++) {
+    const i = c * o.tcc * (1 - .26), b = o.cd ? c * .002 : (c > 5000 ? 34.2 : 0);
+    c = Math.max(0, c + i - b); it += i; bo += b;
+    if (v > 0) v = Math.max(0, v * (1 + o.ralt * (1 - o.talt)) - v * .002);
+    years.push((c + v) / Math.pow(1 + o.inf, y));
+  }
+  return {real: years[years.length - 1], years, it, bo};
+}
 function calcInf() {
-  const imp = Math.max(0, num('i_imp')), i = num('i_inf')/100, y = Math.min(50, Math.max(1, Math.round(num('i_y'))));
-  const realv = imp / Math.pow(1 + i, y), need = imp * Math.pow(1 + i, y);
-  $('i_loss').textContent = eur(imp - realv);
-  $('i_sub').textContent = `In ${y} anni i tuoi ${eur(imp)} varranno come ${eur(realv)} di oggi.`;
-  const at = n => imp / Math.pow(1 + i, n);
+  const imp = pos('i_imp'), i = num('i_inf') / 100, y = int('i_y', 1, 50);
+  if (CM !== 'c') {
+    const realv = imp / Math.pow(1 + i, y), at = n => imp / Math.pow(1 + i, n);
+    $('i_lab').textContent = 'Potere d\'acquisto perso';
+    $('i_loss').textContent = eur(imp - realv);
+    $('i_sub').textContent = `In ${y} anni i tuoi ${eur(imp)} varranno come ${eur(realv)} di oggi.`;
+    rows('i_rows', [['Potere d\'acquisto tra 5 anni', eur(at(5))], ['Potere d\'acquisto tra 10 anni', eur(at(10))], ['Potere d\'acquisto tra 20 anni', eur(at(20))],
+      [`Capitale necessario tra ${y} anni per conservarlo`, eur(imp * Math.pow(1 + i, y)), true]]);
+    $('i_years').innerHTML = ''; warn('i_warn', []);
+    return;
+  }
+  const ris = Math.min(imp, pos('i_spese') * int('i_mesi', 0, 36)), exc = imp - ris;
+  const base = {y, inf: i, tcc: pos('i_tcc') / 100, cd: $('i_tipo').value === 'cd', ralt: num('i_alt') / 100, talt: parseFloat($('i_tax').value)};
+  const A = liqSim({...base, conto: imp, inv: 0}), B = liqSim({...base, conto: ris, inv: exc}), gain = B.real - A.real;
+  $('i_lab').textContent = 'Potere d\'acquisto recuperato';
+  $('i_loss').textContent = eur(gain);
+  $('i_sub').textContent = exc > 0 ? `In ${y} anni, tenendo ${eur(ris)} come riserva e investendo l'eccedenza di ${eur(exc)} invece di lasciarla sul conto.` : 'La liquidità non supera la riserva per gli imprevisti.';
   rows('i_rows', [
-    ['Potere d\'acquisto tra 5 anni', eur(at(5))],
-    ['Potere d\'acquisto tra 10 anni', eur(at(10))],
-    ['Potere d\'acquisto tra 20 anni', eur(at(20))],
-    [`Capitale necessario tra ${y} anni per conservarlo`, eur(need), true]
+    ['Riserva per gli imprevisti', eur(ris)],
+    ['Eccedenza investibile', eur(exc)],
+    ['Tutto sul conto: valore reale finale', eur(A.real)],
+    [`Interessi netti e bollo del conto in ${y} anni`, `+${eur(A.it)} / −${eur(A.bo)}`],
+    ['Riserva + eccedenza investita: valore reale', eur(B.real), true],
+    ['Potere d\'acquisto perso tenendo tutto sul conto', eur(imp - A.real)]
+  ]);
+  $('i_years').innerHTML = table(null, ['Anno', 'Tutto sul conto', 'Con eccedenza investita'], A.years.map((a, n) => ({c: [String(n + 1), eur(a), eur(B.years[n])]})));
+  warn('i_warn', [
+    exc <= 0 && 'La liquidità non supera la riserva consigliata: tenerla disponibile è la scelta prudente.',
+    exc > 0 && gain < 0 && "Con questi rendimenti l'investimento non compensa imposte e bollo: valuta soluzioni diverse."
   ]);
 }
-[['calc-succ',calcSucc],['calc-leg',calcLeg],['calc-pac',calcPac],['calc-inf',calcInf]].forEach(([id,fn]) => { $(id).addEventListener('input', fn); $(id).addEventListener('change', fn); fn(); });
+
+const calcAll = () => { calcSucc(); calcLeg(); calcPac(); calcInf(); };
+const FAM = ['s2_con', 's2_fig', 's2_gen', 's2_fra', 's2_mode'];
+['input', 'change'].forEach(ev => {
+  $('calc-succ').addEventListener(ev, e => { if (FAM.includes(e.target.id)) buildHeirs(); calcSucc(); });
+  [['calc-leg', calcLeg], ['calc-pac', calcPac], ['calc-inf', calcInf]].forEach(([id, fn]) => $(id).addEventListener(ev, fn));
+});
+const setCM = m => {
+  CM = m; CALC.dataset.cm = m;
+  try { localStorage.setItem('mb-calc-versione', m); } catch (e) {}
+  CALC.querySelectorAll('.modo button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === m)));
+  calcAll();
+};
+CALC.querySelectorAll('.modo button').forEach(b => b.onclick = () => setCM(b.dataset.m));
+buildHeirs();
+setCM(CM);
 
 /* ---------- structured data ---------- */
 const ld = {"@context":"https://schema.org","@type":"FinancialService","name":"Marco Busetto - Consulente Finanziario",

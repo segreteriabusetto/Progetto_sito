@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Due fondi a confronto: costi, rendimenti, portafoglio, gestori e particolarità, con un punteggio finale.">
+<meta name="theme-color" content="#001a3d">
+<title>Due fondi a confronto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Testata a fascia (colore del consulente) con la scelta della versione; colonna dei dati a sinistra, fissa sugli schermi larghi,
+   e relazione per il cliente a destra; colonna unica su telefono e in stampa. Nelle tabelle il fondo A è a sinistra e il fondo B
+   a destra: in verde il migliore su quella voce, in rosso il peggiore. Versione semplificata per il cliente, completa per l'analisi. */
+:root{
+  --bg:#eef2f1; --surface:#ffffff; --ink:#17211f; --ink-2:#4d5b59; --line:#d8e0de;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#e3eeed;
+  --band:#003781; --band-ink:#ffffff; --brass:#b08d47;
+  --good:#1d7a46; --bad:#b3372f; --good-bg:#edf6f0; --bad-bg:#fcf0ee; --warn-bg:#fbf2d9; --warn-ink:#6b4d00;
+  --s1:#2a78d6; --s2:#eb6834;
+  --k1:#2a78d6; --k2:#003781; --k3:#c98a16; --k4:#7a5cc2; --k5:#9aa5a4;
+  --r:14px;
+  --display:"Source Serif 4", Georgia, serif; --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+    --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+    --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+    --good:#5fcf8f; --bad:#f08a80; --good-bg:#16291f; --bad-bg:#311c1a; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+    --s1:#3987e5; --s2:#d95926;
+    --k1:#5a9be8; --k2:#5fb9c1; --k3:#e0a93a; --k4:#a58ae0; --k5:#7d8a89;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+  --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+  --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+  --good:#5fcf8f; --bad:#f08a80; --good-bg:#16291f; --bad-bg:#311c1a; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+  --s1:#3987e5; --s2:#d95926;
+  --k1:#5a9be8; --k2:#5fb9c1; --k3:#e0a93a; --k4:#a58ae0; --k5:#7d8a89;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+a{color:var(--accent)}
+a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* testata */
+.site{background:var(--band);color:var(--band-ink)}
+.site :focus-visible{outline-color:var(--band-ink)}
+.hin{max-width:1160px;margin:0 auto;padding:30px 20px 0}
+.htop{display:flex;justify-content:space-between;align-items:flex-end;gap:18px 40px;flex-wrap:wrap;padding-bottom:22px}
+.site h1{font-family:var(--display);font-weight:600;font-size:clamp(27px,3.6vw,38px);line-height:1.1;letter-spacing:-.01em;margin:0;max-width:20ch;text-wrap:balance}
+.site .tag{margin:10px 0 0;font-size:15.5px;line-height:1.45;opacity:.85;max-width:52ch}
+.by{max-width:400px;font-size:13px;line-height:1.45}
+.by p{margin:0}
+.by .who{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25}
+.by .ql{opacity:.82;margin-top:2px}
+.cts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px!important}
+.cts a{color:inherit;text-decoration:none;border:1px solid currentColor;border-radius:999px;padding:5px 13px;font-size:13px;white-space:nowrap}
+.site .cts a{border-color:rgba(255,255,255,.4)}
+.site .cts a:hover{background:rgba(255,255,255,.12)}
+.hbar{display:flex;align-items:center;justify-content:space-between;gap:10px 20px;flex-wrap:wrap;padding:14px 0 18px;border-top:1px solid rgba(255,255,255,.16)}
+.vs{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;font-size:13.5px;min-width:0}
+.vs .fx{display:inline-flex;align-items:center;gap:7px;font-weight:600;min-width:0}
+.vs .fx i{flex:none;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.vs .vv{opacity:.7;font-family:var(--display);font-style:italic}
+.modo{margin-left:auto;display:flex;align-items:center;border:1px solid rgba(255,255,255,.38);border-radius:999px;padding:3px}
+.modo span{padding:0 8px 0 11px;font-size:13px;opacity:.82}
+.modo button{font:500 13.5px var(--body);border:0;background:transparent;color:var(--band-ink);padding:6px 15px;border-radius:999px;cursor:pointer}
+.modo button[aria-pressed="true"]{background:var(--band-ink);color:var(--band);font-weight:600}
+
+/* pagina */
+.wrap{max-width:1160px;margin:0 auto;padding:24px 20px 60px}
+.page{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:22px;align-items:start}
+@media (min-width:881px){
+  .page>.col:first-child{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;border-radius:var(--r);scrollbar-width:thin}
+}
+@media (max-width:880px){.page{grid-template-columns:minmax(0,1fr)}}
+.col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:0}
+h2{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.25;margin:0 0 12px;text-wrap:balance}
+
+/* modulo dei dati */
+.ed h2{margin-bottom:4px}
+.cap{font-size:14.5px;font-weight:600;color:var(--ink);margin:0 0 10px}
+.grp,.grp0{margin-top:16px}
+.grp.key{background:var(--accent-soft);border-radius:12px;padding:14px 14px 6px}
+.grp.key .cap{color:var(--accent)}
+.f{display:grid;gap:5px;margin-bottom:12px;min-width:0}
+.f label{font-size:14px;line-height:1.35}
+.f label small,.gl small,.tl small{display:block;color:var(--ink-2);font-size:12px;line-height:1.35;margin-top:1px;font-weight:400}
+.inp{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;background:var(--surface);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.inp input{width:100%;min-width:0;border:0;background:transparent;color:var(--ink);font:500 15px var(--body);padding:9px 10px;text-align:right;font-variant-numeric:tabular-nums}
+.inp input:focus-visible{outline:none}
+.inp span{padding-right:10px;color:var(--ink-2);font-size:13px;white-space:nowrap}
+input.txt,select.sel,textarea.txt,.fg input,.fg select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;padding:8px 10px}
+select.sel{font-size:14.5px;padding:9px 10px;cursor:pointer}
+.grp.key select.sel{font-weight:600}
+textarea.txt{resize:vertical;line-height:1.4;font-size:13.5px}
+.fg input.n{text-align:right;font-variant-numeric:tabular-nums}
+input.txt:focus-visible,select.sel:focus-visible,textarea.txt:focus-visible,.fg input:focus-visible,.fg select:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+.fine{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin:10px 0 0;max-width:80ch}
+.fine b{color:var(--ink);font-weight:600}
+details.fgd{border-top:1px solid var(--line);margin-top:10px}
+details.fgd>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0 10px;font-size:14.5px;font-weight:600}
+details.fgd>summary::-webkit-details-marker{display:none}
+details.fgd>summary::after{content:"";flex:none;width:8px;height:8px;border-right:1.6px solid var(--ink-2);border-bottom:1.6px solid var(--ink-2);transform:rotate(45deg);margin:-4px 4px 0 0;transition:transform .15s}
+details.fgd[open]>summary::after{transform:rotate(-135deg);margin-top:4px}
+.fg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px 8px;align-items:center;padding-bottom:12px}
+.fg .gh{font-size:11.5px;font-weight:600;color:var(--ink-2);letter-spacing:.02em}
+.fg .gh:first-child{display:none}
+.fg .gl,.fg .tl,.fg .tx2,.fg .ck.wide{grid-column:1/-1}
+.fg .gl,.fg .tl{font-size:13.5px;line-height:1.35;margin:8px 0 0}
+.tx2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.ck{display:flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer}
+.ck input{flex:none;width:17px;height:17px;margin:0;accent-color:var(--accent)}
+.ck.wide{align-items:flex-start;line-height:1.4;margin:10px 0 2px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn2{font:500 13px var(--body);background:transparent;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:7px 14px;cursor:pointer}
+.btn2:hover{background:var(--accent-soft)}
+sup{line-height:0}
+.nw{white-space:nowrap}
+.nm{font:600 10.5px/1 var(--body);color:var(--accent);background:none;border:0;padding:2px 3px;margin-left:1px;cursor:pointer;border-radius:3px}
+.nm:hover{background:var(--accent-soft)}
+
+/* intestazione della relazione */
+.rep-head{display:flex;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;align-items:flex-start}
+.rep-head h2{font-size:27px}
+.rep-head>div:first-child{flex:1 1 420px;min-width:0}
+.rep-head .act{flex:none}
+.rep-head .sub{margin:6px 0 10px;color:var(--ink-2);font-size:15.5px;max-width:60ch}
+.meta{display:flex;gap:4px 20px;flex-wrap:wrap;margin:0;font-size:14px;color:var(--ink-2)}
+.meta b,.cred b{color:var(--ink);font-weight:600}
+.cred{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-2);max-width:72ch}
+.promo{margin:6px 0 0;font-size:12px;font-style:italic;color:var(--ink-2);max-width:78ch}
+.act{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14.5px var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:11px 20px;cursor:pointer}
+.btn svg{width:16px;height:16px;flex:none}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.6;cursor:progress}
+.status{margin:0;font-size:12.5px;color:var(--ink-2);max-width:28ch;text-align:right}
+
+/* sintesi: chi vince e punteggi */
+.win{display:flex;gap:16px;align-items:center;background:var(--band);color:var(--band-ink);border-radius:16px;padding:20px 22px;margin:0 0 14px}
+.win p{margin:0}
+.wb{flex:none;width:52px;height:52px;border-radius:50%;background:var(--band-ink);color:var(--band);box-shadow:0 0 0 3px var(--brass);font:600 20px var(--display);display:grid;place-items:center}
+.wk{font-size:14px;font-weight:500;opacity:.85}
+.wt{font-family:var(--display);font-size:clamp(23px,2.8vw,30px);line-height:1.15;font-weight:600;letter-spacing:-.005em;text-wrap:balance;overflow-wrap:anywhere;margin-top:2px!important}
+.ws{font-size:15.5px;line-height:1.5;margin-top:8px!important;opacity:.95;max-width:72ch}
+.ws b{font-weight:600}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile .l{font-size:13px;color:var(--ink-2);line-height:1.35}
+.tile .v{font-size:19px;font-weight:600;margin-top:4px;line-height:1.25}
+.tile.hi{background:var(--accent-soft);border-color:transparent}
+.tile.hi .v{font-family:var(--display);font-size:26px;letter-spacing:-.01em;line-height:1.15}
+.tile .s{font-size:12.5px;color:var(--ink-2);line-height:1.4;margin-top:4px;font-variant-numeric:tabular-nums}
+.tile .v.pos{color:var(--good)}
+.xt{margin-top:14px}
+.xt .cap{font-size:13px;color:var(--ink-2);margin-bottom:8px}
+.lead{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 16px;font-size:15.5px;line-height:1.55;margin:0 0 14px}
+.lead b{font-weight:600}
+.lead b.nw,.ws b.nw{white-space:nowrap}
+.lgd{display:flex;flex-wrap:wrap;gap:4px 18px;margin:12px 0 0;font-size:13px;color:var(--ink-2)}
+.lgd span{display:inline-flex;align-items:center;gap:7px}
+.lgd i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.lgd i.g{background:var(--good)}.lgd i.r{background:var(--bad)}.lgd i.n{background:var(--line)}
+.ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px;line-height:1.5}
+.ul li{position:relative;padding-left:18px}
+.ul li::before{content:"";position:absolute;left:1px;top:.58em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.cav{margin-top:16px}
+.intro{margin:-4px 0 14px!important}
+
+/* tabelle A | B */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--ink-2);font-size:12.5px;line-height:1.3;vertical-align:bottom;border-bottom:1px solid var(--ink-2)}
+th.l{width:34%}
+th.ab{color:var(--ink);font-weight:600;font-size:13px;width:33%}
+th.ab i,.fch i,.legend i.d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:0}
+i.d1{background:var(--s1)}i.d2{background:var(--s2)}
+th.ab small{display:block;font-weight:400;color:var(--ink-2);font-size:12px;margin-top:1px}
+td.l .rl{font-weight:600}
+td.l .cd{display:block}
+.cd{display:block;font-size:12.5px;line-height:1.4;color:var(--ink-2);font-weight:400;margin-top:2px}
+.cd.s2{color:var(--ink);font-weight:600}
+td.v .cv{display:block;font-size:15.5px;font-weight:600;line-height:1.3}
+td.v .cv.t{font-size:14px;font-weight:500;line-height:1.4}
+td.v.good{background:var(--good-bg)}
+td.v.bad{background:var(--bad-bg)}
+td.v.good .cv{color:var(--good)}
+td.v.bad .cv{color:var(--bad)}
+.tg{display:block;margin-top:5px;font-size:11.5px;font-weight:600;letter-spacing:.02em;color:var(--ink-2)}
+td.good .tg{color:var(--good)}td.bad .tg{color:var(--bad)}
+tr.strong td{border-bottom-color:var(--ink-2)}
+tr.strong td.l{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+tr.strong td.v .cv{font-size:17px}
+.hs{display:none}
+/* telefono: l'etichetta va sopra e i valori dei due fondi sotto, affiancati */
+@media (max-width:600px){
+  .tw{overflow-x:visible}
+  .tw table,.tw thead,.tw tbody{display:block}
+  .tw tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:6px;row-gap:4px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .tw thead tr{align-items:end;border-bottom:1px solid var(--ink-2);padding-top:0}
+  .tw th,.tw td{display:block;border:0;padding:2px 4px;width:auto!important}
+  .tw thead th.l{display:none}
+  .tw td.l{grid-column:1/-1;padding:0 2px}
+  .tw td.v{border-radius:8px;padding:6px 8px}
+  .tw tr.strong td.l{background:transparent;box-shadow:none}
+  .tw tr.strong{box-shadow:inset 3px 0 0 var(--accent);padding-left:8px;background:var(--accent-soft)}
+  td.v .cv{font-size:14.5px}
+  tr.strong td.v .cv{font-size:15.5px}
+  .hf{display:none}.hs{display:inline}
+}
+
+/* elementi dentro le celle */
+.sri{display:flex;gap:3px;margin:5px 0 3px}
+.sri i{width:15px;height:7px;border-radius:2px;background:var(--line)}
+.sri i.on{background:var(--accent)}
+.stars{color:var(--brass);letter-spacing:1px;font-size:14px;margin-top:2px}
+.stk{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--bg);margin:7px 0 6px}
+.stk i{display:block;height:100%}
+.lg{display:grid;gap:2px;font-size:12.5px;color:var(--ink-2)}
+.lg span{display:flex;align-items:center;gap:6px}
+.lg span i{flex:none;width:8px;height:8px;border-radius:2px}
+.lg b{margin-left:auto;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.bl{display:grid;gap:6px;margin-top:5px}
+.br{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 8px;font-size:12.5px;line-height:1.3}
+.br .bv{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.br i{grid-column:1/-1;height:4px;border-radius:2px;background:var(--accent);opacity:.85}
+.tl2{margin:4px 0 0;padding-left:18px;display:grid;gap:3px;font-size:12.5px;line-height:1.35}
+.tl2 li span{color:var(--ink-2);white-space:nowrap}
+
+/* due colonne: particolarità, scelte dei gestori, regole comuni */
+.fl{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px 28px}
+.fch{display:flex;align-items:baseline;gap:0;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);font-family:var(--display);font-size:17px;font-weight:600;line-height:1.3}
+.fch small{display:block;font-family:var(--body);font-size:12.5px;font-weight:400;color:var(--ink-2)}
+.pl{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14px;line-height:1.5}
+.pl li{position:relative;padding-left:20px}
+.pl li::before{content:"";position:absolute;left:1px;top:.5em;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.pl li.pro::before{background:var(--good)}
+.pl li.con::before{background:var(--bad)}
+.pl li.give::before{background:transparent;border:1.5px solid var(--accent);width:6px;height:6px}
+.pl b{font-weight:600}
+.none{margin:0;color:var(--ink-2);font-size:14px}
+.mv{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.mv li{border-left:3px solid var(--line);padding:0 0 0 12px;font-size:14px;line-height:1.5}
+.mv li.pos{border-color:var(--good)}.mv li.neg{border-color:var(--bad)}
+.mv .mt{font-size:11.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-2)}
+.mv li.pos .mt{color:var(--good)}.mv li.neg .mt{color:var(--bad)}
+.mv .mw{font-size:12.5px;color:var(--ink-2);margin-left:8px}
+.mv b{display:block;font-weight:600;margin-top:1px}
+.mv p{margin:2px 0 0;color:var(--ink-2);font-size:13.5px}
+.ms{margin:14px 0 0;font-family:var(--display);font-style:italic;font-size:15px;line-height:1.5}
+
+/* grafici */
+.legend{display:flex;gap:6px 18px;font-size:13px;color:var(--ink-2);margin:2px 0 8px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center}
+.legend i.sq{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px}
+.legend i.ln{display:inline-block;width:18px;height:0;border-top:2px dashed var(--ink);margin-right:7px}
+.chart{position:relative;margin:0 0 14px}
+.chart svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:7px 10px;border-radius:8px;font-size:12.5px;line-height:1.4;width:max-content;max-width:260px;display:none;transform:translate(-50%,-105%);z-index:2;font-variant-numeric:tabular-nums}
+
+/* note, avvertenze, firma */
+.notes{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.notes li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;font-size:13.5px;line-height:1.5;border-radius:8px;padding:3px 6px 3px 2px;max-width:86ch;transition:background .3s}
+.notes li.hl{background:var(--accent-soft)}
+.notes .k{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;text-align:right}
+.notes b{font-weight:600}
+.avv p{margin:0 0 8px;font-size:13px;line-height:1.5;color:var(--ink-2);max-width:86ch}
+.avv p.k{color:var(--ink);font-weight:600}
+.avv p:last-child{margin-bottom:0}
+.firma{display:flex;justify-content:space-between;align-items:center;gap:14px 28px;flex-wrap:wrap;background:var(--band);color:var(--band-ink);border-color:transparent;font-size:13.5px;line-height:1.45}
+.firma p{margin:0}
+.firma .by1{opacity:.82}
+.firma .who{font-family:var(--display);font-size:21px;font-weight:600;line-height:1.25}
+.firma .ql{opacity:.85;max-width:52ch}
+.firma .cts{margin-top:0!important}
+.firma .cts a{border-color:rgba(255,255,255,.45)}
+.firma .cts a:hover{background:rgba(255,255,255,.12)}
+
+/* telefono */
+@media (max-width:600px){
+  .hin{padding:22px 16px 0}
+  .htop{padding-bottom:16px}
+  .by{max-width:none}
+  .by .ql{display:none}
+  .site .tag{font-size:14.5px}
+  .cts a{font-size:12.5px;padding:4px 10px}
+  .hbar{padding:12px 0 14px}
+  .vs{font-size:12.5px}
+  .modo{width:100%;margin:0}
+  .modo button{flex:1}
+  .wrap{padding:18px 12px 48px}
+  .card{padding:16px}
+  .rep-head h2{font-size:24px}
+  .win{padding:16px;gap:12px;align-items:flex-start}
+  .wb{width:42px;height:42px;font-size:17px}
+  .tile .v{font-size:17px}.tile.hi .v{font-size:22px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* ---------- Stampa (A4) ---------- */
+@page{size:A4;margin:14mm 13mm 18mm}
+@page{
+  @bottom-left{content:"Elaborato da Marco Busetto, consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157 · +39 331 520 7568 · marco.busetto@allianzbankfa.it";font:600 6.5pt sans-serif;color:#003781}
+  @bottom-right{content:"Pagina " counter(page) " di " counter(pages);font:7.5pt sans-serif;color:#555}
+}
+@media print{
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+    color-scheme:light;
+    --bg:#ffffff; --surface:#ffffff; --ink:#14201f; --ink-2:#4c5a59; --line:#cfd6d6;
+    --accent:#003781; --accent-ink:#ffffff; --accent-soft:#e6f0f0; --band:#003781; --band-ink:#ffffff;
+    --good:#1d7a46; --bad:#b3372f; --good-bg:#edf6f0; --bad-bg:#fcf0ee;
+    --s1:#2a78d6; --s2:#eb6834;
+    --k1:#2a78d6; --k2:#003781; --k3:#c98a16; --k4:#7a5cc2; --k5:#9aa5a4;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:10pt}
+  .wrap{max-width:none;padding:0}
+  .site,.no-print,.tip{display:none!important}
+  .page{display:block}
+  .col{gap:10pt}
+  .card{border:0;padding:0;border-radius:0}
+  .rep-head{border-top:3pt solid var(--accent);border-bottom:1px solid var(--line);padding:8pt 0}
+  h2{font-size:17pt;color:var(--accent)}
+  h3{font-size:11pt;color:var(--accent);border-bottom:1px solid var(--line);padding-bottom:2pt;margin-bottom:6pt;break-after:avoid}
+  .tiles{grid-template-columns:repeat(3,1fr);gap:6pt}
+  .tile{padding:6pt 8pt;border-radius:4pt}
+  .tile .v{font-size:12pt}.tile.hi .v{font-size:15pt}
+  .tile .l,.tile .s{font-size:8pt}
+  .lead{font-size:10pt;padding:7pt 9pt;margin-bottom:6pt}
+  .win{padding:8pt 10pt;border-radius:5pt;margin-bottom:6pt;gap:8pt;background:var(--accent)}.wb{width:26pt;height:26pt;font-size:11pt}.wk{font-size:7.5pt}.wt{font-size:15pt}.ws{font-size:9.5pt}
+  table{font-size:9pt}th{font-size:8pt}th,td{padding:3pt 5pt}td.v .cv{font-size:9.5pt}
+  .tw{overflow:visible}
+  thead{display:table-header-group}
+  tr,.tile,.notes li,.lead,.win,.avv p,.firma,.fl>div,.mv li{break-inside:avoid}
+  .notes{gap:4pt}.notes li{font-size:8.5pt;max-width:none}
+  .cd{font-size:8pt}
+  .fl{grid-template-columns:1fr 1fr;gap:14pt}.pl,.ul{font-size:9pt;gap:3pt}
+  .avv p{font-size:8.5pt;max-width:none;margin-bottom:4pt}
+  .fine,.cred,.promo{font-size:8pt;max-width:none}
+  .firma{background:none;color:var(--ink);border-top:2pt solid var(--accent);padding:6pt 0 0;font-size:9.5pt}.firma .who{font-size:13pt;color:var(--accent)}.firma .cts a{border:0;padding:0 8pt 0 0;color:var(--ink)}
+  .nm{font-size:7pt;padding:0 1pt}
+}
+.f.fr{grid-template-columns:minmax(0,1fr) 150px;align-items:center;gap:10px}
+.grp.key .fine{margin:-2px 0 10px}
+
+/* ===== Tema del sito di Marco Busetto: colori, caratteri e barra di ritorno al sito ===== */
+:root{
+  --bg:#f7f4ee; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#5b6677; --line:#e7e1d5;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9;
+  --band:#001a3d; --band-ink:#ffffff; --brass:#c4a062;
+  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a;
+  --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+  --display:"Cormorant Garamond",Georgia,serif; --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
+    --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
+    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --good-bg:#16291f; --bad-bg:#311c1a;
+    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}}
+:root[data-theme="dark"]{--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
+    --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
+    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --good-bg:#16291f; --bad-bg:#311c1a;
+    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}
+@media print{:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+  --bg:#ffffff; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#4c5a6b; --line:#d9d3c7;
+  --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9; --band:#003781; --band-ink:#ffffff;
+  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a; --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+}}
+.site{background:linear-gradient(165deg,#00142f 0%,#002456 55%,#003781 100%)}
+h1,h2,h3,.wt,.wb,.who,.fch,.tile .v,.tile .m{font-variant-numeric:lining-nums tabular-nums}
+h2,h3{font-weight:600}
+.site h1{font-size:clamp(32px,4.2vw,46px)}
+.mb-back{background:#00142f;border-bottom:1px solid rgba(196,160,98,.4);font:500 13.5px/1.3 var(--body)}
+.mb-back .in{max-width:1160px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mb-back a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.mb-back a:hover{color:#dcc28c}
+.mb-back .mono{width:30px;height:30px;border:1px solid #c4a062;border-radius:50%;display:grid;place-items:center;font:600 13px/1 var(--display);color:#dcc28c}
+.mb-back .alt{color:#dcc28c}
+@media (max-width:600px){.mb-back .in{padding:10px 12px}.mb-back .alt{display:none}}
+@media print{.mb-back{display:none}}
+</style>
+</head>
+<body>
+<nav class="mb-back no-print" aria-label="Sito di Marco Busetto"><div class="in"><a href="../index.html"><span class="mono">MB</span><span>Torna al sito di Marco Busetto</span></a><a class="alt" href="../index.html#strumenti">Altri strumenti di analisi</a></div></nav>
+
+<header class="site">
+ <div class="hin">
+  <div class="htop">
+   <div>
+    <h1>Due fondi a confronto</h1>
+    <p class="tag">Costi, rendimenti, portafoglio, gestori e particolarità, spiegati in modo semplice</p>
+   </div>
+   <div class="by">
+    <p class="who">Marco Busetto</p>
+    <p class="ql">Consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157</p>
+    <p class="cts"><a href="tel:+393315207568">+39 331 520 7568</a><a href="mailto:marco.busetto@allianzbankfa.it">marco.busetto@allianzbankfa.it</a></p>
+   </div>
+  </div>
+  <div class="hbar">
+   <div class="vs" id="c-vs"></div>
+   <div class="modo no-print" role="group" aria-label="Versione del documento"><span>Versione</span><button type="button" data-m="s" aria-pressed="true">Semplificata</button><button type="button" data-m="c" aria-pressed="false">Completa</button></div>
+  </div>
+ </div>
+</header>
+<div class="wrap">
+<section class="page">
+  <div class="col no-print"><form class="card ed" id="c-form" novalidate></form></div>
+  <div class="col" id="c-rep"></div>
+</section>
+</div>
+
+<script>
+/* Fuori da Claude il salvataggio passa dal browser: il PDF generato viene scaricato direttamente. */
+if(!window.claude){window.claude={use:function(n){return n!=='downloads'?null:{save:function(o){
+  var u=URL.createObjectURL(new Blob([o.data],{type:'application/pdf'})),a=document.createElement('a');
+  a.href=u;a.download=o.filename||'Analisi.pdf';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(u);a.remove()},2000);return Promise.resolve();}}}}}
+</script>
+<script>
+(function(){
+/* ================= ESEMPIO INIZIALE (dati verificati sulle fonti indicate nella nota 1) ================= */
+var DEF={cli:'',int:'Allianz Bank Financial Advisors S.p.A.',agg:'12 novembre 2026',rsame:false,
+  fonti:"Costi, indicatore di rischio, periodo consigliato e politica di investimento: KID di Allsolutions Prudent Optimised Alpha, classe A ACC EUR (17 marzo 2026; limiti di investimento, derivati, swing pricing e gestore delegato verificati anche sulla versione del 21 ottobre 2025) e di Allianz Dynamic Multi Asset Strategy SRI 15, classe AT EUR (16 aprile 2026). Cambio della società di gestione di Allsolutions dal 10 luglio 2026: avviso sul sito di Allfunds Investment Solutions. Patrimonio di Allsolutions: factsheet della società al 31 dicembre 2025. Rendimenti: FondiOnline.it su dati Morningstar, quota al 10 novembre 2026 (Allsolutions) e al 12 novembre 2026 (Allianz); il dato a 10 anni di Allianz è esteso da Morningstar, perché la classe AT esiste dal 2017. Rendimenti per anno e anno peggiore di Allianz: Quefondos. Data di avvio, volatilità e Sharpe di Allsolutions: Borsa Italiana (indicatori al 31 luglio 2026). Composizione, primi titoli, duration, rendimento a scadenza, valute, Sharpe e perdita massima di Allianz: report mensili del fondo al 31 maggio e al 30 giugno 2026 (classe RT, stesso portafoglio della AT ma con costi più bassi). Volatilità a 1 anno di Allianz: FIDA, classe CT (stesso portafoglio), al 15 ottobre 2026. Posizione in classifica: FIDA, al 31 agosto 2026. Rating Morningstar: FondiOnline.it. Patrimonio di Allianz: Finect, al 12 novembre 2026. Gestore, team, data di inizio, metodo, portafoglio di riferimento e limiti sulle azioni di Allianz: Allianz Global Investors; masse di Allianz GI: BlueRating (marzo 2026). Quaestio: sito della società e Advisor Online (masse a giugno 2024). Scelte recenti: report mensili Allianz di maggio e giugno 2026, Allianz GI «Product Playbook Q4 2026», dati di mercato del terzo trimestre 2026 (FIDA tramite Traderlink; Invesco per l'oro), FIDA per il rendimento di Allianz dal 17 giugno al 17 settembre 2026, Borsa Italiana e FondiOnline per le quote di Allsolutions.",
+  f:[
+   {nome:'Allsolutions Prudent Optimised Alpha',breve:'Allsolutions',isin:'LU2787154694',classe:'A, in euro',soc:'Waystone Management Company (Lux), dal 10 luglio 2026 (prima Allfunds Investment Solutions)',tipo:'Bilanciato prudente',lancio:'2025-04-09',pat:53,patd:'31 dicembre 2025',sri:2,rhp:3,sfdr:'8',prov:'acc',
+    come:"Investe soprattutto in altri fondi ed ETF. Portafoglio di riferimento: 35% azioni mondiali e 65% obbligazioni in euro; azioni al massimo 35%. Non usa derivati.",
+    ing:4,usc:0,gst:2.05,trn:0.13,prf:0,ktot:1118,kriy:3.6,r1:-0.27,r3:'',r5:'',r10:'',r20:'',wv:'',wy:'',anni:'',
+    adata:'',azref:35,azmax:35,aaz:'',aob:'',amp:'',aal:'',aliq:'',dur:'',ytm:'',rat:'',ig:'',hy:'',ntit:'',geo:'',set:'',obt:'',val:'',
+    mgr:"Il team di Quaestio Capital SGR (gestore delegato indicato nel KID), guidato dal direttore degli investimenti Christian Prinoth, in passato in Mediobanca SGR ed Epsilon SGR. Il nome del gestore del singolo fondo non è pubblicato.",
+    soct:"Quaestio Capital SGR: società di gestione indipendente di Milano, autorizzata da Banca d'Italia e Consob e controllata al 100% da Quaestio Holding (Lussemburgo). Lavora soprattutto per clienti istituzionali: a giugno 2024 gestiva 14,5 miliardi di euro, di cui circa 10 in strategie multi-asset.",
+    metodo:"Gestione attiva: investe dal 50% al 100% in fondi ed ETF e fino al 50% direttamente in azioni e obbligazioni. Azioni al massimo 35%, obbligazioni high yield ed emergenti al massimo 27%, fondi alternativi al massimo 35%; non usa derivati. Il portafoglio di riferimento serve solo a controllare il rischio.",
+    mgrd:'',msr:'',vol:4.89,volp:'1 anno, al 31/07/2026',shp:0.16,shpp:'1 anno, al 31/07/2026',mdd:'',mddp:'',rank:'',top:'',
+    mov:"? | 10 luglio 2026 | Cambio della società di gestione: da Allfunds Investment Solutions a Waystone Management Company (Lux) | Riguarda l'amministrazione e i controlli del fondo. Le scelte di investimento erano delegate a Quaestio Capital SGR: va verificato nella documentazione aggiornata che delega, strategia e costi siano rimasti invariati. Il commento del gestore sul portafoglio non è nelle fonti consultate.",
+    msint:"Dal 20 agosto al 10 novembre 2026 la quota è scesa da 105,81 a 104,37 € (−1,4%).",
+    fof:true,der:false,swing:true,swp:2,fx:false,pro:'',
+    con:"Dati di portafoglio non disponibili: composizione, primi titoli e commenti del gestore non sono nelle fonti pubbliche consultate; per controllarli serve il factsheet mensile della società."},
+   {nome:'Allianz Dynamic Multi Asset Strategy SRI 15',breve:'Allianz DMAS SRI 15',isin:'LU1548496022',classe:'AT, in euro (classe dal 2017)',soc:'Allianz Global Investors GmbH',tipo:'Bilanciato prudente',lancio:'2014-08-27',pat:1966,patd:'12 novembre 2026',sri:2,rhp:3,sfdr:'8',prov:'acc',
+    come:"Investe soprattutto direttamente in azioni e obbligazioni di tutto il mondo. Portafoglio di riferimento: 15% azioni e 85% obbligazioni protette dal rischio di cambio; azioni al massimo 35%. Punta a oscillazioni annue tra il 3% e il 7%.",
+    ing:3,usc:0,gst:1.31,trn:0.07,prf:0,ktot:738,kriy:2.4,r1:3.34,r3:6.45,r5:1.38,r10:2.23,r20:'',wv:-13.26,wy:'2022',
+    anni:"2025 5,31\n2024 6,13\n2023 8,12\n2022 -13,26",
+    adata:'30 giugno 2026',azref:15,azmax:35,aaz:32.05,aob:60.51,amp:7.46,aal:2.94,aliq:'',dur:6.29,ytm:4.43,rat:'A+',ig:93.57,hy:4.39,ntit:'287 azioni, 476 obbligazioni, 25 fondi ed ETF',
+    geo:"Stati Uniti 57,55\nRegno Unito 9,66\nPaesi Bassi 5,21\nSpagna 3,88\nGermania 3,21\nGiappone 3,20\nSvizzera 2,90\nFrancia 2,68\nHong Kong 2,11\nAltri 9,61",
+    set:"Tecnologia 26,27\nFinanziari 16,37\nIndustriali 13,46\nSalute 12,65\nBeni voluttuari 7,84\nComunicazione 6,72\nServizi di pubblica utilità 4,91\nBeni di prima necessità 4,86\nMateriali 3,81\nImmobiliare 3,07",
+    obt:"Titoli di Stato 60,30\nObbligazioni societarie 27,20\nPaesi emergenti 8,65\nCovered bond 1,56\nLiquidità 2,64",
+    val:"Euro 68,38\nDollaro USA 16,81\nFranco svizzero 9,06\nSterlina 2,82\nYen 1,24",
+    mgr:"Marcus Stahlhacke (CFA, FRM, CAIA), responsabile della gestione multi-asset retail di Allianz GI in Europa: gestisce il fondo dal 1° maggio 2015 con un team di 10 gestori, in media con 16 anni di esperienza (dato di luglio 2024).",
+    soct:"Allianz Global Investors, la società di gestione del gruppo Allianz: 598 miliardi di euro gestiti a marzo 2026.",
+    metodo:"Gestione attiva con approccio sistematico e fondamentale e controllo del rischio basato sul VaR: punta a oscillazioni annue tra il 3% e il 7%. Il nucleo è in azioni e obbligazioni globali scelte con criteri di sostenibilità; per aree specialistiche (emergenti, materie prime, cat bond, immobiliare) usa fondi ed ETF, anche della stessa Allianz.",
+    mgrd:'2015-05-01',msr:4,vol:7.67,volp:'1 anno, al 15/10/2026 (classe CT, stesso portafoglio)',shp:0.72,shpp:'3 anni, al 30/06/2026 (classe RT)',mdd:-13.01,mddp:'5 anni, al 30/06/2026 (classe RT)',
+    rank:"Per alfa, cioè il rendimento in più a parità di rischio: 66° su 320 fondi simili a 1 anno, 98° su 296 a 3 anni, 102° su 258 a 5 anni (FIDA, al 31/08/2026).",
+    top:"Allianz Emerging Markets Select Bond (fondo) 3,93\nAllianz Dynamic Commodities (fondo) 3,59\nL&G Emerging Markets Government Bond Local Currency (fondo) 3,06\niShares J.P. Morgan Advanced $ (ETF) 2,49\nTwelve Cat Bond (fondo) 2,04\nTitolo di Stato USA 2,75% 2028 1,28\niShares Developed Markets Property Yield (ETF) 1,19\nTitolo di Stato USA 2,875% 2049 1,10\nTitolo di Stato USA 4,125% 2032 0,97\nNVIDIA (azione) 0,94",
+    mov:"- | Giugno 2026 | Meno azioni (dal 34,8% al 32,1%), più obbligazioni (dal 58,2% al 60,5%) e duration più lunga (da 5,96 a 6,29 anni) | Nel terzo trimestre le obbligazioni hanno perso il 2,4% e i titoli di Stato dell'area euro oltre 10 anni circa il 9%, mentre le azioni sono rimaste ferme: aumentare obbligazioni e duration ha pesato.\n+ | Maggio-giugno 2026 | Materie prime come principale scommessa «satellite» (tra il 7,5% e l'8,7% del fondo, anche tramite il fondo Allianz Dynamic Commodities) | Nel terzo trimestre le materie prime hanno guadagnato l'11,8% e l'oro il 3,7%: la scelta ha aiutato.\n? | Ultimo trimestre 2026 | Visione della casa per i portafogli prudenti: più azioni e meno obbligazioni, con satelliti in azioni emergenti e oro | Scelta recente: l'effetto si vedrà nei prossimi mesi. Va nella direzione opposta a quella di giugno, dopo il calo delle obbligazioni.",
+    msint:"Dal 17 giugno al 17 settembre 2026 il fondo ha perso l'1,47%; nel terzo trimestre i portafogli diversificati hanno perso in media circa l'1%.",
+    fof:false,der:true,swing:true,swp:'',fx:true,pro:'',
+    con:"Investe anche in fondi: 25 fondi ed ETF, in parte della stessa Allianz (i sei più grandi pesano circa il 16%); i loro costi sono già compresi nei costi del KID.\nVolatilità sopra l'obiettivo: nell'ultimo anno è stata del 7,67%, appena sopra la fascia 3-7% che il fondo si prefigge."}
+  ]};
+var KT=['nome','breve','isin','classe','soc','tipo','lancio','patd','sfdr','prov','come','wy','anni','adata','rat','ntit','geo','set','obt','val','mgr','soct','metodo','mgrd','volp','shpp','mddp','rank','top','mov','msint','pro','con'];
+var KN=['pat','sri','rhp','ing','usc','gst','trn','prf','ktot','kriy','r1','r3','r5','r10','r20','wv','azref','azmax','aaz','aob','amp','aal','aliq','dur','ytm','ig','hy','vol','shp','mdd','msr','swp'];
+var KC=['fof','der','swing','fx'];
+var THOU={pat:1,ktot:1};                     /* campi in cui «1.966» significa milleNovecentoSessantasei */
+var STORE='confronto-due-fondi-v2',LVKEY='confronto-due-fondi-livello';
+var HZ=[[1,'r1','Ultimo anno','',1],[3,'r3','Ultimi 3 anni',"media all'anno",2],[5,'r5','Ultimi 5 anni',"media all'anno",2],[10,'r10','Ultimi 10 anni',"media all'anno",2],[20,'r20','Ultimi 20 anni',"media all'anno",2]];
+var AC=[['aaz','Azioni','k1'],['aob','Obbligazioni','k2'],['amp','Materie prime','k3'],['aal','Investimenti alternativi','k4'],['aliq','Liquidità','k5']];
+var TAGS={cost:['Costa meno','Costa di più'],ret:['Ha reso di più','Ha reso di meno'],loss:['Ha perso meno','Ha perso di più'],hi:['Meglio','Peggio'],risk:['Più stabile','Meno stabile'],exp:['Più esperienza','Meno esperienza'],old:['Più storia','Meno storia']};
+
+/* ================= UTILITÀ ================= */
+var AUTORE='Marco Busetto',QUALIFICA="consulente finanziario iscritto all'albo OCF con delibera 1733, matricola 628157";
+var TEL='+39 331 520 7568',TELH='+393315207568',MAIL='marco.busetto@allianzbankfa.it';
+var OGGI=new Date(),DATA=OGGI.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'});
+var PROMO="Messaggio pubblicitario con finalità promozionale. Prima di sottoscrivere leggere il KID (Documento contenente le informazioni chiave) e il Prospetto di ciascun fondo, disponibili presso il collocatore e sui siti delle società di gestione.";
+var LEVEL='ess';
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function grp(n){return String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function E(v){if(v==null||!isFinite(v))return 'n.d.';var r=Math.round(v);return (r<0?'−':'')+grp(r)+' €'}
+function P(v,d){if(v==null||!isFinite(v))return 'n.d.';d=d==null?2:d;var s=Math.abs(v).toFixed(d);return (v<0&&parseFloat(s)!==0?'−':'')+s.replace('.',',')+'%'}
+function PT(v){if(v==null)return 'n.d.';var s=(Math.round(Math.abs(v)*100)/100).toFixed(2).replace(/\.?0+$/,'');return (v<0?'−':'')+s.replace('.',',')+'%'}
+function PS(v){if(v==null)return 'n.d.';return (v>0?'+':'')+P(v,2)}
+function D2(v){return v==null?'n.d.':(v<0?'−':'')+Math.abs(v).toFixed(2).replace('.',',')}
+function pnum(t,th){
+  t=String(t==null?'':t).trim().replace(/\s/g,'').replace(/[−–]/g,'-').replace('%','');if(t==='')return null;
+  if(th&&/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(t))t=t.replace(/\./g,'');
+  if(t.indexOf(',')>=0)t=t.replace(/\./g,'').replace(',','.');
+  var v=parseFloat(t);return isFinite(v)?v:null;
+}
+function lines(s){return String(s||'').split(/\n+/).map(function(x){return x.trim()}).filter(Boolean)}
+/* «Nome valore» per riga → [nome, valore] */
+function pairs(s){return lines(s).map(function(x){var m=/^(.*?)[\s:;=]+(-?[\d.,]+)\s*%?$/.exec(x);return m?[m[1].replace(/[\s:;=–-]+$/,'').trim(),pnum(m[2])]:[x,null]})}
+function yearsMap(s){var o={};lines(s).forEach(function(x){var m=/^(\d{4})\D+?(-?[\d.,]+)/.exec(x);if(m){var v=pnum(m[2]);if(v!=null)o[m[1]]=v}});return o}
+/* «esito | quando | scelta | com'è andata» per riga */
+function movesList(s){return lines(s).map(function(x){var p=x.split('|').map(function(y){return y.trim()}),e=(p[0]||'').toLowerCase(),k=/^(\+|pos)/.test(e)?'pos':(/^(-|−|neg)/.test(e)?'neg':'neu');
+  return p.length>=3?{e:k,w:p[1]||'',s:p[2]||'',x:p.slice(3).join(' | ')}:{e:'neu',w:'',s:x,x:''}})}
+function fid(k,i){return 'c-'+k+'-'+i}
+function lab(t,m){if(!m)return t;var i=t.lastIndexOf(' ');return (i<0?'':t.slice(0,i+1))+'<span class="nw">'+t.slice(i+1)+m+'</span>'}
+function mk(n){return n?'<sup><button type="button" class="nm" data-n="cn-'+parseInt(n,10)+'" aria-label="Vai alla nota '+n+'">'+n+'</button></sup>':''}
+function dataIt(d){return d?d.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'}).replace(/^1 /,'1° '):'n.d.'}
+function parseD(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?new Date(+m[1],+m[2]-1,+m[3]):null}
+function anniDa(d){return d?(OGGI-d)/(365.25*864e5):null}
+function perTxt(N){return N===1?"l'ultimo anno":'gli ultimi '+N+' anni'}
+function D1(v){return String(Math.round(v*10)/10).replace('.',',')}
+function durTxt(y){if(y==null)return '';if(y<2){var m=Math.max(1,Math.round(y*12));return m+(m===1?' mese':' mesi')}var a=Math.floor(y);return a+(a===1?' anno':' anni')}
+function stelle(n){var s='';for(var i=1;i<=5;i++)s+=i<=n?'★':'☆';return s}
+function patTxt(p){if(p==null)return 'n.d.';return p>=1000?'circa '+(Math.round(p/10)/100).toFixed(2).replace('.',',')+' miliardi di euro':'circa '+grp(p)+' milioni di euro'}
+function esisteva(f,anni){if(!f.dl)return null;var s=new Date(OGGI);s.setFullYear(s.getFullYear()-anni);return f.dl<=s}
+/* chi è meglio: hi = vince il valore più alto */
+function cmp(a,b,hi){
+  if(a==null||b==null)return null;
+  var x=Math.round(a*100),y=Math.round(b*100);
+  if(x===y)return ['eq','eq'];
+  return (hi?x>y:x<y)?['good','bad']:['bad','good'];
+}
+
+/* ---------- Note ---------- */
+var NOTE=[
+ ['fonti','Fonti dei dati',''],
+ ['costi','Costi e commissioni',"Le voci sono quelle del KID (Documento contenente le informazioni chiave). La commissione di ingresso è la massima prevista: quella applicata dal collocatore può essere più bassa. I costi di gestione, gli altri costi amministrativi, i costi di transazione e l'eventuale commissione di performance non si pagano a parte: sono già tolti dal valore della quota e riducono il rendimento. Nei fondi che investono in altri fondi comprendono anche i costi dei fondi sottostanti. I costi totali e l'effetto dei costi sul rendimento sono calcolati dal KID su 10.000 € con la commissione di ingresso massima."],
+ ['rischio','Livello di rischio',"È l'indicatore sintetico di rischio del KID, su una scala da 1 (rischio più basso) a 7 (più alto). Tiene conto di quanto il valore del fondo è oscillato in passato e della capacità di rimborso. Nessun livello garantisce il capitale: anche con un rischio basso si può perdere denaro."],
+ ['rend','Rendimenti passati',"Variazioni del valore della quota, al netto dei costi correnti ma senza la commissione di ingresso e prima delle imposte. I rendimenti a 3, 5, 10 e 20 anni sono medie annue composte. «10.000 € → …» indica quanto sarebbero diventati 10.000 € investiti all'inizio del periodo, con quel rendimento. n.d. significa che il dato non c'è, di solito perché il fondo non esisteva ancora. I rendimenti passati non sono indicativi di quelli futuri."],
+ ['comp','Come investono',"Ripartizione del patrimonio come pubblicata dalla società di gestione, comprese le posizioni in derivati: per questo la somma può superare il 100%. Il portafoglio di riferimento è quello con cui la società descrive il profilo del fondo: il gestore può discostarsene entro i limiti del prospetto, per esempio sulla quota massima in azioni. La duration indica di quanto scende, in percentuale, il valore delle obbligazioni se i tassi salgono dell'1% (e di quanto sale se scendono). Il rendimento a scadenza è il rendimento annuo che le obbligazioni darebbero se tenute fino alla scadenza senza insolvenze, prima dei costi: non è il rendimento atteso del fondo. Paesi e settori si riferiscono alla sola parte in azioni, la tipologia alla sola parte in obbligazioni. La composizione cambia nel tempo: conta la data indicata."],
+ ['gest','Gestori e indicatori',"Volatilità: quanto oscilla il valore della quota in un anno. Indice di Sharpe: rendimento ottenuto in più rispetto a un investimento senza rischio, per ogni unità di volatilità. Perdita massima: la discesa più ampia, dal punto più alto al più basso, nel periodo. Rating Morningstar: da 1 a 5 stelle in base ai rendimenti passati corretti per il rischio rispetto ai fondi della stessa categoria. Alfa: rendimento in più ottenuto dal gestore a parità di rischio. Indicatori calcolati su periodi o classi di quote diverse non sono del tutto confrontabili: in quel caso il report li mostra ma non li usa nel punteggio. I primi titoli sono quelli dell'ultimo report disponibile e cambiano nel tempo."],
+ ['mosse','Le scelte dei gestori',"Le scelte sono ricavate dai report mensili e dai documenti pubblicati dalle società di gestione. L'esito è una valutazione del consulente basata sull'andamento dei mercati nei mesi successivi: non è un giudizio definitivo, perché una scelta può dare frutti su tempi più lunghi. «Da verificare» indica scelte troppo recenti o senza dati sufficienti."],
+ ['part','Particolarità',"Fondo di fondi: investe in altri fondi, quindi ai suoi costi si sommano quelli dei fondi sottostanti; in cambio offre molta diversificazione. Derivati: contratti il cui valore dipende da altri titoli; si usano per proteggere il portafoglio o cambiarne in fretta l'esposizione, ma rendono il fondo più complesso. Swing pricing: quando entrano o escono molti soldi il prezzo di sottoscrizione o di rimborso può essere corretto, per non far pagare i costi a chi resta. Copertura del cambio: protegge dalle oscillazioni delle valute estere rispetto all'euro. Le soglie usate per segnalare i punti (per esempio storia di almeno 10 anni, patrimonio sotto i 100 milioni, duration di almeno 6 anni o azioni almeno 10 punti sopra il portafoglio di riferimento) sono indicative."],
+ ['punti','Come si assegna il vincitore',"In ogni voce vince il fondo che costa meno o che ha reso di più (o perso meno). Punteggio principale: costi ricorrenti annui 3 punti; commissione di ingresso, di uscita e di performance 1 ciascuna; rendimento a 1 anno 1 punto; a 3, 5, 10 e 20 anni 2 ciascuno; anno peggiore 1. Punteggio esteso (versione completa): aggiunge 1 punto ciascuno per storia del fondo, esperienza del gestore e rating Morningstar e, solo se i dati sono dello stesso periodo, per volatilità, indice di Sharpe e perdita massima. Le voci uguali o senza il dato di uno dei due fondi non assegnano punti. Costi di gestione, di transazione e del KID e rendimenti anno per anno sono colorati ma non danno punti, perché già compresi in altre voci. È una sintesi di costi e risultati passati, non una previsione."]
+];
+function nn(key){for(var i=0;i<NOTE.length;i++)if(NOTE[i][0]===key)return i+1;return 0}
+
+/* ================= MODULO ================= */
+function inp(key,i,kind,label){
+  var id=fid(key,i),al=' aria-label="'+esc(label)+', fondo '+'AB'.charAt(i)+'"';
+  if(kind==='n')return '<input class="n" type="text" inputmode="decimal" id="'+id+'"'+al+'>';
+  if(kind==='s')return '<input class="n" type="text" id="'+id+'"'+al+' placeholder="es. −2,5">';
+  if(kind==='d')return '<input type="date" id="'+id+'"'+al+'>';
+  if(kind==='sfdr')return '<select id="'+id+'"'+al+'><option value="">n.d.</option><option value="6">Articolo 6</option><option value="8">Articolo 8</option><option value="9">Articolo 9</option></select>';
+  if(kind==='prov')return '<select id="'+id+'"'+al+'><option value="acc">Accumulazione</option><option value="dis">Distribuzione</option></select>';
+  if(kind==='c')return '<label class="ck"><input type="checkbox" id="'+id+'"'+al+'><span>Sì</span></label>';
+  return '<input type="text" id="'+id+'"'+al+' autocomplete="off" maxlength="200">';
+}
+function rowIn(label,hint,key,kind){return '<span class="gl">'+label+(hint?'<small>'+hint+'</small>':'')+'</span>'+inp(key,0,kind,label)+inp(key,1,kind,label)}
+function rowTx(label,hint,key,rows){
+  return '<p class="tl">'+label+(hint?' <small>'+hint+'</small>':'')+'</p><div class="tx2">'+[0,1].map(function(i){return '<textarea class="txt" rows="'+(rows||3)+'" id="'+fid(key,i)+'" aria-label="'+esc(label)+', fondo '+'AB'.charAt(i)+'" placeholder="Fondo '+'AB'.charAt(i)+'"></textarea>'}).join('')+'</div>';
+}
+function fgroup(title,inner,open){return '<details class="fgd"'+(open?' open':'')+'><summary>'+title+'</summary><div class="fg"><span class="gh"></span><span class="gh">Fondo A (sinistra)</span><span class="gh">Fondo B (destra)</span>'+inner+'</div></details>'}
+function formHTML(){
+  var h='<div class="grp0"><p class="cap">Intestazione</p><div class="f3">'+
+    '<div class="f"><label for="c-cli">Cliente</label><input class="txt" type="text" id="c-cli" placeholder="Nome e cognome" autocomplete="off" maxlength="80"></div>'+
+    '<div class="f"><label for="c-int">Intermediario per cui opera il consulente</label><input class="txt" type="text" id="c-int" autocomplete="off" maxlength="80"></div>'+
+    '<div class="f"><label for="c-agg">Dati aggiornati al</label><input class="txt" type="text" id="c-agg" autocomplete="off" maxlength="40"></div></div></div>';
+  h+=fgroup('Presentazione',
+    rowIn('Nome completo','','nome','t')+rowIn('Nome breve','usato nelle frasi','breve','t')+rowIn('Codice ISIN','','isin','t')+rowIn('Classe','','classe','t')+
+    rowIn('Società di gestione','','soc','t')+rowIn('Tipo di fondo','es. azionario globale','tipo','t')+rowIn('Sul mercato dal','data di avvio del fondo','lancio','d')+
+    rowIn('Patrimonio del fondo','milioni di euro','pat','n')+rowIn('Patrimonio: data del dato','es. 31 dicembre 2025','patd','t')+rowIn('Livello di rischio','da 1 a 7, dal KID','sri','n')+rowIn('Periodo consigliato','anni, dal KID','rhp','n')+
+    rowIn('Proventi','','prov','prov')+rowIn('Sostenibilità','classificazione SFDR','sfdr','sfdr')+rowTx('Come investe','in parole semplici','come',3));
+  h+=fgroup('Costi e commissioni (dal KID, in %)',
+    rowIn('Ingresso massimo','% una tantum','ing','n')+rowIn('Uscita','%','usc','n')+rowIn('Gestione e amministrativi',"% l'anno",'gst','n')+rowIn('Transazione',"% l'anno",'trn','n')+
+    rowIn('Performance',"% l'anno, 0 se assente",'prf','n')+rowIn('Costi totali su 10.000 €','€ nel periodo consigliato','ktot','n')+rowIn('Effetto dei costi',"% l'anno nel periodo consigliato",'kriy','n'));
+  h+=fgroup('Rendimenti passati (in %)',
+    rowIn('Ultimo anno','','r1','s')+rowIn('Ultimi 3 anni',"media all'anno",'r3','s')+rowIn('Ultimi 5 anni',"media all'anno",'r5','s')+rowIn('Ultimi 10 anni',"media all'anno",'r10','s')+rowIn('Ultimi 20 anni',"media all'anno",'r20','s')+
+    rowIn('Anno peggiore','rendimento in %','wv','s')+rowIn('Anno peggiore: quale anno','es. 2022','wy','t')+rowTx('Rendimenti anno per anno','una riga per anno, per esempio «2025 5,31»','anni',3));
+  h+=fgroup('Come investono',
+    rowIn('Dati aggiornati al','es. 30 giugno 2026','adata','t')+rowIn('Azioni nel portafoglio di riferimento','%','azref','n')+rowIn('Azioni: massimo consentito','%, dal prospetto o dal KID','azmax','n')+rowIn('Azioni','% del patrimonio','aaz','n')+rowIn('Obbligazioni','%','aob','n')+rowIn('Materie prime','%','amp','n')+
+    rowIn('Investimenti alternativi','%','aal','n')+rowIn('Liquidità','%','aliq','n')+rowIn('Duration','anni','dur','n')+rowIn('Rendimento a scadenza','% delle obbligazioni','ytm','n')+
+    rowIn('Rating medio','es. A+','rat','t')+rowIn('Investment grade','% delle obbligazioni','ig','n')+rowIn('High yield','% delle obbligazioni','hy','n')+rowIn('Numero di titoli','es. 287 azioni, 476 obbligazioni','ntit','t')+
+    rowTx('Azioni: paesi','una riga per paese, per esempio «Stati Uniti 57,6»','geo',4)+rowTx('Azioni: settori','una riga per settore','set',4)+
+    rowTx('Obbligazioni: tipologia','una riga per tipo','obt',3)+rowTx('Valute','una riga per valuta, compreso «Euro»','val',3));
+  h+=fgroup('Chi gestisce e cosa compra',
+    rowTx('Chi decide','gestore o team','mgr',2)+rowTx('La società che sceglie gli investimenti','per esempio il gestore delegato','soct',3)+rowTx('Metodo di gestione','','metodo',3)+
+    rowIn('Gestore del fondo dal','','mgrd','d')+rowIn('Rating Morningstar','stelle da 1 a 5','msr','n')+
+    rowIn('Volatilità','%','vol','n')+rowIn('Volatilità: periodo','es. 1 anno al 31/07/2026','volp','t')+rowIn('Indice di Sharpe','','shp','s')+rowIn('Sharpe: periodo','','shpp','t')+
+    rowIn('Perdita massima','% (negativa)','mdd','s')+rowIn('Perdita massima: periodo','','mddp','t')+
+    '<label class="ck wide"><input type="checkbox" id="c-rsame"><span>Volatilità, Sharpe e perdita massima dei due fondi sono dello stesso periodo: solo così vengono colorati e danno punti</span></label>'+
+    rowTx('Posizione rispetto ai fondi simili','','rank',2)+rowTx('Primi 10 titoli','una riga per titolo, per esempio «Nome 3,93»','top',5));
+  h+=fgroup('Ultime scelte del gestore',
+    rowTx('Scelte recenti',"una riga per scelta: «esito | quando | scelta | com'è andata»; esito + (ha aiutato), − (ha pesato) o ? (da verificare)",'mov',4)+
+    rowTx('Andamento recente','una frase di sintesi','msint',2));
+  h+=fgroup('Particolarità',
+    rowIn('Investe in altri fondi','fondo di fondi','fof','c')+rowIn('Usa strumenti derivati','','der','c')+rowIn('Swing pricing','prezzo corretto con grandi flussi','swing','c')+rowIn('Swing pricing: correzione massima','%, se indicata nel KID','swp','n')+rowIn('Copre il rischio di cambio','in tutto o in parte','fx','c')+
+    rowTx('Altri punti a favore','uno per riga','pro',2)+rowTx('Altri punti di attenzione','uno per riga','con',2));
+  h+='<details class="fgd"><summary>Fonti dei dati</summary><div class="f"><textarea class="txt" id="c-fonti" rows="6" aria-label="Fonti dei dati"></textarea></div></details>';
+  h+='<p class="fine">Il report mostra il fondo A a sinistra e il fondo B a destra. Lascia vuota una casella se il dato non c\'è: comparirà «n.d.». I dati restano salvati in questo browser.</p>'+
+    '<div class="btns"><button type="button" class="btn2" id="c-scambia">Scambia A e B</button><button type="button" class="btn2" id="c-svuota">Svuota i dati dei fondi</button><button type="button" class="btn2" id="c-esempio">Ripristina l\'esempio</button></div>';
+  return h;
+}
+function setForm(d){
+  $('c-cli').value=d.cli||'';$('c-int').value=d.int||'';$('c-agg').value=d.agg||'';$('c-fonti').value=d.fonti||'';$('c-rsame').checked=!!d.rsame;
+  [0,1].forEach(function(i){var f=d.f[i]||{};
+    KT.concat(KN).forEach(function(k){var el=$(fid(k,i)),v=f[k];
+      el.value=v==null?'':(typeof v==='number'?String(v).replace('.',','):String(v));
+      if(k==='prov'&&!el.value)el.value='acc'});
+    KC.forEach(function(k){$(fid(k,i)).checked=!!f[k]});
+  });
+}
+function getForm(){
+  return {cli:$('c-cli').value,int:$('c-int').value,agg:$('c-agg').value,fonti:$('c-fonti').value,rsame:$('c-rsame').checked,
+    f:[0,1].map(function(i){var o={};KT.concat(KN).forEach(function(k){o[k]=$(fid(k,i)).value});KC.forEach(function(k){o[k]=$(fid(k,i)).checked});return o})};
+}
+function salva(){try{localStorage.setItem(STORE,JSON.stringify(getForm()))}catch(e){}}
+function carica(){try{var s=localStorage.getItem(STORE);if(s){var d=JSON.parse(s);if(d&&d.f&&d.f.length===2)return d}}catch(e){}return null}
+
+/* ================= LETTURA DEI DATI ================= */
+function readF(i){
+  var o={i:i,L:'AB'.charAt(i)};
+  KT.forEach(function(k){o[k]=$(fid(k,i)).value.trim()});
+  KN.forEach(function(k){o[k]=pnum($(fid(k,i)).value,THOU[k])});
+  KC.forEach(function(k){o[k]=$(fid(k,i)).checked});
+  if(!o.nome&&!o.breve)o.nome='Fondo '+o.L;
+  if(!o.breve)o.breve=o.nome;if(!o.nome)o.nome=o.breve;
+  if(o.sri!=null)o.sri=Math.min(7,Math.max(1,Math.round(o.sri)));
+  if(o.msr!=null)o.msr=Math.min(5,Math.max(1,Math.round(o.msr)));
+  o.ric=(o.gst==null&&o.trn==null&&o.prf==null)?null:(o.gst||0)+(o.trn||0)+(o.prf||0);
+  o.dl=parseD(o.lancio);o.yrs=anniDa(o.dl);
+  o.md=parseD(o.mgrd);o.myrs=anniDa(o.md);
+  o.ym=yearsMap(o.anni);o.geoL=pairs(o.geo);o.setL=pairs(o.set);o.obtL=pairs(o.obt);o.valL=pairs(o.val);o.topL=pairs(o.top);
+  o.mv=movesList(o.mov);o.pros=lines(o.pro);o.cons=lines(o.con);
+  o.eur=null;o.fxl=[];o.valL.forEach(function(p){if(/^euro?$/i.test(p[0]))o.eur=p[1];else if(p[1]!=null)o.fxl.push(p)});
+  o.fxp=o.eur!=null?Math.max(0,100-o.eur):(o.fxl.length?o.fxl.reduce(function(a,p){return a+p[1]},0):null);
+  return o;
+}
+
+/* ================= RELAZIONE ================= */
+function buildReport(){
+  var A=readF(0),B=readF(1),FF=[A,B],interm=$('c-int').value.trim(),agg=$('c-agg').value.trim(),rsame=$('c-rsame').checked;
+  NOTE[0][2]=(agg?'Dati aggiornati al '+agg+'. ':'')+($('c-fonti').value.trim()||'Fonti indicate dal consulente.');
+  var pts={c:[0,0],r:[0,0],q:[0,0]},cnt={c:0,r:0,q:0};
+  function score(area,w,t){if(!t)return;cnt[area]++;if(t[0]==='good')pts[area][0]+=w;else if(t[0]==='bad')pts[area][1]+=w}
+  function C(v,o){o=o||{};return {v:v==null?'':String(v),sub:o.sub||'',t:!!o.t,sri:o.sri||0,stars:o.stars||0,bars:o.bars||null,max:o.max||0,stack:o.stack||null,list:o.list||null,tone:'',tag:''}}
+  function ND(sub){return C('n.d.',{t:1,sub:sub||'dato non disponibile'})}
+  function tone(cells,t,kind){if(t){cells[0].tone=t[0];cells[1].tone=t[1];cells.forEach(function(c){c.tag=c.tone==='good'?TAGS[kind][0]:(c.tone==='bad'?TAGS[kind][1]:'Uguale')})}return cells}
+  function R(l,h,cells,o){o=o||{};return {l:l,h:h||'',c:cells,n:o.n||0,tot:!!o.tot,adv:!!o.adv,ess:!!o.ess}}
+  function both(fn){return [fn(A,0),fn(B,1)]}
+  var t;
+  var rep={cliente:$('c-cli').value.trim(),interm:interm,A:A,B:B,sections:[],
+    titolo:'Due fondi a confronto',sotto:A.breve+' e '+B.breve+': costi, rendimenti, portafoglio, gestori e particolarità'};
+
+  /* 1. presentazione */
+  var s1=[];
+  s1.push(R('Nome e codice','',both(function(f){return C(f.nome,{t:1,sub:[f.isin?'ISIN '+f.isin:'',f.classe?'classe '+f.classe:''].filter(Boolean).join(' · ')})})));
+  s1.push(R('Tipo di fondo','',both(function(f){return C(f.tipo||'n.d.',{t:1})})));
+  s1.push(R('Società di gestione','',both(function(f){return C(f.soc||'n.d.',{t:1})})));
+  s1.push(R('Come investe','',both(function(f){return C(f.come||'n.d.',{t:1})})));
+  t=cmp(A.yrs,B.yrs,1);score('q',1,t);
+  s1.push(R('Sul mercato dal','Un fondo con più anni di storia ha già attraversato fasi diverse dei mercati.',tone(both(function(f){return f.dl?C(dataIt(f.dl),{t:1,sub:durTxt(f.yrs)+' di storia'}):ND()}),t,'old')));
+  s1.push(R('Patrimonio del fondo','Quanti soldi gestisce in tutto. I fondi molto piccoli hanno più probabilità di essere chiusi o fusi con altri.',both(function(f){return f.pat==null?ND():C(patTxt(f.pat),{t:1,sub:f.patd?'dato al '+f.patd:''})}),{adv:1}));
+  var sriDiv=A.sri!=null&&B.sri!=null&&A.sri!==B.sri;
+  s1.push(R('Livello di rischio','Da 1 (più basso) a 7 (più alto): più è alto, più il valore può salire e scendere.',both(function(f,i){var o=FF[1-i];return C(f.sri!=null?f.sri+' su 7':'n.d.',{sri:f.sri,sub:sriDiv?(f.sri>o.sri?'più rischioso':'meno rischioso'):''})}),{n:nn('rischio')}));
+  s1.push(R('Periodo di detenzione consigliato','Il tempo minimo per cui il KID suggerisce di tenerlo.',both(function(f){return C(f.rhp!=null?f.rhp+(f.rhp===1?' anno':' anni'):'n.d.',{t:1})})));
+  s1.push(R('Proventi','',both(function(f){return C(f.prov==='dis'?'Distribuzione':'Accumulazione',{t:1,sub:f.prov==='dis'?'paga cedole periodiche':'i guadagni restano nel fondo'})}),{adv:1}));
+  s1.push(R('Sostenibilità (SFDR)','',both(function(f){var m={'6':['Articolo 6','nessun obiettivo di sostenibilità dichiarato'],'8':['Articolo 8','promuove caratteristiche ambientali e sociali'],'9':['Articolo 9','ha obiettivi di investimento sostenibile']}[f.sfdr];return m?C(m[0],{t:1,sub:m[1]}):ND()}),{adv:1}));
+  rep.sections.push({type:'rows',title:'1. I due fondi',n:nn('fonti'),intro:'Chi li gestisce, come investono e quanto sono rischiosi.',rows:s1});
+
+  /* 2. costi */
+  var s2=[];
+  t=cmp(A.ing,B.ing,0);score('c',1,t);
+  s2.push(R('Commissione di ingresso','Si paga una volta, quando si investe. È la massima prevista: quella applicata può essere più bassa.',
+    tone(both(function(f){return f.ing==null?ND():C(f.ing===0?'Nessuna':'fino al '+PT(f.ing),{sub:f.ing>0?'fino a '+E(f.ing*100)+' su 10.000 €':''})}),t,'cost')));
+  t=cmp(A.usc,B.usc,0);score('c',1,t);
+  s2.push(R('Commissione di uscita','Si paga quando si vendono le quote.',tone(both(function(f){return f.usc==null?ND():C(f.usc===0?'Nessuna':PT(f.usc))}),t,'cost')));
+  t=cmp(A.gst,B.gst,0);
+  s2.push(R('Costi di gestione e amministrativi, ogni anno','Pagano il lavoro del gestore. Non si pagano a parte: sono già tolti dal valore della quota.',tone(both(function(f){return f.gst==null?ND():C(PT(f.gst))}),t,'cost'),{adv:1}));
+  t=cmp(A.trn,B.trn,0);
+  s2.push(R('Costi di transazione, ogni anno','Servono a comprare e vendere i titoli del fondo.',tone(both(function(f){return f.trn==null?ND():C(PT(f.trn))}),t,'cost'),{adv:1}));
+  t=cmp(A.prf,B.prf,0);score('c',1,t);
+  s2.push(R('Commissione di performance','Si paga in più quando il fondo supera un obiettivo di rendimento.',tone(both(function(f){return f.prf==null?ND():C(f.prf===0?'Nessuna':PT(f.prf),{sub:f.prf>0?'stima annua del KID':''})}),t,'cost')));
+  t=cmp(A.ric,B.ric,0);score('c',3,t);
+  s2.push(R('Totale costi ricorrenti, ogni anno','Gestione + transazione + performance: è il costo che pesa di più nel tempo.',
+    tone(both(function(f){if(f.ric==null)return ND();var d=[];if(f.gst!=null)d.push('gestione '+PT(f.gst));if(f.trn!=null)d.push('transazione '+PT(f.trn));if(f.prf)d.push('performance '+PT(f.prf));
+      return C(PT(f.ric),{sub:'circa '+E(f.ric*100)+" l'anno ogni 10.000 €"+(d.length>1?' ('+d.join(' + ')+')':'')})}),t,'cost'),{tot:1}));
+  if(A.ktot!=null||B.ktot!=null){
+    var sameR=A.rhp!=null&&A.rhp===B.rhp;t=sameR?cmp(A.ktot,B.ktot,0):null;
+    s2.push(R('Costi totali su 10.000 €'+(sameR?' in '+A.rhp+(A.rhp===1?' anno':' anni'):' nel periodo consigliato')+' (KID)','Tutti i costi pagati nel periodo consigliato, compresa la commissione di ingresso massima.',
+      tone(both(function(f){return f.ktot==null?ND():C(E(f.ktot),{sub:!sameR&&f.rhp!=null?'in '+f.rhp+' anni':''})}),t,'cost'),{adv:1}));
+  }
+  if(A.kriy!=null||B.kriy!=null){
+    t=cmp(A.kriy,B.kriy,0);
+    s2.push(R('Di quanto i costi riducono il rendimento, ogni anno (KID)','Nel periodo consigliato, compresa la commissione di ingresso.',tone(both(function(f){return f.kriy==null?ND():C(PT(f.kriy))}),t,'cost'),{adv:1}));
+  }
+  var cl=[];
+  if(A.ric!=null&&B.ric!=null){
+    var dr=Math.abs(A.ric-B.ric);
+    if(Math.round(dr*100)===0)cl=[{t:'I costi ricorrenti dei due fondi sono uguali.'}];
+    else{var ch=A.ric<B.ric?A:B;
+      cl=[{t:ch.breve+' costa meno.'},{t:'Ogni 10.000 € investiti si risparmiano circa'},{t:E(dr*100)+" l'anno",b:1},{t:'di costi ricorrenti: in 10 anni sono circa'},{t:E(dr*1000)+'.',b:1},{t:'A questi si aggiunge il rendimento che quei soldi avrebbero potuto produrre.'}]}
+  }
+  rep.sections.push({type:'rows',title:'2. Quanto costano',n:nn('costi'),intro:'In verde il fondo che costa meno, in rosso quello che costa di più.',rows:s2,lead:cl});
+
+  /* 3. rendimenti */
+  var s3=[],comp=[],nd=[];
+  HZ.forEach(function(hz){
+    var N=hz[0],k=hz[1];
+    if(A[k]==null&&B[k]==null){nd.push(N);return}
+    var tt=cmp(A[k],B[k],1);score('r',hz[4],tt);if(tt)comp.push({N:N,k:k,tone:tt});
+    s3.push(R(hz[2],hz[3],tone(both(function(f){var v=f[k],ex=esisteva(f,N);
+      return v==null?ND(ex===false?'il fondo non esisteva ancora':''):C(PS(v)+(N>1?" l'anno":''),{sub:'10.000 € → '+E(10000*Math.pow(1+v/100,N))})}),tt,'ret')));
+  });
+  if(A.wv!=null||B.wv!=null){
+    t=cmp(A.wv,B.wv,1);score('r',1,t);
+    s3.push(R('Anno peggiore','Il risultato peggiore in un anno solare: aiuta a capire quanto il fondo può scendere.',
+      tone(both(function(f){
+        if(f.wv==null)return ND(f.dl&&f.dl>new Date(OGGI.getFullYear()-1,0,1)?'non ha ancora un anno solare completo':'');
+        return C(PS(f.wv)+(f.wy?' ('+f.wy+')':''),{sub:'10.000 € → '+E(10000*(1+f.wv/100))});
+      }),t,'loss')));
+  }
+  var ys={};FF.forEach(function(f){Object.keys(f.ym).forEach(function(y){ys[y]=1})});
+  Object.keys(ys).sort().reverse().forEach(function(y,j){
+    var tt=cmp(A.ym[y],B.ym[y],1);
+    s3.push(R('Anno '+y,j===0?'Rendimento di ogni anno solare: mostra quanto i risultati cambiano da un anno all\'altro.':'',tone(both(function(f){var v=f.ym[y],ly=f.dl?f.dl.getFullYear():null;
+      if(v==null)return ND(ly!=null&&+y<ly?'il fondo non esisteva':(ly!=null&&+y===ly?'anno incompleto':''));return C(PS(v))}),tt,'ret'),{adv:1}));
+  });
+  var rl=[];
+  if(!comp.length)rl=[{t:'Non ci sono periodi con il rendimento di entrambi i fondi: per ora il confronto si può fare solo sui costi.'}];
+  else{
+    var wa=comp.filter(function(c){return c.tone[0]==='good'}).length,wb=comp.filter(function(c){return c.tone[1]==='good'}).length,LC=comp[comp.length-1];
+    if(comp.length===1){
+      var w1=wa?A:(wb?B:null);
+      rl.push({t:'Si può confrontare un solo periodo, '+perTxt(LC.N)+':'});
+      if(w1)rl.push({t:'ha reso di più'},{t:w1.breve+'.',b:1});else rl.push({t:'i due fondi hanno reso allo stesso modo.'});
+    }
+    else if(wa===wb)rl.push({t:'Nei '+comp.length+' periodi confrontabili i due fondi '+(wa?'si dividono le vittorie ('+wa+' a '+wb+').':'hanno reso allo stesso modo.')});
+    else{var W=wa>wb?A:B,mx=Math.max(wa,wb);rl.push({t:W.breve+' ha reso di più in'},{t:mx+(mx===1?' periodo':' periodi')+' su '+comp.length,b:1},{t:'confrontabili.'})}
+    rl.push({t:'Su 10.000 € investiti '+(LC.N===1?'un anno':LC.N+' anni')+' fa:'},{t:A.breve+' →'},{t:E(10000*Math.pow(1+A[LC.k]/100,LC.N))+',',b:1},{t:B.breve+' →'},{t:E(10000*Math.pow(1+B[LC.k]/100,LC.N))+'.',b:1});
+  }
+  var rCap=nd.length?'A '+nd.join(' e a ')+' anni nessuno dei due fondi ha un rendimento: '+(nd.length>1?'le righe non sono mostrate.':'la riga non è mostrata.'):'';
+  rep.sections.push({type:'rows',title:'3. Quanto hanno reso finora',n:nn('rend'),intro:'In verde il fondo che ha reso di più, in rosso quello che ha reso di meno. I rendimenti sono già al netto dei costi correnti.',rows:s3,lead:rl,cap:rCap,chart:chartRend(FF,HZ)});
+
+  /* 4. come investono */
+  var s4=[],sopra=false;
+  function refTxt(f){var p=[];if(f.azref!=null)p.push('riferimento '+PT(f.azref));if(f.azmax!=null)p.push('massimo '+PT(f.azmax));return p.length?'azioni: '+p.join(', '):''}
+  s4.push(R('Dove sono investiti i soldi','Come è diviso il patrimonio tra le grandi categorie di investimento, rispetto al portafoglio di riferimento del fondo.',both(function(f){
+    var st=AC.filter(function(a){return f[a[0]]!=null&&f[a[0]]>0}).map(function(a){return {k:a[2],l:a[1],v:f[a[0]]}});
+    if(st.reduce(function(a,s){return a+s.v},0)>100.5)sopra=true;
+    return st.length?C('',{stack:st,sub:[f.adata?'dati al '+f.adata:'',refTxt(f)].filter(Boolean).join(' · ')}):ND(['composizione non disponibile',refTxt(f)].filter(Boolean).join(' · '));
+  })));
+  s4.push(R('Sensibilità ai tassi (duration)','Più è alta, più le obbligazioni del fondo perdono valore se i tassi salgono.',both(function(f){
+    return f.dur==null?ND():C(D1(f.dur)+' anni',{sub:"se i tassi salgono dell'1%, le obbligazioni perdono circa il "+P(f.dur,1)});
+  })));
+  s4.push(R("Valute diverse dall'euro",'La parte esposta alle oscillazioni dei cambi.',both(function(f){
+    return f.fxp==null?ND():C(P(f.fxp,1),{sub:f.fxl.slice(0,3).map(function(p){return p[0]+' '+P(p[1],1)}).join(', ')});
+  })));
+  s4.push(R('Rendimento a scadenza delle obbligazioni',"Quanto renderebbero ogni anno le obbligazioni del fondo se tenute fino alla scadenza, prima dei costi. Non è una promessa di rendimento.",both(function(f){return f.ytm==null?ND():C(P(f.ytm,2)+" l'anno")}),{adv:1}));
+  s4.push(R('Qualità delle obbligazioni','Il rating misura la solidità di chi ha emesso le obbligazioni, da AAA (massima) in giù.',both(function(f){
+    var d=[];if(f.ig!=null)d.push('investment grade '+P(f.ig,1));if(f.hy!=null)d.push('high yield '+P(f.hy,1));
+    return f.rat?C('Rating medio '+f.rat,{sub:d.join(' · ')}):(d.length?C(d.join(' · '),{t:1}):ND());
+  }),{adv:1}));
+  function barsRow(l,h,key,n){
+    var mx=0;FF.forEach(function(f){f[key].slice(0,n).forEach(function(p){if(p[1]!=null&&p[1]>mx)mx=p[1]})});
+    return R(l,h,both(function(f){var b=f[key].filter(function(p){return p[1]!=null}).slice(0,n);return b.length?C('',{bars:b,max:mx}):ND()}),{adv:1});
+  }
+  s4.push(barsRow('Azioni: paesi principali','Peso di ogni paese sulla parte investita in azioni.','geoL',6));
+  s4.push(barsRow('Azioni: settori principali','Peso di ogni settore sulla parte investita in azioni.','setL',6));
+  s4.push(barsRow('Obbligazioni: tipologia','Peso di ogni tipo sulla parte investita in obbligazioni.','obtL',6));
+  s4.push(R('Numero di titoli','Più titoli significa, in genere, più diversificazione.',both(function(f){return f.ntit?C(f.ntit,{t:1}):ND()}),{adv:1}));
+  var l4=FF.map(function(f){
+    if(f.aaz==null&&f.aob==null)return f.breve+': composizione non disponibile'+(f.azref!=null?' (portafoglio di riferimento: '+PT(f.azref)+' in azioni)':'')+'.';
+    var p=[];
+    if(f.aaz!=null)p.push('circa il '+P(f.aaz,0)+' in azioni'+(f.azref!=null?' (riferimento '+PT(f.azref)+(f.azmax!=null?', massimo '+PT(f.azmax):'')+')':''));
+    if(f.aob!=null)p.push('il '+P(f.aob,0)+' in obbligazioni');
+    if(f.amp)p.push('il '+P(f.amp,0)+' in materie prime');
+    return f.breve+': '+(p.length>1?p.slice(0,-1).join(', ')+' e '+p[p.length-1]:p[0])+(f.dur!=null?'; duration '+D1(f.dur)+' anni':'')+'.';
+  }).join(' ');
+  rep.sections.push({type:'rows',title:'4. Come investono',n:nn('comp'),intro:'Come è fatto il portafoglio: quanto è in azioni e quanto in obbligazioni, quanto è sensibile ai tassi e ai cambi, in quali paesi e settori.',
+    rows:s4,lead:[{t:l4}],cap:sopra?'Le percentuali comprendono le posizioni in derivati: per questo la somma può superare il 100%.':''});
+
+  /* 5. chi gestisce e cosa compra */
+  var s5=[],riskData=FF.some(function(f){return f.vol!=null||f.shp!=null||f.mdd!=null});
+  s5.push(R('Chi decide','Il gestore o il team che sceglie gli investimenti.',both(function(f){return f.mgr?C(f.mgr,{t:1}):ND()})));
+  s5.push(R('La società che sceglie gli investimenti','',both(function(f){return f.soct?C(f.soct,{t:1}):ND()})));
+  s5.push(R('Metodo di gestione','',both(function(f){return f.metodo?C(f.metodo,{t:1}):ND()}),{adv:1}));
+  t=cmp(A.myrs,B.myrs,1);score('q',1,t);
+  s5.push(R('Da quanto gestisce il fondo','Un gestore che segue il fondo da anni ha già affrontato mercati diversi.',tone(both(function(f){return f.md?C('dal '+dataIt(f.md),{t:1,sub:durTxt(f.myrs)}):ND()}),t,'exp')));
+  s5.push(R('Primi 5 titoli in portafoglio','I titoli con il peso maggiore: mostrano in concreto dove sono i soldi.',both(function(f){return f.topL.length?C('',{list:f.topL.slice(0,5),sub:f.adata?'dati al '+f.adata:''}):ND('elenco non disponibile')}),{ess:1}));
+  s5.push(R('Primi 10 titoli in portafoglio','I titoli con il peso maggiore, in percentuale del patrimonio.',both(function(f){return f.topL.length?C('',{list:f.topL.slice(0,10),sub:f.adata?'dati al '+f.adata:''}):ND('elenco non disponibile')}),{adv:1}));
+  t=rsame?cmp(A.vol,B.vol,0):null;score('q',1,t);
+  s5.push(R('Volatilità','Quanto il valore oscilla in un anno: più è bassa, più il fondo è stabile.',tone(both(function(f){return f.vol==null?ND():C(P(f.vol,2),{sub:f.volp})}),t,'risk'),{adv:1}));
+  t=rsame?cmp(A.shp,B.shp,1):null;score('q',1,t);
+  s5.push(R('Indice di Sharpe','Rendimento ottenuto per ogni unità di rischio: più è alto, meglio è.',tone(both(function(f){return f.shp==null?ND():C(D2(f.shp),{sub:f.shpp})}),t,'hi'),{adv:1}));
+  t=rsame?cmp(A.mdd,B.mdd,1):null;score('q',1,t);
+  s5.push(R('Perdita massima','La discesa più ampia, dal punto più alto al più basso, nel periodo indicato.',tone(both(function(f){return f.mdd==null?ND():C(PS(f.mdd),{sub:f.mddp})}),t,'loss'),{adv:1}));
+  t=cmp(A.msr,B.msr,1);score('q',1,t);
+  s5.push(R('Rating Morningstar','Da 1 a 5 stelle: confronta i rendimenti passati, corretti per il rischio, con quelli dei fondi simili.',tone(both(function(f){return f.msr==null?ND('non assegnato o non disponibile'):C(f.msr+(f.msr===1?' stella':' stelle')+' su 5',{stars:f.msr})}),t,'hi'),{adv:1}));
+  s5.push(R('Posizione rispetto ai fondi simili','',both(function(f){return f.rank?C(f.rank,{t:1}):ND()}),{adv:1}));
+  rep.sections.push({type:'rows',title:'5. Chi gestisce e cosa compra',n:nn('gest'),intro:'Chi prende le decisioni, con quale metodo e in quali titoli sono investiti i soldi.',rows:s5,
+    cap:riskData&&!rsame?'Volatilità, Sharpe e perdita massima dei due fondi si riferiscono a periodi diversi: sono mostrati per informazione, senza colori né punti.':'',capAdv:1});
+
+  /* 6. ultime scelte dei gestori */
+  rep.sections.push({type:'moves',title:'6. Le ultime scelte dei gestori',n:nn('mosse'),intro:"Le decisioni più recenti sul portafoglio e com'è andata finora. In verde le scelte che hanno aiutato, in rosso quelle che hanno pesato, in grigio quelle ancora da verificare.",
+    none:'Le scelte recenti del gestore non sono pubblicate nelle fonti consultate: per valutarle serve il commento mensile della società di gestione.',
+    f:FF.map(function(f){return {items:f.mv,sint:f.msint}})});
+
+  /* 7. particolarità */
+  var FL=FF.map(function(f,i){
+    var o=FF[1-i],pro=[],con=[];
+    if(f.yrs!=null&&f.yrs>=10)pro.push(['Storia lunga:','è sul mercato da '+durTxt(f.yrs)+' e ha già attraversato fasi diverse dei mercati.']);
+    if(f.yrs!=null&&f.yrs<3)con.push(['Storia breve:','esiste da '+durTxt(f.yrs)+', quindi non si sa ancora come si comporta nelle fasi difficili dei mercati.']);
+    if(f.myrs!=null&&f.myrs>=5)pro.push(['Gestore stabile:','lo stesso gestore segue il fondo da '+durTxt(f.myrs)+'.']);
+    var pd=f.patd?' (dato al '+f.patd+')':'';
+    if(f.pat!=null&&f.pat>=1000)pro.push(['Fondo grande:','gestisce '+patTxt(f.pat)+pd+'.']);
+    if(f.pat!=null&&f.pat<100)con.push(['Fondo piccolo:','gestisce '+patTxt(f.pat)+pd+'; i fondi piccoli hanno più probabilità di essere chiusi o fusi con altri.']);
+    if(f.msr!=null&&f.msr>=4)pro.push(['Rating Morningstar alto:',f.msr+' stelle su 5.']);
+    if(f.msr!=null&&f.msr<=2)con.push(['Rating Morningstar basso:',f.msr+(f.msr===1?' stella':' stelle')+' su 5.']);
+    if(f.fof)con.push(['Fondo di fondi:',"investe soprattutto in altri fondi, quindi ai suoi costi si sommano quelli dei fondi sottostanti (già compresi nei costi del KID). In cambio offre molta diversificazione."]);
+    else if(o.fof)pro.push(['Investe soprattutto direttamente:','i costi di altri fondi pesano meno che in un fondo di fondi.']);
+    if(f.der)con.push(['Usa strumenti derivati:',"possono servire a proteggere il portafoglio o a cambiarne in fretta l'esposizione, ma rendono il fondo più complesso da capire."]);
+    else if(o.der)pro.push(['Non usa derivati:','è più semplice da capire.']);
+    if(f.prf>0)con.push(['Commissione di performance:','negli anni buoni i costi salgono.']);
+    else if(o.prf>0)pro.push(['Nessuna commissione di performance:','i costi non salgono negli anni buoni.']);
+    if(f.swing)con.push(['Swing pricing:',"quando entrano o escono molti soldi, il prezzo di sottoscrizione o di rimborso può essere corretto"+(f.swp>0?' fino al '+PT(f.swp):'')+'.']);
+    if(f.fx)pro.push(['Copre il rischio di cambio:',"in tutto o in parte, riduce l'effetto delle oscillazioni delle valute estere rispetto all'euro."]);
+    if(f.fxp!=null&&f.fxp>=20)con.push(['Esposto ai cambi:',(f.fx?'nonostante la copertura, ':'')+"circa il "+P(f.fxp,1)+" del fondo è in valute diverse dall'euro."]);
+    if(f.aaz!=null&&f.azref!=null&&f.aaz>=f.azref+10)con.push(['Più azioni del portafoglio di riferimento:','oggi ha circa il '+P(f.aaz,0)+' in azioni contro il '+PT(f.azref)+' di riferimento'+(f.azmax!=null?' (massimo '+PT(f.azmax)+')':'')+", quindi risente di più dell'andamento delle borse."]);
+    if(f.dur!=null&&f.dur>=6)con.push(['Sensibile ai tassi:','con una duration di '+D1(f.dur)+" anni, se i tassi salgono dell'1% le obbligazioni perdono circa il "+P(f.dur,1)+'.']);
+    if(f.wv!=null&&f.wv<0)con.push(['Anni negativi:','nel '+(f.wy||'suo anno peggiore')+' ha perso il '+P(Math.abs(f.wv),2)+'. Anche questo fondo può perdere valore.']);
+    /* righe libere: «Etichetta: testo» mette l'etichetta in grassetto */
+    function lbl(s){var m=/^([^:]{3,45}):\s+(.+)$/.exec(s);return m?[m[1]+':',m[2]]:['',s]}
+    f.pros.forEach(function(s){pro.push(lbl(s))});f.cons.forEach(function(s){con.push(lbl(s))});
+    return {pro:pro,con:con};
+  });
+  rep.sections.push({type:'flags',title:'7. Particolarità da conoscere',n:nn('part'),intro:'In verde i punti a favore, in rosso quelli a cui fare attenzione.',f:FL});
+
+  /* 8. risultato */
+  var main=[pts.c[0]+pts.r[0],pts.c[1]+pts.r[1]],ext=[main[0]+pts.q[0],main[1]+pts.q[1]];
+  function chi(p){return p[0]===p[1]?null:(p[0]>p[1]?0:1)}
+  var Wi=chi(main),cw=chi(pts.c),rw=chi(pts.r),Wx=chi(ext);
+  var win={};
+  if(cnt.c+cnt.r===0){win.k='Il confronto';win.t='Dati insufficienti';win.runs=[{t:'Inserisci costi e rendimenti dei due fondi per vedere il risultato.'}]}
+  else if(Wi==null){win.k='Il confronto';win.t='Pareggio';win.runs=[{t:'I due fondi ottengono lo stesso punteggio:'},{t:main[0]+' a '+main[1]+'.',b:1},{t:'La scelta dipende dalle particolarità e dal profilo del cliente.'}]}
+  else{
+    var Wf=FF[Wi],Lf=FF[1-Wi],parts=[];
+    if(cw===Wi)parts.push('costa meno'+(Wf.ric!=null&&Lf.ric!=null&&Math.round(Wf.ric*100)!==Math.round(Lf.ric*100)?' ('+PT(Wf.ric)+" l'anno di costi ricorrenti contro "+PT(Lf.ric)+')':''));
+    else if(cw!=null)parts.push('costa di più');
+    var wins=comp.filter(function(c){return c.tone[Wi]==='good'}).length,loss=comp.filter(function(c){return c.tone[Wi]==='bad'}).length;
+    var rtx=function(n,lab){return comp.length===1?lab+" nell'unico periodo confrontabile ("+perTxt(comp[0].N)+')':(n===comp.length?lab+' in tutti i '+comp.length+' periodi confrontabili':lab+' in '+n+' periodi confrontabili su '+comp.length)};
+    if(rw===Wi)parts.push(wins?rtx(wins,'ha reso di più'):'ha perso meno nel suo anno peggiore');
+    else if(rw!=null)parts.push(loss?rtx(loss,'ha reso di meno'):'ha perso di più nel suo anno peggiore');
+    else if(!comp.length)parts.push('i rendimenti non si possono ancora confrontare');
+    var fr=parts.length?parts.join(parts.length>1&&(cw===Wi)!==(rw===Wi)?' ma ':' e ')+'.':'';
+    win.badge=1;win.k='Vince il confronto';win.t=Wf.nome;
+    win.runs=(fr?[{t:fr.charAt(0).toUpperCase()+fr.slice(1)}]:[]).concat([{t:'Punteggio:'},{t:main[Wi]+' a '+main[1-Wi]+'.',b:1}]);
+  }
+  function tl(label,p,n){var w=chi(p);return {l:label,v:n?(w==null?'Pari':FF[w].breve):'Non confrontabile',good:w!=null,s:A.breve+': '+p[0]+' · '+B.breve+': '+p[1]}}
+  var tiles=[tl('Costi e commissioni',pts.c,cnt.c),tl('Rendimenti passati',pts.r,cnt.r),tl('Totale',main,cnt.c+cnt.r)];
+  var xtiles=[tl('Storia, gestore, rischio e rating',pts.q,cnt.q),tl('Totale esteso',ext,cnt.c+cnt.r+cnt.q)];
+  var xtext=cnt.q===0?'Per storia, gestore, rischio e rating non ci sono dati confrontabili: il punteggio esteso coincide con quello principale.':
+    (Wx===Wi?'Aggiungendo storia del fondo, esperienza del gestore, rischio e rating il risultato non cambia'+(Wx!=null?': vince '+FF[Wx].breve+' '+ext[Wx]+' a '+ext[1-Wx]+'.':'.'):
+     'Aggiungendo storia del fondo, esperienza del gestore, rischio e rating il risultato cambia: '+(Wx==null?'pareggio '+ext[0]+' a '+ext[1]+'.':'vince '+FF[Wx].breve+' '+ext[Wx]+' a '+ext[1-Wx]+'.'));
+  var cav=[];
+  if(sriDiv)cav.push('I due fondi hanno un livello di rischio diverso ('+A.sri+' e '+B.sri+' su 7): un fondo più rischioso può rendere di più, ma anche perdere di più. Il confronto dei rendimenti va letto con questa cautela.');
+  FF.forEach(function(f){var o=f===A?B:A,mancano=HZ.filter(function(h){return f[h[1]]==null&&o[h[1]]!=null}).length;
+    if(mancano&&comp.length<2)cav.push((comp.length?'I rendimenti si possono confrontare solo '+(comp[0].N===1?"sull'ultimo anno":'sugli ultimi '+comp[0].N+' anni'):'I rendimenti non si possono ancora confrontare')+': '+f.breve+(f.dl?' esiste dal '+dataIt(f.dl)+'.':' non ha rendimenti per gli altri periodi.'))});
+  if(A.rhp!=null&&B.rhp!=null&&A.rhp!==B.rhp)cav.push('I periodi consigliati sono diversi ('+A.rhp+' e '+B.rhp+' anni): i due fondi sono pensati per orizzonti diversi.');
+  cav.push("Il punteggio guarda a costi e risultati passati: non dice quale fondo renderà di più in futuro né quale è adatto al cliente, che si valuta nel servizio di consulenza.");
+  rep.sections.push({type:'win',title:'8. Il risultato',n:nn('punti'),win:win,tiles:tiles,items:cav,ext:{tiles:xtiles,text:xtext}});
+
+  rep.sections.push({type:'notes',title:'Note',items:NOTE});
+  var avv=[PROMO,
+    "I rendimenti passati non sono indicativi di quelli futuri. Il valore delle quote può aumentare o diminuire e il capitale investito non è garantito: si può perdere in parte o del tutto.",
+    "Il punteggio e il vincitore sono una sintesi di costi e rendimenti passati secondo i criteri della nota "+nn('punti')+": non sono una previsione, non indicano quale fondo sia adatto al cliente e non tengono conto delle imposte, che dipendono dalla situazione di ciascuno.",
+    "Le valutazioni sull'esito delle scelte dei gestori sono opinioni del consulente basate su dati passati e sull'andamento dei mercati: non sono previsioni né giudizi definitivi.",
+    "I costi sono quelli indicati nei KID; la commissione di ingresso è la massima prevista e quella effettiva può essere più bassa. Composizione e dati dei fondi cambiano nel tempo: prima di sottoscrivere vanno verificati sui documenti aggiornati.",
+    "Il documento non è una consulenza in materia di investimenti né una raccomandazione personalizzata e non sostituisce la documentazione d'offerta. La sottoscrizione è preceduta dalla valutazione di adeguatezza, sulla base del profilo del cliente."];
+  if(/allianz/i.test(interm))FF.forEach(function(f){if(/allianz/i.test(f.soc))avv.push(f.soc+', società di gestione di '+f.breve+', fa parte del gruppo Allianz, come '+interm.replace(/\.+$/,'')+'.')});
+  avv.push("Documento elaborato da "+AUTORE+", "+QUALIFICA+(interm?", che opera per conto di "+interm+" e ne promuove e colloca prodotti e servizi":"")+". "+(agg?'Dati aggiornati al '+agg+'; documento':'Documento')+' del '+DATA+'. Fonti: nota '+nn('fonti')+'.');
+  rep.sections.push({type:'avv',title:'Avvertenze',items:avv});
+  rep.sections.push({type:'firma'});
+  return rep;
+}
+
+/* ---------- Resa a schermo ---------- */
+/* Stile del «Simulatore TFR e liquidità aziendale»: testata a fascia, sintesi in alto, tabelle con il fondo A a sinistra
+   e il fondo B a destra (in verde il migliore su ogni voce, in rosso il peggiore), grafici, note, avvertenze e firma. */
+var LAST=null,DLICON='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function runsHTML(runs){return runs.map(function(r){return r.b?'<b'+(String(r.t).length<=26?' class="nw"':'')+'>'+esc(r.t)+'</b>':esc(r.t)}).join(' ')}
+function ttl(t){return String(t||'').replace(/^\d+\.\s+/,'')}                 /* titoli delle sezioni senza numero */
+function hsub(f){return f.cnome||f.isin||f.tipo||''}
+function fname(f){return f.full||(f.cnome?f.breve+' – '+f.cnome:f.breve)}
+function visR(r){return LEVEL==='full'?!r.ess:!r.adv}
+function stackHTML(st){
+  var tot=st.reduce(function(a,s){return a+Math.max(0,s.v)},0)||1;
+  return '<div class="stk" role="img" aria-label="'+esc(st.map(function(s){return s.l+' '+P(s.v,1)}).join(', '))+'">'+st.map(function(s){return '<i style="width:'+(Math.max(0,s.v)/tot*100).toFixed(2)+'%;background:var(--'+s.k+')"></i>'}).join('')+'</div>'+
+    '<div class="lg">'+st.map(function(s){return '<span><i style="background:var(--'+s.k+')"></i>'+esc(s.l)+'<b>'+P(s.v,1)+'</b></span>'}).join('')+'</div>';
+}
+function barsHTML(b,mx){return '<div class="bl">'+b.map(function(p){return '<div class="br"><span class="bn">'+esc(p[0])+'</span><span class="bv">'+P(p[1],1)+'</span><i style="width:'+(mx>0?Math.min(100,Math.max(2,p[1]/mx*100)):0).toFixed(1)+'%"></i></div>'}).join('')+'</div>'}
+function listHTML(l){return '<ol class="tl2">'+l.map(function(p){return '<li>'+esc(p[0])+(p[1]!=null?' <span>'+P(p[1],2)+'</span>':'')+'</li>'}).join('')+'</ol>'}
+function cellTD(c){
+  var x='',tn=c.tone==='good'?'good':(c.tone==='bad'?'bad':'');
+  if(c.sri){for(var k=1;k<=7;k++)x+='<i'+(k<=c.sri?' class="on"':'')+'></i>';x='<div class="sri" aria-hidden="true">'+x+'</div>'}
+  if(c.stars&&typeof stelle==='function')x+='<div class="stars" aria-hidden="true">'+stelle(c.stars)+'</div>';
+  if(c.stack)x+=stackHTML(c.stack);if(c.bars)x+=barsHTML(c.bars,c.max);if(c.list)x+=listHTML(c.list);
+  return '<td class="v '+tn+'">'+(c.v?'<span class="cv'+(c.t?' t':'')+'">'+esc(c.v)+'</span>':'')+x+(c.sub?'<span class="cd">'+esc(c.sub)+'</span>':'')+
+    (c.sub2?'<span class="cd s2">'+esc(c.sub2)+'</span>':'')+(c.tag?'<span class="tg">'+(tn==='good'?'✓ ':'')+esc(c.tag)+'</span>':'')+'</td>';
+}
+function abHead(rep){
+  return '<thead><tr><th class="l"></th>'+[rep.A,rep.B].map(function(f,i){
+    return '<th class="ab"><i class="d'+(i+1)+'"></i>'+f.L+' · '+esc(f.breve)+(hsub(f)?'<small>'+esc(hsub(f))+'</small>':'')+'</th>'}).join('')+'</tr></thead>';
+}
+function rowsHTML(rep,s){
+  var h='<div class="tw"><table>'+abHead(rep)+'<tbody>';
+  s.rows.filter(visR).forEach(function(r){
+    h+='<tr'+(r.tot?' class="strong"':'')+'><td class="l"><span class="rl">'+lab(esc(r.l),mk(r.n))+'</span>'+(r.h?'<span class="cd">'+esc(r.h)+'</span>':'')+'</td>'+cellTD(r.c[0])+cellTD(r.c[1])+'</tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+function colsHTML(rep,fn){
+  return '<div class="fl">'+[rep.A,rep.B].map(function(f,i){
+    return '<div><p class="fch"><i class="d'+(i+1)+'"></i><span>'+f.L+' · '+esc(f.breve)+(hsub(f)?'<small>'+esc(hsub(f))+'</small>':'')+'</span></p>'+fn(f,i)+'</div>'}).join('')+'</div>';
+}
+function winHTML(w){
+  return '<div class="win">'+(w.badge?'<span class="wb" aria-hidden="true">1°</span>':'')+'<div>'+(w.k?'<p class="wk">'+esc(w.k)+'</p>':'')+'<p class="wt">'+esc(w.t)+'</p>'+
+    (w.runs&&w.runs.length?'<p class="ws">'+runsHTML(w.runs)+'</p>':'')+'</div></div>';
+}
+function tilesHTML(ts){
+  return '<div class="tiles">'+ts.map(function(t,j){var hi=j===ts.length-1;
+    return '<div class="tile'+(hi?' hi':'')+'"><div class="l">'+esc(t.l)+'</div><div class="v'+(t.good&&!hi?' pos':'')+'">'+esc(t.v)+'</div><div class="s">'+esc(t.s)+'</div></div>'}).join('')+'</div>';
+}
+function sintesiHTML(s){
+  return '<div><h3>'+lab('In sintesi',mk(s.n))+'</h3>'+winHTML(s.win)+tilesHTML(s.tiles)+
+    (LEVEL==='full'?'<div class="xt"><p class="cap">Punteggio esteso</p>'+tilesHTML(s.ext.tiles)+'<p class="fine">'+esc(s.ext.text)+'</p></div>':'')+
+    '<ul class="ul cav">'+s.items.map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul>'+
+    '<p class="lgd"><span><i class="g"></i>Migliore su quella voce</span><span><i class="r"></i>Peggiore</span><span><i class="n"></i>Uguale, non confrontabile o solo informativo</span></p></div>';
+}
+function chartHTML(s,i){
+  var ch=s.chart;
+  return '<div class="legend">'+ch.series.map(function(se,k){return '<span><i class="sq" style="background:var(--s'+(k+1)+')"></i>'+esc(se.name)+'</span>'}).join('')+
+    (ch.ref?'<span><i class="ln"></i>'+esc(ch.ref.name)+'</span>':'')+'</div><div class="chart" id="c-chart-'+i+'"></div>';
+}
+function bodyHTML(rep){
+  var h='',full=LEVEL==='full';
+  rep.sections.forEach(function(s){if(s.type==='win')h+=sintesiHTML(s)});
+  rep.sections.forEach(function(s,i){
+    if(s.adv&&!full)return;
+    var t=ttl(s.title),hd='<h3>'+lab(esc(t),mk(s.n))+'</h3>'+(s.intro?'<p class="fine intro">'+esc(s.intro)+'</p>':'');
+    if(s.type==='rows'){
+      h+='<div class="card">'+hd+(s.lead&&s.lead.length?'<p class="lead">'+runsHTML(s.lead)+'</p>':'')+(s.chart?chartHTML(s,i):'')+rowsHTML(rep,s)+
+        (s.cap&&(full||!s.capAdv)?'<p class="fine">'+esc(s.cap)+'</p>':'')+'</div>';
+    }
+    else if(s.type==='moves'){
+      h+='<div class="card">'+hd+colsHTML(rep,function(f,j){
+        var x=s.f[j],li=x.items.map(function(m){return '<li class="'+m.e+'"><span class="mt">'+(m.e==='pos'?'Ha aiutato':(m.e==='neg'?'Ha pesato':'Da verificare'))+'</span>'+(m.w?'<span class="mw">'+esc(m.w)+'</span>':'')+'<b>'+esc(m.s)+'</b>'+(m.x?'<p>'+esc(m.x)+'</p>':'')+'</li>'});
+        return (li.length?'<ul class="mv">'+li.join('')+'</ul>':'<p class="none">'+esc(s.none)+'</p>')+(x.sint?'<p class="ms">'+esc(x.sint)+'</p>':'');
+      })+'</div>';
+    }
+    else if(s.type==='flags'){
+      h+='<div class="card">'+hd+colsHTML(rep,function(f,j){
+        var x=s.f[j],li=x.pro.map(function(p){return '<li class="pro">'+(p[0]?'<b>'+esc(p[0])+'</b> ':'')+esc(p[1])+'</li>'}).concat(x.con.map(function(p){return '<li class="con">'+(p[0]?'<b>'+esc(p[0])+'</b> ':'')+esc(p[1])+'</li>'}));
+        return li.length?'<ul class="pl">'+li.join('')+'</ul>':'<p class="none">Nessuna particolarità da segnalare.</p>';
+      })+'<p class="lgd"><span><i class="g"></i>Punto a favore</span><span><i class="r"></i>Punto di attenzione</span></p></div>';
+    }
+    else if(s.type==='duo'){
+      h+='<div class="card">'+hd+'<div class="fl">'+s.cols.map(function(c,ci){
+        return '<div><p class="fch"><span>'+esc(c.title)+'</span></p><ul class="pl">'+c.items.map(function(p){return '<li'+(ci?' class="give"':'')+'>'+(p[0]?'<b>'+esc(p[0])+'</b> ':'')+esc(p[1])+'</li>'}).join('')+'</ul></div>';
+      }).join('')+'</div></div>';
+    }
+    else if(s.type==='notes')h+='<div class="card"><h3>'+esc(t)+'</h3><ol class="notes">'+s.items.map(function(a,j){return '<li id="cn-'+(j+1)+'"><span class="k">'+(j+1)+'</span><span><b>'+esc(a[1])+'.</b> '+esc(a[2])+'</span></li>'}).join('')+'</ol></div>';
+    else if(s.type==='avv')h+='<div class="card avv"><h3>'+esc(t)+'</h3>'+s.items.map(function(x,j){return '<p'+(j===0?' class="k"':'')+'>'+esc(x)+'</p>'}).join('')+'</div>';
+    else if(s.type==='firma')h+='<div class="card firma"><div><p class="by1">Elaborato da</p><p class="who">'+AUTORE+'</p><p class="ql">'+QUALIFICA.charAt(0).toUpperCase()+QUALIFICA.slice(1)+'</p></div><p class="cts"><a href="tel:'+TELH+'">'+TEL+'</a><a href="mailto:'+MAIL+'">'+MAIL+'</a></p></div>';
+  });
+  return h;
+}
+function shellHTML(){
+  return '<div class="card rep-head"><div><h2 id="c-rh-t"></h2><p class="sub" id="c-rh-s"></p>'+
+    '<p class="meta"><span id="c-rh-az">Preparato per: <b id="c-rh-cli"></b></span><span>Data: <b>'+DATA+'</b></span><span>Versione: <b id="c-rh-v"></b></span></p>'+
+    '<p class="cred">Elaborato da <b>'+AUTORE+'</b>, '+QUALIFICA+' · '+TEL+' · '+MAIL+'</p><p class="promo">'+esc(PROMO)+'</p></div>'+
+    '<div class="act no-print"><button type="button" class="btn" id="c-pdf" hidden>'+DLICON+'Scarica il PDF</button><button type="button" class="btn" id="c-print" hidden>Stampa o salva in PDF</button><p class="status" id="c-status" role="status"></p></div></div>'+
+    '<div class="col" id="c-body"></div>';
+}
+
+/* ---------- Grafico a barre affiancate (A e B per ogni periodo), con valori negativi ed eventuale linea di riferimento ---------- */
+function niceStep(range,n){var raw=range/n,e=Math.pow(10,Math.floor(Math.log(raw)/Math.LN10)),m=raw/e;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*e}
+function scalaG(ch){
+  var lo=0,hi=0;ch.series.concat(ch.ref?[ch.ref]:[]).forEach(function(se){se.v.forEach(function(v){if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v)}})});
+  if(hi-lo<1e-9)hi=lo+1;
+  var st=niceStep(hi-lo,4);return {a:Math.floor(lo/st+1e-9)*st,b:Math.ceil(hi/st-1e-9)*st,st:st};
+}
+function cfmt(ch,v){return ch.fmt==='eur'?E(v):P(v,2)}
+function cax(ch,v,st){return ch.fmt==='eur'?E(v):P(v,st<1?1:0)}
+function drawGB(host,ch){
+  var W=Math.max(300,Math.round(host.clientWidth)||720),H=Math.round(Math.max(220,Math.min(290,W*0.42))),sc=scalaG(ch),ng=ch.groups.length,ns=ch.series.length;
+  var L=14+6.4*Math.max(cax(ch,sc.a,sc.st).length,cax(ch,sc.b,sc.st).length),Rg=8,Tp=22,Bt=30,pw=W-L-Rg,ph=H-Tp-Bt;
+  var Y=function(v){return Tp+(sc.b-v)/(sc.b-sc.a)*ph},y0=Y(0),gw=pw/ng,bw=Math.max(8,Math.min(54,gw*0.3)),gap=4;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(ch.title||'Grafico')+'"><g font-size="11" fill="var(--ink-2)">';
+  for(var v=sc.a;v<=sc.b+1e-9;v+=sc.st){var yy=Y(v),z=Math.abs(v)<1e-9;
+    s+='<line x1="'+L+'" x2="'+(W-Rg)+'" y1="'+yy.toFixed(1)+'" y2="'+yy.toFixed(1)+'" stroke="var(--'+(z?'ink-2':'line')+')" stroke-width="'+(z?1.1:0.6)+'"/><text x="'+(L-7)+'" y="'+(yy+4).toFixed(1)+'" text-anchor="end">'+cax(ch,v,sc.st)+'</text>'}
+  var lbs='';
+  ch.groups.forEach(function(g,i){
+    var cx=L+gw*i+gw/2,tot=ns*bw+(ns-1)*gap,xa=cx-tot/2,vals=ch.series.map(function(se){return se.v[i]});
+    var lw=Math.max.apply(null,vals.map(function(v){return v==null?0:cfmt(ch,v).length*6.1})),both=bw+gap>=lw+2;
+    var best=-1;vals.forEach(function(v,k){if(v!=null&&(best<0||v>vals[best]))best=k});
+    vals.forEach(function(v,k){
+      var x=xa+k*(bw+gap);
+      if(v==null){s+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(y0-5).toFixed(1)+'" text-anchor="middle" font-size="10">n.d.</text>';return}
+      var ya=Y(Math.max(0,v)),yb=Y(Math.min(0,v)),hh=Math.max(1,yb-ya);
+      s+='<rect x="'+x.toFixed(1)+'" y="'+ya.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+hh.toFixed(1)+'" rx="'+Math.min(3,bw/4).toFixed(1)+'" fill="var(--s'+(k+1)+')"/>';
+      if(both||(k===best&&lw<=gw-6))lbs+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(v>=0?ya-5:yb+12).toFixed(1)+'" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--ink)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">'+cfmt(ch,v)+'</text>';
+    });
+    if(ch.ref&&ch.ref.v[i]!=null){var yr=Y(ch.ref.v[i]).toFixed(1);
+      s+='<line x1="'+(xa-8).toFixed(1)+'" x2="'+(xa+tot+8).toFixed(1)+'" y1="'+yr+'" y2="'+yr+'" stroke="var(--surface)" stroke-width="5"/><line x1="'+(xa-8).toFixed(1)+'" x2="'+(xa+tot+8).toFixed(1)+'" y1="'+yr+'" y2="'+yr+'" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>'}
+    s+='<text x="'+cx.toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" font-size="12">'+esc(g)+'</text>';
+    s+='<rect data-i="'+i+'" x="'+(L+gw*i).toFixed(1)+'" y="'+Tp+'" width="'+gw.toFixed(1)+'" height="'+ph+'" fill="transparent"/>';
+  });
+  host.innerHTML=s+lbs+'</g></svg><div class="tip"></div>';
+  var tip=host.querySelector('.tip');
+  host.querySelectorAll('rect[data-i]').forEach(function(rc){
+    function show(){var i=+rc.dataset.i,bx=rc.getBoundingClientRect(),hx=host.getBoundingClientRect();
+      tip.innerHTML='<strong>'+esc(ch.groups[i])+'</strong>'+ch.series.map(function(se){return '<br>'+esc(se.name)+': '+(se.v[i]==null?'n.d.':cfmt(ch,se.v[i]))}).join('')+
+        (ch.ref&&ch.ref.v[i]!=null?'<br>'+esc(ch.ref.name)+': '+cfmt(ch,ch.ref.v[i]):'');
+      tip.style.display='block';
+      var half=tip.offsetWidth/2,x=bx.left-hx.left+bx.width/2;
+      tip.style.left=Math.min(hx.width-half,Math.max(half,x))+'px';tip.style.top=(bx.top-hx.top+30)+'px'}
+    rc.addEventListener('mouseenter',show);rc.addEventListener('click',show);
+    rc.addEventListener('mouseleave',function(){tip.style.display='none'});
+  });
+}
+/* dati dei grafici: rendimenti medi annui per periodo; capitale della simulazione con il TFR lasciato in azienda come riferimento */
+function chartRend(FF,HZ){
+  var gi=HZ.filter(function(h){return FF.some(function(f){return f[h[1]]!=null})});
+  if(gi.length<2)return null;
+  return {fmt:'pct',title:'Rendimenti medi annui',groups:gi.map(function(h){return h[0]===1?'1 anno':h[0]+' anni'}),
+    series:FF.map(function(f){return {name:f.L+' · '+fname(f),v:gi.map(function(h){return f[h[1]]==null?null:f[h[1]]})}})};
+}
+function simChart(FF,SIM){
+  if(!SIM.any)return null;
+  var gk=HS.map(function(N,k){return k}).filter(function(k){return SIM.R[0][k]||SIM.R[1][k]});
+  if(!gk.length)return null;
+  return {fmt:'eur',title:'Capitale stimato',groups:gk.map(function(k){return 'Dopo '+HS[k]+' anni'}),
+    series:FF.map(function(f,i){return {name:f.L+' · '+fname(f),v:gk.map(function(k){return SIM.R[i][k]?SIM.R[i][k].cap:null})}}),
+    ref:SIM.tfrOn&&gk.some(function(k){return SIM.T[k]})?{name:'TFR lasciato in azienda',v:gk.map(function(k){return SIM.T[k]?SIM.T[k].cap:null})}:null};
+}
+function drawCharts(){if(LAST)LAST.sections.forEach(function(s,i){if(s.chart){var el=$('c-chart-'+i);if(el)drawGB(el,s.chart)}})}
+function render(){
+  var rep=buildReport();LAST=rep;
+  $('c-rh-t').textContent=rep.titolo;$('c-rh-s').textContent=rep.sotto;
+  $('c-rh-cli').textContent=rep.cliente;$('c-rh-az').hidden=!rep.cliente;
+  $('c-rh-v').textContent=LEVEL==='full'?'completa':'semplificata';
+  var vs=$('c-vs');
+  if(vs)vs.innerHTML=[rep.A,rep.B].map(function(f,i){return '<span class="fx"><i style="background:var(--s'+(i+1)+')"></i>'+f.L+' · '+esc(fname(f))+'</span>'}).join('<span class="vv">contro</span>');
+  $('c-body').innerHTML=bodyHTML(rep);
+  drawCharts();
+}
+/* versione: «semplificata» per il cliente (LEVEL ess), «completa» per l'analisi del consulente (LEVEL full) */
+function setLevel(l){
+  LEVEL=l==='full'?'full':'ess';
+  document.documentElement.setAttribute('data-modo',LEVEL==='full'?'c':'s');
+  document.querySelectorAll('.modo button').forEach(function(b){b.setAttribute('aria-pressed',String((b.dataset.m==='c')===(LEVEL==='full')))});
+  try{localStorage.setItem(LVKEY,LEVEL)}catch(e){}
+}
+
+/* ---------- PDF per il cliente (A4, generato nel browser, segue la versione scelta) ---------- */
+function loadPdfLib(){return new Promise(function(res,rej){
+  if(window.PDFLib)return res();
+  var u=['https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js','https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js'],i=0;
+  (function next(){
+    if(i>=u.length)return rej({lib:1});
+    var s=document.createElement('script');s.src=u[i++];
+    s.onload=function(){window.PDFLib?res():next()};s.onerror=next;document.head.appendChild(s);
+  })();
+})}
+function buildPDF(rep){
+  var Lb=window.PDFLib,rgb=Lb.rgb,doc,F,B,I,page,y,W=595.28,Hp=841.89,M=36,CW=W-2*M,BOT=M+26,ok={},GAP=18,HW=(CW-GAP)/2,full=LEVEL==='full';
+  var LW=CW*0.34,VW=(CW-LW)/2,AVAIL=Hp-M-BOT-6;
+  var C={ink:rgb(.08,.125,.12),ink2:rgb(.3,.35,.35),line:rgb(.82,.86,.86),acc:rgb(0,.216,.506),soft:rgb(.933,.949,.976),good:rgb(.11,.48,.27),bad:rgb(.7,.22,.18),
+    gs:rgb(.929,.965,.941),bs:rgb(.988,.941,.933),white:rgb(1,1,1),brass:rgb(.769,.627,.384),s1:rgb(.184,.373,.659),s2:rgb(.769,.627,.384),track:rgb(.93,.945,.95)};
+  var KCOL={k1:rgb(.184,.373,.659),k2:rgb(0,.216,.506),k3:rgb(.79,.54,.09),k4:rgb(.48,.36,.76),k5:rgb(.6,.65,.64)};
+  var FOOT=/forme pensionistiche/.test(PROMO)?'Messaggio promozionale':'Messaggio pubblicitario';
+  function vis(r){return full?!r.ess:!r.adv}
+  function cl(s){
+    s=String(s==null?'':s);var o='';
+    for(var i=0;i<s.length;i++){
+      var ch=s[i],k=s.charCodeAt(i);
+      if(k===0x2212)ch='-';else if(k===0xA0||k===0x202F||k===0x2009)ch=' ';else if(k===0x2192){o+='->';continue}else if(k===0x2265){o+='>=';continue}else if(k===0x2264){o+='<=';continue}
+      else if(k===0x2713||k===0x2605||k===0x2606)continue;
+      if(ok[ch]===undefined){try{F.encodeText(ch);ok[ch]=true}catch(e){ok[ch]=false}}
+      o+=ok[ch]?ch:'?';
+    }
+    return o;
+  }
+  function tw(s,f,z){return f.widthOfTextAtSize(s,z)}
+  function T(s,x,yy,z,f,c,al){s=cl(s);f=f||F;var w=tw(s,f,z);if(s)page.drawText(s,{x:al==='r'?x-w:(al==='c'?x-w/2:x),y:yy,size:z,font:f,color:c||C.ink});return w}
+  function wrap(s,f,z,w){var out=[],cur='';cl(s).split(/\s+/).forEach(function(wd){if(!wd)return;var t=cur?cur+' '+wd:wd;if(!cur||tw(t,f,z)<=w)cur=t;else{out.push(cur);cur=wd}});if(cur)out.push(cur);return out.length?out:['']}
+  function fit(s,f,z,w){s=cl(s);if(tw(s,f,z)<=w)return s;while(s.length>1&&tw(s+'…',f,z)>w)s=s.slice(0,-1);return s+'…'}
+  function np(){page=doc.addPage([W,Hp]);y=Hp-M}
+  function need(h){if(y-h<BOT){np();return true}return false}
+  function hl(yy,th,col,x0,x1){page.drawLine({start:{x:x0==null?M:x0,y:yy},end:{x:x1==null?W-M:x1,y:yy},thickness:th,color:col})}
+  function sec(t,n,minH){need(minH||60);y-=17;var w=T(t,M,y,11,B,C.acc);if(n)T(String(n),M+w+2,y+4,6,B,C.acc);y-=5;hl(y,.5,C.line);y-=7}
+  function rich(runs,x0,mw,z,lh,dry,col){
+    var x=x0,segs=[],n=0,yy=y-z;
+    function flush(){if(!dry){var xx=x0;segs.forEach(function(s){xx+=T(s.t,xx,yy,z,s.f,col||s.c)})}segs=[];n++;yy-=lh;x=x0}
+    runs.forEach(function(r){cl(r.t).split(/\s+/).forEach(function(wd){
+      if(!wd)return;var sp=x>x0?' ':'',w=tw(sp+wd,r.f,z);
+      if(x+w>x0+mw&&x>x0){flush();sp='';w=tw(wd,r.f,z)}
+      var last=segs[segs.length-1];
+      if(last&&last.f===r.f&&last.c===r.c)last.t+=sp+wd;else segs.push({t:sp+wd,f:r.f,c:r.c});
+      x+=w;
+    })});
+    if(segs.length)flush();
+    if(!dry)y-=n*lh;
+    return n;
+  }
+  function para(t,z,col){var runs=[{t:t,f:F,c:col||C.ink2}],n=rich(runs,M,CW,z||7.2,9,true);need(n*9+4);rich(runs,M,CW,z||7.2,9,false);y-=3}
+  function leadBox(runs){
+    var rr=runs.map(function(r){return {t:r.t,f:r.b?B:F,c:C.ink}}),pad=8,z=8.8,lh=11.5,x0=M+pad+5,mw=CW-2*pad-5;
+    var n=rich(rr,x0,mw,z,lh,true),hh=n*lh+2*pad-3;
+    need(hh+10);
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.soft});
+    page.drawRectangle({x:M,y:y-hh,width:3,height:hh,color:C.acc});
+    var top=y;y-=pad-1.5;rich(rr,x0,mw,z,lh,false);y=top-hh-6;
+  }
+  /* tabella A | B: intestazione con i due fondi, ripetuta a ogni cambio pagina */
+  function abHead(){
+    [rep.A,rep.B].forEach(function(f,i){var x=M+LW+i*VW+6,sb=hsub(f);
+      page.drawCircle({x:x+3.2,y:y-7.6,size:3.1,color:i?C.s2:C.s1});
+      T(fit(f.L+' · '+f.breve,B,8.2,VW-22),x+10,y-10.4,8.2,B,C.ink);if(sb)T(fit(sb,F,7,VW-22),x+10,y-19.4,7,F,C.ink2)});
+    y-=24;hl(y,.8,C.ink2);
+  }
+  function cellLay(c,w){
+    var pad=6,iw=w-2*pad,L={vf:c.t?F:B,vz:c.t?8.2:9.6};
+    L.vl=c.v?wrap(c.v,L.vf,L.vz,iw):[];
+    var h=pad+L.vl.length*(L.vz+2.4)+(c.sri?9:0);
+    if(c.stack)h+=13+c.stack.length*9.3;
+    if(c.bars)h+=c.bars.length*15;
+    if(c.list){L.ll=c.list.map(function(p){return wrap(p[0],F,7.1,iw-42)});h+=L.ll.reduce(function(a,l){return a+l.length*8.6+1.5},0)}
+    L.sl=c.sub?wrap(c.sub,F,7,iw):[];h+=L.sl.length*8.5;
+    L.s2=c.sub2?wrap(c.sub2,B,7,iw):[];h+=L.s2.length?L.s2.length*8.5+1:0;
+    L.tg=c.tag?wrap(c.tag,B,6.8,iw):[];h+=L.tg.length?L.tg.length*8.3+2.5:0;
+    L.h=h+pad-1;return L;
+  }
+  function drawCell(c,x,top,h,L,w){
+    var g=c.tone==='good',b=c.tone==='bad',vc=g?C.good:(b?C.bad:C.ink),ix=x+6,iw=w-12,cy=top-6;
+    if(g||b)page.drawRectangle({x:x+1,y:top-h+1.5,width:w-2,height:h-3,color:g?C.gs:C.bs});
+    L.vl.forEach(function(s){T(s,ix,cy-L.vz,L.vz,L.vf,vc);cy-=L.vz+2.4});
+    if(c.sri){for(var k=1;k<=7;k++)page.drawRectangle({x:ix+(k-1)*12,y:cy-6,width:10,height:4.5,color:k<=c.sri?C.acc:C.line});cy-=9}
+    if(c.stack){
+      var tot=c.stack.reduce(function(a,s){return a+Math.max(0,s.v)},0)||1,xx=ix;
+      c.stack.forEach(function(s){var ww=Math.max(0,s.v)/tot*iw;page.drawRectangle({x:xx,y:cy-8.5,width:ww,height:6.5,color:KCOL[s.k]});xx+=ww});cy-=13;
+      c.stack.forEach(function(s){page.drawRectangle({x:ix,y:cy-6.6,width:5.5,height:5.5,color:KCOL[s.k]});T(s.l,ix+9,cy-6.4,7.1,F,C.ink);T(P(s.v,1),ix+iw,cy-6.4,7.1,B,C.ink,'r');cy-=9.3});
+    }
+    if(c.bars)c.bars.forEach(function(p){
+      T(fit(p[0],F,7.1,iw-40),ix,cy-7,7.1,F,C.ink);T(P(p[1],1),ix+iw,cy-7,7.1,F,C.ink2,'r');
+      var ww=c.max>0?Math.min(iw,Math.max(2,p[1]/c.max*iw)):0;
+      page.drawRectangle({x:ix,y:cy-12,width:iw,height:3,color:C.track});page.drawRectangle({x:ix,y:cy-12,width:ww,height:3,color:C.acc});cy-=15;
+    });
+    if(c.list)c.list.forEach(function(p,i){
+      var ls=L.ll[i];T((i+1)+'.',ix,cy-7.1,7.1,B,C.ink2);
+      ls.forEach(function(s,j){T(s,ix+12,cy-7.1-j*8.6,7.1,F,C.ink)});
+      if(p[1]!=null)T(P(p[1],2),ix+iw,cy-7.1,7.1,F,C.ink2,'r');cy-=ls.length*8.6+1.5;
+    });
+    L.sl.forEach(function(s){T(s,ix,cy-7,7,F,C.ink2);cy-=8.5});
+    if(L.s2.length)cy-=1;
+    L.s2.forEach(function(s){T(s,ix,cy-7,7,B,C.ink);cy-=8.5});
+    if(L.tg.length){cy-=2.5;L.tg.forEach(function(s){T(s,ix,cy-6.8,6.8,B,g?C.good:(b?C.bad:C.ink2));cy-=8.3})}
+  }
+  function trow(r){
+    var lz=r.tot?9:8.6,ll=wrap(r.l,B,lz,LW-12-(r.n?8:0)),lh2=r.h?wrap(r.h,F,7,LW-12):[],la=cellLay(r.c[0],VW),lb=cellLay(r.c[1],VW);
+    var ch=Math.max(6+ll.length*(lz+2.2)+lh2.length*8.5+5,la.h,lb.h);
+    if(need(ch+1))abHead();
+    var top=y;
+    if(r.tot){page.drawRectangle({x:M,y:top-ch,width:LW,height:ch,color:C.soft});page.drawRectangle({x:M,y:top-ch,width:2.5,height:ch,color:C.acc})}
+    drawCell(r.c[0],M+LW,top,ch,la,VW);drawCell(r.c[1],M+LW+VW,top,ch,lb,VW);
+    var ly=top-6;
+    ll.forEach(function(s,k){var wd=T(s,M+7,ly-lz,lz,B,C.ink);if(r.n&&k===ll.length-1)T(String(r.n),M+7+wd+1.5,ly-lz+3.2,5.5,B,C.acc);ly-=lz+2.2});
+    lh2.forEach(function(s){T(s,M+7,ly-7,7,F,C.ink2);ly-=8.5});
+    y=top-ch;hl(y,r.tot?.6:.3,r.tot?C.ink2:C.line);
+  }
+  /* grafico a barre affiancate */
+  function chartPDF(ch){
+    var h=112,sc=scalaG(ch),ng=ch.groups.length,ns=ch.series.length,lw=Math.max(tw(cl(cax(ch,sc.a,sc.st)),F,7),tw(cl(cax(ch,sc.b,sc.st)),F,7))+9,x0=M+lw,pw=CW-lw;
+    need(h+60);
+    var lx=M;
+    ch.series.forEach(function(se,k){var t=fit(se.name,F,8,CW*0.42),wd=10+tw(t,F,8)+14;if(lx+wd>M+CW&&lx>M){lx=M;y-=11}
+      page.drawRectangle({x:lx,y:y-9,width:7,height:7,color:k?C.s2:C.s1});lx+=10;lx+=T(t,lx,y-9,8,F,C.ink2)+14});
+    if(ch.ref){if(lx+150>M+CW){lx=M;y-=11}
+      page.drawLine({start:{x:lx,y:y-5.5},end:{x:lx+16,y:y-5.5},thickness:1.4,color:C.ink,dashArray:[4,3]});T(ch.ref.name,lx+20,y-9,8,F,C.ink2)}
+    y-=22;var bot=y-h,Y=function(v){return bot+(v-sc.a)/(sc.b-sc.a)*h},y0=Y(0);
+    for(var v=sc.a;v<=sc.b+1e-9;v+=sc.st){var yy=Y(v),z=Math.abs(v)<1e-9;page.drawLine({start:{x:x0,y:yy},end:{x:x0+pw,y:yy},thickness:z?.8:.4,color:z?C.ink2:C.line});T(cax(ch,v,sc.st),x0-5,yy-2.5,7,F,C.ink2,'r')}
+    var gw=pw/ng,bw=Math.max(5,Math.min(34,gw*.3)),gap=3,fz=6.8,lbs=[];
+    ch.groups.forEach(function(g,i){
+      var cx=x0+gw*i+gw/2,tot=ns*bw+(ns-1)*gap,xa=cx-tot/2,vals=ch.series.map(function(se){return se.v[i]});
+      var lwm=Math.max.apply(null,vals.map(function(v){return v==null?0:tw(cl(cfmt(ch,v)),B,fz)})),both=bw+gap>=lwm+2,best=-1;
+      vals.forEach(function(v,k){if(v!=null&&(best<0||v>vals[best]))best=k});
+      vals.forEach(function(v,k){
+        var x=xa+k*(bw+gap);
+        if(v==null){T('n.d.',x+bw/2,y0+3,6.5,F,C.ink2,'c');return}
+        var ya=Y(Math.max(0,v)),yb=Y(Math.min(0,v));
+        page.drawRectangle({x:x,y:yb,width:bw,height:Math.max(.8,ya-yb),color:k?C.s2:C.s1});
+        if(both||(k===best&&lwm<=gw-4))lbs.push({t:cfmt(ch,v),x:x+bw/2,y:v>=0?ya+3:yb-8.5});
+      });
+      if(ch.ref&&ch.ref.v[i]!=null){var yr=Y(ch.ref.v[i]);
+        page.drawLine({start:{x:xa-7,y:yr},end:{x:xa+tot+7,y:yr},thickness:3.2,color:C.white});
+        page.drawLine({start:{x:xa-7,y:yr},end:{x:xa+tot+7,y:yr},thickness:1.3,color:C.ink,dashArray:[4,3]})}
+      T(g,cx,bot-11,7.6,F,C.ink2,'c');
+    });
+    lbs.forEach(function(l){var w=tw(cl(l.t),B,fz);page.drawRectangle({x:l.x-w/2-1.5,y:l.y-1.6,width:w+3,height:fz+2.6,color:C.white});T(l.t,l.x,l.y,fz,B,C.ink,'c')});
+    y=bot-22;
+  }
+  /* voci in due colonne (particolarità, scelte dei gestori, regole comuni); se non stanno in una pagina, una sotto l'altra */
+  var CZ=7.8,CLH=9.8;
+  function colItems(s,kind,i,Wd){
+    if(kind==='duo')return s.cols[i].items.map(function(p){var runs=[{t:p[0],f:B,c:C.ink},{t:p[1],f:F,c:C.ink}].filter(function(r){return r.t});
+      return {give:i===1,runs:runs,h:rich(runs,0,Wd-16,CZ,CLH,true)*CLH+4}});
+    var x=s.f[i];
+    if(kind==='flags')return x.pro.map(function(p){return {pro:1,p:p}}).concat(x.con.map(function(p){return {pro:0,p:p}})).map(function(it){
+      var runs=[{t:it.p[0],f:B,c:C.ink},{t:it.p[1],f:F,c:C.ink}].filter(function(r){return r.t});
+      return {pro:it.pro,runs:runs,h:rich(runs,0,Wd-16,CZ,CLH,true)*CLH+4}});
+    return x.items.map(function(m){var r1=[{t:m.s,f:B,c:C.ink}],r2=m.x?[{t:m.x,f:F,c:C.ink2}]:[];
+      return {m:m,r1:r1,r2:r2,h:12+rich(r1,0,Wd-14,CZ,CLH,true)*CLH+(r2.length?rich(r2,0,Wd-14,CZ,CLH,true)*CLH:0)+7}});
+  }
+  function noneRuns(s,kind){return [{t:kind==='flags'?'Nessuna particolarità da segnalare.':(s.none||'Nessuna informazione sulle scelte recenti.'),f:F,c:C.ink2}]}
+  function sintRuns(s,kind,i){return kind==='moves'&&s.f[i].sint?[{t:s.f[i].sint,f:I,c:C.ink}]:null}
+  function colHeadH(){return 30}
+  function colsH(s,kind){
+    return Math.max.apply(null,[0,1].map(function(i){
+      var its=colItems(s,kind,i,HW),sr=sintRuns(s,kind,i);
+      return colHeadH()+its.reduce(function(a,t){return a+t.h},0)+(its.length?0:rich(noneRuns(s,kind),0,HW,CZ,CLH,true)*CLH+4)+(sr?rich(sr,0,HW,CZ,CLH,true)*CLH+6:0);
+    }))+4;
+  }
+  function colHead(s,kind,i,x,Wd){
+    if(kind==='duo'){T(fit(s.cols[i].title,B,9.5,Wd),x,y-11,9.5,B,C.acc);y-=17}
+    else{var f=i?rep.B:rep.A,sb=hsub(f);page.drawCircle({x:x+3.4,y:y-7.6,size:3.3,color:i?C.s2:C.s1});
+      T(fit(f.L+' · '+f.breve,B,9.5,Wd-12),x+11,y-11,9.5,B,C.ink);y-=13;if(sb){T(fit(sb,F,7.2,Wd-12),x+11,y-7,7.2,F,C.ink2);y-=4}else y+=4}
+    y-=5;hl(y,.5,C.line,x,x+Wd);y-=6;
+  }
+  function drawItem(kind,l,x,Wd){
+    if(kind==='moves'){
+      var e=l.m.e,col=e==='pos'?C.good:(e==='neg'?C.bad:C.ink2),tx=e==='pos'?'HA AIUTATO':(e==='neg'?'HA PESATO':'DA VERIFICARE'),y0=y,w=tw(tx,B,6.6);
+      T(tx,x+9,y-7,6.6,B,col);if(l.m.w)T(fit(l.m.w,F,7,Wd-w-24),x+15+w,y-7,7,F,C.ink2);
+      y-=11;rich(l.r1,x+9,Wd-14,CZ,CLH,false);if(l.r2.length)rich(l.r2,x+9,Wd-14,CZ,CLH,false);
+      page.drawRectangle({x:x+1,y:y-1,width:2,height:y0-y+1,color:e==='neu'?C.line:col});y-=7;return;
+    }
+    var dc=kind==='duo'?C.acc:(l.pro?C.good:C.bad);
+    if(l.give)page.drawCircle({x:x+4,y:y-CZ/2-1.4,size:2.4,borderColor:dc,borderWidth:1});else page.drawCircle({x:x+4,y:y-CZ/2-1.4,size:2.9,color:dc});
+    rich(l.runs,x+13,Wd-16,CZ,CLH,false);y-=4;
+  }
+  function cols(s,kind,side){
+    if(side){
+      var hh=colsH(s,kind);need(hh);
+      [0,1].forEach(function(i){
+        var x=M+i*(HW+GAP),top=y,its=colItems(s,kind,i,HW),sr=sintRuns(s,kind,i);
+        colHead(s,kind,i,x,HW);
+        if(!its.length){rich(noneRuns(s,kind),x,HW,CZ,CLH,false);y-=4}
+        its.forEach(function(l){drawItem(kind,l,x,HW)});
+        if(sr){y-=1;rich(sr,x,HW,CZ,CLH,false)}
+        y=top;
+      });
+      y-=hh+2;return;
+    }
+    [0,1].forEach(function(i){
+      var its=colItems(s,kind,i,CW),sr=sintRuns(s,kind,i);
+      need(50);colHead(s,kind,i,M,CW);
+      if(!its.length){var nr=noneRuns(s,kind);need(rich(nr,0,CW,CZ,CLH,true)*CLH+4);rich(nr,M,CW,CZ,CLH,false);y-=4}
+      its.forEach(function(l){need(l.h);drawItem(kind,l,M,CW)});
+      if(sr){need(rich(sr,0,CW,CZ,CLH,true)*CLH+6);y-=1;rich(sr,M,CW,CZ,CLH,false)}
+      y-=10;
+    });
+  }
+  function keyLine(items){
+    var x=M;need(14);
+    items.forEach(function(k){page.drawRectangle({x:x,y:y-8,width:7.5,height:7.5,color:k[0]});x+=11+T(k[1],x+11,y-7.4,7.5,F,C.ink2)+14});
+    y-=14;
+  }
+  function winBox(w){
+    var pad=11,bx=w.badge?33:0,x0=M+pad+bx,mw=CW-2*pad-bx;
+    var tl=wrap(w.t,B,15,mw),rr=(w.runs||[]).map(function(r){return {t:r.t,f:r.b?B:F,c:C.white}});
+    var nr=rr.length?rich(rr,x0,mw,9,11.5,true):0,hh=pad+(w.k?9:0)+tl.length*17+(nr?nr*11.5+2:0)+pad+1;
+    need(hh+8);
+    page.drawRectangle({x:M,y:y-hh,width:CW,height:hh,color:C.acc});
+    if(w.badge){page.drawCircle({x:M+pad+12,y:y-hh/2,size:13.5,color:C.brass});page.drawCircle({x:M+pad+12,y:y-hh/2,size:11.8,color:C.white});T('1°',M+pad+12,y-hh/2-3.7,10.5,B,C.acc,'c')}
+    var top=y,yy=y-pad;
+    if(w.k){yy-=7;T(w.k,x0,yy,7.8,F,C.white);yy-=2}
+    tl.forEach(function(sx){yy-=15;T(sx,x0,yy,15,B,C.white);yy-=2});
+    if(nr){y=yy-1;rich(rr,x0,mw,9,11.5,false)}
+    y=top-hh-6;
+  }
+  function tiles(items){
+    var n=items.length,gap=8,w=(CW-gap*(n-1))/n,pad=8,iw=w-2*pad;
+    var lay=items.map(function(t,j){
+      var hi=j===n-1,z=hi?13:11,vl=wrap(t.v,B,z,iw);if(vl.length>1){z=hi?11:9.5;vl=wrap(t.v,B,z,iw)}
+      var a={ll:wrap(t.l,F,7.5,iw),vl:vl,z:z,sl:t.s?wrap(t.s,F,7,iw):[],hi:hi};
+      a.h=pad+6+(a.ll.length-1)*9+(z+4)+(vl.length-1)*(z+2)+(a.sl.length?11+(a.sl.length-1)*8.5:0)+pad-1;return a;
+    });
+    var hh=Math.max.apply(null,lay.map(function(a){return a.h}));need(hh+8);
+    items.forEach(function(t,i){
+      var x=M+i*(w+gap),a=lay[i],ly=y-pad-6;
+      page.drawRectangle({x:x,y:y-hh,width:w,height:hh,color:a.hi?C.soft:C.white,borderColor:a.hi?C.acc:C.line,borderWidth:a.hi?1.4:.7});
+      a.ll.forEach(function(s,k){T(s,x+pad,ly-k*9,7.5,F,C.ink2)});
+      var vy=ly-(a.ll.length-1)*9-(a.z+4);
+      a.vl.forEach(function(s,k){T(s,x+pad,vy-k*(a.z+2),a.z,B,t.good&&!a.hi?C.good:C.ink)});
+      var sy=vy-(a.vl.length-1)*(a.z+2)-11;
+      a.sl.forEach(function(s,k){T(s,x+pad,sy-k*8.5,7,F,C.ink2)});
+    });
+    y-=hh+6;
+  }
+  function bullets(items){
+    items.forEach(function(t){var runs=[{t:t,f:F,c:C.ink}],n=rich(runs,M+11,CW-11,8,10.5,true);need(n*10.5+3);
+      page.drawCircle({x:M+3.5,y:y-5.2,size:2.2,color:C.acc});rich(runs,M+11,CW-11,8,10.5,false);y-=3});
+  }
+  function notes(items){
+    items.forEach(function(a,i){
+      var runs=[{t:a[1]+'.',f:B,c:C.ink},{t:a[2],f:F,c:C.ink}],nl=rich(runs,M+16,CW-16,7.5,9.5,true);
+      need(nl*9.5+5);T(String(i+1),M+10,y-7.5,7.5,B,C.acc,'r');rich(runs,M+16,CW-16,7.5,9.5,false);y-=3;
+    });
+  }
+  function avv(items){
+    items.forEach(function(t,i){
+      var runs=[{t:t,f:i===0?B:F,c:i===0?C.ink:C.ink2}],nl=rich(runs,M,CW,7.5,9.5,true);
+      need(nl*9.5+4);rich(runs,M,CW,7.5,9.5,false);y-=3.5;
+    });
+  }
+  function firma(){
+    if(y-62<BOT)return;                         /* stessi dati già nel piè di pagina: niente pagina solo per la firma */
+    y-=8;
+    page.drawRectangle({x:M,y:y-48,width:CW,height:48,color:C.acc});
+    T('Elaborato da',M+14,y-13,7.5,F,C.white);
+    T(AUTORE,M+14,y-27,13,B,C.white);
+    T(QUALIFICA.charAt(0).toUpperCase()+QUALIFICA.slice(1),M+14,y-39,7.8,F,C.white);
+    T(TEL,W-M-14,y-21,8.5,B,C.white,'r');T(MAIL,W-M-14,y-33,8.5,F,C.white,'r');
+    y-=54;
+  }
+  function introH(s){return s.intro?rich([{t:s.intro,f:F,c:C.ink2}],M,CW,7.4,9,true)*9+3:0}
+  return Lb.PDFDocument.create().then(function(d){
+    doc=d;return Promise.all([doc.embedFont(Lb.StandardFonts.Helvetica),doc.embedFont(Lb.StandardFonts.HelveticaBold),doc.embedFont(Lb.StandardFonts.HelveticaOblique)]);
+  }).then(function(ff){
+    F=ff[0];B=ff[1];I=ff[2];
+    doc.setTitle(rep.titolo+(rep.cliente?' - '+rep.cliente:''));doc.setAuthor(AUTORE);doc.setCreator(rep.titolo);
+    np();
+    /* fascia di testata, come la pagina a schermo */
+    var sl=wrap(rep.sotto,F,8.8,CW).slice(0,3),bh=64+sl.length*11;
+    page.drawRectangle({x:0,y:Hp-bh,width:W,height:bh,color:C.acc});
+    T(rep.titolo,M,Hp-40,18,B,C.white);
+    sl.forEach(function(sx,k){T(sx,M,Hp-56-k*11,8.8,F,C.white)});
+    y=Hp-bh-20;var x=M;
+    if(rep.cliente){x+=T('Preparato per: ',x,y,9,F,C.ink2);x+=T(fit(rep.cliente,B,9,230),x,y,9,B)+16}
+    x+=T('Data: ',x,y,9,F,C.ink2);x+=T(DATA,x,y,9,B)+16;
+    x+=T('Versione: ',x,y,9,F,C.ink2);T(full?'completa':'semplificata',x,y,9,B);
+    y-=13;var w=T('Elaborato da '+AUTORE,M,y,9,B,C.acc);T(', '+QUALIFICA,M+w,y,8,F,C.ink2);
+    y-=11;T(TEL+' · '+MAIL,M,y,8,F,C.ink2);
+    y-=7;hl(y,.7,C.line);y-=1;
+    wrap(PROMO,I,7,CW).forEach(function(s){y-=9;T(s,M,y,7,I,C.ink2)});y-=4;
+    rep.sections.forEach(function(s){
+      if(s.type!=='win')return;
+      sec('In sintesi',s.n,200);winBox(s.win);tiles(s.tiles);
+      if(full){need(70);T('PUNTEGGIO ESTESO',M,y-8,7.2,B,C.ink2);y-=13;tiles(s.ext.tiles);para(s.ext.text,7.4)}
+      bullets(s.items);
+      y-=2;keyLine([[C.good,'Migliore su quella voce'],[C.bad,'Peggiore'],[C.line,'Uguale, non confrontabile o solo informativo']]);
+    });
+    rep.sections.forEach(function(s){
+      if(s.adv&&!full)return;
+      var t=ttl(s.title);
+      if(s.type==='rows'){
+        sec(t,s.n,150+(s.chart?150:0));if(s.intro)para(s.intro,7.4);if(s.lead&&s.lead.length)leadBox(s.lead);if(s.chart)chartPDF(s.chart);
+        need(70);abHead();s.rows.filter(vis).forEach(trow);y-=5;if(s.cap&&(full||!s.capAdv))para(s.cap);
+      }
+      else if(s.type==='moves'||s.type==='flags'||s.type==='duo'){
+        var ih=introH(s),hh=colsH(s,s.type),side=hh+ih+34<=AVAIL;
+        sec(t,s.n,side?hh+ih+34:110);if(s.intro)para(s.intro,7.4);y-=2;cols(s,s.type,side);
+        if(s.type==='flags')keyLine([[C.good,'Punto a favore'],[C.bad,'Punto di attenzione']]);
+      }
+      else if(s.type==='notes'){sec(t,0,Math.min(AVAIL,rich([{t:s.items[0][1]+'. '+s.items[0][2],f:F,c:C.ink}],0,CW-16,7.5,9.5,true)*9.5+40));notes(s.items)}
+      else if(s.type==='avv'){sec(t,0,Math.min(AVAIL,rich([{t:s.items[0],f:B,c:C.ink}],0,CW,7.5,9.5,true)*9.5+40));avv(s.items)}
+      else if(s.type==='firma')firma();
+    });
+    var pp=doc.getPages();
+    pp.forEach(function(pg,i){page=pg;hl(M+17,.5,C.line);
+      T('Elaborato da '+AUTORE+', '+QUALIFICA,M,M+7,7,B,C.acc);
+      T(TEL+' · '+MAIL+' · '+FOOT+', '+DATA,M,M-2.5,7,F,C.ink2);
+      T('Pagina '+(i+1)+' di '+pp.length,W-M,M-2.5,7.5,F,C.ink2,'r')});
+    return doc.save();
+  });
+}
+
+/* ---------- Azioni: PDF o stampa ---------- */
+var DL=null;
+function setAct(kind){$('c-pdf').hidden=kind!=='pdf';$('c-print').hidden=kind!=='print'}
+function initAct(tries){
+  var c=window.claude;
+  if(c&&typeof c.use==='function'){
+    Promise.resolve(c.use('downloads')).then(function(ns){if(ns&&typeof ns.save==='function'){DL=ns;setAct('pdf')}},function(){});
+  }else if(tries<60)setTimeout(function(){initAct(tries+1)},250);
+}
+function savePDF(){
+  var btn=$('c-pdf'),st=$('c-status'),rep=LAST;
+  btn.disabled=true;st.textContent='Preparo il PDF…';
+  loadPdfLib().then(function(){return buildPDF(rep)}).then(function(bytes){
+    var nome=('Confronto '+rep.A.breve+' - '+rep.B.breve+(LEVEL==='full'?'':' (sintesi)')+(rep.cliente?' - '+rep.cliente:'')).replace(/[\\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim().slice(0,110).replace(/[.\s]+$/,'')+'.pdf';
+    return DL.save({filename:nome,data:bytes});
+  }).then(function(){st.textContent='PDF pronto: controlla i download del dispositivo.'},function(e){
+    var c=e&&e.code;
+    st.textContent=e&&e.lib?'Non riesco a caricare il componente PDF: controlla la connessione e riprova.':
+      c==='declined'?'Salvataggio annullato.':
+      c==='rate_limited'?'Attendi qualche secondo e riprova.':
+      (c==='rejected_extension'||c==='extension_not_enabled')?'In questa vista il formato PDF non è disponibile.':
+      c?'In questa vista il salvataggio non è disponibile.':'Non sono riuscito a creare il PDF. Riprova.';
+    if(!c&&!(e&&e.lib)&&window.console)console.error(e);
+  }).then(function(){btn.disabled=false});
+}
+
+/* ---------- Avvio ---------- */
+$('c-form').innerHTML='<h2>Dati del confronto</h2><p class="fine">Modifica qui i dati: la relazione si aggiorna mentre scrivi e resta salvata in questo browser.</p>'+formHTML();$('c-rep').innerHTML=shellHTML();
+setForm(carica()||DEF);
+var lv='ess';try{lv=localStorage.getItem(LVKEY)||'ess'}catch(e){}
+setLevel(lv);
+function aggiorna(){render();salva()}
+$('c-form').addEventListener('input',aggiorna);
+$('c-form').addEventListener('change',aggiorna);
+$('c-form').addEventListener('submit',function(e){e.preventDefault()});
+$('c-form').addEventListener('click',function(e){
+  var id=e.target&&e.target.id;
+  if(id==='c-esempio'){setForm(DEF);aggiorna()}
+  else if(id==='c-svuota'){var d=getForm();d.f=[{prov:'acc'},{prov:'acc'}];d.fonti='';d.rsame=false;setForm(d);aggiorna()}
+  else if(id==='c-scambia'){var g=getForm();g.f=[g.f[1],g.f[0]];setForm(g);aggiorna()}
+});
+document.querySelectorAll('.modo button').forEach(function(b){b.addEventListener('click',function(){setLevel(b.dataset.m==='c'?'full':'ess');render()})});
+var rz,lastW=document.documentElement.clientWidth;
+window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){var w=document.documentElement.clientWidth;if(w!==lastW){lastW=w;drawCharts()}},150)});
+$('c-pdf').addEventListener('click',savePDF);
+$('c-print').addEventListener('click',function(){try{window.print()}catch(e){}});
+document.addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('.nm'):null;if(!b)return;
+  var el=$(b.dataset.n);if(!el)return;
+  var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({behavior:calm?'auto':'smooth',block:'center'});el.classList.add('hl');setTimeout(function(){el.classList.remove('hl')},1800);
+});
+render();
+var solo=false;try{solo=window.self===window.top}catch(e){}
+if(solo)setAct('print');
+initAct(0);
+})();
+</script>
+</body>
+</html>
