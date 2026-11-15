@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marco Busetto · Consulente Finanziario</title>
+<meta name="description" content="Marco Busetto, consulente finanziario specializzato in pianificazione successoria, protezione del patrimonio e investimenti. Prenota una consulenza.">
+<meta property="og:title" content="Marco Busetto · Consulente Finanziario">
+<meta property="og:description" content="Pianificazione successoria, protezione del patrimonio e investimenti.">
+<meta property="og:type" content="profile">
+<meta name="theme-color" content="#0f2a3d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec; --surface:#ffffff; --ink:#132430; --muted:#5b6b75; --line:#e4ded3;
+  --brand:#0f2a3d; --brand-ink:#ffffff; --accent:#b8893b; --accent-soft:#f3ead9;
+  --ok:#1f7a4d; --shadow:0 1px 2px rgba(15,42,61,.06),0 8px 24px rgba(15,42,61,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c1820; --surface:#13232e; --ink:#e9eef1; --muted:#9db0bb; --line:#22394a;
+    --brand:#d9b26a; --brand-ink:#0c1820; --accent:#d9b26a; --accent-soft:#2a2a1f;
+    --ok:#4cc38a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c1820; --surface:#13232e; --ink:#e9eef1; --muted:#9db0bb; --line:#22394a;
+  --brand:#d9b26a; --brand-ink:#0c1820; --accent:#d9b26a; --accent-soft:#2a2a1f;
+  --ok:#4cc38a; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:40px 16px 56px}
+
+/* Header */
+.hero{text-align:center}
+.avatar{width:112px;height:112px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;
+  background:var(--brand);color:var(--brand-ink);font:600 38px/1 Fraunces,Georgia,serif;
+  box-shadow:0 0 0 4px var(--surface),0 0 0 5px var(--line);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+h1{font:600 30px/1.15 Fraunces,Georgia,serif;margin:0 0 6px;letter-spacing:-.01em}
+.role{margin:0;color:var(--muted);font-size:15px}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:6px 12px;border-radius:999px;
+  background:var(--accent-soft);color:var(--ink);font-size:13px;font-weight:500}
+.badge svg{color:var(--accent)}
+.rating{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:14px;color:var(--muted);text-decoration:none}
+.rating .stars{color:#e3a008;letter-spacing:1px}
+
+/* Quick actions */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:28px 0 12px}
+.qa{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:14px;
+  background:var(--surface);border:1px solid var(--line);text-decoration:none;font-size:12.5px;font-weight:500;
+  box-shadow:var(--shadow);transition:transform .15s}
+.qa:hover{transform:translateY(-2px)}
+.qa svg{width:22px;height:22px;color:var(--brand)}
+
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:12px 0 0;padding:16px;
+  border-radius:14px;background:var(--brand);color:var(--brand-ink);text-decoration:none;font-weight:600;font-size:16px;
+  box-shadow:var(--shadow);transition:filter .15s,transform .15s}
+.cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* Sections */
+h2{font:600 13px/1 Inter,sans-serif;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:36px 0 12px}
+.links{display:flex;flex-direction:column;gap:10px}
+.link{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--surface);
+  border:1px solid var(--line);text-decoration:none;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.link:hover{transform:translateY(-2px);border-color:var(--accent)}
+.link .ic{flex:none;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.link .ic svg{width:20px;height:20px}
+.link .tx{flex:1;min-width:0}
+.link .t{display:block;font-weight:600}
+.link .s{display:block;font-size:13.5px;color:var(--muted)}
+.link .ar{color:var(--muted);flex:none}
+
+.services{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.svc{padding:16px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.svc b{display:block;font:600 16px/1.25 Fraunces,Georgia,serif;margin-bottom:4px}
+.svc span{font-size:13.5px;color:var(--muted)}
+
+.about{padding:20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:15px}
+.about p{margin:0 0 10px}.about p:last-child{margin:0}
+
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;padding:0 16px}
+.faq summary{cursor:pointer;padding:14px 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--accent);font-size:20px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 14px;color:var(--muted);font-size:15px}
+
+footer{margin-top:40px;text-align:center;font-size:12.5px;color:var(--muted)}
+footer p{margin:6px 0}
+.tools{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.tools button{font:inherit;font-size:13px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (max-width:380px){.services{grid-template-columns:1fr}.qa{font-size:11.5px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<!--
+  ================================================================
+  COME MODIFICARE LA PAGINA
+  Tutti i dati (link, telefono, social, testi) stanno nell'oggetto
+  CONFIG in fondo alla pagina. Lascia "" su un link per nasconderlo.
+  ================================================================
+-->
+<main class="wrap">
+  <header class="hero">
+    <div class="avatar" id="avatar">MB</div>
+    <h1 id="name"></h1>
+    <p class="role" id="role"></p>
+    <div class="badge" id="badge" hidden>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
+      <span id="badgeText"></span>
+    </div>
+    <div><a class="rating" id="rating" target="_blank" rel="noopener" hidden></a></div>
+  </header>
+
+  <nav class="quick" id="quick" aria-label="Contatti rapidi"></nav>
+  <a class="cta" id="cta" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    <span id="ctaText"></span>
+  </a>
+
+  <section><h2>Link utili</h2><div class="links" id="links"></div></section>
+  <section><h2>Di cosa mi occupo</h2><div class="services" id="services"></div></section>
+  <section><h2>Chi sono</h2><div class="about" id="about"></div></section>
+  <section class="faq"><h2>Domande frequenti</h2><div id="faq"></div></section>
+
+  <footer>
+    <div class="tools">
+      <button type="button" id="vcard">Salva contatto</button>
+      <button type="button" id="share">Condividi</button>
+    </div>
+    <p id="legal" style="margin-top:20px"></p>
+    <p>© <span id="year"></span> <span id="fname"></span></p>
+  </footer>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ================================================================
+   CONFIG — modifica solo questa parte
+   ================================================================ */
+const CONFIG = {
+  name: "Marco Busetto",
+  role: "Consulente Finanziario · Pianificazione successoria",
+  badge: "Specialista in passaggio generazionale",
+  photo: "",                       // es. "foto.jpg" (metti il file nella stessa cartella)
+
+  phone: "",                       // es. "+39 333 1234567"
+  whatsapp: "",                    // solo numeri con prefisso, es. "393331234567"
+  email: "",                       // es. "marco@esempio.it"
+  booking: "",                     // link calendario (Calendly, Google Calendar, ecc.)
+  ctaText: "Prenota una consulenza gratuita",
+
+  google: {
+    profile: "https://www.google.com/search?q=marco+busetto+-+consulente+finanziario+specializzato+in+pianificazione+successoria",
+    review: "",                    // link "Scrivi una recensione" dal profilo Google
+    maps: "",                      // link Google Maps dello studio
+    rating: "",                    // es. "5,0"
+    reviews: ""                    // es. "32"
+  },
+
+  // Link principali (quelli del tuo Linktree). url "" = nascosto.
+  links: [
+    { icon: "calendar", title: "Prenota un appuntamento", sub: "Primo incontro conoscitivo, senza impegno", url: "" },
+    { icon: "star",     title: "Leggi le recensioni su Google", sub: "Cosa dicono i miei clienti", url: "google.profile" },
+    { icon: "pen",      title: "Lascia una recensione", sub: "Mi aiuta a farmi conoscere", url: "google.review" },
+    { icon: "map",      title: "Dove trovarmi", sub: "Indicazioni per lo studio", url: "google.maps" },
+    { icon: "linkedin", title: "LinkedIn", sub: "Profilo professionale", url: "" },
+    { icon: "instagram",title: "Instagram", sub: "Pillole di educazione finanziaria", url: "" },
+    { icon: "facebook", title: "Facebook", sub: "", url: "" },
+    { icon: "youtube",  title: "YouTube", sub: "Video e approfondimenti", url: "" },
+    { icon: "doc",      title: "Guida gratuita alla successione", sub: "Scarica il PDF", url: "" }
+  ],
+
+  services: [
+    ["Pianificazione successoria", "Trasferire il patrimonio alle persone giuste, nei tempi giusti."],
+    ["Protezione del patrimonio", "Tutela da imprevisti, rischi e conflitti familiari."],
+    ["Investimenti", "Strategie su misura per obiettivi e orizzonte temporale."],
+    ["Previdenza", "Costruire oggi la serenità di domani."]
+  ],
+
+  about: [
+    "Aiuto famiglie e imprenditori a proteggere ciò che hanno costruito e a trasmetterlo alle generazioni future, con serenità e senza sorprese.",
+    "Il mio approccio parte dall'ascolto: prima capiamo obiettivi e priorità, poi costruiamo insieme un piano chiaro e sostenibile."
+  ],
+
+  faq: [
+    ["Cos'è la pianificazione successoria?", "È l'insieme di scelte che permettono di decidere come e a chi trasferire il proprio patrimonio, riducendo costi, tempi e possibili contrasti tra eredi."],
+    ["Quando conviene iniziare?", "Prima possibile: pianificare per tempo offre più strumenti e più libertà di scelta."],
+    ["Il primo incontro ha un costo?", "Il primo incontro è conoscitivo e senza impegno."]
+  ],
+
+  legal: "Consulente finanziario iscritto all'Albo OCF." // aggiungi n° iscrizione e società mandante
+};
+/* ================================================================ */
+
+const I = {
+  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>',
+  whatsapp:'<path d="M3 21l1.7-5A9 9 0 1 1 8 19.3z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 .8v1.6c-4 .5-8.3-3.8-7.8-7.8h1.6l.8 2z"/>',
+  mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/>',
+  map:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+  calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  star:'<path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/>',
+  pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  linkedin:'<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+  instagram:'<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/>',
+  facebook:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+  youtube:'<path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.9 4 12 4 12 4s-6.9 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2C5.1 20 12 20 12 20s6.9 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m10 15 5-3-5-3z"/>',
+  doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+  arrow:'<path d="m9 18 6-6-6-6"/>'
+};
+const svg = (k, sw=2) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[k]||I.link}</svg>`;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $ = id => document.getElementById(id);
+const C = CONFIG;
+const resolve = u => u && u.startsWith('google.') ? C.google[u.slice(7)] : u;
+
+$('name').textContent = C.name; $('fname').textContent = C.name;
+$('role').textContent = C.role; $('year').textContent = new Date().getFullYear();
+document.title = `${C.name} · Consulente Finanziario`;
+if (C.photo) $('avatar').innerHTML = `<img src="${esc(C.photo)}" alt="${esc(C.name)}">`;
+if (C.badge) { $('badge').hidden = false; $('badgeText').textContent = C.badge; }
+if (C.google.rating) {
+  const r = $('rating'); r.hidden = false; r.href = C.google.profile;
+  r.innerHTML = `<span class="stars">★★★★★</span> <b>${esc(C.google.rating)}</b> su Google${C.google.reviews ? ` · ${esc(C.google.reviews)} recensioni` : ''}`;
+}
+
+// Quick actions
+const quick = [
+  C.phone && ['phone','Chiama',`tel:${C.phone.replace(/\s/g,'')}`],
+  C.whatsapp && ['whatsapp','WhatsApp',`https://wa.me/${C.whatsapp}?text=${encodeURIComponent('Buongiorno Marco, vorrei informazioni su una consulenza.')}`],
+  C.email && ['mail','Email',`mailto:${C.email}`],
+  (C.google.maps || C.google.profile) && ['map','Studio', C.google.maps || C.google.profile]
+].filter(Boolean);
+if (quick.length) {
+  $('quick').style.gridTemplateColumns = `repeat(${quick.length},1fr)`;
+  $('quick').innerHTML = quick.map(([i,l,h]) => `<a class="qa" href="${esc(h)}" ${h.startsWith('http')?'target="_blank" rel="noopener"':''}>${svg(i)}${l}</a>`).join('');
+} else $('quick').hidden = true;
+
+// Main CTA
+const ctaHref = C.booking || (C.whatsapp && `https://wa.me/${C.whatsapp}`) || (C.email && `mailto:${C.email}`) || C.google.profile;
+$('cta').href = ctaHref; $('ctaText').textContent = C.ctaText;
+
+// Links
+$('links').innerHTML = C.links
+  .map(l => ({...l, url: l.icon === 'calendar' && !l.url ? C.booking : resolve(l.url)}))
+  .filter(l => l.url)
+  .map(l => `<a class="link" href="${esc(l.url)}" target="_blank" rel="noopener">
+      <span class="ic">${svg(l.icon)}</span>
+      <span class="tx"><span class="t">${esc(l.title)}</span>${l.sub?`<span class="s">${esc(l.sub)}</span>`:''}</span>
+      <span class="ar">${svg('arrow')}</span></a>`).join('');
+
+$('services').innerHTML = C.services.map(([t,d]) => `<div class="svc"><b>${esc(t)}</b><span>${esc(d)}</span></div>`).join('');
+$('about').innerHTML = C.about.map(p => `<p>${esc(p)}</p>`).join('');
+$('faq').innerHTML = C.faq.map(([q,a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('');
+$('legal').textContent = C.legal;
+
+// Structured data for Google
+const ld = {"@context":"https://schema.org","@type":"FinancialService","name":`${C.name} - Consulente Finanziario`,
+  "description":C.role, "url":location.href.split('#')[0]};
+if (C.phone) ld.telephone = C.phone; if (C.email) ld.email = C.email;
+const sameAs = C.links.map(l => resolve(l.url)).filter(u => u && /^https?:/.test(u)); if (sameAs.length) ld.sameAs = sameAs;
+const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
+
+// Toast
+const toast = m => { const t=$('toast'); t.textContent=m; t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),2200); };
+
+// Save contact (vCard)
+$('vcard').onclick = () => {
+  const [first, ...rest] = C.name.split(' ');
+  const v = ['BEGIN:VCARD','VERSION:3.0',`N:${rest.join(' ')};${first}`,`FN:${C.name}`,'TITLE:Consulente Finanziario',
+    C.phone && `TEL;TYPE=CELL:${C.phone}`, C.email && `EMAIL:${C.email}`, `URL:${location.href.split('#')[0]}`,'END:VCARD']
+    .filter(Boolean).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([v],{type:'text/vcard'})); a.download = 'Marco-Busetto.vcf'; a.click();
+  toast('Contatto scaricato');
+};
+// Share
+$('share').onclick = async () => {
+  const data = {title: document.title, url: location.href};
+  try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); toast('Link copiato'); } }
+  catch(e) {}
+};
+</script>
+</body>
+</html>
