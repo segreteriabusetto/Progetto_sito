@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#001a3d">
 <script>
 /* Animazione di apertura: una volta per visita, disattivata se il dispositivo chiede meno movimento */
-(function(){var d=document.documentElement;if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;d.classList.add("anim");var seen=false;try{seen=sessionStorage.getItem("mbIntro")==="1";sessionStorage.setItem("mbIntro","1")}catch(e){}if(seen)d.classList.add("no-intro")})();
+(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem("mb-tema")}catch(e){}if(t!=="chiaro"&&t!=="scuro"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"scuro":"chiaro"}if(t==="scuro")d.setAttribute("data-theme","dark");if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;d.classList.add("anim");var seen=false;try{seen=sessionStorage.getItem("mbIntro")==="1";sessionStorage.setItem("mbIntro","1")}catch(e){}if(seen)d.classList.add("no-intro")})();
 </script>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
@@ -19,6 +19,7 @@
   --navy-950:#00142f; --navy-900:#001a3d; --navy-800:#002456; --navy:#003781; --navy-500:#2f5fa8;
   --gold:#c4a062; --gold-2:#dcc28c; --gold-soft:#f5eedf;
   --ivory:#f7f4ee; --paper:#ffffff; --ink:#0e1a2b; --muted:#5b6677; --line:#e7e1d5;
+  --head:#001a3d; --navy-l:#003781; --gold-d:#8a6d2f; --ink-2:#3a4657;
   --on-dark:#ffffff; --on-dark-muted:rgba(255,255,255,.72); --line-dark:rgba(255,255,255,.14);
   --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
   --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -39,7 +40,7 @@ a{color:inherit}
 .eyebrow{display:inline-flex;align-items:center;gap:12px;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 18px}
 .eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
 h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.005em;margin:0}
-h2{font-size:clamp(32px,4.4vw,48px);line-height:1.08;color:var(--navy-900)}
+h2{font-size:clamp(32px,4.4vw,48px);line-height:1.08;color:var(--head)}
 h2 em,h1 em{font-style:italic;font-weight:500;color:var(--gold)}
 .lead{font-size:18px;color:var(--muted);max-width:620px}
 .dark{background:var(--navy-900);color:var(--on-dark)}
@@ -63,7 +64,7 @@ section{position:relative}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold-2)}
 .btn-navy{background:var(--navy);color:#fff}
 .btn-navy:hover{background:var(--navy-800)}
-.btn-line{border-color:var(--navy);color:var(--navy);background:transparent}
+.btn-line{border-color:var(--navy-l);color:var(--navy-l);background:transparent}
 .btn-line:hover{background:var(--navy);color:#fff}
 
 /* ---------- header ---------- */
@@ -81,9 +82,11 @@ section{position:relative}
 .menu-btn{width:44px;height:44px;border:1px solid var(--line-dark);background:transparent;color:#fff;border-radius:2px;display:grid;place-items:center;cursor:pointer}
 @media (min-width:1024px){.nav{display:flex}.menu-btn{display:none}}
 .mnav{position:fixed;inset:0;z-index:60;background:var(--navy-950);color:#fff;display:flex;flex-direction:column;padding:24px var(--pad) 40px;
-  transform:translateY(-100%);transition:transform .35s ease;visibility:hidden}
+  transform:translateY(-100%);transition:transform .35s ease;visibility:hidden;overflow-y:auto;overscroll-behavior:contain}
+@media (max-height:760px){.mnav a.l{font-size:26px;padding:9px 0}.mnav .btn{margin-top:18px}}
 .mnav.open{transform:none;visibility:visible}
-.mnav-top{display:flex;justify-content:space-between;align-items:center;height:48px;margin-bottom:28px}
+.mnav-top{display:flex;justify-content:space-between;align-items:center;gap:12px;height:48px;margin-bottom:28px}
+.mnav-brand{margin-right:auto}
 .mnav a.l{display:block;font:500 32px/1.2 var(--serif);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--line-dark)}
 .mnav .btn{margin-top:28px}
 
@@ -124,16 +127,16 @@ section{position:relative}
 
 /* ---------- intro / pillars ---------- */
 .intro{background:var(--ivory)}
-.quote{font:500 clamp(28px,3.6vw,42px)/1.22 var(--serif);color:var(--navy-900);max-width:900px;margin:0 auto;text-align:center}
+.quote{font:500 clamp(28px,3.6vw,42px)/1.22 var(--serif);color:var(--head);max-width:900px;margin:0 auto;text-align:center}
 .quote em{color:var(--gold);font-style:italic}
 .pillars{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px}
 .pillar{background:var(--ivory);padding:30px 26px}
 .pillar .n{font:600 14px/1 var(--serif);color:var(--gold);letter-spacing:.1em}
-.pillar h3{font-size:26px;color:var(--navy-900);margin:10px 0 8px}
+.pillar h3{font-size:26px;color:var(--head);margin:10px 0 8px}
 .pillar p{margin:0;color:var(--muted);font-size:15px}
 @media (min-width:820px){.pillars{grid-template-columns:repeat(3,1fr)}}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:56px;text-align:center}
-.stat b{display:block;font:600 clamp(38px,5vw,52px)/1.05 var(--serif);color:var(--navy)}
+.stat b{display:block;font:600 clamp(38px,5vw,52px)/1.05 var(--serif);color:var(--navy-l)}
 .stat span{font-size:14px;color:var(--muted)}
 @media (min-width:820px){.stats{grid-template-columns:repeat(4,1fr)}}
 
@@ -148,7 +151,7 @@ section{position:relative}
 .checks{list-style:none;padding:0;margin:26px 0 30px;display:grid;gap:12px}
 .checks li{display:flex;gap:12px;align-items:flex-start}
 .checks svg{flex:none;width:20px;height:20px;color:var(--gold);margin-top:3px}
-.sign{font:italic 500 30px/1 var(--serif);color:var(--navy)}
+.sign{font:italic 500 30px/1 var(--serif);color:var(--navy-l)}
 @media (min-width:960px){.about-grid{grid-template-columns:.9fr 1.1fr;gap:80px}}
 
 /* ---------- services ---------- */
@@ -157,12 +160,12 @@ section{position:relative}
 @media (min-width:1080px){.svc-grid{grid-template-columns:repeat(3,1fr)}}
 .svc{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:30px 28px;display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s,border-color .25s}
 .svc:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:#d9cfbd}
-.svc .ic{width:52px;height:52px;border-radius:50%;background:var(--gold-soft);color:var(--navy);display:grid;place-items:center;margin-bottom:22px}
+.svc .ic{width:52px;height:52px;border-radius:50%;background:var(--gold-soft);color:var(--navy-l);display:grid;place-items:center;margin-bottom:22px}
 .svc .ic svg{width:24px;height:24px}
-.svc h3{font-size:27px;line-height:1.15;color:var(--navy-900);margin-bottom:10px}
+.svc h3{font-size:27px;line-height:1.15;color:var(--head);margin-bottom:10px}
 .svc p{color:var(--muted);margin:0 0 18px;font-size:15.5px}
 .svc details{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
-.svc summary{cursor:pointer;list-style:none;font-weight:600;font-size:14.5px;color:var(--navy);display:flex;justify-content:space-between;align-items:center}
+.svc summary{cursor:pointer;list-style:none;font-weight:600;font-size:14.5px;color:var(--navy-l);display:flex;justify-content:space-between;align-items:center}
 .svc summary::-webkit-details-marker{display:none}
 .svc summary::after{content:"+";font:400 22px/1 var(--sans);color:var(--gold)}
 .svc details[open] summary::after{content:"–"}
@@ -200,7 +203,7 @@ section{position:relative}
 @media (min-width:720px){.fact-grid{grid-template-columns:1fr 1fr}}
 @media (min-width:1080px){.fact-grid{grid-template-columns:repeat(4,1fr)}}
 .fact{background:var(--paper);border:1px solid var(--line);padding:28px 24px;box-shadow:var(--shadow)}
-.fact b{display:block;font:600 40px/1.05 var(--serif);color:var(--navy);margin-bottom:12px}
+.fact b{display:block;font:600 40px/1.05 var(--serif);color:var(--navy-l);margin-bottom:12px}
 .fact p{margin:0;color:var(--muted);font-size:15px}
 
 /* ---------- calculators ---------- */
@@ -214,14 +217,14 @@ section{position:relative}
 @media (min-width:900px){.calc.on{grid-template-columns:1.05fr .95fr}}
 .calc-in{padding:28px 22px;background:var(--paper)}
 @media (min-width:720px){.calc-in{padding:36px}}
-.calc-in h3{font-size:30px;color:var(--navy-900);margin-bottom:6px}
+.calc-in h3{font-size:30px;color:var(--head);margin-bottom:6px}
 .calc-in .hint{color:var(--muted);font-size:14.5px;margin:0 0 24px}
 .field{margin-bottom:18px}
 .field label{display:block;font-weight:600;font-size:14px;margin-bottom:7px}
 .field small{display:block;color:var(--muted);font-size:12.5px;margin-top:5px}
 .inp{position:relative}
 .inp input,.field select{width:100%;font:500 16px/1.2 var(--sans);color:var(--ink);background:var(--ivory);border:1px solid var(--line);border-radius:3px;padding:13px 14px}
-.inp input:focus,.field select:focus{outline:2px solid var(--navy-500);outline-offset:1px;background:#fff}
+.inp input:focus,.field select:focus{outline:2px solid var(--navy-500);outline-offset:1px;background:var(--paper)}
 .inp.eur input{padding-left:32px}
 .inp.eur::before{content:"€";position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:500}
 .inp.pct input{padding-right:34px}
@@ -229,7 +232,7 @@ section{position:relative}
 .row2{display:grid;gap:0 16px}
 @media (min-width:520px){.row2{grid-template-columns:1fr 1fr}}
 .chk{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;margin:4px 0 12px;cursor:pointer}
-.chk input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--navy)}
+.chk input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--navy-l)}
 .chk.off{opacity:.45;pointer-events:none}
 .calc-out{background:linear-gradient(165deg,var(--navy-900),var(--navy-800));color:#fff;padding:28px 22px;position:relative;overflow:hidden}
 @media (min-width:720px){.calc-out{padding:36px}}
@@ -275,7 +278,7 @@ section{position:relative}
 .heir .inp.pct input:disabled{color:var(--ink);opacity:1;background:#efebe3}
 .heir select{width:100%;font:500 14px/1.2 var(--sans);color:var(--ink);background:var(--ivory);border:1px solid var(--line);border-radius:3px;padding:9px 8px}
 .heir .dis{display:flex;justify-content:center}
-.heir .dis input{width:18px;height:18px;accent-color:var(--navy)}
+.heir .dis input{width:18px;height:18px;accent-color:var(--navy-l)}
 .heirs .sum{font-size:13px;color:var(--muted);text-align:right;padding-right:64px}
 .heirs .sum.bad{color:#a5422f;font-weight:600}
 .heirs .none{font-size:14px;color:var(--muted);margin:4px 0}
@@ -318,9 +321,9 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 @media (min-width:720px){.calc-x{padding:40px 36px 32px}}
 .cx-cols{display:grid;gap:26px}
 @media (min-width:900px){.cx-cols{grid-template-columns:repeat(3,1fr);gap:36px}}
-.cx-cols h4{font:600 22px/1.2 var(--serif);color:var(--navy-900);margin:0 0 10px;padding-top:14px;border-top:2px solid var(--gold)}
-.cx-cols p{margin:0;font-size:15px;color:#3a4657}
-.cx-cols b{color:var(--navy-900)}
+.cx-cols h4{font:600 22px/1.2 var(--serif);color:var(--head);margin:0 0 10px;padding-top:14px;border-top:2px solid var(--gold)}
+.cx-cols p{margin:0;font-size:15px;color:var(--ink-2)}
+.cx-cols b{color:var(--head)}
 .xnotes-t{margin:32px 0 12px;font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
 .xnotes{margin:0;padding-left:20px;display:grid;gap:8px;font-size:13.5px;line-height:1.55;color:var(--muted)}
 .xnotes li::marker{color:var(--gold);font-weight:600}
@@ -337,7 +340,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .calc-disc p{margin:0}
 .calc-disc b{color:var(--ink)}
 .consent{font-size:13px;line-height:1.5;color:var(--muted);margin:4px 0 14px}
-.consent a{color:var(--navy)}
+.consent a{color:var(--navy-l)}
 .ftr .legal p.k{color:#fff}
 .legal-links{display:flex;flex-wrap:wrap;gap:6px 18px;padding-top:6px}
 .legal-links a{color:var(--gold-2);text-decoration:underline;text-underline-offset:3px}
@@ -362,9 +365,9 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .post-num small{display:block;font:500 14px/1.4 var(--sans);color:var(--on-dark-muted);margin-top:8px;max-width:300px}
 .post-b{display:flex;flex-direction:column;flex:1;padding:24px 24px 22px}
 .post-meta{margin:0 0 10px;font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
-.post h3{font-size:27px;line-height:1.15;color:var(--navy-900);margin:0 0 10px}
-.post-b>p:not(.post-meta){margin:0 0 20px;color:#3a4657;font-size:15.5px}
-.post .read{margin-top:auto;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:0;border:0;background:none;font:600 14.5px/1.2 var(--sans);color:var(--navy);text-decoration:none;cursor:pointer}
+.post h3{font-size:27px;line-height:1.15;color:var(--head);margin:0 0 10px}
+.post-b>p:not(.post-meta){margin:0 0 20px;color:var(--ink-2);font-size:15.5px}
+.post .read{margin-top:auto;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:0;border:0;background:none;font:600 14.5px/1.2 var(--sans);color:var(--navy-l);text-decoration:none;cursor:pointer}
 .post .read svg{width:18px;height:18px;color:var(--gold);transition:transform .25s}
 .post .read:hover svg{transform:translateX(5px)}
 @media (min-width:1080px){
@@ -382,8 +385,8 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 @media (min-width:1080px){.post.follow.wide{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;gap:24px}.post.follow.wide p{margin:6px 0 0}}
 /* elementi dentro gli articoli */
 .r-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin:30px 0;background:var(--line);border:1px solid var(--line)}
-.r-stats div{background:#fff;padding:20px 14px;text-align:center}
-.r-stats b{display:block;font:600 40px/1 var(--serif);font-variant-numeric:lining-nums;color:var(--navy)}
+.r-stats div{background:var(--paper);padding:20px 14px;text-align:center}
+.r-stats b{display:block;font:600 40px/1 var(--serif);font-variant-numeric:lining-nums;color:var(--navy-l)}
 .r-stats span{display:block;margin-top:8px;font-size:13.5px;line-height:1.4;color:var(--muted)}
 .r-cta{margin:34px 0 18px;padding:24px 24px 26px;background:linear-gradient(160deg,var(--navy-900),var(--navy));color:#fff;border-radius:3px}
 .r-cta p{margin:0 0 18px;color:#e9eef5}
@@ -395,7 +398,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 /* ---------- tools (pagine di analisi) ---------- */
 .tools-sec{overflow:hidden}
 .tools-sec .gl{opacity:.1}
-.svc .kw{margin:auto 0 16px;font-size:11px;line-height:1.7;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:#86683a}
+.svc .kw{margin:auto 0 16px;font-size:11px;line-height:1.7;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-d)}
 .svc .kw span{white-space:nowrap}
 .svc .kw i{font-style:normal;color:var(--gold);margin:0 .15em}
 .svc .kw + .read{margin-top:0}
@@ -418,7 +421,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 @media (min-width:960px){.faq-grid{grid-template-columns:.8fr 1.2fr;gap:72px}}
 .acc details{border-bottom:1px solid var(--line)}
 .acc details:first-child{border-top:1px solid var(--line)}
-.acc summary{cursor:pointer;list-style:none;padding:22px 0;display:flex;justify-content:space-between;gap:20px;font:600 22px/1.25 var(--serif);color:var(--navy-900)}
+.acc summary{cursor:pointer;list-style:none;padding:22px 0;display:flex;justify-content:space-between;gap:20px;font:600 22px/1.25 var(--serif);color:var(--head)}
 .acc summary::-webkit-details-marker{display:none}
 .acc summary::after{content:"+";flex:none;font:300 28px/0.9 var(--sans);color:var(--gold)}
 .acc details[open] summary::after{content:"–"}
@@ -438,15 +441,15 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .ccard b{font-weight:600}
 .form{background:var(--paper);color:var(--ink);padding:30px 24px;border-radius:var(--r)}
 @media (min-width:720px){.form{padding:38px}}
-.form h3{font-size:30px;color:var(--navy-900);margin-bottom:6px}
+.form h3{font-size:30px;color:var(--head);margin-bottom:6px}
 .form>p{color:var(--muted);margin:0 0 22px;font-size:15px}
-.form textarea{width:100%;min-height:110px;font:500 16px/1.4 var(--sans);background:var(--ivory);border:1px solid var(--line);border-radius:3px;padding:13px 14px;resize:vertical}
+.form textarea{width:100%;min-height:110px;font:500 16px/1.4 var(--sans);color:var(--ink);background:var(--ivory);border:1px solid var(--line);border-radius:3px;padding:13px 14px;resize:vertical}
 .form .btn{width:100%;margin-top:6px}
 .form .priv{font-size:12.5px;color:var(--muted);margin:12px 0 0}
 .links{display:grid;gap:10px;margin-top:20px}
 .lnk{display:flex;align-items:center;gap:14px;padding:14px 16px;color:var(--ink);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;background:var(--paper);transition:border-color .2s}
 .lnk:hover{border-color:var(--gold)}
-.lnk .ic{flex:none;width:38px;height:38px;border-radius:50%;background:var(--gold-soft);color:var(--navy);display:grid;place-items:center}
+.lnk .ic{flex:none;width:38px;height:38px;border-radius:50%;background:var(--gold-soft);color:var(--navy-l);display:grid;place-items:center}
 .lnk .ic svg{width:18px;height:18px}
 .lnk b{display:block;font-weight:600;font-size:15px}
 .lnk small{color:var(--muted);font-size:13px}
@@ -464,7 +467,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .ftr .legal p{margin:0 0 10px}
 .ftr-tools{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
 .social{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-.soc{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--navy);text-decoration:none;transition:background .2s,border-color .2s,color .2s}
+.soc{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--navy-l);text-decoration:none;transition:background .2s,border-color .2s,color .2s}
 .soc:hover{border-color:var(--gold);background:var(--gold-soft)}
 .soc svg{width:18px;height:18px}
 .ftr .soc,.mnav .soc{border-color:var(--line-dark);color:var(--gold-2)}
@@ -486,7 +489,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ---------- service article buttons ---------- */
-.svc .read{margin-top:auto;display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 0 0;border:0;border-top:1px solid var(--line);background:none;font:600 14.5px/1.2 var(--sans);color:var(--navy);cursor:pointer;text-align:left}
+.svc .read{margin-top:auto;display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 0 0;border:0;border-top:1px solid var(--line);background:none;font:600 14.5px/1.2 var(--sans);color:var(--navy-l);cursor:pointer;text-align:left}
 .svc .read svg{width:18px;height:18px;color:var(--gold);transition:transform .25s}
 .svc .read:hover svg,.svc .read:focus-visible svg{transform:translateX(5px)}
 .svc.feat .read{border-color:var(--line-dark);color:var(--gold-2)}
@@ -508,26 +511,26 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .r-hero h2{color:#fff;font-size:clamp(32px,5.4vw,46px);line-height:1.08}
 .r-hero .lead{color:var(--on-dark-muted);margin:18px 0 0;font-size:17.5px}
 .r-meta{margin:22px 0 0;font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2)}
-.r-body{display:block;max-width:688px;margin:0 auto;padding:40px 24px 16px;font-size:17px;line-height:1.78;color:#26313f}
+.r-body{display:block;max-width:688px;margin:0 auto;padding:40px 24px 16px;font-size:17px;line-height:1.78;color:var(--ink-2)}
 .r-body>p:first-child::first-letter{float:left;font:600 66px/.82 var(--serif);color:var(--gold);padding:7px 10px 0 0}
 .r-body p{margin:0 0 18px}
-.r-body h3{font-size:27px;line-height:1.2;color:var(--navy-900);margin:38px 0 12px}
+.r-body h3{font-size:27px;line-height:1.2;color:var(--head);margin:38px 0 12px}
 .r-body ul{margin:0 0 18px;padding-left:20px}
 .r-body li{margin-bottom:10px}
 .r-body li::marker{color:var(--gold)}
-.r-body strong{color:var(--navy-900)}
-.r-body a{color:var(--navy);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
-.r-body blockquote{margin:34px 0;padding:6px 0 6px 24px;border-left:2px solid var(--gold);font:italic 500 clamp(23px,3vw,27px)/1.35 var(--serif);color:var(--navy)}
+.r-body strong{color:var(--head)}
+.r-body a{color:var(--navy-l);font-weight:600;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+.r-body blockquote{margin:34px 0;padding:6px 0 6px 24px;border-left:2px solid var(--gold);font:italic 500 clamp(23px,3vw,27px)/1.35 var(--serif);color:var(--navy-l)}
 .r-body blockquote span{display:block;margin-top:12px;font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
 .r-note-inline{font-size:14px;font-style:italic;color:var(--muted)}
 .r-sum{background:var(--paper);border:1px solid var(--line);padding:30px 28px 18px;margin:38px 0 10px}
 .r-sum h4{margin:0 0 14px;font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .r-sum ul{margin:0}
 .r-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;max-width:688px;margin:0 auto;padding:26px 24px 36px;border-top:1px solid var(--line)}
-.r-next{display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:330px;padding:4px 0;border:0;background:none;color:var(--navy-900);text-align:right;cursor:pointer}
+.r-next{display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:330px;padding:4px 0;border:0;background:none;color:var(--head);text-align:right;cursor:pointer}
 .r-next small{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
 .r-next b{font:600 20px/1.2 var(--serif)}
-.r-next:hover b{color:var(--navy)}
+.r-next:hover b{color:var(--navy-l)}
 .r-note{flex-basis:100%;margin:4px 0 0;font-size:12.5px;color:var(--muted)}
 @media (max-width:719px){.r-foot .btn{width:100%}.r-next{align-items:flex-start;text-align:left;max-width:none}}
 @media (min-width:720px){.r-hero{padding:60px 48px 52px}.r-body{padding:48px 24px 16px}}
@@ -551,6 +554,226 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .in .lc-curve{stroke-dashoffset:0}
 .in .lc-area,.in .lc-pt{opacity:1}
 
+/* ---------- cornice, linee e cerchi: meno vuoto nelle sezioni chiare ---------- */
+.frame{position:fixed;inset:0 0 0 0;pointer-events:none;z-index:30;display:none;--fr-c:rgba(0,36,86,.13)}
+@media (min-width:1280px){.frame{display:block}}
+.frame i{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(transparent,var(--fr-c) 10%,var(--fr-c) 90%,transparent)}
+.frame i:first-child{left:30px}
+.frame i:last-child{right:30px}
+.frame b{position:absolute;width:11px;height:11px;opacity:.9}
+.frame b::before,.frame b::after{content:"";position:absolute;background:var(--gold);opacity:.55}
+.frame b::before{left:5px;top:0;width:1px;height:11px}
+.frame b::after{left:0;top:5px;width:11px;height:1px}
+.frame b:nth-of-type(1){left:25px;top:84px}
+.frame b:nth-of-type(2){right:25px;top:84px}
+.frame b:nth-of-type(3){left:25px;bottom:84px}
+.frame b:nth-of-type(4){right:25px;bottom:84px}
+/* filo sottile fra due sezioni chiare vicine */
+.sec:not(.dark):not(.band)+.sec:not(.dark):not(.band)::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
+  width:min(calc(100% - 2*var(--pad)),var(--wrap));height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent)}
+.has-dial{overflow:hidden}
+.dial{position:absolute;pointer-events:none;width:clamp(240px,32vw,440px);aspect-ratio:1;color:var(--gold);opacity:.5;
+  transform:translate3d(calc(var(--px,0)*14px),calc(var(--py,0)*14px),0);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.dial svg{width:100%;height:100%;fill:none;stroke:currentColor;overflow:visible;
+  transform:rotate(calc(var(--px,0)*5deg));transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.d-r{stroke:currentColor;stroke-width:1;opacity:.5}
+.d-r2{opacity:.3;stroke-dasharray:2 7}
+.d-r3{opacity:.22}
+.d-tk path{stroke:currentColor;stroke-width:1;opacity:.45}
+.d-x{stroke:currentColor;stroke-width:1;opacity:.16}
+.d-or circle{fill:currentColor;stroke:none;opacity:.85}
+.d-tk,.d-or,.d-or2{transform-box:view-box;transform-origin:50% 50%}
+.d-tk{animation:spin 240s linear infinite}
+.d-or{animation:spin 54s linear infinite}
+.d-or2{animation:spin 32s linear infinite reverse}
+#piramide .dial{right:-7%;top:30px}
+#faq .dial{left:-14%;bottom:-12%}
+#recensioni .dial{right:-10%;bottom:-14%;opacity:.42}
+#canale .dial{right:-4%;top:-16%;color:#5ec498;opacity:.42}
+#calcolatori .dial{left:-15%;top:120px;opacity:.38}
+@media (max-width:860px){.dial{opacity:.3;width:clamp(200px,52vw,300px)}}
+@media (prefers-reduced-motion:reduce){.dial,.dial svg{transition:none}.d-tk,.d-or,.d-or2{animation:none}}
+
+/* ---------- tema scuro ---------- */
+:root[data-theme="dark"]{
+  --ivory:#07152b; --paper:#0c1c35; --ink:#e9eff7; --ink-2:#c7d3e3; --muted:#93a4ba; --line:rgba(255,255,255,.14);
+  --head:#f1f5fb; --navy-l:#9ec5ff; --gold-d:#d8bd86; --gold-soft:rgba(196,160,98,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 18px 40px -18px rgba(0,0,0,.9);
+  color-scheme:dark;
+}
+:root[data-theme="dark"] .dark{background:#04122a;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+:root[data-theme="dark"] .svc.feat{background:#04132c;border-color:rgba(196,160,98,.3)}
+:root[data-theme="dark"] .tab[aria-selected="true"],:root[data-theme="dark"] .modo button[aria-pressed="true"],
+:root[data-theme="dark"] .aud-sw button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--navy-950)}
+:root[data-theme="dark"] .btn-navy{background:var(--navy-500)}
+:root[data-theme="dark"] .btn-navy:hover{background:var(--navy)}
+:root[data-theme="dark"] .ins-cta{background:#04132c;border:1px solid var(--line-dark)}
+:root[data-theme="dark"] .stars{color:#f0bb46}
+:root[data-theme="dark"] .gridlines{--gl-c:rgba(158,197,255,.13)}
+:root[data-theme="dark"] .frame{--fr-c:rgba(220,194,140,.16)}
+:root[data-theme="dark"] .splash{background:var(--navy-950)}
+/* interruttore del tema */
+.thm{flex:none;width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line-dark);
+  background:transparent;color:#fff;border-radius:50%;cursor:pointer;transition:border-color .2s,color .2s}
+.thm:hover,.thm:focus-visible{border-color:var(--gold);color:var(--gold-2)}
+.thm svg{width:19px;height:19px}
+.thm .t-moon,:root[data-theme="dark"] .thm .t-sun{display:none}
+:root[data-theme="dark"] .thm .t-moon{display:block}
+
+/* ---------- bisogni: ciclo di vita ---------- */
+.cv-legend{display:flex;flex-wrap:wrap;gap:14px 28px;margin:0 0 22px}
+.cv-k{position:relative;padding-left:20px;font:600 13.5px/1.3 var(--sans)}
+.cv-k small{display:block;font-weight:400;font-size:12.5px;color:var(--on-dark-muted)}
+.cv-k::before{content:"";position:absolute;left:0;top:5px;width:11px;height:11px;border-radius:50%;background:currentColor}
+.cv-k-fin{color:var(--gold-2)}
+.cv-k-pro{color:#7ecdab}
+.cv-k-cur{color:#fff}
+.cv-k-cur::before{top:9px;height:2px;width:14px;border-radius:0;background:var(--gold)}
+.cv-wrap{position:relative;border:1px solid var(--line-dark);border-radius:var(--r);background:rgba(255,255,255,.03);padding:10px 6px}
+.cv-scroll{overflow-x:auto;scrollbar-width:thin}
+.cv-scroll .cv{display:block;width:100%;min-width:940px;height:auto}
+.cv-hint{margin:2px 10px 4px;text-align:right;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-muted)}
+.cv text{font-family:var(--sans)}
+.cv-ph{font-size:11.5px;font-weight:600;letter-spacing:.2em;fill:var(--gold-2)}
+.cv-ph-l{fill:none;stroke:rgba(220,194,140,.45);stroke-width:1}
+.cv-ax{fill:none;stroke:rgba(255,255,255,.4);stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.cv-axl{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;fill:rgba(255,255,255,.55)}
+.cv-div{stroke:rgba(255,255,255,.16);stroke-width:1;stroke-dasharray:3 6}
+.cv-div-s{stroke:rgba(220,194,140,.5);stroke-dasharray:5 5}
+.cv-area{fill:rgba(196,160,98,.09)}
+.cv-curve{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.2s cubic-bezier(.6,0,.2,1) .2s}
+.in .cv-curve{stroke-dashoffset:0}
+.cv-l{opacity:0;transition:opacity .6s ease;transition-delay:calc(.5s + var(--i)*.16s)}
+.in .cv-l{opacity:1}
+.cv-l text{font-size:13.5px;font-weight:500}
+.cv-l path{fill:none;stroke-width:1}
+.cv-fin text{fill:var(--gold-2)}
+.cv-fin circle{fill:var(--gold)}
+.cv-fin path{stroke:rgba(220,194,140,.5)}
+.cv-pro text{fill:#8fd6b7}
+.cv-pro circle{fill:#5cba93}
+.cv-pro path{stroke:rgba(126,205,171,.5)}
+.cv-stage{font-size:12.5px;fill:rgba(255,255,255,.6)}
+.cv-cols{margin-top:34px}
+.dark .cx-cols h4{color:#fff}
+.dark .cx-cols p{color:var(--on-dark-muted)}
+@media (min-width:860px){.cv-hint{display:none}.cv-wrap{padding:16px 14px}}
+@media (min-width:900px){.cx-cols.cv-cols{grid-template-columns:repeat(3,1fr);gap:30px}}
+
+/* ---------- piramide dei bisogni ---------- */
+.aud{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 30px}
+.aud-l{font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.aud-sw{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--paper)}
+.aud-sw button{font:600 14px/1 var(--sans);border:0;background:transparent;color:var(--ink);padding:11px 22px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.aud-sw button[aria-pressed="true"]{background:var(--navy-900);color:#fff}
+[data-aud="fam"] .only-az,[data-aud="az"] .only-fam{display:none}
+.pyr-grid{display:grid;gap:34px;align-items:center}
+.pyr{margin:0;position:relative;padding-left:34px}
+.pyr-ax{position:absolute;left:0;top:8px;bottom:34px;width:22px;display:flex;align-items:center;justify-content:center;
+  writing-mode:vertical-rl;transform:rotate(180deg);font:600 10.5px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.pyr-ax i{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(var(--gold),rgba(196,160,98,.15));z-index:-1}
+.pyr-ax::after{content:"";position:absolute;left:50%;top:0;transform:translate(-50%,-1px);border:5px solid transparent;border-bottom-color:var(--gold);border-top:0}
+.pyr-lv{width:var(--w);margin:0 auto 4px;background:var(--c);color:#fff;padding:14px 16px;text-align:center;
+  clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);transition:transform .25s ease,filter .25s ease}
+.pyr-lv:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.pyr-lv b{display:block;font:600 16px/1.2 var(--sans)}
+.pyr-lv small{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.78;margin-top:3px}
+.pyr figcaption{margin-top:16px;font-size:13px;line-height:1.55;color:var(--muted);text-align:center}
+.pyr-list{list-style:none;margin:0;padding:0;counter-reset:p}
+.pyr-list li{position:relative;padding:0 0 18px 22px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.pyr-list li:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.pyr-list li::before{content:"";position:absolute;left:0;top:7px;width:10px;height:10px;background:var(--c);border-radius:2px}
+.pyr-list h3{font:600 21px/1.2 var(--serif);color:var(--head);margin:0 0 6px;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.pyr-list em{font:600 10.5px/1 var(--sans);font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-d)}
+.pyr-list p{margin:0;font-size:15px;color:var(--muted)}
+@media (min-width:900px){.pyr-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:50px}.pyr-lv{padding:17px 18px}.pyr-lv b{font-size:17px}}
+
+/* ---------- famiglie / aziende ---------- */
+.aud-deep{margin-top:52px}
+.aud-deep h3{font:600 clamp(26px,3.4vw,34px)/1.18 var(--serif);color:var(--head);margin:0 0 26px}
+.aud-deep h3 em{color:var(--gold-d);font-style:italic}
+.deep-grid{display:grid;gap:18px}
+.deep{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px}
+.deep .ic{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--gold-soft);color:var(--navy-l);margin-bottom:16px}
+.deep .ic svg{width:22px;height:22px}
+.deep h4{font:600 19px/1.25 var(--serif);color:var(--head);margin:0 0 8px}
+.deep p{margin:0;font-size:14.8px;color:var(--muted)}
+.deep a{color:var(--navy-l);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+@media (min-width:760px){.deep-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.deep-grid{grid-template-columns:repeat(4,1fr)}.deep.wide{grid-column:span 4;display:grid;grid-template-columns:auto 1fr;gap:4px 22px;align-items:center}
+  .deep.wide .ic{margin:0}.deep.wide h4{grid-column:2;margin:0}.deep.wide p{grid-column:2}}
+
+/* ---------- nobel ---------- */
+.nobel{margin-top:56px;border-top:1px solid var(--line);padding-top:30px}
+.nobel-grid{display:grid;gap:22px}
+.nb{position:relative;padding-left:18px;border-left:2px solid var(--gold)}
+.nb-y{display:block;font:600 10.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-d);margin-bottom:7px}
+.nb h4{font:600 20px/1.2 var(--serif);color:var(--head);margin:0 0 8px}
+.nb-i{margin:0 0 8px;font-size:14.5px;color:var(--ink)}
+.nb-c{margin:0;font-size:14px;color:var(--muted);font-style:italic}
+@media (min-width:760px){.nobel-grid{grid-template-columns:repeat(2,1fr);gap:26px 40px}}
+@media (min-width:1040px){.nobel-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- assicurarsi: richiamo ---------- */
+.ins-cta{margin-top:52px;background:var(--navy-900);color:#fff;border-radius:var(--r);padding:34px 28px;display:grid;gap:26px;align-items:center}
+.ins-n{text-align:center;border-bottom:1px solid var(--line-dark);padding-bottom:22px}
+.ins-n b{display:block;font:600 clamp(48px,8vw,66px)/1 var(--serif);color:var(--gold-2);font-variant-numeric:lining-nums}
+.ins-n span{display:block;margin:10px auto 0;max-width:330px;font-size:13.5px;line-height:1.5;color:var(--on-dark-muted)}
+.ins-b h3{font:600 clamp(25px,3.2vw,32px)/1.2 var(--serif);color:#fff;margin:0 0 12px}
+.ins-b p{margin:0 0 22px;color:var(--on-dark-muted);font-size:15.5px}
+.ins-b .eyebrow{margin-bottom:12px}
+@media (min-width:860px){.ins-cta{grid-template-columns:minmax(0,.62fr) minmax(0,1fr);gap:44px;padding:42px 44px}
+  .ins-n{border-bottom:0;border-right:1px solid var(--line-dark);padding:8px 36px 8px 0}}
+
+/* ---------- rete di professionisti ---------- */
+.net-grid{display:grid;gap:18px}
+.net{background:rgba(255,255,255,.04);border:1px solid var(--line-dark);border-radius:var(--r);padding:28px 24px;transition:background .25s,border-color .25s}
+.net:hover{background:rgba(255,255,255,.07);border-color:rgba(196,160,98,.45)}
+.net .ic{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:rgba(196,160,98,.16);color:var(--gold-2);margin-bottom:16px}
+.net .ic svg{width:22px;height:22px}
+.net h3{font:600 21px/1.2 var(--serif);color:#fff;margin:0 0 8px}
+.net p{margin:0;font-size:14.8px;color:var(--on-dark-muted)}
+.net-more{margin-top:34px;border-top:1px solid var(--line-dark);padding-top:26px}
+.net-more-t{margin:0 0 14px;font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2)}
+.net-tags{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0}
+.net-tags li{border:1px solid var(--line-dark);border-radius:999px;padding:9px 16px;font-size:13.5px;color:rgba(255,255,255,.88)}
+@media (min-width:720px){.net-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.net-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- recensioni ---------- */
+.reviews{background:var(--ivory)}
+.t-grid{display:grid;gap:20px}
+.t{margin:0;background:var(--paper);border:1px solid var(--line);padding:30px 26px;border-radius:var(--r);display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.t .q{font:600 56px/.6 var(--serif);color:var(--gold);height:24px}
+.t p{margin:10px 0 20px;font-size:15.5px;color:var(--ink)}
+.t footer{margin-top:auto;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px}
+.stars{color:#e0a526;letter-spacing:2px;font-size:15px}
+.g-card{margin-top:24px;display:grid;gap:20px;align-items:center;justify-items:center;text-align:center;background:var(--paper);border:1px solid var(--line);padding:28px 26px;border-radius:var(--r)}
+.g-ic{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--gold-soft)}
+.g-ic svg{width:26px;height:26px}
+.g-card h3{font:600 23px/1.25 var(--serif);color:var(--head);margin:0 0 6px}
+.g-card p{margin:0;color:var(--muted);font-size:14.5px}
+.g-card .btn{white-space:nowrap}
+@media (min-width:820px){.t-grid{grid-template-columns:repeat(3,1fr)}.g-card{grid-template-columns:auto 1fr auto;justify-items:start;text-align:left;padding:30px 36px;gap:30px}}
+
+/* ---------- canale whatsapp ---------- */
+.band{background:linear-gradient(135deg,var(--navy-950) 0%,var(--navy-900) 48%,#073b2f 140%);color:#fff;position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;right:-120px;top:-90px;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(94,196,152,.22),transparent 68%);pointer-events:none}
+.band h2{color:#fff}
+.band-grid{display:grid;gap:36px;position:relative}
+.band-t p{color:var(--on-dark-muted);max-width:560px}
+.band-cta{margin-top:10px}
+.band-cta svg{width:20px;height:20px}
+.band-note{margin:16px 0 0;font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.6);max-width:520px}
+.band-l{list-style:none;margin:0;padding:0;display:grid;gap:14px;align-content:center}
+.band-l li{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center;
+  background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-radius:var(--r);padding:18px 20px;font-size:14px;color:var(--on-dark-muted)}
+.band-l span{grid-row:span 2;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:rgba(94,196,152,.16);color:#7ecdab}
+.band-l span svg{width:21px;height:21px}
+.band-l b{font:600 16px/1.2 var(--sans);color:#fff}
+@media (min-width:900px){.band-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:60px;align-items:center}}
+
 /* ---------- decorative lines & ornaments ---------- */
 section>.wrap{position:relative}
 .grain::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;opacity:.07;mix-blend-mode:overlay}
@@ -558,7 +781,7 @@ section>.wrap{position:relative}
 /* architectural grid */
 .gridlines{position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:calc(min(100%,var(--wrap)) - 2*var(--pad) + 80px);pointer-events:none;display:none;--gl-c:rgba(0,36,86,.08)}
 .gridlines.h{--gl-c:rgba(255,255,255,.1)}
-@media (min-width:1200px){.gridlines{display:block}}
+@media (min-width:1024px){.gridlines{display:block}}
 .gridlines i{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(transparent,var(--gl-c) 15%,var(--gl-c) 85%,transparent);transform-origin:top}
 .gridlines i:nth-child(1){left:0}.gridlines i:nth-child(2){left:50%}.gridlines i:nth-child(3){left:100%}
 .gridlines.h i:nth-child(2){left:calc(40px + (100% - 80px)*.575)}
@@ -686,9 +909,11 @@ section>.wrap{position:relative}
     <nav class="nav" aria-label="Principale">
       <a href="#chi-sono">Chi sono</a>
       <a href="#servizi">Servizi</a>
+      <a href="#bisogni">Bisogni</a>
       <a href="#articoli">Articoli</a>
       <a href="#calcolatori">Calcolatori</a>
       <a href="#strumenti">Strumenti</a>
+      <button class="thm" type="button" data-thm aria-pressed="false" aria-label="Attiva il tema scuro" title="Tema chiaro o scuro"><svg class="t-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg><svg class="t-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
       <a class="btn btn-gold" data-book href="#contatti">Prenota un incontro</a>
     </nav>
     <button class="menu-btn" id="menuOpen" aria-label="Apri menu" aria-expanded="false">
@@ -700,21 +925,26 @@ section>.wrap{position:relative}
 
 <div class="mnav" id="mnav" aria-hidden="true">
   <div class="mnav-top">
-    <span class="brand"><span class="mono">MB</span><span><b>Marco Busetto</b></span></span>
+    <span class="brand mnav-brand"><span class="mono">MB</span><span><b>Marco Busetto</b></span></span>
+    <button class="thm" type="button" data-thm aria-pressed="false" aria-label="Attiva il tema scuro" title="Tema chiaro o scuro"><svg class="t-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg><svg class="t-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
     <button class="menu-btn" id="menuClose" aria-label="Chiudi menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
   </div>
   <a class="l" href="#chi-sono">Chi sono</a>
   <a class="l" href="#servizi">Servizi</a>
+  <a class="l" href="#bisogni">I bisogni</a>
   <a class="l" href="#metodo">Il metodo</a>
   <a class="l" href="#articoli">Articoli</a>
   <a class="l" href="#calcolatori">Calcolatori</a>
   <a class="l" href="#strumenti">Strumenti di analisi</a>
+  <a class="l" href="#recensioni">Recensioni</a>
   <a class="l" href="#contatti">Contatti</a>
   <a class="btn btn-gold" data-book href="#contatti">Prenota un incontro</a>
   <div class="social" data-social aria-label="Profili social" hidden></div>
 </div>
+
+<div class="frame" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 
 <main id="top">
   <!-- HERO -->
@@ -765,6 +995,7 @@ section>.wrap{position:relative}
 
   <!-- ABOUT -->
   <section class="sec" id="chi-sono">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap about-grid">
       <div class="about-photo rv">
         <svg class="gl" data-gl="about" viewBox="0 0 600 660" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
@@ -808,6 +1039,7 @@ section>.wrap{position:relative}
 
   <!-- SERVICES -->
   <section class="sec has-wm" id="servizi" style="background:var(--ivory)">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <span class="wm" aria-hidden="true">MB</span>
     <div class="wrap">
@@ -864,6 +1096,193 @@ section>.wrap{position:relative}
     </div>
   </section>
 
+  <!-- BISOGNI: CICLO DI VITA -->
+  <section class="sec dark needs grain" id="bisogni">
+    <svg class="gl" data-gl="method" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Il punto di partenza</p>
+        <h2>Ogni stagione della vita <em>ha i suoi bisogni</em></h2>
+        <p class="lead">Un piano non nasce da un prodotto, ma da una domanda: di che cosa hai bisogno, e quando. Sopra la linea i bisogni finanziari, sotto la linea quelli di protezione: camminano insieme, dal primo stipendio alla successione.</p>
+      </div>
+      <div class="cv-legend rv">
+        <span class="cv-k cv-k-fin">Bisogni finanziari<small>sopra la linea</small></span>
+        <span class="cv-k cv-k-pro">Bisogni di protezione<small>sotto la linea</small></span>
+        <span class="cv-k cv-k-cur">La curva<small>il patrimonio che si forma e poi si consuma</small></span>
+      </div>
+      <div class="cv-wrap rv">
+        <div class="cv-scroll"><svg class="cv" viewBox="0 0 1180 580" role="img" aria-labelledby="cvTitle cvDesc">
+<title id="cvTitle">I bisogni lungo il ciclo di vita</title>
+<desc id="cvDesc">Una curva che sale nella fase di accumulo e scende in quella di decumulo. Sopra la linea i bisogni finanziari: previdenza integrativa, finanziare la casa, capitale per i figli, investire per obiettivi, rendita integrativa, pianificare la successione. Sotto la linea i bisogni di protezione: mobilità, casa, salute, reddito, non autosufficienza, capitale.</desc>
+<path class="cv-ph-l" d="M90 96H685M90 90v12M685 90v12"/>
+<path class="cv-ph-l" d="M705 96H1120M705 90v12M1120 90v12"/>
+<text class="cv-ph" x="387" y="80" text-anchor="middle">FASE DI ACCUMULO</text>
+<text class="cv-ph" x="912" y="80" text-anchor="middle">FASE DI DECUMULO</text>
+<path class="cv-ax" d="M90 116V480H1134M1128 475l6 5-6 5M85 121l5-5 5 5"/>
+<text class="cv-axl" x="76" y="300" text-anchor="middle" transform="rotate(-90 76 300)">Capitale e bisogni</text>
+<text class="cv-axl" x="1128" y="506" text-anchor="end">Età</text>
+<path class="cv-div" d="M295 120V480"/>
+<path class="cv-div" d="M495 120V480"/>
+<path class="cv-div cv-div-s" d="M695 120V480"/>
+<path class="cv-div" d="M895 120V480"/>
+<path class="cv-area" d="M90 400C118.3 397.0 205.0 395.0 260 382C315.0 369.0 367.5 344.3 420 322C472.5 299.7 523.3 273.0 575 248C626.7 223.0 675.8 180.7 730 172C784.2 163.3 840.0 175.3 900 196C960.0 216.7 1058.3 279.3 1090 296L1090 480H90Z"/>
+<path class="cv-curve" pathLength="1" d="M90 400C118.3 397.0 205.0 395.0 260 382C315.0 369.0 367.5 344.3 420 322C472.5 299.7 523.3 273.0 575 248C626.7 223.0 675.8 180.7 730 172C784.2 163.3 840.0 175.3 900 196C960.0 216.7 1058.3 279.3 1090 296"/>
+<g class="cv-l cv-fin" style="--i:0">
+<path d="M175 386.9V352.9"/>
+<circle cx="175" cy="393.9" r="4.5"/>
+<text x="175" y="346.9" text-anchor="middle">Previdenza<tspan x="175" dy="17">integrativa</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:1">
+<path d="M345 346.9V312.9"/>
+<circle cx="345" cy="353.9" r="4.5"/>
+<text x="345" y="306.9" text-anchor="middle">Finanziare<tspan x="345" dy="17">la casa</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:2">
+<path d="M505 275.5V241.5"/>
+<circle cx="505" cy="282.5" r="4.5"/>
+<text x="505" y="235.5" text-anchor="middle">Capitale<tspan x="505" dy="17">per i figli</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:3">
+<path d="M645 200.7V166.7"/>
+<circle cx="645" cy="207.7" r="4.5"/>
+<text x="645" y="160.7" text-anchor="middle">Investire<tspan x="645" dy="17">per obiettivi</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:4">
+<path d="M825 168.2V134.2"/>
+<circle cx="825" cy="175.2" r="4.5"/>
+<text x="825" y="128.2" text-anchor="middle">Rendita<tspan x="825" dy="17">integrativa</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:5">
+<path d="M1020 248.7V214.7"/>
+<circle cx="1020" cy="255.7" r="4.5"/>
+<text x="1020" y="208.7" text-anchor="middle">Pianificare<tspan x="1020" dy="17">la successione</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:0">
+<path d="M262 388.5V405.5"/>
+<circle cx="262" cy="381.5" r="4.5"/>
+<text x="262" y="417.5" text-anchor="middle">Proteggere<tspan x="262" dy="17">la mobilità</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:1">
+<path d="M425 326.9V343.9"/>
+<circle cx="425" cy="319.9" r="4.5"/>
+<text x="425" y="355.9" text-anchor="middle">Proteggere<tspan x="425" dy="17">la casa</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:2">
+<path d="M575 255.0V272.0"/>
+<circle cx="575" cy="248.0" r="4.5"/>
+<text x="575" y="284.0" text-anchor="middle">Proteggere<tspan x="575" dy="17">la salute</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:3">
+<path d="M725 179.9V196.9"/>
+<circle cx="725" cy="172.9" r="4.5"/>
+<text x="725" y="208.9" text-anchor="middle">Proteggere<tspan x="725" dy="17">il reddito</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:4">
+<path d="M920 210.8V241.8"/>
+<circle cx="920" cy="203.8" r="4.5"/>
+<text x="920" y="253.8" text-anchor="middle">Non autosufficienza<tspan x="920" dy="17">(Long Term Care)</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:5">
+<path d="M1080 297.5V314.5"/>
+<circle cx="1080" cy="290.5" r="4.5"/>
+<text x="1080" y="326.5" text-anchor="middle">Tutelare<tspan x="1080" dy="17">i beneficiari</tspan></text></g>
+<text class="cv-stage" x="192" y="510" text-anchor="middle">Entrare nel<tspan x="192" dy="16">mondo del lavoro</tspan></text>
+<text class="cv-stage" x="395" y="510" text-anchor="middle">Formare<tspan x="395" dy="16">una famiglia</tspan></text>
+<text class="cv-stage" x="595" y="510" text-anchor="middle">Consolidare lavoro,<tspan x="595" dy="16">famiglia, incertezze</tspan></text>
+<text class="cv-stage" x="795" y="510" text-anchor="middle">Ritirarsi dal<tspan x="795" dy="16">mondo del lavoro</tspan></text>
+<text class="cv-stage" x="1005" y="510" text-anchor="middle">Preservare e<tspan x="1005" dy="16">trasmettere</tspan></text>
+</svg></div>
+        <p class="cv-hint" aria-hidden="true">Scorri il grafico &rarr;</p>
+      </div>
+      <div class="cx-cols cv-cols rv">
+        <div><h4>Fase di accumulo</h4><p>Dal primo stipendio alla maturità professionale il reddito cresce e con esso la capacità di risparmio. È il tempo in cui si costruisce: previdenza, casa, figli, investimenti. Ed è anche il tempo in cui si ha più da proteggere, perché il patrimonio più grande è ancora il reddito che verrà.</p></div>
+        <div><h4>Il punto di svolta</h4><p>Con la pensione il reddito da lavoro si ferma e il patrimonio comincia a essere speso. L'obiettivo cambia: non più accumulare, ma trasformare il capitale in una rendita che duri, senza esaurirsi troppo presto e senza rinunciare al tenore di vita.</p></div>
+        <div><h4>Fase di decumulo</h4><p>Negli ultimi decenni contano preservare e trasmettere: difendere il capitale da oscillazioni e inflazione, coprire il rischio di non autosufficienza e preparare la successione, perché arrivi a destinazione senza costi evitabili e senza conflitti.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIRAMIDE DEI BISOGNI -->
+  <section class="sec piramide has-dial" id="piramide" data-aud="fam">
+    <div class="dial" aria-hidden="true"><svg viewBox="0 0 240 240"><circle class="d-r" cx="120" cy="120" r="96"/><circle class="d-r d-r2" cx="120" cy="120" r="68"/><circle class="d-r d-r3" cx="120" cy="120" r="40"/><g class="d-tk"><path d="M120 12V34" transform="rotate(0 120 120)"/><path d="M120 18V30" transform="rotate(15 120 120)"/><path d="M120 18V30" transform="rotate(30 120 120)"/><path d="M120 18V30" transform="rotate(45 120 120)"/><path d="M120 18V30" transform="rotate(60 120 120)"/><path d="M120 18V30" transform="rotate(75 120 120)"/><path d="M120 12V34" transform="rotate(90 120 120)"/><path d="M120 18V30" transform="rotate(105 120 120)"/><path d="M120 18V30" transform="rotate(120 120 120)"/><path d="M120 18V30" transform="rotate(135 120 120)"/><path d="M120 18V30" transform="rotate(150 120 120)"/><path d="M120 18V30" transform="rotate(165 120 120)"/><path d="M120 12V34" transform="rotate(180 120 120)"/><path d="M120 18V30" transform="rotate(195 120 120)"/><path d="M120 18V30" transform="rotate(210 120 120)"/><path d="M120 18V30" transform="rotate(225 120 120)"/><path d="M120 18V30" transform="rotate(240 120 120)"/><path d="M120 18V30" transform="rotate(255 120 120)"/><path d="M120 12V34" transform="rotate(270 120 120)"/><path d="M120 18V30" transform="rotate(285 120 120)"/><path d="M120 18V30" transform="rotate(300 120 120)"/><path d="M120 18V30" transform="rotate(315 120 120)"/><path d="M120 18V30" transform="rotate(330 120 120)"/><path d="M120 18V30" transform="rotate(345 120 120)"/></g><path class="d-x" d="M120 2V238M2 120H238"/><g class="d-or"><circle cx="120" cy="24" r="4.5"/></g><g class="d-or d-or2"><circle cx="120" cy="52" r="3"/></g></svg></div>
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">La piramide dei bisogni</p>
+        <h2>Prima la base, <em>poi il vertice</em></h2>
+        <p class="lead">Ogni obiettivo ha un orizzonte temporale e, di conseguenza, il rischio che può sopportare. Si costruisce sempre dal basso: un livello regge solo se quello che lo sostiene è completo.</p>
+      </div>
+      <div class="aud rv">
+        <span class="aud-l">Stai guardando per</span>
+        <div class="aud-sw" role="group" aria-label="Scegli il punto di vista">
+          <button type="button" data-aud="fam" aria-pressed="true">Famiglie</button>
+          <button type="button" data-aud="az" aria-pressed="false">Aziende</button>
+        </div>
+      </div>
+      <div class="pyr-grid rv">
+        <figure class="pyr">
+          <span class="pyr-ax" aria-hidden="true"><i></i>Rischio</span>
+          <div class="pyr-lv" style="--w:34%;--c:#a2493a"><b>Extra rendimento</b><small>nessun orizzonte</small></div>
+          <div class="pyr-lv" style="--w:52%;--c:#bd7f2d"><b>Investimento</b><small>oltre 60 mesi</small></div>
+          <div class="pyr-lv" style="--w:70%;--c:#2d5f9e"><b>Riserva</b><small>24/36 mesi</small></div>
+          <div class="pyr-lv" style="--w:86%;--c:#14306b"><b>Liquidità</b><small>3/6 mesi</small></div>
+          <div class="pyr-lv" style="--w:100%;--c:#10573f"><b>Protezione</b><small>subito</small></div>
+          <figcaption>Il rischio cresce salendo, l'orizzonte temporale si allunga. Alla base i bisogni da coprire oggi.</figcaption>
+        </figure>
+        <ol class="pyr-list">
+          <li style="--c:#10573f"><h3>Protezione<em>subito</em></h3>
+            <p class="only-fam">Il reddito e le persone. Premorienza, invalidità, salute, non autosufficienza: eventi rari, ma capaci di cancellare in un giorno ciò che è stato costruito in vent'anni.</p>
+            <p class="only-az">La continuità dell'impresa. Persone chiave, beni strumentali, crediti verso i clienti, eventi catastrofali: i rischi che l'azienda non può assorbire da sola si trasferiscono a chi li sa gestire.</p></li>
+          <li style="--c:#14306b"><h3>Liquidità<em>immediato · 3/6 mesi</em></h3>
+            <p class="only-fam">Le spese di tutti i giorni e la ruota di scorta: alcuni mesi di uscite familiari sempre disponibili, per non dover smobilizzare un investimento nel momento sbagliato.</p>
+            <p class="only-az">La tesoreria operativa: fornitori, stipendi, imposte. Quanto serve davvero per lavorare senza tensioni, su conti remunerati invece che fermo a perdere valore.</p></li>
+          <li style="--c:#2d5f9e"><h3>Riserva<em>breve termine · 24/36 mesi</em></h3>
+            <p class="only-fam">I progetti già in agenda: l'auto, i lavori in casa, l'università dei figli. Strumenti prudenti e facilmente smobilizzabili, con una scadenza allineata alla spesa.</p>
+            <p class="only-az">Gli esborsi programmati: attrezzature, scadenze fiscali, acconti. Impieghi a basso rischio, con durata coerente con il piano di cassa.</p></li>
+          <li style="--c:#bd7f2d"><h3>Investimento<em>medio/lungo · oltre 60 mesi</em></h3>
+            <p class="only-fam">Gli obiettivi lontani: integrare la pensione, aiutare i figli, costruire il capitale da trasmettere. Qui il tempo lavora a tuo favore e le oscillazioni si possono sopportare.</p>
+            <p class="only-az">La liquidità strutturalmente in eccesso e il TFR: previdenza complementare, impieghi di medio periodo, efficienza fiscale. Risorse che non servono alla gestione corrente.</p></li>
+          <li style="--c:#a2493a"><h3>Extra rendimento<em>nessun orizzonte</em></h3>
+            <p class="only-fam">La parte che puoi permetterti di veder oscillare molto, e a lungo, senza toccare nessun obiettivo. Si affronta soltanto quando tutto il resto è già sistemato.</p>
+            <p class="only-az">Operazioni opportunistiche e finanza straordinaria: hanno senso solo quando continuità, tesoreria e impegni futuri sono già coperti.</p></li>
+        </ol>
+      </div>
+
+      <div class="aud-deep only-fam rv">
+        <h3>Con le famiglie, il piano è anche <em>una relazione</em></h3>
+        <div class="deep-grid">
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.2-4.5-7.2-9.6A4.1 4.1 0 0 1 12 7.4a4.1 4.1 0 0 1 7.2 3.5c0 5.1-7.2 9.6-7.2 9.6z"/></svg></span><h4>Un legame che dura</h4><p>Conosco la storia, i figli, i progetti e i timori. Il piano non è un documento firmato una volta: cambia quando cambia la vita, e per questo ci rivediamo con regolarità.</p></div>
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></span><h4>Strumenti professionali</h4><p>Analisi del portafoglio, stima della pensione futura, simulazioni successorie e reportistica leggibile. Gli stessi strumenti che uso con te li trovi, in forma semplificata, nei <a href="#calcolatori">calcolatori</a> di questo sito.</p></div>
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 0 1 9 9H3a9 9 0 0 1 9-9z"/><path d="M12 12v6.5a2.5 2.5 0 0 0 5 0"/></svg></span><h4>Accanto nelle scelte difficili</h4><p>Un lutto, una separazione, la vendita dell'azienda, un figlio che inizia a lavorare. Sono i momenti in cui le decisioni sul denaro pesano di più ed è utile avere qualcuno che ascolti prima di proporre.</p></div>
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 14.5a2 2 0 0 1-2 2H8l-4 3.5V6a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 12.5h5"/></svg></span><h4>Parlare di denaro in famiglia</h4><p>Preparare chi erediterà fa parte della pianificazione: coinvolgere i figli, spiegare le scelte, evitare che si trovino impreparati. Spesso è il passaggio che previene i conflitti.</p></div>
+        </div>
+      </div>
+
+      <div class="aud-deep only-az rv">
+        <h3>Con le aziende, si parte <em>dal bilancio</em></h3>
+        <div class="deep-grid">
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><h4>Le voci di bilancio, una per una</h4><p>Attivo e passivo: disponibilità liquide, crediti commerciali, immobilizzazioni, debiti finanziari, TFR, capitale e riserve. È lì che si vede dove il valore si ferma e dove può essere messo al lavoro.</p></div>
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg></span><h4>TFR e TFM</h4><p>Lasciare il TFR in azienda o destinarlo alla previdenza complementare cambia la fiscalità per il dipendente e i costi per l'impresa. Il trattamento di fine mandato degli amministratori merita la stessa attenzione. <a href="strumenti/tfr-fondi-pensione.html">Apri il simulatore</a>.</p></div>
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="1.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v5M18 9.5v5"/></svg></span><h4>Liquidità e tesoreria</h4><p>La cassa in eccesso ha un costo silenzioso: inflazione e imposta di bollo. Si organizza per scadenze, lasciando sempre disponibile quanto serve alla gestione corrente. <a href="strumenti/tfr-liquidita-aziendale.html">Apri il simulatore</a>.</p></div>
+          <div class="deep corners"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.3v5.9c0 4.8 3.2 9 7.5 10.3 4.3-1.3 7.5-5.5 7.5-10.3V5.3z"/><path d="m9.2 11.8 2 2 3.6-3.8"/></svg></span><h4>I rischi dell'impresa</h4><p>Crediti verso i clienti, beni strumentali, eventi catastrofali, persone chiave: si misura quali rischi l'azienda può sostenere da sola e quali conviene trasferire, anche alla luce dei nuovi obblighi di legge.</p></div>
+          <div class="deep corners wide"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.6" r="2.3"/><circle cx="5" cy="18.4" r="2.3"/><circle cx="19" cy="18.4" r="2.3"/><path d="m10.9 6.7-4.8 9.5M13.1 6.7l4.8 9.5M7.3 18.4h9.4"/></svg></span><h4>Una rete di professionisti</h4><p>Commercialista, avvocato, notaio, consulente del lavoro, specialisti di operazioni straordinarie e di gestione dei crediti: quando serve una competenza che non è la mia, la porto al tavolo e coordino il lavoro.</p></div>
+        </div>
+      </div>
+
+      <div class="nobel rv">
+        <p class="xnotes-t">Perché funziona: le basi teoriche</p>
+        <div class="nobel-grid">
+          <div class="nb"><span class="nb-y">Nobel 1985</span><h4>Franco Modigliani</h4><p class="nb-i">La teoria del ciclo di vita: si risparmia quando il reddito è alto per sostenere i consumi quando non lo sarà più.</p><p class="nb-c">Per questo il piano guarda a tutta la vita, non all'anno in corso.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 2002</span><h4>Daniel Kahneman</h4><p class="nb-i">Con Amos Tversky ha mostrato che una perdita pesa psicologicamente circa il doppio di un guadagno equivalente.</p><p class="nb-c">Per questo la protezione sta alla base: evitare un danno vale più che inseguire un rendimento.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 2017</span><h4>Richard Thaler</h4><p class="nb-i">La contabilità mentale: tendiamo a dividere il denaro in «conti» separati, ciascuno con il proprio scopo.</p><p class="nb-c">La piramide usa questa tendenza a tuo favore: a ogni obiettivo il suo salvadanaio e il suo orizzonte.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 1972</span><h4>Kenneth Arrow</h4><p class="nb-i">L'economia dell'incertezza: conviene trasferire a chi è attrezzato a sopportarli i rischi che per noi sarebbero insostenibili.</p><p class="nb-c">È la logica dell'assicurazione: una spesa certa e contenuta al posto di una perdita rara ma enorme.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 1990</span><h4>Harry Markowitz</h4><p class="nb-i">La diversificazione è l'unico «pasto gratis» della finanza: riduce il rischio senza sacrificare il rendimento atteso.</p><p class="nb-c">Per questo dentro ogni livello si distribuisce, invece di concentrare.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 1997</span><h4>Robert C. Merton</h4><p class="nb-i">Premiato per il modello di valutazione delle opzioni, ha poi dedicato il suo lavoro alla previdenza: ciò che conta non è il capitale accumulato, ma il reddito che potrà generare.</p><p class="nb-c">Per questo ragioniamo in rendita mensile, non solo in montante finale.</p></div>
+        </div>
+      </div>
+
+      <div class="ins-cta corners rv">
+        <div class="ins-n"><b>866 €</b><span>al mese: quanto riceverebbe dallo Stato Luca, 40 anni e 21.000 € lordi di stipendio, con un'invalidità totale</span></div>
+        <div class="ins-b">
+          <p class="eyebrow">Alla base della piramide</p>
+          <h3>Perché assicurarsi prima di investire</h3>
+          <p>Il patrimonio più prezioso non è sul conto: è la capacità di produrre reddito. Se un imprevisto la mette fuori gioco, la copertura pubblica lascia scoperta buona parte del tenore di vita, proprio quando le spese aumentano. Ecco i numeri, caso per caso.</p>
+          <button class="btn btn-gold read" type="button" data-art="assicurarsi">Leggi l'approfondimento<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <p class="sec-note">La piramide dei bisogni e il ciclo di vita sono schemi di pianificazione a scopo divulgativo: la composizione dei livelli, gli orizzonti indicati e gli strumenti adatti a ciascuno dipendono dalla situazione personale o aziendale e vanno definiti con un'analisi dedicata. I riferimenti agli studi citati hanno finalità illustrative e non costituiscono consulenza né raccomandazione.</p>
+    </div>
+  </section>
+
   <!-- METHOD -->
   <section class="sec dark method grain" id="metodo">
     <svg class="gl" data-gl="method" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
@@ -883,7 +1302,8 @@ section>.wrap{position:relative}
   </section>
 
   <!-- FACTS -->
-  <section class="sec facts">
+  <section class="sec facts" style="background:var(--ivory)">
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div class="sec-head center rv">
@@ -915,7 +1335,9 @@ section>.wrap{position:relative}
   </section>
 
   <!-- CALCULATORS -->
-  <section class="sec" id="calcolatori" data-cm="s">
+  <section class="sec has-dial" id="calcolatori" data-cm="s">
+    <div class="dial" aria-hidden="true"><svg viewBox="0 0 240 240"><circle class="d-r" cx="120" cy="120" r="96"/><circle class="d-r d-r2" cx="120" cy="120" r="68"/><circle class="d-r d-r3" cx="120" cy="120" r="40"/><g class="d-tk"><path d="M120 12V34" transform="rotate(0 120 120)"/><path d="M120 18V30" transform="rotate(15 120 120)"/><path d="M120 18V30" transform="rotate(30 120 120)"/><path d="M120 18V30" transform="rotate(45 120 120)"/><path d="M120 18V30" transform="rotate(60 120 120)"/><path d="M120 18V30" transform="rotate(75 120 120)"/><path d="M120 12V34" transform="rotate(90 120 120)"/><path d="M120 18V30" transform="rotate(105 120 120)"/><path d="M120 18V30" transform="rotate(120 120 120)"/><path d="M120 18V30" transform="rotate(135 120 120)"/><path d="M120 18V30" transform="rotate(150 120 120)"/><path d="M120 18V30" transform="rotate(165 120 120)"/><path d="M120 12V34" transform="rotate(180 120 120)"/><path d="M120 18V30" transform="rotate(195 120 120)"/><path d="M120 18V30" transform="rotate(210 120 120)"/><path d="M120 18V30" transform="rotate(225 120 120)"/><path d="M120 18V30" transform="rotate(240 120 120)"/><path d="M120 18V30" transform="rotate(255 120 120)"/><path d="M120 12V34" transform="rotate(270 120 120)"/><path d="M120 18V30" transform="rotate(285 120 120)"/><path d="M120 18V30" transform="rotate(300 120 120)"/><path d="M120 18V30" transform="rotate(315 120 120)"/><path d="M120 18V30" transform="rotate(330 120 120)"/><path d="M120 18V30" transform="rotate(345 120 120)"/></g><path class="d-x" d="M120 2V238M2 120H238"/><g class="d-or"><circle cx="120" cy="24" r="4.5"/></g><g class="d-or d-or2"><circle cx="120" cy="52" r="3"/></g></svg></div>
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Calcolatori</p>
@@ -1225,7 +1647,9 @@ section>.wrap{position:relative}
   </section>
 
   <!-- FAQ -->
-  <section class="sec" id="faq">
+  <section class="sec has-dial" id="faq">
+    <div class="dial" aria-hidden="true"><svg viewBox="0 0 240 240"><circle class="d-r" cx="120" cy="120" r="96"/><circle class="d-r d-r2" cx="120" cy="120" r="68"/><circle class="d-r d-r3" cx="120" cy="120" r="40"/><g class="d-tk"><path d="M120 12V34" transform="rotate(0 120 120)"/><path d="M120 18V30" transform="rotate(15 120 120)"/><path d="M120 18V30" transform="rotate(30 120 120)"/><path d="M120 18V30" transform="rotate(45 120 120)"/><path d="M120 18V30" transform="rotate(60 120 120)"/><path d="M120 18V30" transform="rotate(75 120 120)"/><path d="M120 12V34" transform="rotate(90 120 120)"/><path d="M120 18V30" transform="rotate(105 120 120)"/><path d="M120 18V30" transform="rotate(120 120 120)"/><path d="M120 18V30" transform="rotate(135 120 120)"/><path d="M120 18V30" transform="rotate(150 120 120)"/><path d="M120 18V30" transform="rotate(165 120 120)"/><path d="M120 12V34" transform="rotate(180 120 120)"/><path d="M120 18V30" transform="rotate(195 120 120)"/><path d="M120 18V30" transform="rotate(210 120 120)"/><path d="M120 18V30" transform="rotate(225 120 120)"/><path d="M120 18V30" transform="rotate(240 120 120)"/><path d="M120 18V30" transform="rotate(255 120 120)"/><path d="M120 12V34" transform="rotate(270 120 120)"/><path d="M120 18V30" transform="rotate(285 120 120)"/><path d="M120 18V30" transform="rotate(300 120 120)"/><path d="M120 18V30" transform="rotate(315 120 120)"/><path d="M120 18V30" transform="rotate(330 120 120)"/><path d="M120 18V30" transform="rotate(345 120 120)"/></g><path class="d-x" d="M120 2V238M2 120H238"/><g class="d-or"><circle cx="120" cy="24" r="4.5"/></g><g class="d-or d-or2"><circle cx="120" cy="52" r="3"/></g></svg></div>
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap faq-grid">
       <div class="rv">
         <p class="eyebrow">Domande frequenti</p>
@@ -1240,6 +1664,69 @@ section>.wrap{position:relative}
         <details><summary>Il primo incontro ha un costo?</summary><p>Il primo incontro è conoscitivo e senza impegno: serve a conoscerci e a capire se e come posso esserti utile.</p></details>
         <details><summary>Quanto sono affidabili i calcolatori?</summary><p>Forniscono stime indicative basate sulla normativa vigente e su ipotesi semplificate. Sono utili per orientarsi, ma non sostituiscono l'analisi del tuo caso specifico.</p></details>
       </div>
+    </div>
+  </section>
+
+  <!-- RETE DI PROFESSIONISTI -->
+  <section class="sec dark rete grain" id="rete">
+    <svg class="gl" data-gl="contact" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">Rete e collaborazioni</p>
+        <h2>Un interlocutore solo, <em>una rete intera</em></h2>
+        <p class="lead">La mia consulenza segue la filosofia dei family office: guardare al patrimonio a 360 gradi e tenere insieme gli aspetti finanziari, fiscali, assicurativi, legali e familiari. Non sostituisco i professionisti che già ti seguono: lavoro con loro, e quando serve una competenza che non è la mia la porto al tavolo.</p>
+      </div>
+      <div class="net-grid">
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><h3>Commercialisti</h3><p>Fiscalità personale e d'impresa, bilanci, assetti societari. Ogni scelta sul patrimonio ha un riflesso fiscale: lo verifichiamo prima di decidere, non dopo.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20h14M7 16.5h10l-.6-4.1a2 2 0 0 0-2-1.7H9.6a2 2 0 0 0-2 1.7z"/><path d="M12 10.7V8.4a2.4 2.4 0 1 0-2.4-2.4"/></svg></span><h3>Notai</h3><p>Testamenti, donazioni, patti di famiglia, atti societari e immobiliari. È con i loro atti che la pianificazione successoria prende forma e diventa opponibile.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14l-2.6 4.6a3.1 3.1 0 0 1-5.4 0z" /><path d="M12 4.8 5 8"/></svg></span><h3>Avvocati</h3><p>Diritto di famiglia e delle successioni, societario, contrattualistica. Quando ci sono assetti complessi o conflitti possibili, conviene prevenirli con chi li tratta ogni giorno.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.3v5.9c0 4.8 3.2 9 7.5 10.3 4.3-1.3 7.5-5.5 7.5-10.3V5.3z"/><path d="m9.2 11.8 2 2 3.6-3.8"/></svg></span><h3>Specialisti assicurativi</h3><p>Rami danni, responsabilità civile, coperture aziendali, salute e non autosufficienza: aree tecniche in cui mi affianco a chi le segue quotidianamente, per non lasciare scoperture né doppioni.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 19.5a6.2 6.2 0 0 1 12.4 0"/><circle cx="17.4" cy="9.4" r="2.4"/><path d="M16.4 14.4a5 5 0 0 1 4.8 5.1"/></svg></span><h3>Consulenti del lavoro</h3><p>TFR, welfare aziendale, piani per i dipendenti e per gli amministratori: la previdenza d'impresa funziona solo se è coerente con il costo del lavoro e con i contratti.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5.5h4V20"/></svg></span><h3>Professionisti dell'immobiliare</h3><p>Valutazioni, compravendite, locazioni e valorizzazione del patrimonio immobiliare, che per molte famiglie italiane è la parte più grande e meno liquida del patrimonio.</p></div>
+      </div>
+      <div class="net-more rv">
+        <p class="net-more-t">E quando il patrimonio lo richiede</p>
+        <ul class="net-tags">
+          <li>Operazioni straordinarie e passaggi societari</li>
+          <li>Gestione e assicurazione dei crediti commerciali</li>
+          <li>Arte e collezioni</li>
+          <li>Beni rifugio</li>
+          <li>Filantropia e iniziative benefiche</li>
+          <li>Tesoreria e finanziamenti d'impresa</li>
+        </ul>
+      </div>
+      <p class="sec-note">Il coordinamento con altri professionisti avviene sempre con il tuo consenso e ciascuno resta responsabile del proprio ambito: non presto consulenza fiscale, legale o notarile. I servizi dei partner sono erogati dai rispettivi soggetti, alle loro condizioni.</p>
+    </div>
+  </section>
+
+  <!-- RECENSIONI -->
+  <section class="sec reviews has-dial" id="recensioni">
+    <div class="dial" aria-hidden="true"><svg viewBox="0 0 240 240"><circle class="d-r" cx="120" cy="120" r="96"/><circle class="d-r d-r2" cx="120" cy="120" r="68"/><circle class="d-r d-r3" cx="120" cy="120" r="40"/><g class="d-tk"><path d="M120 12V34" transform="rotate(0 120 120)"/><path d="M120 18V30" transform="rotate(15 120 120)"/><path d="M120 18V30" transform="rotate(30 120 120)"/><path d="M120 18V30" transform="rotate(45 120 120)"/><path d="M120 18V30" transform="rotate(60 120 120)"/><path d="M120 18V30" transform="rotate(75 120 120)"/><path d="M120 12V34" transform="rotate(90 120 120)"/><path d="M120 18V30" transform="rotate(105 120 120)"/><path d="M120 18V30" transform="rotate(120 120 120)"/><path d="M120 18V30" transform="rotate(135 120 120)"/><path d="M120 18V30" transform="rotate(150 120 120)"/><path d="M120 18V30" transform="rotate(165 120 120)"/><path d="M120 12V34" transform="rotate(180 120 120)"/><path d="M120 18V30" transform="rotate(195 120 120)"/><path d="M120 18V30" transform="rotate(210 120 120)"/><path d="M120 18V30" transform="rotate(225 120 120)"/><path d="M120 18V30" transform="rotate(240 120 120)"/><path d="M120 18V30" transform="rotate(255 120 120)"/><path d="M120 12V34" transform="rotate(270 120 120)"/><path d="M120 18V30" transform="rotate(285 120 120)"/><path d="M120 18V30" transform="rotate(300 120 120)"/><path d="M120 18V30" transform="rotate(315 120 120)"/><path d="M120 18V30" transform="rotate(330 120 120)"/><path d="M120 18V30" transform="rotate(345 120 120)"/></g><path class="d-x" d="M120 2V238M2 120H238"/><g class="d-or"><circle cx="120" cy="24" r="4.5"/></g><g class="d-or d-or2"><circle cx="120" cy="52" r="3"/></g></svg></div>
+    <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
+    <span class="wm wm-q" aria-hidden="true">&ldquo;</span>
+    <div class="wrap">
+      <div class="sec-head center rv">
+        <p class="eyebrow">Recensioni</p>
+        <h2>Le parole <em>di chi mi conosce</em></h2>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="t-grid">
+        <blockquote class="t corners rv"><span class="q">&ldquo;</span>
+          <p>Lavorare con il dott. Busetto ci sta dando una grande mano. È una persona competente e molto chiara, che ci segue con attenzione a 360 gradi, sia in ambito di passaggio generazionale, che per l'aspetto investimenti. È divenuto un punto di riferimento prezioso.</p>
+          <footer><span class="stars" aria-label="5 stelle su 5">★★★★★</span><span>Recensione su Google · un mese fa</span></footer></blockquote>
+        <blockquote class="t corners rv"><span class="q">&ldquo;</span>
+          <p>Il dott. Busetto è il partner strategico di cui ogni famiglia imprenditoriale ha bisogno. La sua familiarità con le dinamiche del passaggio generazionale è preziosa: sa interfacciarsi con il commercialista e l'avvocato garantendo che ogni aspetto sia curato nei minimi dettagli. In aggiunta, la sua consulenza sui fondi pensione mi ha permesso di pianificare con serenità il futuro, grazie a soluzioni su misura. Professionalità, competenza e chiarezza sono i suoi punti di forza.</p>
+          <footer><span class="stars" aria-label="5 stelle su 5">★★★★★</span><span>Recensione su Google · cinque mesi fa</span></footer></blockquote>
+        <blockquote class="t corners rv"><span class="q">&ldquo;</span>
+          <p>Consulente con una profonda conoscenza del mercato finanziario ed esaustivo nelle spiegazioni relative agli investimenti. Il tutto accompagnato da cortesia e disponibilità.</p>
+          <footer><span class="stars" aria-label="5 stelle su 5">★★★★★</span><span>Recensione su Google · sei mesi fa</span></footer></blockquote>
+      </div>
+      <div class="g-card corners rv">
+        <span class="g-ic"><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.4l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.6-3.9-12.3-9.1H4.4v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.7 28.1a13.2 13.2 0 0 1 0-8.4v-5.7H4.4a22 22 0 0 0 0 19.8z"/><path fill="#EA4335" d="M24 10.8c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.4 14l7.3 5.7c1.7-5.2 6.6-9 12.3-9z"/></svg></span>
+        <div><h3>Le altre recensioni sono sul mio profilo Google</h3><p>Lì trovi anche orari, indicazioni per lo studio di Mestre e i contatti diretti.</p></div>
+        <a class="btn btn-navy" id="gRead" target="_blank" rel="noopener">Leggi le recensioni</a>
+      </div>
+      <p class="sec-note">Le recensioni riportate sono opinioni personali di clienti pubblicate su Google e sono riprodotte integralmente, senza alcuna modifica. Non sono verificate dal consulente, riflettono esperienze individuali e non costituiscono garanzia o previsione di risultati futuri: ogni situazione patrimoniale è diversa.</p>
     </div>
   </section>
 
@@ -1506,6 +1993,25 @@ section>.wrap{position:relative}
 </dialog>
 
 
+  <!-- CANALE WHATSAPP -->
+  <section class="sec band has-dial" id="canale">
+    <div class="dial" aria-hidden="true"><svg viewBox="0 0 240 240"><circle class="d-r" cx="120" cy="120" r="96"/><circle class="d-r d-r2" cx="120" cy="120" r="68"/><circle class="d-r d-r3" cx="120" cy="120" r="40"/><g class="d-tk"><path d="M120 12V34" transform="rotate(0 120 120)"/><path d="M120 18V30" transform="rotate(15 120 120)"/><path d="M120 18V30" transform="rotate(30 120 120)"/><path d="M120 18V30" transform="rotate(45 120 120)"/><path d="M120 18V30" transform="rotate(60 120 120)"/><path d="M120 18V30" transform="rotate(75 120 120)"/><path d="M120 12V34" transform="rotate(90 120 120)"/><path d="M120 18V30" transform="rotate(105 120 120)"/><path d="M120 18V30" transform="rotate(120 120 120)"/><path d="M120 18V30" transform="rotate(135 120 120)"/><path d="M120 18V30" transform="rotate(150 120 120)"/><path d="M120 18V30" transform="rotate(165 120 120)"/><path d="M120 12V34" transform="rotate(180 120 120)"/><path d="M120 18V30" transform="rotate(195 120 120)"/><path d="M120 18V30" transform="rotate(210 120 120)"/><path d="M120 18V30" transform="rotate(225 120 120)"/><path d="M120 18V30" transform="rotate(240 120 120)"/><path d="M120 18V30" transform="rotate(255 120 120)"/><path d="M120 12V34" transform="rotate(270 120 120)"/><path d="M120 18V30" transform="rotate(285 120 120)"/><path d="M120 18V30" transform="rotate(300 120 120)"/><path d="M120 18V30" transform="rotate(315 120 120)"/><path d="M120 18V30" transform="rotate(330 120 120)"/><path d="M120 18V30" transform="rotate(345 120 120)"/></g><path class="d-x" d="M120 2V238M2 120H238"/><g class="d-or"><circle cx="120" cy="24" r="4.5"/></g><g class="d-or d-or2"><circle cx="120" cy="52" r="3"/></g></svg></div>
+    <div class="wrap band-grid">
+      <div class="band-t rv">
+        <p class="eyebrow">Resta aggiornato</p>
+        <h2>Prima di andare, <em>ti lascio qualcosa</em></h2>
+        <p>Sul mio canale WhatsApp pubblico approfondimenti periodici: che cosa succede sui mercati, le novità fiscali che toccano il risparmio e i nuovi strumenti che aggiungo a questo sito. È gratuito, non è una chat e puoi uscire quando vuoi.</p>
+        <a class="btn btn-gold band-cta" id="waCh" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A9 9 0 1 1 8 19.3z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 .8v1.6c-4 .5-8.3-3.8-7.8-7.8h1.6l.8 2z"/></svg>Iscriviti al canale WhatsApp</a>
+        <p class="band-note">Nei canali WhatsApp chi segue resta anonimo: il tuo numero non è visibile né a me né agli altri iscritti. Nessun messaggio promozionale diretto.</p>
+      </div>
+      <ul class="band-l rv">
+        <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/></svg></span><b>Approfondimenti di mercato</b>Che cosa è successo e che cosa significa per chi investe, senza tecnicismi.</li>
+        <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><b>Novità fiscali e normative</b>Successioni, previdenza, detrazioni: gli aggiornamenti che cambiano le scelte.</li>
+        <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="2.5" width="15" height="19" rx="2"/><path d="M8 7h8"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"/></svg></span><b>Nuovi strumenti</b>Ogni volta che pubblico un calcolatore o un'analisi, lo trovi lì per primo.</li>
+      </ul>
+    </div>
+  </section>
+
 <footer class="ftr grain">
   <div class="wrap" style="position:relative">
     <div class="orn" aria-hidden="true" style="margin:0 0 44px"><i></i></div>
@@ -1517,8 +2023,8 @@ section>.wrap{position:relative}
         <div class="social" data-social aria-label="Profili social" hidden></div>
       </div>
       <div><h4>Navigazione</h4><ul>
-        <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#metodo">Il metodo</a></li><li><a href="#articoli">Articoli</a></li>
-        <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#strumenti">Strumenti di analisi</a></li><li><a href="#faq">Domande frequenti</a></li><li><a href="note-legali.html">Note legali e privacy</a></li></ul></div>
+        <li><a href="#chi-sono">Chi sono</a></li><li><a href="#servizi">Servizi</a></li><li><a href="#bisogni">I bisogni</a></li><li><a href="#metodo">Il metodo</a></li><li><a href="#articoli">Articoli</a></li>
+        <li><a href="#calcolatori">Calcolatori</a></li><li><a href="#strumenti">Strumenti di analisi</a></li><li><a href="#recensioni">Recensioni</a></li><li><a href="#rete">Rete e collaborazioni</a></li><li><a href="#faq">Domande frequenti</a></li><li><a href="note-legali.html">Note legali e privacy</a></li></ul></div>
       <div><h4>Contatti</h4><ul id="ftrContacts"></ul></div>
     </div>
     <div class="legal">
@@ -1554,7 +2060,7 @@ const CONFIG = {
   address: "Via Pepe 106, 30172 Mestre (VE)",   // studio
 
   google: {
-    profile: "https://www.google.com/search?q=marco+busetto+-+consulente+finanziario+specializzato+in+pianificazione+successoria",
+    profile: "https://share.google/yN2XkcrKKmtO3kdyK",   // profilo Google: recensioni, orari e indicazioni
     maps: ""            // link Google Maps dello studio
   },
 
@@ -1565,11 +2071,9 @@ const CONFIG = {
   //  - post social: tipo "instagram", "linkedin" o "facebook" e url = link del post
   //  Facoltativi: tema (es. "Protezione"), immagine (es. "img/post.jpg"), cifra e cifraTesto (numero in copertina), icona (shield, pen, star...)
   //  Esempio: { tipo: "instagram", data: "2026-11-20", tema: "Investimenti", titolo: "...", estratto: "...", url: "https://www.instagram.com/p/..." },
+  //  L'articolo «Perché assicurarsi prima di investire» ora si apre dalla sezione «La piramide dei bisogni».
+  //  Finché questo elenco è vuoto la sezione «Articoli» resta nascosta: aggiungi un post e ricompare.
   posts: [
-    { tipo: "articolo", data: "2026-11-15", tema: "Protezione", articolo: "assicurarsi", icona: "shield",
-      titolo: "Perché assicurarsi prima di investire",
-      estratto: "Un quarantenne con 21.000 € di stipendio: con un'invalidità totale riceverebbe dallo Stato circa 866 € al mese. Ecco perché la protezione viene prima dell'investimento.",
-      cifra: "866 €", cifraTesto: "al mese: quanto resterebbe a Luca, 40 anni, con un'invalidità totale" }
   ],
 
   stats: [
@@ -1584,7 +2088,7 @@ const CONFIG = {
     { icon: "linkedin",  title: "LinkedIn",  sub: "Profilo professionale", url: "https://www.linkedin.com/in/busettomarco/" },
     { icon: "instagram", title: "Instagram", sub: "Pillole di educazione finanziaria", url: "https://www.instagram.com/marcobusetto_investimenti/" },
     { icon: "facebook",  title: "Facebook",  sub: "", url: "https://www.facebook.com/marco.busetto.3" },
-    { icon: "whatsapp",  title: "Canale WhatsApp", sub: "Approfondimenti di mercato gratuiti", url: "" },   // link del canale (whatsapp.com/channel/...)
+    { icon: "whatsapp",  title: "Canale WhatsApp", sub: "Approfondimenti di mercato gratuiti", url: "https://tr.ee/Bw2RUl_AnR" },   // link del canale (whatsapp.com/channel/...)
     { icon: "youtube",   title: "YouTube",   sub: "Video e approfondimenti", url: "" },
     { icon: "doc",       title: "Guida gratuita alla successione", sub: "Scarica il PDF", url: "" }
   ],
@@ -1705,7 +2209,7 @@ if (wa || C.email) {
 
 const links = [
   ...C.links.filter(l => l.url),
-  cards[0][0] !== 'google' && C.google.profile && {icon:'google', title:'Profilo Google', sub:'Studio, orari e indicazioni', url:C.google.profile}
+  cards[0][0] !== 'google' && C.google.profile && {icon:'google', title:'Profilo Google', sub:'Recensioni, orari e indicazioni', url:C.google.profile}
 ].filter(Boolean);
 /* ---------- articoli e post ---------- */
 { const TIPI = {articolo: ['Articolo', 'doc', 'Leggi l\'articolo'], instagram: ['Post Instagram', 'instagram', 'Vedi il post su Instagram'],
@@ -1737,8 +2241,8 @@ const links = [
     $('postFilters').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
       $('postFilters').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); show(b.dataset.f); });
   }
-  if (posts.length || soc) { $('postGrid').innerHTML = posts.map((p, i) => card(p, i === 0 && p.tipo === 'articolo')).join('') + follow(posts.length + (posts[0] && posts[0].tipo === 'articolo' ? 2 : 0)); }
-  else $('articoli').hidden = true;
+  if (posts.length) { $('postGrid').innerHTML = posts.map((p, i) => card(p, i === 0 && p.tipo === 'articolo')).join('') + follow(posts.length + (posts[0].tipo === 'articolo' ? 2 : 0)); }
+  else { $('articoli').hidden = true; document.querySelectorAll('a[href="#articoli"]').forEach(a => a.remove()); }
 }
 /* icone social (Chi sono, menu e piè di pagina): solo i profili con un link */
 { const NAMES = {linkedin: 'LinkedIn', instagram: 'Instagram', facebook: 'Facebook', youtube: 'YouTube', whatsapp: 'Canale WhatsApp'};
@@ -1748,6 +2252,47 @@ const links = [
     el.innerHTML = soc.map(([i, n, u]) => `<a class="soc" href="${esc(u)}" target="_blank" rel="noopener" aria-label="${n}" title="${n}">${svg(i)}</a>`).join(''); });
 }
 $('links').innerHTML = (links.length ? '<p class="eyebrow" style="margin:0 0 4px">Link utili</p>' : '') + links.map(l => `<a class="lnk" href="${esc(l.url)}" target="_blank" rel="noopener"><span class="ic">${svg(l.icon)}</span><span><b>${esc(l.title)}</b>${l.sub?`<small>${esc(l.sub)}</small>`:''}</span><span class="ar">${svg('arrow')}</span></a>`).join('');
+
+/* ---------- il puntatore muove i cerchi decorativi ---------- */
+if (window.matchMedia && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const R = document.documentElement; let x = 0, y = 0, atteso = false;
+  addEventListener('pointermove', e => {
+    x = (e.clientX / innerWidth - .5) * 2; y = (e.clientY / innerHeight - .5) * 2;
+    if (atteso) return; atteso = true;
+    requestAnimationFrame(() => { R.style.setProperty('--px', x.toFixed(3)); R.style.setProperty('--py', y.toFixed(3)); atteso = false; });
+  }, {passive: true});
+}
+
+/* ---------- tema chiaro o scuro ---------- */
+{ const R = document.documentElement, KEY = 'mb-tema', meta = document.querySelector('meta[name="theme-color"]');
+  const sys = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+  let fissato = false; try { const v = localStorage.getItem(KEY); fissato = v === 'chiaro' || v === 'scuro'; } catch (e) {}
+  const setTema = (scuro, salva) => {
+    R.toggleAttribute('data-theme', scuro); if (scuro) R.setAttribute('data-theme', 'dark');
+    if (meta) meta.content = scuro ? '#04122a' : '#001a3d';
+    document.querySelectorAll('[data-thm]').forEach(b => { b.setAttribute('aria-pressed', String(scuro));
+      b.setAttribute('aria-label', scuro ? 'Attiva il tema chiaro' : 'Attiva il tema scuro'); });
+    if (salva) { fissato = true; try { localStorage.setItem(KEY, scuro ? 'scuro' : 'chiaro'); } catch (e) {} }
+  };
+  setTema(R.getAttribute('data-theme') === 'dark', false);
+  document.querySelectorAll('[data-thm]').forEach(b => b.onclick = () => setTema(R.getAttribute('data-theme') !== 'dark', true));
+  /* finché non scegli tu, il sito segue le impostazioni del telefono o del computer */
+  if (sys) sys.addEventListener('change', e => { if (!fissato) setTema(e.matches, false); });
+}
+
+/* ---------- piramide: stesso schema per famiglie e aziende ---------- */
+{ const sec = $('piramide'), sw = sec.querySelector('.aud-sw');
+  const set = b => { sec.dataset.aud = b.dataset.aud;
+    sw.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    try { localStorage.setItem('mb-aud', b.dataset.aud); } catch (e) {} };
+  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b); });
+  try { const v = localStorage.getItem('mb-aud'); if (v) { const b = sw.querySelector(`[data-aud="${v}"]`); if (b) set(b); } } catch (e) {}
+}
+
+/* ---------- recensioni e canale WhatsApp ---------- */
+$('gRead').href = C.google.profile;
+{ const ch = (C.links.find(l => l.icon === 'whatsapp' && l.url) || {}).url;
+  if (ch) $('waCh').href = ch; else $('canale').hidden = true; }
 
 /* ---------- stats, legal ---------- */
 if (C.stats.length) { $('stats').hidden = false; $('stats').innerHTML = C.stats.map(s => `<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join(''); }
