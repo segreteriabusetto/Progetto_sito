@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Confronta fondi pensione aperti, negoziali e PIP con il TFR lasciato in azienda: capitale stimato, costi, imposte e rendita.">
-<meta name="theme-color" content="#001a3d">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/svg+xml" href="../img/logo-b.svg">
+<script>(function(){var t=null;try{t=localStorage.getItem("mb-tema")}catch(e){}
+if(t!=="chiaro"&&t!=="scuro"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"scuro":"chiaro"}
+document.documentElement.setAttribute("data-theme",t==="scuro"?"dark":"light")})();</script>
 <title>TFR e fondi pensione a confronto</title>
 <link rel="stylesheet" href="../fonts/fonts.css">
 <style>
@@ -31,6 +35,15 @@
     --s1:#3987e5; --s2:#d95926;
     --k1:#5a9be8; --k2:#5fb9c1; --k3:#e0a93a; --k4:#a58ae0; --k5:#7d8a89;
   }
+}
+:root[data-theme="dark"]{
+    color-scheme:dark;
+    --bg:#0f1516; --surface:#182122; --ink:#eaf0ef; --ink-2:#a9b6b5; --line:#2c3839;
+    --accent:#5fb9c1; --accent-ink:#0b1516; --accent-soft:#1c3133;
+    --band:#123a3e; --band-ink:#ffffff; --brass:#d2b06c;
+    --good:#5fcf8f; --bad:#f08a80; --good-bg:#16291f; --bad-bg:#311c1a; --warn-bg:#3a3014; --warn-ink:#f2d68a;
+    --s1:#3987e5; --s2:#d95926;
+    --k1:#5a9be8; --k2:#5fb9c1; --k3:#e0a93a; --k4:#a58ae0; --k5:#7d8a89;
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
@@ -426,48 +439,79 @@ tr.muted td{color:var(--ink-2)}
   .duo{grid-template-columns:1fr 1fr;gap:14pt}.duo>div{break-inside:avoid}
 }
 
-/* ===== Tema del sito di Marco Busetto: colori, caratteri e barra di ritorno al sito ===== */
+/* ===== Tema del sito di Marco Busetto: chiaro, sobrio, oro tenue ===== */
 :root{
-  --bg:#f7f4ee; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#5b6677; --line:#e7e1d5;
+  --bg:#f8f6f1; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#5b6677; --line:#e8e3d8;
   --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9;
-  --band:#001a3d; --band-ink:#ffffff; --brass:#c4a062;
-  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a;
-  --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+  --band:#001a3d; --band-ink:#ffffff; --brass:#b9a47c; --gold-deep:#a08756; --gold-ink:#7f6a43;
+  --s1:#2f5fa8; --s2:#a89367; --s3:#3f8f7a;
+  --k1:#2f5fa8; --k2:#001a3d; --k3:#a89367; --k4:#7a5cc2; --k5:#9aa5a4;
   --display:"Cormorant Garamond",Georgia,serif; --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:6px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
     --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
-    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --band:#00142f; --band-ink:#ffffff; --brass:#d8c9a8; --gold-deep:#d8c9a8; --gold-ink:#d8c9a8;
     --good-bg:#16291f; --bad-bg:#311c1a;
-    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
-    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}}
+    --s1:#6f9be0; --s2:#d8c9a8; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#d8c9a8; --k4:#a58ae0; --k5:#7d8a89;}}
 :root[data-theme="dark"]{--bg:#0b1626; --surface:#13223a; --ink:#e9eef5; --ink-2:#a5b2c4; --line:#24364f;
     --accent:#8fb3e8; --accent-ink:#0b1626; --accent-soft:#1a2c47;
-    --band:#00142f; --band-ink:#ffffff; --brass:#dcc28c;
+    --band:#00142f; --band-ink:#ffffff; --brass:#d8c9a8; --gold-deep:#d8c9a8; --gold-ink:#d8c9a8;
     --good-bg:#16291f; --bad-bg:#311c1a;
-    --s1:#6f9be0; --s2:#dcc28c; --s3:#4fb393;
-    --k1:#6f9be0; --k2:#8fb3e8; --k3:#dcc28c; --k4:#a58ae0; --k5:#7d8a89;}
+    --s1:#6f9be0; --s2:#d8c9a8; --s3:#4fb393;
+    --k1:#6f9be0; --k2:#8fb3e8; --k3:#d8c9a8; --k4:#a58ae0; --k5:#7d8a89;}
 @media print{:root,:root[data-theme="dark"],:root:not([data-theme="light"]){
   --bg:#ffffff; --surface:#ffffff; --ink:#0e1a2b; --ink-2:#4c5a6b; --line:#d9d3c7;
   --accent:#003781; --accent-ink:#ffffff; --accent-soft:#eef2f9; --band:#003781; --band-ink:#ffffff;
-  --s1:#2f5fa8; --s2:#c4a062; --s3:#3f8f7a; --k1:#2f5fa8; --k2:#001a3d; --k3:#c4a062; --k4:#7a5cc2; --k5:#9aa5a4;
+  --s1:#2f5fa8; --s2:#a89367; --s3:#3f8f7a; --k1:#2f5fa8; --k2:#001a3d; --k3:#a89367; --k4:#7a5cc2; --k5:#9aa5a4;
 }}
-.site{background:linear-gradient(165deg,#00142f 0%,#002456 55%,#003781 100%)}
 h1,h2,h3,.wt,.wb,.who,.fch,.tile .v,.tile .m{font-variant-numeric:lining-nums tabular-nums}
-h2,h3{font-weight:600}
-.site h1{font-size:clamp(32px,4.2vw,46px)}
-.mb-back{background:#00142f;border-bottom:1px solid rgba(196,160,98,.4);font:500 13.5px/1.3 var(--body)}
-.mb-back .in{max-width:1160px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mb-back a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.mb-back a:hover{color:#dcc28c}
-.mb-back .mono{width:30px;height:30px;border:1px solid #c4a062;border-radius:50%;display:grid;place-items:center;font:600 13px/1 var(--display);color:#dcc28c}
-.mb-back .alt{color:#dcc28c}
+@media screen{
+  h2,h3{font-weight:500}
+  /* testata chiara */
+  .site{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
+  .site :focus-visible{outline-color:var(--accent)}
+  .site h1{font-weight:500;font-size:clamp(32px,4.2vw,46px);letter-spacing:-.005em}
+  .site .tag{opacity:1;color:var(--ink-2)}
+  .by .who{font-weight:500}
+  .by .ql{opacity:1;color:var(--ink-2)}
+  .site .cts a{border-color:var(--line);color:var(--ink)}
+  .site .cts a:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
+  .hbar{border-top:1px solid var(--line)}
+  .vs .fx i{box-shadow:none}
+  .vs .vv{opacity:1;color:var(--ink-2)}
+  .modo{border-color:var(--line)}
+  .modo span{opacity:1;color:var(--ink-2)}
+  .modo button{color:var(--ink)}
+  .modo button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+  nav:not(.mb-back) a{background:none;color:var(--ink-2);border-radius:0;border-bottom:2px solid transparent;padding:12px 2px 12px;margin-right:22px}
+  nav:not(.mb-back) a:hover{background:none;color:var(--ink)}
+  nav:not(.mb-back) a[aria-current="page"]{background:none;color:var(--ink);font-weight:600;border-bottom-color:var(--gold-deep)}
+  /* linee più nette */
+  .grp.key,.tile{border-radius:6px}
+  .win{border-radius:6px}
+  .inp,input.txt,select.sel,textarea.txt,.fg input,.fg select,.out,.frw select,.frw input,.g3 input,.g4 input{border-radius:4px}
+  .notes li,.tip{border-radius:4px}
+  .lead,.alert{border-radius:0 4px 4px 0}
+  .btn,.btn2{border-radius:3px}
+}
+/* barra di ritorno al sito */
+.mb-back{display:block;background:var(--surface);border-bottom:1px solid var(--line);font:500 13.5px/1.3 var(--body)}
+.mb-back .in{max-width:1160px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mb-back a{padding:0;margin:0;background:none;border:0;border-radius:0;color:var(--ink-2);text-decoration:none;display:inline-flex;align-items:center;gap:12px;font-weight:500}
+.mb-back a:hover{background:none;color:var(--ink)}
+.mb-back img{display:block;height:28px;width:auto}
+.mb-back .alt{color:var(--gold-ink)}
+.mb-back .alt:hover{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mb-back img{filter:brightness(0) invert(1)}}
+:root[data-theme="dark"] .mb-back img{filter:brightness(0) invert(1)}
 @media (max-width:600px){.mb-back .in{padding:10px 12px}.mb-back .alt{display:none}}
 @media print{.mb-back{display:none}}
 </style>
 </head>
 <body>
-<nav class="mb-back no-print" aria-label="Sito di Marco Busetto"><div class="in"><a href="../index.html"><span class="mono">MB</span><span>Torna al sito di Marco Busetto</span></a><a class="alt" href="../index.html#strumenti">Altri strumenti di analisi</a></div></nav>
+<nav class="mb-back no-print" aria-label="Sito di Marco Busetto"><div class="in"><a href="../index.html" aria-label="Torna al sito di Marco Busetto"><img src="../img/logo-b.svg" alt="" width="16" height="28"><span>Torna al sito</span></a><a class="alt" href="../index.html#strumenti">Altri strumenti di analisi</a></div></nav>
 
 <header class="site">
  <div class="hin">
@@ -1192,7 +1236,7 @@ function loadPdfLib(){return new Promise(function(res,rej){
 function buildPDF(rep){
   var Lb=window.PDFLib,rgb=Lb.rgb,doc,F,B,I,page,y,W=595.28,Hp=841.89,M=36,CW=W-2*M,BOT=M+26,ok={},full=MODE==='c';
   var C={ink:rgb(.08,.125,.12),ink2:rgb(.3,.35,.35),line:rgb(.82,.86,.86),acc:rgb(0,.216,.506),soft:rgb(.933,.949,.976),good:rgb(.11,.48,.27),bad:rgb(.7,.22,.18),
-    white:rgb(1,1,1),brass:rgb(.769,.627,.384),s:[rgb(.184,.373,.659),rgb(.769,.627,.384),rgb(.247,.561,.478)]};
+    white:rgb(1,1,1),brass:rgb(.725,.643,.486),s:[rgb(.184,.373,.659),rgb(.659,.576,.404),rgb(.247,.561,.478)]};
   function cl(s){
     s=String(s==null?'':s);var o='';
     for(var i=0;i<s.length;i++){
