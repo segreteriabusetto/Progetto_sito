@@ -504,14 +504,19 @@ h1,h2,h3,.wt,.wb,.who,.fch,.tile .v,.tile .m{font-variant-numeric:lining-nums ta
 .mb-back img{display:block;height:28px;width:auto}
 .mb-back .alt{color:var(--gold-ink)}
 .mb-back .alt:hover{color:var(--ink)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mb-back img{filter:brightness(0) invert(1)}}
-:root[data-theme="dark"] .mb-back img{filter:brightness(0) invert(1)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mb-back img{background:#f4f1e9;border-radius:4px;padding:3px 5px}}
+:root[data-theme="dark"] .mb-back img{background:#f4f1e9;border-radius:4px;padding:3px 5px}
 @media (max-width:600px){.mb-back .in{padding:10px 12px}.mb-back .alt{display:none}}
 @media print{.mb-back{display:none}}
+.mb-nota{margin:0;padding:11px 20px;background:var(--accent-soft);color:var(--ink);border-bottom:1px solid var(--line);font:400 13.5px/1.5 var(--body);text-align:center}
+.mb-nota strong{font-weight:600}
+@media print{.mb-nota{display:none}}
+
 </style>
 </head>
 <body>
 <nav class="mb-back no-print" aria-label="Sito di Marco Busetto"><div class="in"><a href="../index.html" aria-label="Torna al sito di Marco Busetto"><img src="../img/logo-b.svg" alt="" width="16" height="28"><span>Torna al sito</span></a><a class="alt" href="../index.html#strumenti">Altri strumenti di analisi</a></div></nav>
+<p class="mb-nota no-print">Questo strumento dà un ordine di grandezza: <strong>leggilo insieme al tuo consulente</strong>, che conosce la tua situazione e può verificare le ipotesi. Non è una raccomandazione personalizzata.</p>
 
 <header class="site">
  <div class="hin">
