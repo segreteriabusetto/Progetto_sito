@@ -424,7 +424,10 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .form textarea{width:100%;min-height:110px;font:500 16px/1.4 var(--sans);background:var(--ivory);border:1px solid var(--line);border-radius:3px;padding:13px 14px;resize:vertical}
 .form .btn{width:100%;margin-top:6px}
 .form .priv{font-size:12.5px;color:var(--muted);margin:12px 0 0}
-.links{display:grid;gap:10px;margin-top:20px}
+.links{display:grid;gap:12px;margin-top:54px;padding-top:40px;border-top:1px solid var(--line)}
+.links .eyebrow{grid-column:1/-1}
+@media (min-width:720px){.links{grid-template-columns:1fr 1fr;gap:14px 20px}}
+@media (min-width:1080px){.links{grid-template-columns:repeat(3,1fr);margin-top:64px}}
 .lnk{display:flex;align-items:center;gap:14px;padding:14px 16px;color:var(--ink);border:1px solid var(--line);border-radius:var(--r);text-decoration:none;background:var(--paper);transition:border-color .2s}
 .lnk:hover{border-color:var(--gold)}
 .lnk .ic{flex:none;width:38px;height:38px;border-radius:50%;background:var(--gold-soft);color:var(--gold-ink);display:grid;place-items:center}
@@ -1862,9 +1865,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           <button class="btn btn-navy" type="submit">Invia richiesta</button>
           <p class="priv">La richiesta si apre nella tua app di posta o su WhatsApp: decidi tu se inviarla. Il primo contatto non costituisce consulenza.</p>
         </form>
-        <div class="links" id="links"></div>
       </div>
     </div>
+    <div class="wrap"><div class="links rv" id="links"></div></div>
   </section>
 </main>
 
