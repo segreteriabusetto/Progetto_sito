@@ -1603,7 +1603,11 @@ function savePDF(){
 
 /* ---------- Avvio ---------- */
 $('c-form').innerHTML='<h2>Dati del confronto</h2><p class="fine">Modifica qui i dati: la relazione si aggiorna mentre scrivi e resta salvata in questo browser.</p>'+formHTML();$('c-rep').innerHTML=shellHTML();
-setForm(carica()||DEF_FE);
+/* All'apertura lo strumento è vuoto: nessun prodotto precaricato.
+   Gli esempi si caricano con i pulsanti «Esempio» del modulo, quando servono. */
+var VUOTO=(function(){var d=JSON.parse(JSON.stringify(DEF_FE));
+  d.f=[{prov:'acc'},{prov:'acc'}];d.fonti='';d.rsame=false;d.cli='';d.agg='';d.cons=false;return d})();
+setForm(carica()||VUOTO);
 var lv='ess';try{lv=localStorage.getItem(LVKEY)||'ess'}catch(e){}
 setLevel(lv);
 function aggiorna(){render();salva()}
