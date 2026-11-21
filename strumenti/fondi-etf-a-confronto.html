@@ -472,76 +472,26 @@ h1,h2,h3,.wt,.wb,.who,.fch,.tile .v,.tile .m{font-variant-numeric:lining-nums ta
 </div>
 
 <script>
+/* Fuori da Claude il salvataggio passa dal browser: il PDF generato viene scaricato direttamente. */
+if(!window.claude){window.claude={use:function(n){return n!=='downloads'?null:{save:function(o){
+  var u=URL.createObjectURL(new Blob([o.data],{type:'application/pdf'})),a=document.createElement('a');
+  a.href=u;a.download=o.filename||'Analisi.pdf';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(u);a.remove()},2000);return Promise.resolve();}}}}}
+</script>
+<script>
 (function(){
-/* ================= ESEMPIO INIZIALE (dati verificati sulle fonti indicate nella nota 1) ================= */
-var DEF_FF={cli:'',int:'Allianz Bank Financial Advisors S.p.A.',agg:'12 novembre 2026',rsame:false,imp:'100000',hor:'5',cons:false,pcp:0.4,pcn:2,pci:150,iva:true,
-  fonti:"Costi, indicatore di rischio, periodo consigliato e politica di investimento: KID di Allsolutions Prudent Optimised Alpha, classe A ACC EUR (17 marzo 2026; limiti di investimento, derivati, swing pricing e gestore delegato verificati anche sulla versione del 21 ottobre 2025) e di Allianz Dynamic Multi Asset Strategy SRI 15, classe AT EUR (16 aprile 2026). Cambio della società di gestione di Allsolutions dal 10 luglio 2026: avviso sul sito di Allfunds Investment Solutions. Patrimonio di Allsolutions: factsheet della società al 31 dicembre 2025. Rendimenti: FondiOnline.it su dati Morningstar, quota al 10 novembre 2026 (Allsolutions) e al 12 novembre 2026 (Allianz); il dato a 10 anni di Allianz è esteso da Morningstar, perché la classe AT esiste dal 2017. Rendimenti per anno e anno peggiore di Allianz: Quefondos. Data di avvio, volatilità e Sharpe di Allsolutions: Borsa Italiana (indicatori al 31 luglio 2026). Composizione, primi titoli, duration, rendimento a scadenza, valute, Sharpe e perdita massima di Allianz: report mensili del fondo al 31 maggio e al 30 giugno 2026 (classe RT, stesso portafoglio della AT ma con costi più bassi). Volatilità a 1 anno di Allianz: FIDA, classe CT (stesso portafoglio), al 15 ottobre 2026. Posizione in classifica: FIDA, al 31 agosto 2026. Rating Morningstar: FondiOnline.it. Patrimonio di Allianz: Finect, al 12 novembre 2026. Gestore, team, data di inizio, metodo, portafoglio di riferimento e limiti sulle azioni di Allianz: Allianz Global Investors; masse di Allianz GI: BlueRating (marzo 2026). Quaestio: sito della società e Advisor Online (masse a giugno 2024). Scelte recenti: report mensili Allianz di maggio e giugno 2026, Allianz GI «Product Playbook Q4 2026», dati di mercato del terzo trimestre 2026 (FIDA tramite Traderlink; Invesco per l'oro), FIDA per il rendimento di Allianz dal 17 giugno al 17 settembre 2026, Borsa Italiana e FondiOnline per le quote di Allsolutions.",
-  f:[
-   {nome:'Allsolutions Prudent Optimised Alpha',breve:'Allsolutions',isin:'LU2787154694',classe:'A, in euro',soc:'Waystone Management Company (Lux), dal 10 luglio 2026 (prima Allfunds Investment Solutions)',tipo:'Bilanciato prudente',lancio:'2025-04-09',pat:53,patd:'31 dicembre 2025',sri:2,rhp:3,sfdr:'8',prov:'acc',
-    come:"Investe soprattutto in altri fondi ed ETF. Portafoglio di riferimento: 35% azioni mondiali e 65% obbligazioni in euro; azioni al massimo 35%. Non usa derivati.",
-    ing:4,usc:0,gst:2.05,trn:0.13,prf:0,ktot:1118,kriy:3.6,r1:-0.27,r3:'',r5:'',r10:'',r20:'',wv:'',wy:'',anni:'',
-    adata:'',azref:35,azmax:35,aaz:'',aob:'',amp:'',aal:'',aliq:'',dur:'',ytm:'',rat:'',ig:'',hy:'',ntit:'',geo:'',set:'',obt:'',val:'',
-    mgr:"Il team di Quaestio Capital SGR (gestore delegato indicato nel KID), guidato dal direttore degli investimenti Christian Prinoth, in passato in Mediobanca SGR ed Epsilon SGR. Il nome del gestore del singolo fondo non è pubblicato.",
-    soct:"Quaestio Capital SGR: società di gestione indipendente di Milano, autorizzata da Banca d'Italia e Consob e controllata al 100% da Quaestio Holding (Lussemburgo). Lavora soprattutto per clienti istituzionali: a giugno 2024 gestiva 14,5 miliardi di euro, di cui circa 10 in strategie multi-asset.",
-    metodo:"Gestione attiva: investe dal 50% al 100% in fondi ed ETF e fino al 50% direttamente in azioni e obbligazioni. Azioni al massimo 35%, obbligazioni high yield ed emergenti al massimo 27%, fondi alternativi al massimo 35%; non usa derivati. Il portafoglio di riferimento serve solo a controllare il rischio.",
-    mgrd:'',msr:'',vol:4.89,volp:'1 anno, al 31/07/2026',shp:0.16,shpp:'1 anno, al 31/07/2026',mdd:'',mddp:'',rank:'',top:'',
-    mov:"? | 10 luglio 2026 | Cambio della società di gestione: da Allfunds Investment Solutions a Waystone Management Company (Lux) | Riguarda l'amministrazione e i controlli del fondo. Le scelte di investimento erano delegate a Quaestio Capital SGR: va verificato nella documentazione aggiornata che delega, strategia e costi siano rimasti invariati. Il commento del gestore sul portafoglio non è nelle fonti consultate.",
-    msint:"Dal 20 agosto al 10 novembre 2026 la quota è scesa da 105,81 a 104,37 € (−1,4%).",
-    fof:true,der:'no',swing:true,swp:2,fx:false,ist:'fondo',pro:'',
-    con:"Dati di portafoglio non disponibili: composizione, primi titoli e commenti del gestore non sono nelle fonti pubbliche consultate; per controllarli serve il factsheet mensile della società."},
-   {nome:'Allianz Dynamic Multi Asset Strategy SRI 15',breve:'Allianz DMAS SRI 15',isin:'LU1548496022',classe:'AT, in euro (classe dal 2017)',soc:'Allianz Global Investors GmbH',tipo:'Bilanciato prudente',lancio:'2014-08-27',pat:1966,patd:'12 novembre 2026',sri:2,rhp:3,sfdr:'8',prov:'acc',
-    come:"Investe soprattutto direttamente in azioni e obbligazioni di tutto il mondo. Portafoglio di riferimento: 15% azioni e 85% obbligazioni protette dal rischio di cambio; azioni al massimo 35%. Punta a oscillazioni annue tra il 3% e il 7%.",
-    ing:3,usc:0,gst:1.31,trn:0.07,prf:0,ktot:738,kriy:2.4,r1:3.34,r3:6.45,r5:1.38,r10:2.23,r20:'',wv:-13.26,wy:'2022',
-    anni:"2025 5,31\n2024 6,13\n2023 8,12\n2022 -13,26",
-    adata:'30 giugno 2026',azref:15,azmax:35,aaz:32.05,aob:60.51,amp:7.46,aal:2.94,aliq:'',dur:6.29,ytm:4.43,rat:'A+',ig:93.57,hy:4.39,ntit:'287 azioni, 476 obbligazioni, 25 fondi ed ETF',
-    geo:"Stati Uniti 57,55\nRegno Unito 9,66\nPaesi Bassi 5,21\nSpagna 3,88\nGermania 3,21\nGiappone 3,20\nSvizzera 2,90\nFrancia 2,68\nHong Kong 2,11\nAltri 9,61",
-    set:"Tecnologia 26,27\nFinanziari 16,37\nIndustriali 13,46\nSalute 12,65\nBeni voluttuari 7,84\nComunicazione 6,72\nServizi di pubblica utilità 4,91\nBeni di prima necessità 4,86\nMateriali 3,81\nImmobiliare 3,07",
-    obt:"Titoli di Stato 60,30\nObbligazioni societarie 27,20\nPaesi emergenti 8,65\nCovered bond 1,56\nLiquidità 2,64",
-    val:"Euro 68,38\nDollaro USA 16,81\nFranco svizzero 9,06\nSterlina 2,82\nYen 1,24",
-    mgr:"Marcus Stahlhacke (CFA, FRM, CAIA), responsabile della gestione multi-asset retail di Allianz GI in Europa: gestisce il fondo dal 1° maggio 2015 con un team di 10 gestori, in media con 16 anni di esperienza (dato di luglio 2024).",
-    soct:"Allianz Global Investors, la società di gestione del gruppo Allianz: 598 miliardi di euro gestiti a marzo 2026.",
-    metodo:"Gestione attiva con approccio sistematico e fondamentale e controllo del rischio basato sul VaR: punta a oscillazioni annue tra il 3% e il 7%. Il nucleo è in azioni e obbligazioni globali scelte con criteri di sostenibilità; per aree specialistiche (emergenti, materie prime, cat bond, immobiliare) usa fondi ed ETF, anche della stessa Allianz.",
-    mgrd:'2015-05-01',msr:4,vol:7.67,volp:'1 anno, al 15/10/2026 (classe CT, stesso portafoglio)',shp:0.72,shpp:'3 anni, al 30/06/2026 (classe RT)',mdd:-13.01,mddp:'5 anni, al 30/06/2026 (classe RT)',
-    rank:"Per alfa, cioè il rendimento in più a parità di rischio: 66° su 320 fondi simili a 1 anno, 98° su 296 a 3 anni, 102° su 258 a 5 anni (FIDA, al 31/08/2026).",
-    top:"Allianz Emerging Markets Select Bond (fondo) 3,93\nAllianz Dynamic Commodities (fondo) 3,59\nL&G Emerging Markets Government Bond Local Currency (fondo) 3,06\niShares J.P. Morgan Advanced $ (ETF) 2,49\nTwelve Cat Bond (fondo) 2,04\nTitolo di Stato USA 2,75% 2028 1,28\niShares Developed Markets Property Yield (ETF) 1,19\nTitolo di Stato USA 2,875% 2049 1,10\nTitolo di Stato USA 4,125% 2032 0,97\nNVIDIA (azione) 0,94",
-    mov:"- | Giugno 2026 | Meno azioni (dal 34,8% al 32,1%), più obbligazioni (dal 58,2% al 60,5%) e duration più lunga (da 5,96 a 6,29 anni) | Nel terzo trimestre le obbligazioni hanno perso il 2,4% e i titoli di Stato dell'area euro oltre 10 anni circa il 9%, mentre le azioni sono rimaste ferme: aumentare obbligazioni e duration ha pesato.\n+ | Maggio-giugno 2026 | Materie prime come principale scommessa «satellite» (tra il 7,5% e l'8,7% del fondo, anche tramite il fondo Allianz Dynamic Commodities) | Nel terzo trimestre le materie prime hanno guadagnato l'11,8% e l'oro il 3,7%: la scelta ha aiutato.\n? | Ultimo trimestre 2026 | Visione della casa per i portafogli prudenti: più azioni e meno obbligazioni, con satelliti in azioni emergenti e oro | Scelta recente: l'effetto si vedrà nei prossimi mesi. Va nella direzione opposta a quella di giugno, dopo il calo delle obbligazioni.",
-    msint:"Dal 17 giugno al 17 settembre 2026 il fondo ha perso l'1,47%; nel terzo trimestre i portafogli diversificati hanno perso in media circa l'1%.",
-    fof:false,der:'si',swing:true,swp:'',fx:true,ist:'fondo',pro:'',
-    con:"Volatilità sopra l'obiettivo: nell'ultimo anno è stata del 7,67%, appena sopra la fascia 3-7% che il fondo si prefigge.\nInveste anche in fondi: 25 fondi ed ETF, in parte della stessa Allianz (i sei più grandi pesano circa il 16%); i loro costi sono già compresi nei costi del KID."}
-  ]};
+/* ================= DATI INIZIALI: il modulo parte vuoto ================= */
+/* Nessun prodotto precaricato: i dati di ogni confronto si inseriscono a mano,
+   dal KID e dalla documentazione dello strumento, e restano in questo browser. */
+var DEF={cli:'',int:'Allianz Bank Financial Advisors S.p.A.',agg:'',rsame:false,imp:'100000',hor:'5',cons:false,
+  pcp:0.4,pcn:2,pci:150,iva:true,fonti:'',
+  f:[{prov:'acc'},{prov:'acc'}]};
 var KT=['nome','breve','isin','classe','soc','tipo','lancio','patd','sfdr','prov','come','wy','anni','adata','rat','ntit','geo','set','obt','val','mgr','soct','metodo','mgrd','volp','shpp','mddp','rank','top','mov','msint','pro','con','ist','borsa','idx','rep','der'];
 var KN=['pat','sri','rhp','ing','usc','gst','trn','prf','ktot','kriy','r1','r3','r5','r10','r20','wv','azref','azmax','aaz','aob','amp','aal','aliq','dur','ytm','ig','hy','vol','shp','mdd','msr','swp'];
 var KC=['fof','swing','fx'];
 var THOU={pat:1,ktot:1};   /* campi in cui «1.966» significa milleNovecentoSessantasei */
-var STORE='confronto-fondi-etf-v2',LVKEY='confronto-fondi-etf-livello';
+var STORE='confronto-fondi-etf-v3',LVKEY='confronto-fondi-etf-livello';
 
-/* Esempio «fondo ed ETF»: fondo Allianz (con i dati dell'esempio «due fondi») contro un ETF Vanguard, con la consulenza sull'ETF inclusa.
-   I valori della consulenza (parcella e incontri) sono solo illustrativi: vanno sostituiti con quelli concordati con il cliente. */
-var DEF_FE=(function(){
-  var d=JSON.parse(JSON.stringify(DEF_FF));
-  d.agg='18 novembre 2026';d.cons=true;
-  d.fonti="Fondo Allianz Dynamic Multi Asset Strategy SRI 15, classe AT EUR. Costi, indicatore di rischio, periodo consigliato e politica di investimento: KID del 16 aprile 2026. Rendimenti: FondiOnline.it su dati Morningstar, quota al 12 novembre 2026; il dato a 10 anni è esteso da Morningstar, perché la classe AT esiste dal 2017. Rendimenti per anno e anno peggiore: Quefondos. Composizione, primi titoli, duration, rendimento a scadenza, valute, Sharpe e perdita massima: report mensili del fondo al 31 maggio e al 30 giugno 2026 (classe RT, stesso portafoglio della AT ma con costi più bassi). Volatilità a 1 anno: FIDA, classe CT (stesso portafoglio), al 15 ottobre 2026. Posizione in classifica: FIDA, al 31 agosto 2026. Rating Morningstar: FondiOnline.it. Patrimonio: Finect, al 12 novembre 2026. Gestore, team, data di inizio, metodo, portafoglio di riferimento e limiti sulle azioni: Allianz Global Investors; masse di Allianz GI: BlueRating (marzo 2026). Scelte recenti: report mensili di maggio e giugno 2026, Allianz GI «Product Playbook Q4 2026», dati di mercato del terzo trimestre 2026 (FIDA tramite Traderlink; Invesco per l'oro), FIDA per il rendimento dal 17 giugno al 17 settembre 2026. "+
-    "ETF Vanguard LifeStrategy 20% Equity UCITS ETF (EUR) Accumulating. Costi, indicatore di rischio e periodo consigliato: KID Vanguard del 29 settembre 2026 (spese correnti 0,25%, costi di transazione 0,02%, nessun costo di ingresso e di uscita, costi totali 85 € su 10.000 € in 3 anni). Politica di investimento: documento Vanguard del 17 febbraio 2026 e pagina del prodotto sul sito Vanguard. Patrimonio e metodo di replica: scheda Vanguard al 31 agosto 2026 (la scheda e il sito Vanguard indicano un patrimonio di circa 118-119 milioni di euro per l'intero fondo). Rendimenti a 1, 3 e 5 anni (3 e 5 anni annualizzati), rendimenti per anno, volatilità, indice di Sharpe e perdita massima: extraETF, dati al 18 novembre 2026 (valori molto vicini su justETF). Composizione e ETF sottostanti: sito Vanguard, ripartizione al 30 giugno 2026; numero di titoli: sito Vanguard, al 18 novembre 2026; l'ETF è quotato su Borsa Italiana nel segmento ETF a gestione attiva. "+
-    "Consulenza: parcella e incontri sono quelli indicati dal consulente per il caso del cliente; non fanno parte dei documenti dei prodotti.";
-  var etf={ist:'etf',nome:'Vanguard LifeStrategy 20% Equity UCITS ETF (EUR) Accumulating',breve:'Vanguard LifeStrategy 20%',isin:'IE00BMVB5K07',classe:'EUR, accumulazione',soc:'Vanguard Group (Ireland) Limited',tipo:'Bilanciato prudente (ETF)',lancio:'2020-12-08',pat:118,patd:'31 agosto 2026',sri:2,rhp:3,sfdr:'',prov:'acc',
-    borsa:'Borsa Italiana, ticker VNGA20',idx:'Nessun indice: ETF a gestione attiva, che investe quasi solo in altri ETF Vanguard a indice',rep:'fis',
-    come:"ETF a gestione attiva che investe quasi solo in altri ETF Vanguard a indice. Ripartizione fissa: circa il 20% in azioni di tutto il mondo e circa l'80% in obbligazioni di governi e società, in euro o coperte dal rischio di cambio.",
-    ing:0,usc:0,gst:0.25,trn:0.02,prf:0,ktot:85,kriy:0.3,r1:1.47,r3:4.91,r5:-0.06,r10:'',r20:'',wv:-15.69,wy:'2022',
-    anni:"2025 4,23\n2024 5,10\n2023 7,29\n2022 -15,69",
-    adata:'30 giugno 2026',azref:20,azmax:'',aaz:20.34,aob:79.63,amp:'',aal:'',aliq:'',dur:'',ytm:'',rat:'',ig:'',hy:'',ntit:'9 ETF Vanguard, per circa 25.000 titoli in tutto (al 18 novembre 2026)',
-    geo:'',set:'',obt:'',val:'',
-    mgr:"Il team Global Equity Index Management di Vanguard, indicato come gestore nella scheda del fondo. Il nome del singolo gestore non è pubblicato.",
-    soct:"Vanguard Group (Ireland) Limited, la società irlandese del gruppo Vanguard, specializzato in fondi ed ETF a costo contenuto. Le scelte di investimento sono affidate alla divisione Global Equity Index Management.",
-    metodo:"Gestione attiva con ripartizione fissa: circa il 20% in azioni e l'80% in obbligazioni, ottenuta quasi del tutto con ETF Vanguard a indice. Il gestore ha libertà di scelta sulla composizione e non segue un indice di riferimento.",
-    mgrd:'',msr:'',vol:4.97,volp:'1 anno, al 18/11/2026',shp:0.68,shpp:'3 anni, al 18/11/2026',mdd:-16.02,mddp:'5 anni, al 18/11/2026',rank:'',
-    top:"Vanguard FTSE All-World UCITS ETF (ETF) 19,44\nVanguard USD Treasury Bond UCITS ETF (ETF) 19,16\nVanguard Global Aggregate Bond UCITS ETF (ETF) 19,14\nVanguard EUR Eurozone Government Bond UCITS ETF (ETF) 16,46\nVanguard USD Corporate Bond UCITS ETF (ETF) 15,88\nVanguard EUR Corporate Bond UCITS ETF (ETF) 5,86\nVanguard U.K. Gilt UCITS ETF (ETF) 3,13\nVanguard FTSE Developed World UCITS ETF (ETF) 0,78\nVanguard FTSE Emerging Markets UCITS ETF (ETF) 0,12",
-    mov:'',msint:'',
-    fof:true,der:'',swing:false,swp:'',fx:true,
-    pro:"Costi del prodotto molto bassi: 0,25% l'anno di spese correnti e 0,02% di costi di transazione.\nDiversificazione molto ampia: 9 ETF che contengono circa 25.000 titoli di tutto il mondo.",
-    con:"Rendimento a 5 anni quasi nullo: in media −0,06% l'anno, perché il periodo comprende il 2022 (−15,69%)."};
-  d.f=[d.f[1],etf];
-  return d;
-})();
 var HZ=[[1,'r1','Ultimo anno','',1],[3,'r3','Ultimi 3 anni',"media all'anno",2],[5,'r5','Ultimi 5 anni',"media all'anno",2],[10,'r10','Ultimi 10 anni',"media all'anno",2],[20,'r20','Ultimi 20 anni',"media all'anno",2]];
 var AC=[['aaz','Azioni','k1'],['aob','Obbligazioni','k2'],['amp','Materie prime','k3'],['aal','Investimenti alternativi','k4'],['aliq','Liquidità','k5']];
 var TAGS={cost:['Costa meno','Costa di più'],ret:['Ha reso di più','Ha reso di meno'],loss:['Ha perso meno','Ha perso di più'],hi:['Meglio','Peggio'],risk:['Più stabile','Meno stabile'],exp:['Più esperienza','Meno esperienza'],old:['Più storia','Meno storia']};
@@ -676,8 +626,8 @@ function formHTML(){
     rowIn('Investe in altri fondi o ETF','fondo di fondi','fof','c')+rowIn('Usa strumenti derivati','','der','tri')+rowIn('Swing pricing','prezzo corretto con grandi flussi, solo fondi','swing','c')+rowIn('Swing pricing: correzione massima','%, se indicata nel KID','swp','n')+rowIn('Copre il rischio di cambio','in tutto o in parte','fx','c')+
     rowTx('Altri punti a favore','uno per riga','pro',2)+rowTx('Altri punti di attenzione','uno per riga','con',2));
   h+='<details class="fgd"><summary>Fonti dei dati</summary><div class="f"><textarea class="txt" id="c-fonti" rows="6" aria-label="Fonti dei dati"></textarea></div></details>';
-  h+='<p class="fine">Il report mostra lo strumento A a sinistra e il B a destra. Non serve compilare tutto: se un dato manca per entrambi gli strumenti, la riga non compare; se manca per uno solo, compare «n.d.». I dati restano salvati in questo browser. La parcella e gli incontri dell\'esempio sono solo illustrativi: sostituiscili con quelli concordati con il cliente.</p>'+
-    '<div class="btns"><button type="button" class="btn2" id="c-scambia">Scambia A e B</button><button type="button" class="btn2" id="c-svuota">Svuota i dati</button><button type="button" class="btn2" id="c-esempio">Esempio: fondo ed ETF</button><button type="button" class="btn2" id="c-esempio2">Esempio: due fondi</button></div>';
+  h+='<p class="fine">Il report mostra lo strumento A a sinistra e il B a destra. Non serve compilare tutto: se un dato manca per entrambi gli strumenti, la riga non compare; se manca per uno solo, compare «n.d.». I dati restano salvati in questo browser. La parcella e gli incontri sono precompilati con valori indicativi: sostituiscili con quelli concordati con il cliente.</p>'+
+    '<div class="btns"><button type="button" class="btn2" id="c-scambia">Scambia A e B</button><button type="button" class="btn2" id="c-svuota">Svuota i dati</button></div>';
   return h;
 }
 function fv(v){return v==null?'':(typeof v==='number'?String(v).replace('.',','):String(v))}
@@ -1603,11 +1553,7 @@ function savePDF(){
 
 /* ---------- Avvio ---------- */
 $('c-form').innerHTML='<h2>Dati del confronto</h2><p class="fine">Modifica qui i dati: la relazione si aggiorna mentre scrivi e resta salvata in questo browser.</p>'+formHTML();$('c-rep').innerHTML=shellHTML();
-/* All'apertura lo strumento è vuoto: nessun prodotto precaricato.
-   Gli esempi si caricano con i pulsanti «Esempio» del modulo, quando servono. */
-var VUOTO=(function(){var d=JSON.parse(JSON.stringify(DEF_FE));
-  d.f=[{prov:'acc'},{prov:'acc'}];d.fonti='';d.rsame=false;d.cli='';d.agg='';d.cons=false;return d})();
-setForm(carica()||VUOTO);
+setForm(carica()||JSON.parse(JSON.stringify(DEF)));
 var lv='ess';try{lv=localStorage.getItem(LVKEY)||'ess'}catch(e){}
 setLevel(lv);
 function aggiorna(){render();salva()}
@@ -1616,9 +1562,7 @@ $('c-form').addEventListener('change',aggiorna);
 $('c-form').addEventListener('submit',function(e){e.preventDefault()});
 $('c-form').addEventListener('click',function(e){
   var id=e.target&&e.target.id;
-  if(id==='c-esempio'){setForm(DEF_FE);aggiorna()}
-  else if(id==='c-esempio2'){setForm(DEF_FF);aggiorna()}
-  else if(id==='c-svuota'){var d=getForm();d.f=[{prov:'acc'},{prov:'acc'}];d.fonti='';d.rsame=false;setForm(d);aggiorna()}
+  if(id==='c-svuota'){var d=getForm();d.f=[{prov:'acc'},{prov:'acc'}];d.fonti='';d.rsame=false;setForm(d);aggiorna()}
   else if(id==='c-scambia'){var g=getForm();g.f=[g.f[1],g.f[0]];setForm(g);aggiorna()}
 });
 document.querySelectorAll('.modo button[data-m]').forEach(function(b){b.addEventListener('click',function(){setLevel(b.dataset.m==='c'?'full':'ess');render()})});
