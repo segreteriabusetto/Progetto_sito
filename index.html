@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Marco Busetto · Consulente Finanziario a Venezia</title>
-<meta name="description" content="Marco Busetto, consulente finanziario: pianificazione successoria, passaggio generazionale e protezione del patrimonio. Calcola l'imposta di successione e fissa un primo incontro.">
+<meta name="description" content="Marco Busetto, consulente finanziario: passaggio generazionale, pianificazione successoria e protezione del patrimonio. Prova i calcolatori e fissa un primo incontro.">
 <meta property="og:title" content="Marco Busetto · Consulente Finanziario">
-<meta property="og:description" content="Pianificazione successoria, protezione del patrimonio e investimenti per famiglie e imprenditori.">
+<meta property="og:description" content="Passaggio generazionale, protezione del patrimonio e investimenti per famiglie e imprenditori.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#ffffff">
 <script>
@@ -671,6 +671,15 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .dark .cx-cols p{color:var(--on-dark-muted)}
 @media (min-width:860px){.cv-hint{display:none}.cv-wrap{padding:16px 14px}}
 @media (min-width:900px){.cx-cols.cv-cols{grid-template-columns:repeat(3,1fr);gap:30px}}
+/* ciclo di vita: stesso interruttore Famiglie / Aziende della piramide, in versione scura */
+.dark .aud-l{color:var(--on-dark-muted)}
+.dark .aud-sw{border-color:var(--line-dark);background:rgba(255,255,255,.04)}
+.dark .aud-sw button{color:rgba(255,255,255,.82)}
+.dark .aud-sw button:hover{color:#fff}
+.dark .aud-sw button[aria-pressed="true"]{background:var(--gold);color:var(--navy-950)}
+[data-aud="fam"] .cv-scroll .cv.only-az,[data-aud="az"] .cv-scroll .cv.only-fam{display:none}
+.cv-re .cv-curve{transition:none;stroke-dashoffset:1}
+.cv-re .cv-l{transition:none;opacity:0}
 
 /* ---------- piramide dei bisogni ---------- */
 .aud{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 30px}
@@ -695,6 +704,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .pyr-axis .pyr-head{fill:var(--gold);stroke:none}
 .pyr-axis text{font-size:10px;font-weight:600;letter-spacing:.2em;fill:var(--muted)}
 .pyr figcaption{margin-top:14px;font-size:13px;line-height:1.55;color:var(--muted);text-align:center}
+/* sul telefono le etichette non ci stanno: resta la piramide, ingrandita */
 @media (max-width:719px){.pyr-name,.pyr-chip,.pyr-hz,.pyr-cap,.pyr-lead,.pyr-axis,.pyr-base{display:none}
   .pyr figcaption{margin-top:18px}}
 .pyr-list{list-style:none;margin:0;padding:0;counter-reset:p}
@@ -760,6 +770,26 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .net-tags li{border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:13.5px;color:var(--ink-2)}
 @media (min-width:720px){.net-grid{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1040px){.net-grid{grid-template-columns:repeat(3,1fr)}}
+/* ---------- ruoli distinti: investimento e assicurazione ---------- */
+.role-split{background:var(--navy-900);color:#fff;border-radius:var(--r);padding:34px 28px;margin:0 0 26px;display:grid;gap:30px;align-items:center}
+.role-split .eyebrow{color:var(--gold-2);margin:0 0 14px}
+.rs-q{margin:0 0 14px;font:500 clamp(28px,3.6vw,40px)/1.18 var(--serif);color:#fff;max-width:520px}
+.rs-q em{color:var(--gold-2);font-style:italic}
+.rs-t{margin:0;max-width:520px;font-size:15.5px;color:var(--on-dark-muted)}
+.rs-cols>div{padding:20px 0}
+.rs-cols>div+div{border-top:1px solid var(--gold)}
+.rs-cols h4{margin:0 0 8px;font:600 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2)}
+.rs-cols p{margin:0;font-size:15.5px;line-height:1.55;color:#fff}
+@media (min-width:860px){.role-split{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;padding:46px 48px}}
+:root[data-theme="dark"] .role-split{background:#04132c;border:1px solid var(--line-dark)}
+.svc-role{margin:48px auto 0;max-width:640px;text-align:center}
+.svc-role .svc-role-q{margin:0 0 8px;font:500 clamp(24px,3vw,30px)/1.2 var(--serif);color:var(--head)}
+.svc-role .svc-role-q em{color:var(--gold-deep);font-style:italic}
+.svc-role p{margin:0;font-size:15.5px;color:var(--muted)}
+.svc-role a{color:var(--navy-l);text-underline-offset:3px}
+.pyr-list .pyr-who{margin-top:8px;font-size:13.5px;color:var(--gold-ink)}
+.ins-b .ins-who{margin:0 0 24px;padding-left:14px;border-left:2px solid var(--gold);font-size:14px;line-height:1.55;color:var(--on-dark-muted)}
+
 
 /* ---------- recensioni ---------- */
 .reviews{background:var(--ivory)}
@@ -867,15 +897,15 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <div class="dial" aria-hidden="true"><svg viewBox="0 0 240 240"><circle class="d-r" cx="120" cy="120" r="96"/><circle class="d-r d-r2" cx="120" cy="120" r="68"/><circle class="d-r d-r3" cx="120" cy="120" r="40"/><g class="d-tk"><path d="M120 12V34" transform="rotate(0 120 120)"/><path d="M120 18V30" transform="rotate(15 120 120)"/><path d="M120 18V30" transform="rotate(30 120 120)"/><path d="M120 18V30" transform="rotate(45 120 120)"/><path d="M120 18V30" transform="rotate(60 120 120)"/><path d="M120 18V30" transform="rotate(75 120 120)"/><path d="M120 12V34" transform="rotate(90 120 120)"/><path d="M120 18V30" transform="rotate(105 120 120)"/><path d="M120 18V30" transform="rotate(120 120 120)"/><path d="M120 18V30" transform="rotate(135 120 120)"/><path d="M120 18V30" transform="rotate(150 120 120)"/><path d="M120 18V30" transform="rotate(165 120 120)"/><path d="M120 12V34" transform="rotate(180 120 120)"/><path d="M120 18V30" transform="rotate(195 120 120)"/><path d="M120 18V30" transform="rotate(210 120 120)"/><path d="M120 18V30" transform="rotate(225 120 120)"/><path d="M120 18V30" transform="rotate(240 120 120)"/><path d="M120 18V30" transform="rotate(255 120 120)"/><path d="M120 12V34" transform="rotate(270 120 120)"/><path d="M120 18V30" transform="rotate(285 120 120)"/><path d="M120 18V30" transform="rotate(300 120 120)"/><path d="M120 18V30" transform="rotate(315 120 120)"/><path d="M120 18V30" transform="rotate(330 120 120)"/><path d="M120 18V30" transform="rotate(345 120 120)"/></g><path class="d-x" d="M120 2V238M2 120H238"/><g class="d-or"><circle cx="120" cy="24" r="4.5"/></g><g class="d-or d-or2"><circle cx="120" cy="52" r="3"/></g></svg></div>
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="eyebrow">Consulente finanziario · Pianificazione successoria</p>
+        <p class="eyebrow">Consulente finanziario · Passaggio generazionale</p>
         <h1><span class="ln">Proteggere ciò che hai costruito.</span> <em class="ln">Trasmetterlo con serenità.</em></h1>
-        <p class="lead">Accompagniamo famiglie, imprenditori e professionisti nelle decisioni che non si prendono due volte: proteggere, far crescere, trasmettere. Con metodo, e senza fretta.</p>
+        <p class="lead">Affianchiamo famiglie, imprenditori e professionisti nel passaggio generazionale e nelle scelte sul patrimonio, con un metodo chiaro e una relazione che dura nel tempo.</p>
         <div class="hero-ctas">
           <a class="btn btn-navy" data-book href="#contatti">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Prenota un incontro
           </a>
-          <a class="btn btn-line" href="#calcolatori">Calcola l'imposta di successione</a>
+          <a class="btn btn-line" href="#calcolatori">Prova i calcolatori</a>
         </div>
       </div>
       <div class="portrait"><img id="heroPhoto" src="img/marco-busetto.webp" alt="Marco Busetto, consulente finanziario" width="1192" height="1458" fetchpriority="high"></div>
@@ -885,9 +915,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
   <div class="trust">
     <ul class="wrap" id="trust">
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Iscritto all'Albo OCF</b>e al registro IVASS</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg><span><b>Pianificazione successoria</b>Passaggio generazionale</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg><span><b>Passaggio generazionale</b>e pianificazione successoria</span></li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2a5 5 0 0 1 5.5 5.8"/></svg><span><b>Famiglie e imprenditori</b>Patrimoni da proteggere</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg><span><b>Seconda generazione</b>Oltre trent'anni accanto alle famiglie</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.6 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg><span><b>Seconda generazione</b>Quarant'anni accanto alle famiglie</span></li>
     </ul>
   </div>
 
@@ -896,9 +926,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <div class="wrap">
       <p class="quote rv">«Il patrimonio non è solo ciò che possiedi: è ciò che <em>scegli di lasciare</em> alle persone che ami.»</p>
       <div class="pillars rv">
-        <div class="pillar"><span class="n">I</span><h3>Ascolto</h3><p>Un piano parte sempre da una storia: la tua, la tua famiglia, ciò che conta davvero.</p></div>
-        <div class="pillar"><span class="n">II</span><h3>Visione</h3><p>Protezione, crescita e trasmissione non sono tre discorsi separati: sono un unico disegno.</p></div>
-        <div class="pillar"><span class="n">III</span><h3>Continuità</h3><p>Un riferimento stabile, che rivede il piano quando cambiano la vita e le regole.</p></div>
+        <div class="pillar"><span class="n">I</span><h3>Ascolto</h3><p>Ogni piano parte dalla tua storia, dalla tua famiglia e da ciò che conta davvero per te.</p></div>
+        <div class="pillar"><span class="n">II</span><h3>Visione</h3><p>Guardiamo oltre il presente: protezione, crescita e trasmissione del patrimonio in un unico disegno.</p></div>
+        <div class="pillar"><span class="n">III</span><h3>Continuità</h3><p>Un riferimento stabile nel tempo, che aggiorna il piano quando cambiano la vita e le regole.</p></div>
       </div>
       <div class="stats rv" id="stats" hidden></div>
     </div>
@@ -910,7 +940,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <div class="wrap about-grid">
       <div class="about-photo rv">
         <svg class="lc" viewBox="0 0 480 548" role="img" aria-labelledby="lcTitle">
-          <title id="lcTitle">I bisogni lungo il ciclo di vita: fase di accumulo e fase di decumulo, dal lavoro alla successione</title>
+          <title id="lcTitle">I bisogni lungo il ciclo di vita: fase di accumulo e fase di decumulo, dal lavoro al passaggio generazionale</title>
           <defs><linearGradient id="lcFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a08756" stop-opacity=".22"/><stop offset="1" stop-color="#a08756" stop-opacity="0"/></linearGradient><linearGradient id="lcFade"><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="lcMask"><rect width="480" height="548" fill="url(#lcFade)"/></mask></defs>
           <text class="lc-eb" x="40" y="64">IL CICLO DI VITA DEL PATRIMONIO</text>
           <text class="lc-t" x="40" y="104">Bisogni diversi</text>
@@ -924,21 +954,23 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           <g class="lc-pt" style="--i:1"><circle class="halo" cx="173" cy="320.2" r="8"/><circle cx="173" cy="320.2" r="3.5"/><text x="159" y="325" text-anchor="end">Famiglia</text></g>
           <g class="lc-pt" style="--i:2"><circle class="halo" cx="237.2" cy="238.7" r="8"/><circle cx="237.2" cy="238.7" r="3.5"/><text x="223" y="236" text-anchor="end">Consolidare</text></g>
           <g class="lc-pt" style="--i:3"><circle class="halo" cx="310" cy="190" r="8"/><circle cx="310" cy="190" r="3.5"/><text x="310" y="164" text-anchor="middle">Pensione</text></g>
-          <g class="lc-pt" style="--i:4"><circle class="halo" cx="423.3" cy="234" r="8"/><circle cx="423.3" cy="234" r="3.5"/><text x="408" y="276" text-anchor="middle">Successione</text></g>
+          <g class="lc-pt" style="--i:4"><circle class="halo" cx="423.3" cy="234" r="8"/><circle cx="423.3" cy="234" r="3.5"/><text x="408" y="276" text-anchor="middle">Passaggio</text></g>
           <text class="lc-ph" x="175" y="464" text-anchor="middle">ACCUMULO</text>
           <text class="lc-sub" x="175" y="486" text-anchor="middle">proteggere · accumulare</text>
           <text class="lc-ph" x="378" y="464" text-anchor="middle">DECUMULO</text>
-          <text class="lc-sub" x="378" y="486" text-anchor="middle">rendita · successione</text>
+          <text class="lc-sub" x="378" y="486" text-anchor="middle">rendita · passaggio</text>
           </g>
         </svg>
       </div>
       <div class="about-text rv">
         <p class="eyebrow">Chi siamo</p>
-        <h2>Due generazioni, <em>una sola idea</em></h2>
-        <p>In casa Busetto tutto è cominciato <strong>oltre trent'anni fa</strong>. Oggi siamo alla seconda generazione e con molte famiglie imprenditoriali il rapporto dura da decenni: nel frattempo sono cambiate le aziende, i mercati e perfino le persone sedute al tavolo. Il filo è rimasto lo stesso.</p>
-        <p>Io sono <strong>Marco Busetto</strong>, consulente finanziario abilitato all'offerta fuori sede: mi occupo soprattutto di <strong>pianificazione successoria</strong> e <strong>passaggio generazionale</strong>. Non lavoro da solo. Accanto a me commercialisti, notai, avvocati e specialisti, che entrano in gioco quando il caso lo richiede.</p>
-        <p>Il metodo parte dall'ascolto: prima gli obiettivi, le priorità e gli equilibri di famiglia; poi un piano sostenibile e verificabile, costruito insieme a chi già ti segue.</p>
+        <h2>Due generazioni, <em>una sola idea di consulenza</em></h2>
+        <p>In casa Busetto la consulenza finanziaria è cominciata <strong>quarant'anni fa</strong>, con mio padre. Oggi siamo alla seconda generazione e molte delle famiglie imprenditoriali che seguiamo sono con noi da decenni: nel frattempo sono cambiate le aziende, i patrimoni e perfino la generazione seduta al tavolo. Il filo è rimasto lo stesso.</p>
+        <p>Io sono <strong>Marco Busetto</strong>, consulente finanziario abilitato all'offerta fuori sede, e mi occupo in particolare di <strong>passaggio generazionale</strong>, che ho vissuto in prima persona, nella consulenza e in azienda, accanto a mio padre. Accompagno le famiglie anche nella pianificazione successoria. Non lavoro da solo: un consulente finanziario non può essere un tuttofare. Intorno al tavolo ci sono commercialisti, notai, avvocati e, per la parte assicurativa, professionisti con cui collaboro. Ognuno nel proprio ambito, e noi a coordinarli quando il patrimonio lo richiede.</p>
+        <p>Il metodo parte dall'ascolto: prima comprendiamo obiettivi, priorità e legami familiari, poi costruiamo insieme un piano chiaro, sostenibile e verificabile nel tempo, in coordinamento con i professionisti che già ti seguono.</p>
         <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Quarant'anni di consulenza finanziaria in famiglia, oggi alla seconda generazione</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Il passaggio generazionale vissuto in prima persona, nella consulenza e in azienda</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Laurea magistrale in Economia e Finanza con 110 e lode</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Iscritto all'Albo unico dei consulenti finanziari (OCF) e al registro IVASS</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>Alle spalle un gruppo internazionale tra i primi al mondo nell'assicurazione e nella gestione del risparmio</li>
@@ -957,23 +989,23 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
       <div class="sec-head rv">
         <p class="eyebrow">Servizi</p>
         <h2>Un unico interlocutore per <em>tutto il patrimonio</em></h2>
-        <p class="lead">Dalla protezione alla crescita, fino alla trasmissione: sono aree collegate, e una scelta presa in una si sente in tutte le altre.</p>
+        <p class="lead">Dalla protezione alla crescita, fino alla trasmissione: ogni area è collegata alle altre, perché ogni scelta ha effetti sul tutto.</p>
       </div>
       <div class="svc-grid">
         <article class="svc feat rv">
           <span class="tag">Area principale</span>
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="14" rx="1"/><path d="M8 7V4h8v3M3 13h18"/></svg></div>
+          <h3>Passaggio generazionale</h3>
+          <p>Accompagnare la famiglia e l'azienda verso la generazione successiva, preservandone valore e continuità. Un percorso che ho vissuto in prima persona, nella consulenza e in azienda.</p>
+          <p class="kw"><span>Patto di famiglia</span> <i>·</i> <span>Key man</span> <i>·</i> <span>TFM</span></p>
+          <button class="read" type="button" data-art="impresa">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </article>
+        <article class="svc rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg></div>
           <h3>Pianificazione successoria</h3>
           <p>Decidere oggi come, quando e a chi trasferire il patrimonio, riducendo costi, tempi e rischi di conflitto tra eredi.</p>
           <p class="kw"><span>Testamento</span> <i>·</i> <span>Donazioni</span> <i>·</i> <span>Polizze vita</span></p>
           <button class="read" type="button" data-art="successione">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </article>
-        <article class="svc rv">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="14" rx="1"/><path d="M8 7V4h8v3M3 13h18"/></svg></div>
-          <h3>Passaggio generazionale d'impresa</h3>
-          <p>Accompagnare l'azienda di famiglia verso la generazione successiva, preservandone valore e continuità.</p>
-          <p class="kw"><span>Patto di famiglia</span> <i>·</i> <span>Key man</span> <i>·</i> <span>TFM</span></p>
-          <button class="read" type="button" data-art="impresa">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
         <article class="svc rv">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/></svg></div>
@@ -1004,28 +1036,42 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           <button class="read" type="button" data-art="liquidita">Leggi l'articolo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </article>
       </div>
+      <div class="svc-role rv">
+        <p class="svc-role-q">Un unico interlocutore, <em>non un tuttofare</em></p>
+        <p>Io seguo la visione d'insieme e gli investimenti. Per la parte assicurativa mi affido a professionisti con cui collaboro: <a href="#rete">scopri come lavoriamo insieme</a>.</p>
+      </div>
     </div>
     <div class="wrap"><p class="ponte rv">Prima degli strumenti, però, viene una domanda più semplice: che cosa serve, e quando.</p></div>
   </section>
 
   <!-- BISOGNI: CICLO DI VITA -->
-  <section class="sec dark needs" id="bisogni">
+  <section class="sec dark needs" id="bisogni" data-aud="fam">
     <div class="gridlines" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="wrap">
       <div class="sec-head rv">
         <p class="eyebrow">Il punto di partenza</p>
-        <h2>Ogni stagione della vita <em>ha i suoi bisogni</em></h2>
-        <p class="lead">Un piano non nasce da un prodotto, ma da una domanda: che cosa serve, e quando. Sopra la linea le esigenze finanziarie, sotto quelle di protezione: corrono insieme, dal primo stipendio alla successione.</p>
+        <h2 class="only-fam">Ogni stagione della vita <em>ha i suoi bisogni</em></h2>
+        <h2 class="only-az">Ogni stagione dell'impresa <em>ha i suoi bisogni</em></h2>
+        <p class="lead only-fam">Un piano non nasce da un prodotto, ma da una domanda: di che cosa hai bisogno, e quando. Sopra la linea i bisogni finanziari, sotto la linea quelli di protezione: camminano insieme, dal primo stipendio al passaggio generazionale.</p>
+        <p class="lead only-az">Un piano non nasce da un prodotto, ma da una domanda: di che cosa ha bisogno l'impresa, e quando. Sopra la linea i bisogni finanziari, sotto la linea quelli di protezione: camminano insieme, dall'avvio al passaggio generazionale.</p>
+      </div>
+      <div class="aud rv">
+        <span class="aud-l">Stai guardando per</span>
+        <div class="aud-sw" role="group" aria-label="Scegli il punto di vista">
+          <button type="button" data-aud="fam" aria-pressed="true">Famiglie</button>
+          <button type="button" data-aud="az" aria-pressed="false">Aziende</button>
+        </div>
       </div>
       <div class="cv-legend rv">
         <span class="cv-k cv-k-fin">Bisogni finanziari<small>sopra la linea</small></span>
         <span class="cv-k cv-k-pro">Bisogni di protezione<small>sotto la linea</small></span>
-        <span class="cv-k cv-k-cur">La curva<small>il patrimonio che si forma e poi si consuma</small></span>
+        <span class="cv-k cv-k-cur only-fam">La curva<small>il patrimonio che si forma e poi si consuma</small></span>
+        <span class="cv-k cv-k-cur only-az">La curva<small>il valore dell'impresa che cresce e poi passa di mano</small></span>
       </div>
       <div class="cv-wrap rv">
-        <div class="cv-scroll"><svg class="cv" viewBox="0 0 1180 580" role="img" aria-labelledby="cvTitle cvDesc">
+        <div class="cv-scroll"><svg class="cv only-fam" viewBox="0 0 1180 580" role="img" aria-labelledby="cvTitle cvDesc">
 <title id="cvTitle">I bisogni lungo il ciclo di vita</title>
-<desc id="cvDesc">Una curva che sale nella fase di accumulo e scende in quella di decumulo. Sopra la linea i bisogni finanziari: previdenza integrativa, finanziare la casa, capitale per i figli, investire per obiettivi, rendita integrativa, pianificare la successione. Sotto la linea i bisogni di protezione: mobilità, casa, salute, reddito, non autosufficienza, capitale.</desc>
+<desc id="cvDesc">Una curva che sale nella fase di accumulo e scende in quella di decumulo. Sopra la linea i bisogni finanziari: previdenza integrativa, finanziare la casa, capitale per i figli, investire per obiettivi, rendita integrativa, passaggio generazionale. Sotto la linea i bisogni di protezione: mobilità, casa, salute, reddito, non autosufficienza, capitale.</desc>
 <path class="cv-ph-l" d="M90 96H685M90 90v12M685 90v12"/>
 <path class="cv-ph-l" d="M705 96H1120M705 90v12M1120 90v12"/>
 <text class="cv-ph" x="387" y="80" text-anchor="middle">FASE DI ACCUMULO</text>
@@ -1060,9 +1106,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
 <circle cx="825" cy="175.2" r="4.5"/>
 <text x="825" y="128.2" text-anchor="middle">Rendita<tspan x="825" dy="17">integrativa</tspan></text></g>
 <g class="cv-l cv-fin" style="--i:5">
-<path d="M1020 248.7V214.7"/>
+<path d="M1020 248.7V210.7"/>
 <circle cx="1020" cy="255.7" r="4.5"/>
-<text x="1020" y="208.7" text-anchor="middle">Pianificare<tspan x="1020" dy="17">la successione</tspan></text></g>
+<text x="1020" y="204.7" text-anchor="middle">Passaggio<tspan x="1020" dy="17">generazionale</tspan></text></g>
 <g class="cv-l cv-pro" style="--i:0">
 <path d="M262 388.5V405.5"/>
 <circle cx="262" cy="381.5" r="4.5"/>
@@ -1092,13 +1138,88 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
 <text class="cv-stage" x="595" y="510" text-anchor="middle">Consolidare lavoro,<tspan x="595" dy="16">famiglia, incertezze</tspan></text>
 <text class="cv-stage" x="795" y="510" text-anchor="middle">Ritirarsi dal<tspan x="795" dy="16">mondo del lavoro</tspan></text>
 <text class="cv-stage" x="1005" y="510" text-anchor="middle">Preservare e<tspan x="1005" dy="16">trasmettere</tspan></text>
+</svg>
+<svg class="cv only-az" viewBox="0 0 1180 580" role="img" aria-labelledby="cvTitleAz cvDescAz">
+<title id="cvTitleAz">I bisogni lungo il ciclo di vita dell'impresa</title>
+<desc id="cvDescAz">Una curva che sale nella fase di sviluppo e scende in quella di passaggio. Sopra la linea i bisogni finanziari: tesoreria, esborsi programmati, TFR e previdenza, investire la liquidità, separare impresa e famiglia, pianificare il passaggio generazionale. Sotto la linea i bisogni di protezione: persone chiave, beni aziendali, crediti verso i clienti, continuità, liquidità per gli altri eredi, tutela dei successori.</desc>
+<path class="cv-ph-l" d="M90 96H685M90 90v12M685 90v12"/>
+<path class="cv-ph-l" d="M705 96H1120M705 90v12M1120 90v12"/>
+<text class="cv-ph" x="387" y="80" text-anchor="middle">FASE DI SVILUPPO</text>
+<text class="cv-ph" x="912" y="80" text-anchor="middle">FASE DI PASSAGGIO</text>
+<path class="cv-ax" d="M90 116V480H1134M1128 475l6 5-6 5M85 121l5-5 5 5"/>
+<text class="cv-axl" x="76" y="300" text-anchor="middle" transform="rotate(-90 76 300)">Valore e bisogni</text>
+<text class="cv-axl" x="1128" y="506" text-anchor="end">Tempo</text>
+<path class="cv-div" d="M295 120V480"/>
+<path class="cv-div" d="M495 120V480"/>
+<path class="cv-div cv-div-s" d="M695 120V480"/>
+<path class="cv-div" d="M895 120V480"/>
+<path class="cv-area" d="M90 410C130 409 200 406 250 396C300 386 345 368 400 340C455 312 510 268 570 236C630 204 680 178 735 174C790 170 840 180 890 204C940 228 1040 292 1090 322L1090 480H90Z"/>
+<path class="cv-curve" pathLength="1" d="M90 410C130 409 200 406 250 396C300 386 345 368 400 340C455 312 510 268 570 236C630 204 680 178 735 174C790 170 840 180 890 204C940 228 1040 292 1090 322"/>
+<g class="cv-l cv-fin" style="--i:0">
+<path d="M175 398.7V364.7"/>
+<circle cx="175" cy="405.7" r="4.5"/>
+<text x="175" y="358.7" text-anchor="middle">Gestire la<tspan x="175" dy="17">tesoreria</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:1">
+<path d="M345 358.9V324.9"/>
+<circle cx="345" cy="365.9" r="4.5"/>
+<text x="345" y="318.9" text-anchor="middle">Pianificare<tspan x="345" dy="17">gli esborsi</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:2">
+<path d="M505 268.2V224.2"/>
+<circle cx="505" cy="275.2" r="4.5"/>
+<text x="505" y="218.2" text-anchor="middle">Gestire il TFR<tspan x="505" dy="17">e la previdenza</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:3">
+<path d="M645 191.5V157.5"/>
+<circle cx="645" cy="198.5" r="4.5"/>
+<text x="645" y="151.5" text-anchor="middle">Investire la<tspan x="645" dy="17">liquidità</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:4">
+<path d="M825 173.8V139.8"/>
+<circle cx="825" cy="180.8" r="4.5"/>
+<text x="825" y="133.8" text-anchor="middle">Separare impresa<tspan x="825" dy="17">e famiglia</tspan></text></g>
+<g class="cv-l cv-fin" style="--i:5">
+<path d="M1020 272.1V210.1"/>
+<circle cx="1020" cy="279.1" r="4.5"/>
+<text x="1020" y="204.1" text-anchor="middle">Pianificare il<tspan x="1020" dy="17">passaggio generazionale</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:0">
+<path d="M262 400.4V417.4"/>
+<circle cx="262" cy="393.4" r="4.5"/>
+<text x="262" y="429.4" text-anchor="middle">Proteggere le<tspan x="262" dy="17">persone chiave</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:1">
+<path d="M425 333.3V358.3"/>
+<circle cx="425" cy="326.3" r="4.5"/>
+<text x="425" y="370.3" text-anchor="middle">Proteggere i<tspan x="425" dy="17">beni aziendali</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:2">
+<path d="M575 240.3V272.3"/>
+<circle cx="575" cy="233.3" r="4.5"/>
+<text x="575" y="284.3" text-anchor="middle">Tutelare i crediti<tspan x="575" dy="17">verso i clienti</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:3">
+<path d="M745 180.4V197.4"/>
+<circle cx="745" cy="173.4" r="4.5"/>
+<text x="745" y="209.4" text-anchor="middle">Garantire la<tspan x="745" dy="17">continuità</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:4">
+<path d="M920 226.7V256.7"/>
+<circle cx="920" cy="219.7" r="4.5"/>
+<text x="920" y="268.7" text-anchor="middle">Liquidità per gli<tspan x="920" dy="17">altri eredi</tspan></text></g>
+<g class="cv-l cv-pro" style="--i:5">
+<path d="M1080 323V340"/>
+<circle cx="1080" cy="316" r="4.5"/>
+<text x="1080" y="352" text-anchor="middle">Tutelare i<tspan x="1080" dy="17">successori</tspan></text></g>
+<text class="cv-stage" x="192" y="510" text-anchor="middle">Avviare<tspan x="192" dy="16">l'impresa</tspan></text>
+<text class="cv-stage" x="395" y="510" text-anchor="middle">Crescere e<tspan x="395" dy="16">strutturarsi</tspan></text>
+<text class="cv-stage" x="595" y="510" text-anchor="middle">Consolidare<tspan x="595" dy="16">il mercato</tspan></text>
+<text class="cv-stage" x="795" y="510" text-anchor="middle">Preparare<tspan x="795" dy="16">il ricambio</tspan></text>
+<text class="cv-stage" x="1005" y="510" text-anchor="middle">Trasmettere<tspan x="1005" dy="16">o cedere</tspan></text>
 </svg></div>
         <p class="cv-hint" aria-hidden="true">Scorri il grafico &rarr;</p>
       </div>
-      <div class="cx-cols cv-cols rv">
-        <div><h4>Fase di accumulo</h4><p>Dal primo stipendio alla maturità professionale il reddito cresce, e con esso la capacità di risparmio. È il tempo in cui si costruisce: previdenza, casa, figli, investimenti. Ed è anche il tempo in cui si ha più da proteggere, perché la ricchezza più grande è ancora il reddito che verrà.</p></div>
+      <div class="cx-cols cv-cols only-fam rv">
+        <div><h4>Fase di accumulo</h4><p>Dal primo stipendio alla maturità professionale il reddito cresce e con esso la capacità di risparmio. È il tempo in cui si costruisce: previdenza, casa, figli, investimenti. Ed è anche il tempo in cui si ha più da proteggere, perché il patrimonio più grande è ancora il reddito che verrà.</p></div>
         <div><h4>Il punto di svolta</h4><p>Con la pensione il reddito da lavoro si ferma e il patrimonio comincia a essere speso. L'obiettivo cambia: non più accumulare, ma trasformare il capitale in una rendita che duri, senza esaurirsi troppo presto e senza rinunciare al tenore di vita.</p></div>
-        <div><h4>Fase di decumulo</h4><p>Negli ultimi decenni contano preservare e trasmettere: difendere il capitale da oscillazioni e inflazione, coprire il rischio di non autosufficienza e preparare la successione, perché arrivi a destinazione senza costi evitabili e senza conflitti.</p></div>
+        <div><h4>Fase di decumulo</h4><p>Negli ultimi decenni contano preservare e trasmettere: difendere il capitale da oscillazioni e inflazione, coprire il rischio di non autosufficienza e preparare il passaggio generazionale, perché avvenga senza costi evitabili e senza conflitti.</p></div>
+      </div>
+      <div class="cx-cols cv-cols only-az rv">
+        <div><h4>Fase di sviluppo</h4><p>Dall'avvio alla maturità l'impresa cresce e con essa il suo valore. È il tempo in cui si costruisce: tesoreria, struttura, dipendenti, investimenti. Ed è anche il tempo in cui si ha più da proteggere, perché il valore dipende da persone, beni e clienti che non si sostituiscono in un giorno.</p></div>
+        <div><h4>Il punto di svolta</h4><p>Quando l'imprenditore si avvicina al passo indietro, l'obiettivo cambia: non più far crescere l'impresa, ma farla passare in mani sicure, che siano i figli, i soci o un acquirente, senza disperdere valore e senza mettere a rischio la famiglia.</p></div>
+        <div><h4>Fase di passaggio</h4><p>Negli ultimi anni alla guida contano continuità e trasmissione: separare impresa e famiglia, ridisegnare il controllo, garantire liquidità agli eredi non coinvolti e reinvestire con criterio ciò che l'azienda ha generato, perché il passaggio avvenga senza costi evitabili e senza conflitti.</p></div>
       </div>
     </div>
     <div class="wrap"><p class="ponte rv">Le esigenze non arrivano tutte insieme. E non hanno tutte la stessa urgenza.</p></div>
@@ -1113,7 +1234,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
       <div class="sec-head rv">
         <p class="eyebrow">La piramide dei bisogni</p>
         <h2>Prima la base, <em>poi il vertice</em></h2>
-        <p class="lead">A ogni obiettivo il suo orizzonte, e a ogni orizzonte il rischio che può reggere. Si costruisce dal basso: un livello tiene solo se quello sotto è completo.</p>
+        <p class="lead">Ogni obiettivo ha un orizzonte temporale e, di conseguenza, il rischio che può sopportare. Si costruisce sempre dal basso: un livello regge solo se quello che lo sostiene è completo.</p>
       </div>
       <div class="aud rv">
         <span class="aud-l">Stai guardando per</span>
@@ -1169,12 +1290,13 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
 <text class="pyr-cap" x="652" y="468">ORIZZONTE TEMPORALE</text>
 <path class="pyr-base" d="M218 440H622"/>
 </svg>
-          <figcaption>Salendo crescono insieme il rischio e l'orizzonte temporale. Alla base, ciò che va coperto oggi.</figcaption>
+          <figcaption>Il rischio cresce salendo e con esso l'orizzonte temporale. Alla base i bisogni da coprire oggi: è da lì che si parte.</figcaption>
         </figure>
         <ol class="pyr-list">
           <li style="--c:#10573f"><h3>Protezione<em>subito</em></h3>
             <p class="only-fam">Il reddito e le persone. Premorienza, invalidità, salute, non autosufficienza: eventi rari, ma capaci di cancellare in un giorno ciò che è stato costruito in vent'anni.</p>
-            <p class="only-az">La continuità dell'impresa. Persone chiave, beni strumentali, crediti verso i clienti, eventi catastrofali: i rischi che l'azienda non può assorbire da sola si trasferiscono a chi li sa gestire.</p></li>
+            <p class="only-az">La continuità dell'impresa. Persone chiave, beni strumentali, crediti verso i clienti, eventi catastrofali: i rischi che l'azienda non può assorbire da sola si trasferiscono a chi li sa gestire.</p>
+            <p class="pyr-who">Qui mi affido a professionisti assicurativi con cui collaboro: è un mestiere diverso dall'investimento.</p></li>
           <li style="--c:#14306b"><h3>Liquidità<em>immediato · 3/6 mesi</em></h3>
             <p class="only-fam">Le spese di tutti i giorni e la ruota di scorta: alcuni mesi di uscite familiari sempre disponibili, per non dover smobilizzare un investimento nel momento sbagliato.</p>
             <p class="only-az">La tesoreria operativa: fornitori, stipendi, imposte. Quanto serve davvero per lavorare senza tensioni, su conti remunerati invece che fermo a perdere valore.</p></li>
@@ -1215,24 +1337,25 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
         <p class="xnotes-t">Perché funziona: le basi teoriche</p>
         <div class="nobel-grid">
           <div class="nb"><span class="nb-y">Nobel 1985</span><h4>Franco Modigliani</h4><p class="nb-i">La teoria del ciclo di vita: si risparmia quando il reddito è alto per sostenere i consumi quando non lo sarà più.</p><p class="nb-c">Per questo il piano guarda a tutta la vita, non all'anno in corso.</p></div>
-          <div class="nb"><span class="nb-y">Nobel 2002</span><h4>Daniel Kahneman</h4><p class="nb-i">Con Amos Tversky ha mostrato che una perdita pesa psicologicamente circa il doppio di un guadagno equivalente.</p><p class="nb-c">Ecco perché la protezione sta alla base: evitare un danno vale più che inseguire un rendimento.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 2002</span><h4>Daniel Kahneman</h4><p class="nb-i">Con Amos Tversky ha mostrato che una perdita pesa psicologicamente circa il doppio di un guadagno equivalente.</p><p class="nb-c">Per questo la protezione sta alla base: evitare un danno vale più che inseguire un rendimento.</p></div>
           <div class="nb"><span class="nb-y">Nobel 2017</span><h4>Richard Thaler</h4><p class="nb-i">La contabilità mentale: tendiamo a dividere il denaro in «conti» separati, ciascuno con il proprio scopo.</p><p class="nb-c">La piramide usa questa tendenza a tuo favore: a ogni obiettivo il suo salvadanaio e il suo orizzonte.</p></div>
           <div class="nb"><span class="nb-y">Nobel 1972</span><h4>Kenneth Arrow</h4><p class="nb-i">L'economia dell'incertezza: conviene trasferire a chi è attrezzato a sopportarli i rischi che per noi sarebbero insostenibili.</p><p class="nb-c">È la logica dell'assicurazione: una spesa certa e contenuta al posto di una perdita rara ma enorme.</p></div>
-          <div class="nb"><span class="nb-y">Nobel 1990</span><h4>Harry Markowitz</h4><p class="nb-i">La diversificazione è l'unico «pasto gratis» della finanza: riduce il rischio senza sacrificare il rendimento atteso.</p><p class="nb-c">Dentro ogni livello, quindi, si distribuisce invece di concentrare.</p></div>
+          <div class="nb"><span class="nb-y">Nobel 1990</span><h4>Harry Markowitz</h4><p class="nb-i">La diversificazione è l'unico «pasto gratis» della finanza: riduce il rischio senza sacrificare il rendimento atteso.</p><p class="nb-c">Per questo dentro ogni livello si distribuisce, invece di concentrare.</p></div>
           <div class="nb"><span class="nb-y">Nobel 1997</span><h4>Robert C. Merton</h4><p class="nb-i">Premiato per il modello di valutazione delle opzioni, ha poi dedicato il suo lavoro alla previdenza: ciò che conta non è il capitale accumulato, ma il reddito che potrà generare.</p><p class="nb-c">Per questo ragioniamo in rendita mensile, non solo in montante finale.</p></div>
         </div>
       </div>
 
       <div class="ins-cta corners rv">
-        <div class="ins-n"><b>2.475 €</b><span>al mese: quanto riceverebbe dallo Stato Luca, 40 anni e una RAL di 60.000 €, con un'invalidità totale</span></div>
+        <div class="ins-n"><b>1.945 €</b><span>netti al mese: quanto riceverebbe dallo Stato Luca, 40 anni e una RAL di 60.000 €, con un'invalidità totale</span></div>
         <div class="ins-b">
           <p class="eyebrow">Alla base della piramide</p>
           <h3>Con dei figli, la base <em>non è un'opzione</em></h3>
-          <p>Luca ha 40 anni, due figli e una RAL di 60.000 €, cioè 5.000 € lordi al mese. Con un'invalidità totale gliene resterebbero <strong>2.475</strong>: più della metà del reddito sparisce proprio mentre le spese di cura aumentano. Se venisse a mancare, alla famiglia andrebbero circa <strong>660 € al mese</strong>. Ma il mutuo, la scuola e la vita di tutti i giorni non si fermano: crescere un figlio fino a 18 anni costa in media oltre <strong>175.000 €</strong> (Federconsumatori). È qui che la protezione smette di essere una voce di spesa e diventa la base di tutto.</p>
+          <p>Luca ha 40 anni, due figli e una RAL di 60.000 €, cioè circa 3.238 € netti al mese. Con un'invalidità totale gliene resterebbero <strong>1.945</strong>: circa il 40% del reddito sparisce proprio mentre le spese di cura aumentano. Se venisse a mancare, alla famiglia andrebbero circa <strong>660 € al mese</strong>. Ma il mutuo, la scuola e la vita di tutti i giorni non si fermano: crescere un figlio fino a 18 anni costa in media oltre <strong>175.000 €</strong> (Federconsumatori). È qui che la protezione smette di essere una voce di spesa e diventa la base di tutto.</p>
+          <p class="ins-who">Per la parte assicurativa mi affido a professionisti con cui collaboro: un consulente finanziario non può essere un tuttofare.</p>
           <button class="btn btn-gold read" type="button" data-art="assicurarsi">Leggi l'approfondimento<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
       </div>
-      <p class="sec-note">La piramide dei bisogni e il ciclo di vita sono schemi di pianificazione a scopo divulgativo: la composizione dei livelli, gli orizzonti indicati e gli strumenti adatti a ciascuno dipendono dalla situazione personale o aziendale e vanno definiti con un'analisi dedicata. I riferimenti agli studi citati hanno finalità illustrative e non costituiscono consulenza né raccomandazione.</p>
+      <p class="sec-note">La piramide dei bisogni e il ciclo di vita sono schemi di pianificazione a scopo divulgativo: la composizione dei livelli, gli orizzonti indicati e gli strumenti adatti a ciascuno dipendono dalla situazione personale o aziendale e vanno definiti con un'analisi dedicata. I riferimenti agli studi citati hanno finalità illustrative e non costituiscono consulenza né raccomandazione. Le cifre dell'esempio di Luca sono al netto di contributi INPS e IRPEF, senza addizionali locali.</p>
     </div>
     <div class="wrap"><p class="ponte rv">Sapere in che ordine muoversi è metà del lavoro. L'altra metà è come lo facciamo.</p></div>
   </section>
@@ -1243,11 +1366,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
       <div class="sec-head rv">
         <p class="eyebrow">Il metodo</p>
         <h2>Quattro passi, <em>un piano chiaro</em></h2>
-        <p class="lead">Un percorso che trasforma domande complesse in decisioni semplici.</p>
+        <p class="lead">Un percorso strutturato che trasforma domande complesse in decisioni semplici.</p>
       </div>
       <ol class="steps">
         <li class="step rv"><span class="num">1</span><h3>Ascolto</h3><p>Un primo incontro, senza impegno, per conoscere te, la tua famiglia e i tuoi obiettivi.</p></li>
-        <li class="step rv"><span class="num">2</span><h3>Analisi</h3><p>Mappiamo i beni e simuliamo che cosa accadrebbe se la successione si aprisse domani.</p></li>
+        <li class="step rv"><span class="num">2</span><h3>Analisi</h3><p>Mappiamo il patrimonio e simuliamo come passerebbe oggi alla generazione successiva.</p></li>
         <li class="step rv"><span class="num">3</span><h3>Piano</h3><p>Ti presentiamo soluzioni concrete, con costi e benefici spiegati senza tecnicismi.</p></li>
         <li class="step rv"><span class="num">4</span><h3>Accompagnamento</h3><p>Il piano evolve con la tua vita: incontri periodici e revisione costante.</p></li>
       </ol>
@@ -1260,7 +1383,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <div class="wrap">
       <div class="sec-head center rv">
         <p class="eyebrow">Che cosa succede se non si pianifica</p>
-        <h2>Quattro rischi <em>di una successione lasciata al caso</em></h2>
+        <h2>Quattro rischi <em>di un passaggio generazionale lasciato al caso</em></h2>
         <p class="lead">Non decidere è comunque una decisione: significa lasciare che siano la legge, i tempi dei tribunali e la cassa degli eredi a scegliere al posto tuo.</p>
       </div>
       <div class="fact-grid">
@@ -1403,7 +1526,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           <div class="legend" id="l_leg"></div>
           <div class="only-c" id="l_full"></div>
           <div id="l_warn"></div>
-          <div class="calc-cta"><a class="btn btn-gold" data-book href="#contatti">Pianifica la tua successione</a></div>
+          <div class="calc-cta"><a class="btn btn-gold" data-book href="#contatti">Pianifica il passaggio generazionale</a></div>
           <p class="note">Quote di riserva previste dagli artt. 536 e seguenti del Codice civile<span class="only-c">; successione senza testamento secondo gli artt. 565 e seguenti</span>. Al coniuge spettano inoltre i diritti di abitazione sulla casa familiare e di uso dei mobili.</p>
         </div>
       </div>
@@ -1564,7 +1687,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           </ol>
         </div>
       </div>
-      <div class="calc-disc"><p><b>Usa i calcolatori insieme a un consulente:</b> danno un ordine di grandezza, non una risposta. Le stime hanno finalità esclusivamente informative: si basano sui dati inseriti, su ipotesi semplificate e sulla normativa in vigore a novembre 2026, che può cambiare. Rendimenti, inflazione e probabilità sono ipotesi o stime statistiche, non previsioni né risultati garantiti; i rendimenti passati non sono indicativi di quelli futuri. I risultati non considerano la tua situazione personale complessiva e non costituiscono consulenza in materia di investimenti, né consulenza fiscale, legale o notarile. I dati inseriti restano nel tuo browser. <a href="note-legali.html#calcolatori">Note legali complete</a>.</p></div>
+      <div class="calc-disc"><p><b>Usa i calcolatori insieme a un consulente:</b> danno un ordine di grandezza, non una risposta, e le ipotesi vanno adattate al tuo caso. Le stime hanno finalità esclusivamente informative: si basano sui dati inseriti, su ipotesi semplificate e sulla normativa in vigore a novembre 2026, che può cambiare. Rendimenti, inflazione e probabilità sono ipotesi o stime statistiche, non previsioni né risultati garantiti; i rendimenti passati non sono indicativi di quelli futuri. I risultati non considerano la tua situazione personale complessiva e non costituiscono consulenza in materia di investimenti, né consulenza fiscale, legale o notarile. I dati inseriti restano nel tuo browser. <a href="note-legali.html#calcolatori">Note legali complete</a>.</p></div>
     </div>
   </section>
 
@@ -1574,7 +1697,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
       <div class="sec-head rv">
         <p class="eyebrow">Strumenti di analisi</p>
         <h2>Le analisi che prepariamo <em>per i nostri clienti</em></h2>
-        <p class="lead">Gli stessi simulatori che usiamo in studio, in versione semplificata o completa, con una relazione in PDF da conservare. Falli girare quanto vuoi: poi <strong>leggiamoli insieme</strong>.</p>
+        <p class="lead">Simulatori completi, ciascuno con versione semplificata e completa e con una relazione in PDF da conservare o condividere. Sono pensati per essere usati <strong>insieme a noi</strong>: i numeri che restituiscono vanno letti nel contesto della tua situazione.</p>
       </div>
       <div class="tool-grid">
         <a class="tool rv" href="strumenti/tfr-fondi-pensione.html">
@@ -1596,9 +1719,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           <span class="tool-go">Apri lo strumento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
-      <p class="sec-note">Gli strumenti hanno finalità illustrative: le simulazioni dipendono dai dati inseriti e da ipotesi semplificate, non costituiscono consulenza né raccomandazione personalizzata e non sono garantite. Messaggio promozionale riguardante forme pensionistiche complementari: prima dell'adesione leggere la Parte I «Le informazioni chiave per l'aderente» e l'Appendice «Informativa sulla sostenibilità» della Nota informativa.</p>
+      <p class="sec-note"><strong>Usali con noi, non al posto nostro.</strong> Gli strumenti hanno finalità illustrative: le simulazioni dipendono dai dati inseriti e da ipotesi semplificate, non costituiscono consulenza né raccomandazione personalizzata e non sono garantite. Messaggio promozionale riguardante forme pensionistiche complementari: prima dell'adesione leggere la Parte I «Le informazioni chiave per l'aderente» e l'Appendice «Informativa sulla sostenibilità» della Nota informativa.</p>
     </div>
-    <div class="wrap"><p class="ponte rv">I numeri, da soli, non firmano un atto. Per quello serve una squadra.</p></div>
   </section>
 
   <!-- FAQ -->
@@ -1612,14 +1734,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
         <p class="lead" style="margin-top:16px">Non trovi la tua domanda? Scrivici: rispondiamo personalmente.</p>
       </div>
       <div class="acc rv">
+        <details><summary>Cos'è il passaggio generazionale?</summary><p>È il momento in cui la famiglia, il patrimonio e, se c'è, l'impresa passano nelle mani della generazione successiva. Non è un evento di un giorno, ma un percorso: richiede tempo, scelte condivise e le persone giuste attorno al tavolo.</p></details>
         <details><summary>Cos'è la pianificazione successoria?</summary><p>È l'insieme di scelte con cui decidi, mentre sei in vita, come e a chi trasferire il tuo patrimonio. Serve a rispettare le tue volontà, ridurre costi e tempi per gli eredi e prevenire possibili conflitti familiari.</p></details>
         <details><summary>Quando conviene iniziare a pianificare?</summary><p>Il prima possibile. Pianificare per tempo offre più strumenti, più libertà di scelta e la possibilità di correggere il piano quando cambiano la situazione familiare o le norme.</p></details>
-        <details><summary>Ti occupi anche di testamenti e atti notarili?</summary><p>No: la redazione di testamenti e atti spetta al notaio. Il nostro ruolo è analizzare il patrimonio, individuare le soluzioni finanziarie e assicurative più adatte e coordinarci con i professionisti che ti seguono.</p></details>
+        <details><summary>Ti occupi anche di testamenti e atti notarili?</summary><p>No: la redazione di testamenti e atti spetta al notaio. Il nostro ruolo è analizzare il patrimonio, individuare le soluzioni finanziarie più adatte e coordinarci con i professionisti che ti seguono, compresi gli specialisti assicurativi con cui collaboro.</p></details>
+        <details><summary>Ti occupi anche di assicurazioni?</summary><p>Per la parte assicurativa mi affido a professionisti con cui collaboro. Credo che il consulente finanziario non possa essere un tuttofare e che serva una divisione chiara tra professionisti, così come tra investimento e assicurazione: io mi occupo della visione d'insieme e degli investimenti, loro delle coperture.</p></details>
         <details><summary>Devo spostare subito i miei investimenti?</summary><p>No. L'analisi parte da ciò che hai già. Le proposte arrivano solo dopo aver compreso a fondo obiettivi, priorità ed esigenze della tua famiglia.</p></details>
         <details><summary>Il primo incontro ha un costo?</summary><p>Il primo incontro è conoscitivo e senza impegno: serve a conoscerci e a capire se e come posso esserti utile.</p></details>
         <details><summary>Quanto sono affidabili i calcolatori?</summary><p>Forniscono stime indicative basate sulla normativa vigente e su ipotesi semplificate. Sono utili per orientarsi, ma non sostituiscono l'analisi del tuo caso specifico.</p></details>
       </div>
     </div>
+    <div class="wrap"><p class="ponte rv">Un piano, da solo, non firma un atto. Per questo accanto a noi c’è una rete.</p></div>
   </section>
 
   <!-- RETE DI PROFESSIONISTI -->
@@ -1630,15 +1755,26 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
       <div class="sec-head rv">
         <p class="eyebrow">Rete e collaborazioni</p>
         <h2>Un interlocutore solo, <em>una rete intera</em></h2>
-        <p class="lead">È l'impostazione dei family office: un solo punto di riferimento che tiene insieme finanza, fisco, assicurazioni, diritto e famiglia. Non sostituiamo i professionisti che già ti seguono: lavoriamo con loro e, quando serve una competenza che non abbiamo, la portiamo al tavolo.</p>
+        <p class="lead">Seguiamo la filosofia dei family office: guardare al patrimonio a 360 gradi e tenere insieme gli aspetti finanziari, fiscali, assicurativi, legali e familiari. Non sostituiamo i professionisti che già ti seguono: lavoriamo con loro e, quando serve una competenza che non è la nostra, la portiamo al tavolo.</p>
+      </div>
+      <div class="role-split corners rv">
+        <div class="rs-main">
+          <p class="eyebrow">Il mio principio</p>
+          <p class="rs-q">Un consulente finanziario <em>non può essere un tuttofare</em></p>
+          <p class="rs-t">Ogni mestiere ha le sue competenze, le sue regole e le sue responsabilità. Per questo credo in una divisione chiara tra professionisti e, in particolare, tra investimento e assicurazione.</p>
+        </div>
+        <div class="rs-cols">
+          <div><h4>Investimento</h4><p>Me ne occupo io, con la visione d'insieme del patrimonio e del piano.</p></div>
+          <div><h4>Assicurazione</h4><p>Per questa parte mi affido a professionisti con cui collaboro, che la seguono ogni giorno.</p></div>
+        </div>
       </div>
       <div class="net-grid">
         <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><h3>Commercialisti</h3><p>Fiscalità personale e d'impresa, bilanci, assetti societari. Ogni scelta sul patrimonio ha un riflesso fiscale: lo verifichiamo prima di decidere, non dopo.</p></div>
-        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20h14M7 16.5h10l-.6-4.1a2 2 0 0 0-2-1.7H9.6a2 2 0 0 0-2 1.7z"/><path d="M12 10.7V8.4a2.4 2.4 0 1 0-2.4-2.4"/></svg></span><h3>Notai</h3><p>Testamenti, donazioni, patti di famiglia, atti societari e immobiliari. È con i loro atti che la pianificazione successoria prende forma e diventa opponibile.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20h14M7 16.5h10l-.6-4.1a2 2 0 0 0-2-1.7H9.6a2 2 0 0 0-2 1.7z"/><path d="M12 10.7V8.4a2.4 2.4 0 1 0-2.4-2.4"/></svg></span><h3>Notai</h3><p>Testamenti, donazioni, patti di famiglia, atti societari e immobiliari. È con i loro atti che il passaggio generazionale prende forma e diventa opponibile.</p></div>
         <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14l-2.6 4.6a3.1 3.1 0 0 1-5.4 0z" /><path d="M12 4.8 5 8"/></svg></span><h3>Avvocati</h3><p>Diritto di famiglia e delle successioni, societario, contrattualistica. Quando ci sono assetti complessi o conflitti possibili, conviene prevenirli con chi li tratta ogni giorno.</p></div>
-        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.3v5.9c0 4.8 3.2 9 7.5 10.3 4.3-1.3 7.5-5.5 7.5-10.3V5.3z"/><path d="m9.2 11.8 2 2 3.6-3.8"/></svg></span><h3>Specialisti assicurativi</h3><p>Rami danni, responsabilità civile, coperture aziendali, salute e non autosufficienza: aree tecniche in cui ci affianchiamo a chi le segue ogni giorno, per non lasciare scoperture né doppioni.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.3v5.9c0 4.8 3.2 9 7.5 10.3 4.3-1.3 7.5-5.5 7.5-10.3V5.3z"/><path d="m9.2 11.8 2 2 3.6-3.8"/></svg></span><h3>Specialisti assicurativi</h3><p>Rami danni, responsabilità civile, coperture aziendali, salute e non autosufficienza: aree tecniche in cui mi affianco a chi le segue quotidianamente, per non lasciare scoperture né doppioni.</p></div>
         <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 19.5a6.2 6.2 0 0 1 12.4 0"/><circle cx="17.4" cy="9.4" r="2.4"/><path d="M16.4 14.4a5 5 0 0 1 4.8 5.1"/></svg></span><h3>Consulenti del lavoro</h3><p>TFR, welfare aziendale, piani per i dipendenti e per gli amministratori: la previdenza d'impresa funziona solo se è coerente con il costo del lavoro e con i contratti.</p></div>
-        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5.5h4V20"/></svg></span><h3>Professionisti dell'immobiliare</h3><p>Valutazioni, compravendite, locazioni e valorizzazione: per molte famiglie italiane il mattone è la parte più grande, e meno liquida, di ciò che possiedono.</p></div>
+        <div class="net corners rv"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 10v10h13V10"/><path d="M10 20v-5.5h4V20"/></svg></span><h3>Professionisti dell'immobiliare</h3><p>Valutazioni, compravendite, locazioni e valorizzazione del patrimonio immobiliare, che per molte famiglie italiane è la parte più grande e meno liquida del patrimonio.</p></div>
       </div>
       <div class="net-more rv">
         <p class="net-more-t">E quando il patrimonio lo richiede</p>
@@ -1701,7 +1837,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
           <p>Lasciaci i tuoi riferimenti: ti ricontattiamo personalmente.</p>
           <div class="field"><label for="f_nome">Nome e cognome</label><div class="inp"><input id="f_nome" required autocomplete="name"></div></div>
           <div class="field"><label for="f_tel">Telefono</label><div class="inp"><input id="f_tel" type="tel" autocomplete="tel"></div></div>
-          <div class="field"><label for="f_msg">Di cosa vorresti parlare?</label><textarea id="f_msg" placeholder="Es. vorrei capire come organizzare la successione per i miei figli"></textarea></div>
+          <div class="field"><label for="f_msg">Di cosa vorresti parlare?</label><textarea id="f_msg" placeholder="Es. vorrei capire come preparare il passaggio generazionale ai miei figli"></textarea></div>
           <label class="chk consent"><input type="checkbox" id="f_ok" required> <span>Ho letto l'<a href="note-legali.html#privacy" target="_blank" rel="noopener">informativa sulla privacy</a> e chiedo di essere ricontattato.</span></label>
           <button class="btn btn-navy" type="submit">Invia richiesta</button>
           <p class="priv">La richiesta si apre nella tua app di posta o su WhatsApp: decidi tu se inviarla. Il primo contatto non costituisce consulenza.</p>
@@ -1746,7 +1882,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
   </ul></div>
 </template>
 
-<template id="art-impresa" data-cat="Passaggio generazionale d'impresa" data-time="4 min"
+<template id="art-impresa" data-cat="Passaggio generazionale" data-time="4 min"
   data-title="L'impresa di famiglia, oltre una generazione"
   data-lead="Il passaggio generazionale è uno dei momenti più delicati nella vita di un'azienda: richiede tempo, metodo e le persone giuste attorno al tavolo.">
   <p>Un'azienda familiare non è soltanto un patrimonio: è un insieme di relazioni, competenze e responsabilità costruite negli anni. Per questo il suo passaggio alla generazione successiva non può essere improvvisato.</p>
@@ -1763,7 +1899,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
   <h3>Separare impresa e famiglia</h3>
   <p>Un passaggio ben riuscito tiene distinti il patrimonio aziendale e quello personale. Significa gestire in modo efficiente la tesoreria dell'impresa, valorizzare strumenti come il TFR e il trattamento di fine mandato degli amministratori e costruire, accanto all'azienda, un patrimonio familiare autonomo.</p>
   <h3>Il nostro ruolo</h3>
-  <p>Affianchiamo l'imprenditore nella visione d'insieme e nel coordinamento con commercialista, notaio e avvocato, curando gli aspetti finanziari, assicurativi e previdenziali, sia per l'azienda sia per la famiglia.</p>
+  <p>Affianchiamo l'imprenditore nella visione d'insieme e nel coordinamento con commercialista, notaio e avvocato, curando gli aspetti finanziari e previdenziali, sia per l'azienda sia per la famiglia. Per quelli assicurativi, come le coperture sulle persone chiave, mi affido a professionisti con cui collaboro: un consulente finanziario non può essere un tuttofare.</p>
+  <p><strong>Lo conosco da dentro.</strong> Il passaggio generazionale non lo conosco solo dai libri: l'ho vissuto in prima persona, nella consulenza e in azienda, accanto a mio padre, che nel settore ha quarant'anni di esperienza.</p>
   <p class="r-note-inline">Gli strumenti societari e successori citati richiedono la valutazione di notaio, commercialista e avvocato, in base alla situazione dell'impresa e della famiglia.</p>
   <div class="r-sum"><h4>In sintesi</h4><ul>
     <li>Il passaggio generazionale va preparato con anni di anticipo.</li>
@@ -1791,12 +1928,14 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
   <p>Per l'imprenditore la protezione riguarda anche l'azienda: le persone chiave, i crediti verso i clienti, i beni aziendali. La legge ha inoltre introdotto per le imprese l'obbligo di assicurare i beni contro gli eventi catastrofali, come terremoti e alluvioni.</p>
   <h3>Come lavoriamo</h3>
   <p>Analizziamo insieme quali eventi metterebbero davvero in difficoltà la tua famiglia, verifichiamo le coperture che hai già ed eliminiamo doppioni e lacune. Poi rivediamo il quadro periodicamente, perché i bisogni cambiano con la vita.</p>
+  <p><strong>Ognuno il suo mestiere.</strong> Per la parte assicurativa mi affido a professionisti con cui collaboro: un consulente finanziario non può essere un tuttofare, e investimento e assicurazione sono mestieri distinti.</p>
   <p class="r-note-inline">Prima della sottoscrizione di un prodotto assicurativo leggere il set informativo. Le coperture sono soggette a condizioni, limitazioni ed esclusioni.</p>
   <div class="r-sum"><h4>In sintesi</h4><ul>
     <li>La protezione viene prima dell'investimento.</li>
     <li>Premorienza, invalidità e non autosufficienza sono i rischi più sottovalutati.</li>
     <li>Le coperture trasformano un rischio grave in un costo sostenibile.</li>
     <li>Le esigenze cambiano: il piano va rivisto nel tempo.</li>
+    <li>Investimento e assicurazione sono mestieri diversi: ognuno ha il suo specialista.</li>
   </ul></div>
 </template>
 
@@ -1885,21 +2024,22 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
   data-lead="Il tuo patrimonio più prezioso non è sul conto: è la capacità di guadagnare. Ecco quanto resterebbe davvero, con la sola copertura pubblica, se un imprevisto la mettesse fuori gioco.">
   <p>Pensiamo agli investimenti come al primo passo per costruire il futuro. In realtà il primo passo è un altro: mettere al sicuro ciò che rende possibile risparmiare, cioè il reddito da lavoro. Senza questa base, anche il miglior piano di investimento rischia di fermarsi al primo imprevisto.</p>
   <h3>Un esempio concreto</h3>
-  <p>Prendiamo Luca: 40 anni, lavoratore dipendente da 10 anni, una RAL di 60.000 €, cioè 5.000 € lordi al mese. Che cosa riceverebbe dallo Stato se un infortunio o una malattia gli impedissero di lavorare?</p>
+  <p>Prendiamo Luca: 40 anni, lavoratore dipendente da 10 anni, una RAL di 60.000 €, cioè 5.000 € lordi al mese, circa 3.238 € netti dopo contributi e IRPEF. Che cosa riceverebbe dallo Stato se un infortunio o una malattia gli impedissero di lavorare? Le cifre che seguono sono al netto delle imposte.</p>
   <div class="r-stats">
-    <div><b>2.475 €</b><span>al mese con un'invalidità totale</span></div>
-    <div><b>825 €</b><span>al mese con un'invalidità tra il 66% e il 99%</span></div>
-    <div><b>660 €</b><span>al mese alla famiglia, in caso di decesso</span></div>
+    <div><b>1.945 €</b><span>netti al mese con un'invalidità totale</span></div>
+    <div><b>791 €</b><span>netti al mese con un'invalidità tra il 66% e il 99%</span></div>
+    <div><b>660 €</b><span>netti al mese alla famiglia, in caso di decesso</span></div>
   </div>
-  <blockquote>Da 5.000 € a 2.475 € al mese: con un'invalidità totale sparisce più della metà del reddito. Proprio quando le spese per cure e assistenza aumentano.</blockquote>
+  <blockquote>Da 3.238 € a 1.945 € netti al mese: con un'invalidità totale sparisce circa il 40% del reddito. Proprio quando le spese per cure e assistenza aumentano.</blockquote>
   <h3>Come si arriva a queste cifre</h3>
   <p>Nel sistema contributivo l'INPS calcola la pensione sui contributi versati, il 33% dello stipendio per un dipendente, e li trasforma in una rendita con un coefficiente di conversione.</p>
   <ul>
-    <li><strong>Invalidità totale (pensione di inabilità).</strong> Ai 10 anni già lavorati lo Stato aggiunge quelli mancanti fino ai 60 anni: (10 + 20) × 60.000 € = 1.800.000 €, che al 33% diventano 594.000 € di contributi. Con un coefficiente di circa il 5% si ottengono circa 29.700 € l'anno: <strong>2.475 € al mese</strong>.</li>
-    <li><strong>Invalidità tra il 66% e il 99% (assegno ordinario di invalidità).</strong> Contano solo i contributi già versati: 600.000 € × 33% = 198.000 €, cioè circa 9.900 € l'anno: <strong>825 € al mese</strong>. Si può continuare a lavorare, ma oltre certi redditi l'assegno si riduce.</li>
-    <li><strong>Decesso (pensione ai superstiti).</strong> Al coniuge con un figlio spetta l'80% della pensione maturata: circa 7.920 € l'anno, <strong>660 € al mese</strong>.</li>
+    <li><strong>Invalidità totale (pensione di inabilità).</strong> Ai 10 anni già lavorati lo Stato aggiunge quelli mancanti fino ai 60 anni: (10 + 20) × 60.000 € = 1.800.000 €, che al 33% diventano 594.000 € di contributi. Con un coefficiente di circa il 5% si ottengono circa 29.700 € l'anno lordi, circa 23.345 € dopo l'IRPEF: <strong>1.945 € al mese</strong>.</li>
+    <li><strong>Invalidità tra il 66% e il 99% (assegno ordinario di invalidità).</strong> Contano solo i contributi già versati: 600.000 € × 33% = 198.000 €, cioè circa 9.900 € l'anno lordi, circa 9.488 € dopo l'IRPEF: <strong>791 € al mese</strong>. Si può continuare a lavorare, ma oltre certi redditi l'assegno si riduce.</li>
+    <li><strong>Decesso (pensione ai superstiti).</strong> Al coniuge con un figlio spetta l'80% della pensione maturata: circa 7.920 € l'anno, cioè <strong>660 € al mese</strong>, senza IRPEF: restando sotto gli 8.500 € l'anno, le detrazioni per i redditi da pensione la azzerano.</li>
   </ul>
-  <p>Per un lavoratore autonomo l'aliquota contributiva è più bassa e le cifre scendono ancora: con il 26%, la pensione di inabilità dell'esempio scende a circa 1.950 € al mese.</p>
+  <p>Lo stipendio netto è calcolato dopo i contributi INPS a carico del lavoratore (9,19%) e l'IRPEF 2026: da 60.000 € restano circa 38.857 € l'anno. Le pensioni sono soggette alla stessa IRPEF, ma con le detrazioni previste per i redditi da pensione.</p>
+  <p>Per un lavoratore autonomo l'aliquota contributiva è più bassa e le cifre scendono ancora: con il 26%, la pensione di inabilità dell'esempio scende a circa 1.585 € netti al mese.</p>
   <h3>Quando ci sono dei figli</h3>
   <p>Con una famiglia il conto cambia di natura. I <strong>660 € al mese</strong> della pensione ai superstiti vanno confrontati con spese che non si fermano: il mutuo, la scuola, lo sport, l'università. Secondo l'Osservatorio Federconsumatori crescere un figlio fino ai 18 anni costa in media <strong>oltre 175.000 €</strong>, e la cifra sale con il reddito familiare, perché salgono anche le abitudini di spesa.</p>
   <p>Il punto non è lo spavento, è l'ordine di grandezza: se il reddito di chi mantiene la famiglia si ferma, servono risorse che durino finché i figli non sono autonomi. È esattamente il compito di una copertura, e il motivo per cui va dimensionata sugli anni che mancano, non su una cifra qualsiasi.</p>
@@ -1914,13 +2054,16 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <li><strong>Salute</strong>: il rimborso delle spese mediche e degli interventi.</li>
   </ul>
   <p>Il costo di una copertura è una frazione del capitale che protegge e dipende da età, stato di salute e somme assicurate. Per questo si parte sempre dal proprio fabbisogno: quanto spetterebbe dallo Stato, quanto servirebbe alla famiglia, quanto manca.</p>
-  <div class="r-cta"><p><strong>Quanto vale davvero la tua protezione?</strong> In un primo incontro, senza impegno, calcoliamo insieme quanto ti spetterebbe dallo Stato, quanto servirebbe alla tua famiglia e come colmare la differenza.</p><a class="btn btn-gold" href="#contatti">Prenota il check-up di protezione</a></div>
-  <p class="r-note-inline">Esempio semplificato a scopo illustrativo, elaborato dal consulente. Per semplicità usa un coefficiente di circa il 5% e divide l'importo annuo per 12: i coefficienti INPS per età inferiori ai 60 anni sono più bassi e la pensione è pagata in 13 mensilità, quindi le cifre reali sarebbero in genere ancora più basse. L'importo effettivo calcolato dall'INPS dipende dalla storia contributiva, dalla rivalutazione dei contributi, dai coefficienti di trasformazione e dai requisiti di legge (ad esempio almeno 5 anni di contributi, di cui 3 negli ultimi 5). Messaggio pubblicitario con finalità promozionale: prima della sottoscrizione di un prodotto assicurativo leggere il set informativo. Le coperture sono soggette a condizioni, limitazioni ed esclusioni.</p>
+  <h3>Chi se ne occupa</h3>
+  <p>Investimento e assicurazione sono mestieri diversi, e credo che un consulente finanziario non possa essere un tuttofare. Per questo, per la parte assicurativa mi affido a professionisti con cui collaboro, che la seguono ogni giorno. Io tengo insieme il quadro: misuro con te il fabbisogno e mi coordino con loro, perché le coperture siano coerenti con il resto del piano.</p>
+  <div class="r-cta"><p><strong>Quanto vale davvero la tua protezione?</strong> In un primo incontro, senza impegno, calcoliamo insieme quanto ti spetterebbe dallo Stato e quanto servirebbe alla tua famiglia; poi, con i professionisti assicurativi con cui collaboro, vediamo come colmare la differenza.</p><a class="btn btn-gold" href="#contatti">Prenota il check-up di protezione</a></div>
+  <p class="r-note-inline">Esempio semplificato a scopo illustrativo, elaborato dal consulente. Per semplicità usa un coefficiente di circa il 5% e divide l'importo annuo per 12: i coefficienti INPS per età inferiori ai 60 anni sono più bassi e la pensione è pagata in 13 mensilità, quindi le cifre reali sarebbero in genere ancora più basse. Gli importi sono al netto delle imposte, senza addizionali regionale e comunale: lo stipendio è al netto dei contributi INPS a carico del lavoratore (9,19%) e dell'IRPEF 2026 (aliquote del 23%, 33% e 43%); le pensioni sono al netto dell'IRPEF, con le detrazioni per i redditi da pensione, considerate come unico reddito e senza detrazioni per familiari a carico. L'importo effettivo calcolato dall'INPS dipende dalla storia contributiva, dalla rivalutazione dei contributi, dai coefficienti di trasformazione e dai requisiti di legge (ad esempio almeno 5 anni di contributi, di cui 3 negli ultimi 5). Messaggio pubblicitario con finalità promozionale: prima della sottoscrizione di un prodotto assicurativo leggere il set informativo. Le coperture sono soggette a condizioni, limitazioni ed esclusioni.</p>
   <div class="r-sum"><h4>In sintesi</h4><ul>
     <li>Il primo patrimonio da proteggere è la capacità di produrre reddito.</li>
-    <li>Con la sola copertura pubblica, un'invalidità totale può dimezzare il reddito.</li>
+    <li>Con la sola copertura pubblica, un'invalidità totale può ridurre il reddito netto di circa il 40%.</li>
     <li>Senza protezione, un imprevisto costringe a usare i risparmi nel momento sbagliato.</li>
     <li>Prima si misura il proprio fabbisogno, poi si sceglie la copertura.</li>
+    <li>Investimento e assicurazione sono mestieri distinti: ognuno ha il suo specialista.</li>
   </ul></div>
 </template>
 </div>
@@ -1956,7 +2099,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <div class="wrap band-grid">
       <div class="band-t rv">
         <p class="eyebrow">Resta aggiornato</p>
-        <h2>Prima di andare, <em>ti lasciamo qualcosa</em></h2>
+        <h2>Prima di andare, <em>ti lascio qualcosa</em></h2>
         <p>Sul nostro canale WhatsApp pubblichiamo approfondimenti periodici: che cosa succede sui mercati, le novità fiscali che toccano il risparmio e i nuovi strumenti che aggiungiamo a questo sito. È gratuito, non è una chat e puoi uscire quando vuoi.</p>
         <a class="btn btn-gold band-cta" id="waCh" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A9 9 0 1 1 8 19.3z"/><path d="M9 10c.5 2 2 3.5 4 4l1.2-1.2 2 .8v1.6c-4 .5-8.3-3.8-7.8-7.8h1.6l.8 2z"/></svg>Iscriviti al canale WhatsApp</a>
         <p class="band-note">Nei canali WhatsApp chi segue resta anonimo: il tuo numero non è visibile né a me né agli altri iscritti. Nessun messaggio promozionale diretto.</p>
@@ -1974,7 +2117,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
     <div class="ftr-grid">
       <div>
         <img class="ftr-logo" src="img/logo.svg" alt="Marco Busetto, consulente finanziario" width="150" height="121">
-        <p style="margin:22px 0 0;max-width:380px">Pianificazione successoria, passaggio generazionale e protezione del patrimonio per famiglie, imprenditori e professionisti.</p>
+        <p style="margin:22px 0 0;max-width:380px">Passaggio generazionale, pianificazione successoria e protezione del patrimonio per famiglie, imprenditori e professionisti.</p>
         <div class="ftr-tools"><button type="button" id="vcard">Salva contatto</button><button type="button" id="share">Condividi la pagina</button></div>
         <div class="social" data-social aria-label="Profili social" hidden></div>
       </div>
@@ -2030,12 +2173,12 @@ const CONFIG = {
   _postiEsempio: [
     { tipo: "articolo", data: "2026-11-15", tema: "Protezione", articolo: "assicurarsi", icona: "shield",
       titolo: "Perché assicurarsi prima di investire",
-      estratto: "Un quarantenne con una RAL di 60.000 €: con un'invalidità totale riceverebbe dallo Stato circa 2.475 € al mese, meno della metà. Ecco perché la protezione viene prima dell'investimento.",
-      cifra: "2.475 €", cifraTesto: "al mese: quanto resterebbe a Luca, 40 anni, con un'invalidità totale" }
+      estratto: "Un quarantenne con una RAL di 60.000 €: con un'invalidità totale riceverebbe dallo Stato circa 1.945 € netti al mese, il 40% in meno dello stipendio netto. Ecco perché la protezione viene prima dell'investimento.",
+      cifra: "1.945 €", cifraTesto: "netti al mese: quanto resterebbe a Luca, 40 anni, con un'invalidità totale" }
   ],
 
   stats: [
-    { value: "30+", label: "Anni di consulenza accanto a famiglie e imprese" },
+    { value: "40", label: "Anni di consulenza accanto a famiglie e imprese" },
     { value: "2ª",   label: "Generazione della famiglia Busetto" },
     { value: "110",  label: "e lode, laurea in Economia e Finanza" },
     { value: "6",    label: "Aree di consulenza collegate tra loro" }
@@ -2048,7 +2191,7 @@ const CONFIG = {
     { icon: "facebook",  title: "Facebook",  sub: "", url: "https://www.facebook.com/marco.busetto.3" },
     { icon: "whatsapp",  title: "Canale WhatsApp", sub: "Approfondimenti di mercato gratuiti", url: "https://tr.ee/Bw2RUl_AnR" },   // link del canale (whatsapp.com/channel/...)
     { icon: "youtube",   title: "YouTube",   sub: "Video e approfondimenti", url: "" },
-    { icon: "doc",       title: "Guida gratuita alla successione", sub: "Scarica il PDF", url: "" }
+    { icon: "doc",       title: "Guida gratuita al passaggio generazionale", sub: "Scarica il PDF", url: "" }
   ],
 
   legal: "Marco Busetto · Consulente finanziario abilitato all'offerta fuori sede, iscritto all'Albo unico dei consulenti finanziari (delibera OCF n. 1733 del 03/08/2021, matricola 628157) e al RUI IVASS (n. E000694887). Opera in qualità di agente per conto di Allianz Bank Financial Advisors S.p.A."
@@ -2201,22 +2344,23 @@ if (window.matchMedia && matchMedia('(pointer:fine)').matches && !matchMedia('(p
   if (sys) sys.addEventListener('change', e => { if (!fissato) setTema(e.matches, false); });
 }
 
-/* ---------- piramide: su telefono si inquadra solo il disegno ---------- */
-{ const sv = document.querySelector('.pyr-svg');
-  if (sv && window.matchMedia) {
-    const mq = matchMedia('(max-width:719px)');
+/* ---------- piramide: sul telefono si inquadra il solo disegno ---------- */
+{ const mq = window.matchMedia && matchMedia('(max-width:719px)');
+  if (mq) document.querySelectorAll('.pyr-svg').forEach(sv => {
     const inquadra = () => sv.setAttribute('viewBox', mq.matches ? '228 26 384 412' : '0 0 840 500');
     inquadra(); mq.addEventListener('change', inquadra);
-  }
+  });
 }
 
-/* ---------- piramide: stesso schema per famiglie e aziende ---------- */
-{ const sec = $('piramide'), sw = sec.querySelector('.aud-sw');
-  const set = b => { sec.dataset.aud = b.dataset.aud;
-    sw.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    try { localStorage.setItem('mb-aud', b.dataset.aud); } catch (e) {} };
-  sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b); });
-  try { const v = localStorage.getItem('mb-aud'); if (v) { const b = sw.querySelector(`[data-aud="${v}"]`); if (b) set(b); } } catch (e) {}
+/* ---------- ciclo di vita e piramide: stesso schema per famiglie e aziende, una sola scelta per entrambi ---------- */
+{ const secs = [$('bisogni'), $('piramide')], sws = [...document.querySelectorAll('.aud-sw')];
+  const set = (v, replay) => { secs.forEach(s => { s.dataset.aud = v; });
+    sws.forEach(sw => sw.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.aud === v))));
+    try { localStorage.setItem('mb-aud', v); } catch (e) {}
+    /* il grafico del ciclo di vita si ridisegna quando cambia il punto di vista */
+    if (replay) { const g = secs[0].querySelector('.cv.only-' + v); if (g) { g.classList.add('cv-re'); void g.getBoundingClientRect(); g.classList.remove('cv-re'); } } };
+  sws.forEach(sw => sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.dataset.aud !== secs[0].dataset.aud) set(b.dataset.aud, true); }));
+  try { const v = localStorage.getItem('mb-aud'); if (v === 'fam' || v === 'az') set(v, false); } catch (e) {}
 }
 
 /* ---------- recensioni e canale WhatsApp ---------- */
@@ -2622,8 +2766,8 @@ setCM(CM);
 
 /* ---------- structured data ---------- */
 const ld = {"@context":"https://schema.org","@type":"FinancialService","name":"Marco Busetto - Consulente Finanziario",
-  "description":"Consulente finanziario: pianificazione successoria, passaggio generazionale e protezione del patrimonio.","url":location.href.split('#')[0],
-  "areaServed":"IT","knowsAbout":["Pianificazione successoria","Passaggio generazionale","Protezione del patrimonio","Investimenti","Previdenza"]};
+  "description":"Consulente finanziario: passaggio generazionale, pianificazione successoria e protezione del patrimonio.","url":location.href.split('#')[0],
+  "areaServed":"IT","knowsAbout":["Passaggio generazionale","Pianificazione successoria","Protezione del patrimonio","Investimenti","Previdenza"]};
 if (C.phone) ld.telephone = C.phone; if (C.email) ld.email = C.email; if (C.address) ld.address = C.address;
 const sameAs = links.map(l => l.url).filter(u => /^https?:/.test(u)); if (sameAs.length) ld.sameAs = sameAs;
 const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
@@ -2642,7 +2786,7 @@ $('share').onclick = async () => {
 };
 
 /* ---------- articles reader ---------- */
-const ART = ['successione','impresa','protezione','investimenti','previdenza','liquidita'];
+const ART = ['impresa','successione','protezione','investimenti','previdenza','liquidita'];
 const BLOG = (C.posts || []).filter(p => p.tipo === 'articolo' && p.articolo).sort((a, b) => String(b.data).localeCompare(String(a.data))).map(p => p.articolo);
 const dlg = $('reader'); let pushed = false;
 function openArticle(id, push = true) {
