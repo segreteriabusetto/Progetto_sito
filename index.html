@@ -83,7 +83,7 @@ section{position:relative}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
 .hdr.solid{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
 .brand{display:inline-flex;align-items:center;text-decoration:none}
-.brand img{display:block;height:44px;width:auto}
+.brand img{display:block;height:52px;width:auto}
 .nav{display:none;align-items:center;gap:32px}
 .nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.01em;transition:color .2s}
 .nav a:hover{color:var(--gold-ink)}
@@ -94,7 +94,7 @@ section{position:relative}
 .mnav{position:fixed;inset:0;z-index:60;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;padding:16px var(--pad) 40px;overflow-y:auto;
   transform:translateY(-100%);transition:transform .35s ease;visibility:hidden}
 .mnav.open{transform:none;visibility:visible}
-.mnav-top{display:flex;justify-content:space-between;align-items:center;gap:12px;height:56px;margin-bottom:24px}
+.mnav-top{display:flex;flex:none;justify-content:space-between;align-items:center;gap:12px;height:68px;margin-bottom:22px}
 .mnav-brand{margin-right:auto}
 @media (max-height:760px){.mnav a.l{font-size:25px;padding:9px 0}}
 .mnav a.l{display:block;font:500 30px/1.2 var(--serif);color:var(--head);text-decoration:none;padding:13px 0;border-bottom:1px solid var(--line)}
@@ -439,6 +439,7 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 /* ---------- footer ---------- */
 .ftr{position:relative;background:var(--paper);color:var(--muted);font-size:14px;padding:72px 0 110px;border-top:1px solid var(--line)}
 @media (min-width:960px){.ftr{padding-bottom:44px}}
+@media (max-width:1023px){.ftr{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}}
 .ftr-grid{display:grid;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--line)}
 @media (min-width:820px){.ftr-grid{grid-template-columns:1.4fr 1fr 1fr}}
 .ftr-logo{display:block;width:150px;height:auto}
@@ -457,12 +458,16 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .ftr-tools button:hover{border-color:var(--gold)}
 
 /* ---------- mobile action bar ---------- */
+/* il margine di sicurezza dell'iPhone sta dentro i pulsanti, così ognuno porta
+   il proprio colore fino al bordo dello schermo e sotto non resta una striscia */
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:1px;background:var(--line-dark);
-  padding-bottom:env(safe-area-inset-bottom);transform:translateY(110%);transition:transform .3s;box-shadow:0 -8px 24px rgba(0,20,47,.2)}
+  transform:translateY(110%);transition:transform .3s;box-shadow:0 -8px 24px rgba(0,20,47,.2)}
 .mbar.on{transform:none}
-.mbar a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;background:var(--navy-950);color:#fff;text-decoration:none;font-size:12px;font-weight:500}
+.mbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  padding:13px 4px calc(13px + env(safe-area-inset-bottom,0px));
+  background:var(--navy-950);color:#fff;text-decoration:none;font-size:12.5px;font-weight:500}
 .mbar a.pri{background:var(--gold);color:var(--navy-950)}
-.mbar svg{width:20px;height:20px}
+.mbar svg{width:21px;height:21px}
 @media (min-width:1024px){.mbar{display:none}}
 
 .toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);opacity:0;background:var(--navy-950);color:#fff;padding:11px 18px;border-radius:999px;font-size:14px;transition:.25s;pointer-events:none;z-index:70}
@@ -635,8 +640,8 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 :root[data-theme="dark"] .frame{--fr-c:rgba(216,201,168,.16)}
 :root[data-theme="dark"] .wm{-webkit-text-stroke-color:rgba(216,201,168,.16)}
 /* il logo resta dei suoi colori: al buio gli diamo un fondo chiaro per non perderne la parte scura */
-:root[data-theme="dark"] .brand img,:root[data-theme="dark"] .ftr-logo{background:#f4f1e9;border-radius:5px;padding:5px 8px}
-:root[data-theme="dark"] .ftr-logo{padding:10px 14px;border-radius:7px}
+:root[data-theme="dark"] .brand img{background:#f4f1e9;border-radius:4px;box-shadow:0 0 0 6px #f4f1e9}
+:root[data-theme="dark"] .ftr-logo{background:#f4f1e9;border-radius:6px;box-shadow:0 0 0 10px #f4f1e9;margin-left:10px}
 :root[data-theme="dark"] .portrait{background:rgba(255,255,255,.05)}
 .thm{flex:none;width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);
   background:transparent;color:var(--head);border-radius:50%;cursor:pointer;transition:border-color .2s,color .2s}
