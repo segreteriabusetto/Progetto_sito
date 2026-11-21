@@ -84,6 +84,11 @@ section{position:relative}
 .hdr.solid{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
 .brand{display:inline-flex;align-items:center;text-decoration:none}
 .brand img{display:block;height:52px;width:auto}
+/* sul telefono il monogramma gira di un quarto: la B coricata diventa una M */
+@media (max-width:1023px){
+  .brand{position:relative;display:block;width:52px;height:52px}
+  .brand img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-90deg)}
+}
 .nav{display:none;align-items:center;gap:32px}
 .nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.01em;transition:color .2s}
 .nav a:hover{color:var(--gold-ink)}
