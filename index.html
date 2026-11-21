@@ -798,6 +798,16 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .svc-role p{margin:0;font-size:15.5px;color:var(--muted)}
 .svc-role a{color:var(--navy-l);text-underline-offset:3px}
 .pyr-list .pyr-who{margin-top:8px;font-size:13.5px;color:var(--gold-ink)}
+.pyr-g{transition:opacity .25s ease}
+.pyr-svg.acceso .pyr-g:not(.on){opacity:.26}
+.pyr-g.on .pyr-band{filter:brightness(1.14)}
+.pyr-list li{transition:opacity .25s ease}
+.pyr-list li::after{content:"";position:absolute;left:4.5px;top:22px;bottom:24px;width:1px;
+  background:var(--gold);opacity:0;transition:opacity .25s ease}
+.pyr-list li:last-child::after{bottom:6px}
+.pyr-list.acceso li:not(.on){opacity:.36}
+.pyr-list li.on::after{opacity:.8}
+@media (prefers-reduced-motion:reduce){.pyr-g,.pyr-list li,.pyr-list li::after{transition:none}}
 .ins-b .ins-who{margin:0 0 24px;padding-left:14px;border-left:2px solid var(--gold);font-size:14px;line-height:1.55;color:var(--on-dark-muted)}
 
 
@@ -1266,36 +1276,36 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
 <linearGradient id="pg4" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#10573f" stop-opacity=".82"/><stop offset=".55" stop-color="#10573f"/><stop offset="1" stop-color="#10573f" stop-opacity=".88"/></linearGradient>
 </defs>
 <g class="pyr-axis"><path d="M34 428V52"/><path class="pyr-head" d="M34 40l-5.5 11h11z"/><text x="22" y="232" transform="rotate(-90 22 232)" text-anchor="middle">RISCHIO</text></g>
-<path class="pyr-band" fill="url(#pg0)" d="M420 36.0L455.2 110.9H384.8Z"/>
+<g class="pyr-g" data-i="0"><path class="pyr-band" fill="url(#pg0)" d="M420 36.0L455.2 110.9H384.8Z"/>
 <g class="pyr-lead"><path d="M395.6 75.2H196"/><circle cx="395.6" cy="75.2" r="2.6"/></g>
 <g class="pyr-lead"><path d="M444.4 75.2H644"/><circle cx="444.4" cy="75.2" r="2.6"/></g>
 <text class="pyr-name" x="188" y="75.2" text-anchor="end" dominant-baseline="middle">Extra rendimento</text>
 <rect class="pyr-chip" x="196" y="70.2" width="10" height="10" rx="2" fill="#9d4a3b"/>
-<text class="pyr-hz" x="652" y="75.2" dominant-baseline="middle">Nessun orizzonte</text>
-<path class="pyr-band" fill="url(#pg1)" d="M381.6 117.9H458.4L492.0 189.3H348.0Z"/>
+<text class="pyr-hz" x="652" y="75.2" dominant-baseline="middle">Nessun orizzonte</text></g>
+<g class="pyr-g" data-i="1"><path class="pyr-band" fill="url(#pg1)" d="M381.6 117.9H458.4L492.0 189.3H348.0Z"/>
 <g class="pyr-lead"><path d="M358.8 153.6H196"/><circle cx="358.8" cy="153.6" r="2.6"/></g>
 <g class="pyr-lead"><path d="M481.2 153.6H644"/><circle cx="481.2" cy="153.6" r="2.6"/></g>
 <text class="pyr-name" x="188" y="153.6" text-anchor="end" dominant-baseline="middle">Investimento</text>
 <rect class="pyr-chip" x="196" y="148.6" width="10" height="10" rx="2" fill="#bd8530"/>
-<text class="pyr-hz" x="652" y="153.6" dominant-baseline="middle">Medio/lungo · oltre 60 mesi</text>
-<path class="pyr-band" fill="url(#pg2)" d="M344.8 196.3H495.2L528.8 267.7H311.2Z"/>
+<text class="pyr-hz" x="652" y="153.6" dominant-baseline="middle">Medio/lungo · oltre 60 mesi</text></g>
+<g class="pyr-g" data-i="2"><path class="pyr-band" fill="url(#pg2)" d="M344.8 196.3H495.2L528.8 267.7H311.2Z"/>
 <g class="pyr-lead"><path d="M322.0 232.0H196"/><circle cx="322.0" cy="232.0" r="2.6"/></g>
 <g class="pyr-lead"><path d="M518.0 232.0H644"/><circle cx="518.0" cy="232.0" r="2.6"/></g>
 <text class="pyr-name" x="188" y="232.0" text-anchor="end" dominant-baseline="middle">Riserva</text>
 <rect class="pyr-chip" x="196" y="227.0" width="10" height="10" rx="2" fill="#2d5f9e"/>
-<text class="pyr-hz" x="652" y="232.0" dominant-baseline="middle">Breve termine · 24/36 mesi</text>
-<path class="pyr-band" fill="url(#pg3)" d="M308.0 274.7H532.0L565.6 346.1H274.4Z"/>
+<text class="pyr-hz" x="652" y="232.0" dominant-baseline="middle">Breve termine · 24/36 mesi</text></g>
+<g class="pyr-g" data-i="3"><path class="pyr-band" fill="url(#pg3)" d="M308.0 274.7H532.0L565.6 346.1H274.4Z"/>
 <g class="pyr-lead"><path d="M285.2 310.4H196"/><circle cx="285.2" cy="310.4" r="2.6"/></g>
 <g class="pyr-lead"><path d="M554.8 310.4H644"/><circle cx="554.8" cy="310.4" r="2.6"/></g>
 <text class="pyr-name" x="188" y="310.4" text-anchor="end" dominant-baseline="middle">Liquidità</text>
 <rect class="pyr-chip" x="196" y="305.4" width="10" height="10" rx="2" fill="#14306b"/>
-<text class="pyr-hz" x="652" y="310.4" dominant-baseline="middle">Immediato · 3/6 mesi</text>
-<path class="pyr-band" fill="url(#pg4)" d="M271.2 353.1H568.8L602.4 424.5H237.6Z"/>
+<text class="pyr-hz" x="652" y="310.4" dominant-baseline="middle">Immediato · 3/6 mesi</text></g>
+<g class="pyr-g" data-i="4"><path class="pyr-band" fill="url(#pg4)" d="M271.2 353.1H568.8L602.4 424.5H237.6Z"/>
 <g class="pyr-lead"><path d="M248.4 388.8H196"/><circle cx="248.4" cy="388.8" r="2.6"/></g>
 <g class="pyr-lead"><path d="M591.6 388.8H644"/><circle cx="591.6" cy="388.8" r="2.6"/></g>
 <text class="pyr-name" x="188" y="388.8" text-anchor="end" dominant-baseline="middle">Protezione</text>
 <rect class="pyr-chip" x="196" y="383.8" width="10" height="10" rx="2" fill="#10573f"/>
-<text class="pyr-hz" x="652" y="388.8" dominant-baseline="middle">Subito</text>
+<text class="pyr-hz" x="652" y="388.8" dominant-baseline="middle">Subito</text></g>
 <text class="pyr-cap" x="188" y="468" text-anchor="end">OBIETTIVI</text>
 <text class="pyr-cap" x="652" y="468">ORIZZONTE TEMPORALE</text>
 <path class="pyr-base" d="M218 440H622"/>
@@ -2352,6 +2362,30 @@ if (window.matchMedia && matchMedia('(pointer:fine)').matches && !matchMedia('(p
   document.querySelectorAll('[data-thm]').forEach(b => b.onclick = () => setTema(R.getAttribute('data-theme') !== 'dark', true));
   /* finché non scegli tu, il sito segue le impostazioni del telefono o del computer */
   if (sys) sys.addEventListener('change', e => { if (!fissato) setTema(e.matches, false); });
+}
+
+/* ---------- piramide: il gradino e il suo testo si accendono insieme ---------- */
+{ const sv = document.querySelector('.pyr-svg'), ol = document.querySelector('.pyr-list');
+  if (sv && ol) {
+    const liv = [...sv.querySelectorAll('.pyr-g')];   /* dall'alto in basso */
+    const voci = [...ol.children];                    /* dal basso in alto */
+    const N = liv.length;
+    const accendi = i => {
+      const acceso = i != null;
+      sv.classList.toggle('acceso', acceso); ol.classList.toggle('acceso', acceso);
+      liv.forEach((g, k) => g.classList.toggle('on', k === i));
+      voci.forEach((v, k) => v.classList.toggle('on', acceso && k === N - 1 - i));
+    };
+    const segui = (el, indice) => {
+      el.addEventListener('pointerover', e => {
+        const t = e.target.closest && e.target.closest(el === sv ? '.pyr-g' : 'li');
+        accendi(t ? indice(t) : null);
+      });
+      el.addEventListener('pointerleave', () => accendi(null));
+    };
+    segui(sv, g => liv.indexOf(g));
+    segui(ol, v => N - 1 - voci.indexOf(v));
+  }
 }
 
 /* ---------- piramide: sul telefono si inquadra il solo disegno ---------- */
