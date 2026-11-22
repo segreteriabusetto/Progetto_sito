@@ -551,6 +551,22 @@ details.yt .htab{max-height:300px;overflow:auto;margin-top:8px}
 .dark .eyebrow{color:var(--gold-2)}
 .dark .eyebrow::before{background:currentColor}
 
+/* ---------- prenotazione: il calendario si apre qui, senza lasciare il sito ---------- */
+.book{border:0;padding:0;margin:auto;width:min(560px,calc(100% - 32px));max-width:none;
+  height:min(800px,calc(100dvh - 48px));max-height:none;background:var(--paper);color:var(--ink);
+  border-radius:var(--r);box-shadow:0 30px 90px rgba(0,20,47,.5);overflow:hidden}
+.book[open]{display:flex;flex-direction:column;animation:readerIn .5s cubic-bezier(.2,.7,.2,1)}
+.book::backdrop{background:rgba(0,14,33,.72);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.book-bar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 12px 10px 24px;border-bottom:1px solid var(--line)}
+.book-bar .eyebrow{margin:0}
+.book-body{flex:1;min-height:0;position:relative;background:#fff}
+.book-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.book-note{flex:none;margin:0;padding:11px 24px;font-size:12px;line-height:1.5;color:var(--muted);border-top:1px solid var(--line)}
+.book-note a{color:var(--gold-d)}
+@media (max-width:620px){.book{width:100%;height:100dvh;border-radius:0}
+  .book-bar{padding-left:16px}.book-note{padding:10px 16px}}
+
 /* ---------- ponti: una riga che accompagna da una sezione all'altra ---------- */
 .ponte{max-width:640px;margin:0 auto;padding-top:14px;text-align:center;position:relative;
   font:italic 500 clamp(18px,2.2vw,22px)/1.5 var(--serif);color:var(--muted)}
@@ -2186,7 +2202,7 @@ const CONFIG = {
   office: "+39 041 504 0933",      // ufficio
   whatsapp: "393315207568",   // solo cifre con prefisso internazionale
   email: "marco.busetto@allianzbankfa.it",
-  booking: "",          // link calendario per prenotare (Calendly, Google Calendar...)
+  booking: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1wY0bYkOWddzhYEjJ5qm9uhgUbkuuTPGdteZ_k30SXc1bxUkbttvG9O1ZHl3wVufDc6kom4ig8?gv=true",   // calendario per prenotare: si apre dentro il sito
   address: "Via Pepe 106, 30172 Mestre (VE)",   // studio
 
   google: {
@@ -2905,6 +2921,46 @@ addEventListener('popstate', () => {
 });
 document.addEventListener('click', e => { const b = e.target.closest('button[data-art]'); if (b) openArticle(b.dataset.art); });
 { const m = location.hash.match(/^#articolo-([a-z]+)$/); if (m && $('art-' + m[1])) openArticle(m[1], false); }
+
+/* ---------- prenotazione: il calendario si apre dentro il sito ---------- */
+if (C.booking && /^https:\/\//.test(C.booking)) {
+  const puo = window.HTMLDialogElement && HTMLDialogElement.prototype.showModal;
+  let box = null, caricato = false;
+  const costruisci = () => {
+    box = document.createElement('dialog');
+    box.className = 'book';
+    box.setAttribute('aria-label', 'Prenota un incontro');
+    box.innerHTML = '<div class="book-bar"><p class="eyebrow">Prenota un incontro</p>' +
+      '<button class="r-close" type="button" aria-label="Chiudi il calendario">' +
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg>' +
+      '</button></div><div class="book-body"></div>' +
+      '<p class="book-note">Il calendario è un servizio di Google: aprendolo valgono le sue condizioni. ' +
+      '<a href="note-legali.html#privacy" target="_blank" rel="noopener">Note legali</a>.</p>';
+    document.body.appendChild(box);
+    box.querySelector('.r-close').onclick = () => box.close();
+    box.addEventListener('click', e => { if (e.target === box) box.close(); });
+    box.addEventListener('close', () => { document.documentElement.style.overflow = ''; });
+  };
+  const apri = () => {
+    if (!box) costruisci();
+    /* il riquadro di Google si carica solo adesso: chi non prenota non lo incontra mai */
+    if (!caricato) {
+      const f = document.createElement('iframe');
+      f.src = C.booking; f.title = 'Calendario per prenotare un incontro'; f.loading = 'lazy';
+      box.querySelector('.book-body').appendChild(f); caricato = true;
+    }
+    box.showModal(); document.documentElement.style.overflow = 'hidden';
+  };
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.getAttribute('href') !== C.booking || !puo) return;   /* senza <dialog> resta il link */
+    e.preventDefault();
+    setMenu(false);
+    const daArticolo = dlg.open;         /* se si arriva da un articolo, quello si chiude prima */
+    if (daArticolo) closeArticle();
+    setTimeout(apri, daArticolo ? 170 : 0);
+  });
+}
 
 /* ---------- reveal on scroll ---------- */
 if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
